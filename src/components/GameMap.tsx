@@ -1,5 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import * as anchor from "@coral-xyz/anchor";
+import { ToastContainer, toast } from "react-toastify";
+
 import Terrain, { TileType } from "./Terrain";
 import Unit from "./Unit";
 import UnitInfoWindow from "./UnitInfoWindow";
@@ -156,7 +158,6 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
   };
 
   const moveUnit = async (selectedUnit: Unit, x: number, y: number) => {
-    console.log("Moving unit");
     const [gameKey] = anchor.web3.PublicKey.findProgramAddressSync(
       [Buffer.from("GAME"), provider!.publicKey.toBuffer()],
       program!.programId
@@ -170,8 +171,16 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
       player: provider!.publicKey,
     };
     try {
-      const tx = await program!.methods.moveUnit(selectedUnit.unitId, x, y).accounts(accounts).rpc();
-      console.log(`Move unit TX: https://explorer.solana.com/tx/${tx}?cluster=devnet`);
+      const tx = program!.methods.moveUnit(selectedUnit.unitId, x, y).accounts(accounts).rpc();
+      const signature = await toast.promise(
+        tx,
+        {
+          pending: 'Moving unit...',
+          success: 'Unit moved',
+          error: 'Failed to move unit'
+        }
+      );
+      console.log(`Move unit TX: https://explorer.solana.com/tx/${signature}?cluster=devnet`);
       logMessage(`Unit #${selectedUnit.unitId} ${selectedUnit.type} moved to (${x}, ${y})`);
     } catch (error) {
       console.error("Failed to move unit", error);
@@ -211,8 +220,16 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
       player: provider!.publicKey,
     };
     try {
-      const tx = await program!.methods.attackUnit(attackingUnit.unitId, defendingUnit.unitId).accounts(accounts).rpc();
-      console.log(`Attack TX: https://explorer.solana.com/tx/${tx}?cluster=devnet`);
+      const tx = program!.methods.attackUnit(attackingUnit.unitId, defendingUnit.unitId).accounts(accounts).rpc();
+      const signature = await toast.promise(
+        tx,
+        {
+          pending: 'Attacking enemy...',
+          success: 'Enemy attacked',
+          error: 'Failed to attack enemy'
+        }
+      );
+      console.log(`Attack TX: https://explorer.solana.com/tx/${signature}?cluster=devnet`);
       logMessage(`Unit #${attackingUnit.unitId} attacked barbarian`);
       playSound("attack");
     } catch (error) {
@@ -245,8 +262,11 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
     // If the target tile is occupied by an NPC unit,
     // and the selected unit can attack, attack the unit.
     if (selectedUnit && targetUnit && targetUnit.npc && canAttack(selectedUnit)) {
-      console.log("Attacking unit");
-      return attackUnit(selectedUnit, targetUnit);
+      if (selectedUnit.movementRange === 0) {
+        toast.error("Unit has no moves left");
+      } else {
+        return attackUnit(selectedUnit, targetUnit);
+      }
     }
 
     // else simply select the unit at clicked tile
@@ -331,11 +351,23 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
                   <img src={`/icons/${resourceAvailable}.png`} alt="" />
                 </div>
               )}
-              {currentUnit && <Unit {...currentUnit} onClick={() => unitAction(col, row, currentUnit.type)} />}
+              {currentUnit && <Unit {...currentUnit} onClick={() => ""} />}
             </div>
           );
         })}
       </div>
+      <ToastContainer
+        position="top-right"
+        autoClose={1000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
     </div>
   );
 };

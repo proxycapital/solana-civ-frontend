@@ -233,14 +233,16 @@ export const foundCity = async (provider: AnchorProvider, program: Program<Solci
     playerAccount: playerKey,
     systemProgram: anchor.web3.SystemProgram.programId,
   };
-  try {
-    const tx = await program.methods.foundCity(unit.x, unit.y, unit.unitId).accounts(accounts).rpc();
-    console.log(`Found a city TX: https://explorer.solana.com/tx/${tx}?cluster=devnet`);
-  } catch (error) {
-    console.log("Error while founding city: ", error);
-    return error;
-  }
-  return true;
+
+  return program.methods.foundCity(unit.x, unit.y, unit.unitId).accounts(accounts).rpc();
+  // try {
+  //   const tx = await program.methods.foundCity(unit.x, unit.y, unit.unitId).accounts(accounts).rpc();
+  //   console.log(`Found a city TX: https://explorer.solana.com/tx/${tx}?cluster=devnet`);
+  // } catch (error) {
+  //   console.log("Error while founding city: ", error);
+  //   return error;
+  // }
+  // return true;
 };
 
 export const upgradeLandPlot = async (provider: AnchorProvider, program: Program<Solciv>, unit: any) => {
@@ -259,12 +261,13 @@ export const upgradeLandPlot = async (provider: AnchorProvider, program: Program
     player: provider.publicKey,
     playerAccount: playerKey,
   };
-  try {
-    const tx = await program.methods.upgradeTile(unit.x, unit.y, unit.unitId).accounts(accounts).rpc();
-    console.log(`Upgrade land plot TX: https://explorer.solana.com/tx/${tx}?cluster=devnet`);
-  } catch (error) {
-    console.log("Error while upgrading land: ", error);
-    return error;
-  }
-  return true;
+  return program.methods.upgradeTile(unit.x, unit.y, unit.unitId).accounts(accounts).rpc();
+  // try {
+  //   const tx = await program.methods.upgradeTile(unit.x, unit.y, unit.unitId).accounts(accounts).rpc();
+  //   console.log(`Upgrade land plot TX: https://explorer.solana.com/tx/${tx}?cluster=devnet`);
+  // } catch (error) {
+  //   console.log("Error while upgrading land: ", error);
+  //   return false;
+  // }
+  // return true;
 };
