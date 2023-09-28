@@ -38,7 +38,7 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
             </div>
             <div className="balance-box">
               <img src="/icons/solana.png" width="32" alt="SOL" />
-              {resources.sol}
+              {resources.sol ? resources.sol.toFixed(2) : 0}
             </div>
           </div>
         </Toolbar>

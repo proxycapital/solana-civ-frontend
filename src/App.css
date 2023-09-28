@@ -1,12 +1,16 @@
 body {
-  background: rgb(46,63,75);
-  background: linear-gradient(180deg, rgba(46,63,75,1) 0%, rgba(30,39,52,1) 100%);
+  background: rgb(46, 63, 75);
+  background: linear-gradient(180deg, rgba(46, 63, 75, 1) 0%, rgba(30, 39, 52, 1) 100%);
 }
 
 body.light-mode {
-  background: #E0EAFC;
-  background: -webkit-linear-gradient(to right, #CFDEF3, #E0EAFC);
-  background: linear-gradient(to right, #CFDEF3, #E0EAFC);
+  background: #e0eafc;
+  background: -webkit-linear-gradient(to right, #cfdef3, #e0eafc);
+  background: linear-gradient(to right, #cfdef3, #e0eafc);
+}
+
+h6 {
+  font-size: 14px !important;
 }
 
 .home-container {
@@ -53,32 +57,34 @@ button.fixed-width-button-secondary {
 }
 
 header.top-navigation {
-  background: rgb(34,47,59);
-  background: radial-gradient(circle, rgba(34,47,59,1) 0%, rgba(30,39,52,1) 100%);
+  background: rgb(34, 47, 59);
+  background: radial-gradient(circle, rgba(34, 47, 59, 1) 0%, rgba(30, 39, 52, 1) 100%);
   -ms-flex-negative: 0;
   border: 1px solid #3c4a57;
   color: #fff;
   border-radius: 10px;
-  box-shadow: 0px 2px 7px 0px rgba(0,0,0,0.75);
-  -webkit-box-shadow: 0px 2px 7px 0px rgba(0,0,0,0.75);
-  -moz-box-shadow: 0px 2px 7px 0px rgba(0,0,0,0.75);
+  box-shadow: 0px 2px 7px 0px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 0px 2px 7px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 2px 7px 0px rgba(0, 0, 0, 0.75);
 }
 
 header.top-navigation .balance-container {
-  display: flex; 
+  display: flex;
   align-items: center;
 }
 
 header.top-navigation .balance-box {
-  display: flex; 
-  align-items: center; 
-  margin-right: 20px; 
-  padding: 5px 10px; 
-  border: 1px solid #3d4a57; 
+  display: flex;
+  align-items: center;
+  margin-right: 5px;
+  padding: 5px 10px;
+  border: 1px solid #3d4a57;
   border-radius: 15px;
+  font-size: 14px;
 }
 
 header.top-navigation .balance-box img {
+  width: 24px;
   margin-right: 5px;
 }
 
@@ -181,16 +187,16 @@ img.upgraded-tile {
   right: 20px;
   padding: 10px;
   z-index: 100;
-  background: rgb(34,47,59);
-  background: radial-gradient(circle, rgba(34,47,59,1) 0%, rgba(30,39,52,1) 100%);
+  background: rgb(34, 47, 59);
+  background: radial-gradient(circle, rgba(34, 47, 59, 1) 0%, rgba(30, 39, 52, 1) 100%);
   -ms-flex-negative: 0;
   border: 1px solid #3c4a57;
   color: #b7b7ba;
   font-size: 14px;
   border-radius: 10px;
-  box-shadow: 0px 2px 7px 0px rgba(0,0,0,0.75);
-  -webkit-box-shadow: 0px 2px 7px 0px rgba(0,0,0,0.75);
-  -moz-box-shadow: 0px 2px 7px 0px rgba(0,0,0,0.75);
+  box-shadow: 0px 2px 7px 0px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 0px 2px 7px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 2px 7px 0px rgba(0, 0, 0, 0.75);
 }
 
 .unit-action-button {
@@ -245,7 +251,8 @@ img.upgraded-tile {
 
 .game-tile img.terrain.village:hover {
   cursor: pointer;
-  filter: drop-shadow(-1px 2px 0 white) drop-shadow(2px -1px 0 rgba(255,255,255,.7)) drop-shadow(-2px -1px 0 rgba(255,255,255,.7)) drop-shadow(1px 1.5px 10px rgba(255,255,255,.5));
+  filter: drop-shadow(-1px 2px 0 white) drop-shadow(2px -1px 0 rgba(255, 255, 255, 0.7))
+    drop-shadow(-2px -1px 0 rgba(255, 255, 255, 0.7)) drop-shadow(1px 1.5px 10px rgba(255, 255, 255, 0.5));
 }
 
 .top-menu {
@@ -295,15 +302,15 @@ img.upgraded-tile {
 }
 
 .modal {
-  background: rgb(34,47,59);
-  background: radial-gradient(circle, rgba(34,47,59,1) 0%, rgba(30,39,52,1) 100%);
+  background: rgb(34, 47, 59);
+  background: radial-gradient(circle, rgba(34, 47, 59, 1) 0%, rgba(30, 39, 52, 1) 100%);
   -ms-flex-negative: 0;
   border: 1px solid #3c4a57;
   color: #fff;
   border-radius: 10px;
-  box-shadow: 0px 2px 7px 0px rgba(0,0,0,0.75);
-  -webkit-box-shadow: 0px 2px 7px 0px rgba(0,0,0,0.75);
-  -moz-box-shadow: 0px 2px 7px 0px rgba(0,0,0,0.75);
+  box-shadow: 0px 2px 7px 0px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 0px 2px 7px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 2px 7px 0px rgba(0, 0, 0, 0.75);
 }
 
 .modal:focus-visible {
@@ -331,6 +338,7 @@ img.upgraded-tile {
   color: white;
 }
 
-.console-message-error, .error-container .error-message {
+.console-message-error,
+.error-container .error-message {
   color: #d10808;
 }
