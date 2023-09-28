@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import Switch from "@mui/material/Switch";
+import Button from "@mui/material/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faVolumeHigh, faVolumeXmark } from "@fortawesome/free-solid-svg-icons";
+import { faVolumeHigh, faVolumeXmark, faFlask, faTrophy, faBook } from "@fortawesome/free-solid-svg-icons";
+import CustomModal from "./CustomModal";
 import EndTurnButton from "./EndTurnButton";
 import { useGameState } from "../context/GameStateContext";
 import { useSound } from "../context/SoundContext";
@@ -17,6 +18,19 @@ interface TopMenuProps {
 const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
   const { resources, game } = useGameState();
   const { toggleBackgroundMusic } = useSound();
+
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [modalContent, setModalContent] = useState("");
+
+  const handleOpenModal = (content: string) => {
+    setModalContent(content);
+    setModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
+    setModalContent("");
+  };
 
   const [isMusicPlaying, setMusicPlaying] = useState(() => {
     return localStorage.getItem("isMusicPlaying") === "true";
@@ -35,7 +49,7 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
         className="top-navigation"
         style={{ flex: "2", marginRight: "10px", borderRadius: "8px" }}
       >
-        <Toolbar>
+        <Toolbar style={{ display: "flex", justifyContent: "space-between" }}>
           <div className="balance-container">
             <div className="balance-box">
               <img src="/icons/gold.png" width="32" alt="Gold" />
@@ -54,6 +68,42 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
               {resources.sol ? resources.sol.toFixed(2) : 0}
             </div>
           </div>
+          <div className="button-container">
+            <Button
+              variant="text"
+              color="inherit"
+              onClick={() => {
+                handleOpenModal("Research");
+              }}
+            >
+              Research
+            </Button>
+            <Button
+              variant="text"
+              color="inherit"
+              onClick={() => {
+                handleOpenModal("Quests");
+              }}
+            >
+              Quests
+            </Button>
+            <Button
+              variant="text"
+              color="inherit"
+              onClick={() => {
+                handleOpenModal("Leaderboard");
+              }}
+            >
+              Leaderboard
+            </Button>
+          </div>
+          <CustomModal isOpen={isModalOpen} onClose={handleCloseModal} title={modalContent}>
+            <div>
+              {modalContent === "Research" && <div>Research Content</div>}
+              {modalContent === "Quests" && <div>Quests Content</div>}
+              {modalContent === "Leaderboard" && <div>Leaderboard Content</div>}
+            </div>
+          </CustomModal>
         </Toolbar>
       </AppBar>
 
