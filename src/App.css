@@ -342,3 +342,15 @@ img.upgraded-tile {
 .error-container .error-message {
   color: #d10808;
 }
+
+.music-toggle-button {
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  font-size: 20px;
+  vertical-align: middle;
+}
+.music-toggle-button:hover {
+  color: #ccc;
+}

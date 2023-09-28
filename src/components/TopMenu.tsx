@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Switch from "@mui/material/Switch";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faVolumeHigh, faVolumeXmark } from "@fortawesome/free-solid-svg-icons";
 import EndTurnButton from "./EndTurnButton";
-import { useGameState } from '../context/GameStateContext';
+import { useGameState } from "../context/GameStateContext";
+import { useSound } from "../context/SoundContext";
 
 interface TopMenuProps {
   debug: boolean;
@@ -13,6 +16,16 @@ interface TopMenuProps {
 
 const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
   const { resources, game } = useGameState();
+  const { toggleBackgroundMusic } = useSound();
+
+  const [isMusicPlaying, setMusicPlaying] = useState(() => {
+    return localStorage.getItem("isMusicPlaying") === "true";
+  });
+
+  const handleToggleBackgroundMusic = () => {
+    toggleBackgroundMusic();
+    setMusicPlaying((prevState) => !prevState);
+  };
 
   return (
     <div style={{ display: "flex", justifyContent: "space-between", margin: "20px" }}>
@@ -52,20 +65,20 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
       >
         <Toolbar>
           <div style={{ marginLeft: "auto" }}>
-            {/* <Typography variant="h6" style={{ display: "inline" }}>
-              Debug:
-            </Typography> */}
-            <Switch
+            {/* <Switch
               checked={debug}
               onChange={() => setDebug(!debug)}
               name="debug"
               color="default"
               inputProps={{ "aria-label": "Debug mode" }}
-            />
+            /> */}
             <Typography variant="h6" style={{ display: "inline", marginRight: "20px" }}>
               Day {game.turn}
             </Typography>
             <EndTurnButton />
+            <button onClick={handleToggleBackgroundMusic} className="music-toggle-button">
+              <FontAwesomeIcon icon={isMusicPlaying ? faVolumeHigh : faVolumeXmark} />
+            </button>
           </div>
         </Toolbar>
       </AppBar>
