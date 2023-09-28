@@ -155,44 +155,97 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
     return withinDistance;
   };
 
-  const selectOrMoveUnit = async (x: number, y: number, type: string) => {
-    const selectedUnit = units.find((unit) => unit.isSelected);
-    const isTileOccupied = units.some(unit => unit.x === x && unit.y === y);
-
-    if (selectedUnit && !isTileOccupied && isWithinDistance(selectedUnit.x, selectedUnit.y, x, y, selectedUnit.movementRange)) {
-      console.log('Condition 1: Moving unit');
-      const [gameKey] = anchor.web3.PublicKey.findProgramAddressSync(
-        [Buffer.from("GAME"), provider!.publicKey.toBuffer()],
-        program!.programId
-      );
-      const [playerKey] = anchor.web3.PublicKey.findProgramAddressSync(
-        [Buffer.from("PLAYER"), gameKey.toBuffer(), provider!.publicKey.toBuffer()],
-        program!.programId
-      );
-      const accounts = {
-        playerAccount: playerKey,
-        player: provider!.publicKey,
-      };
-      try {
-        const tx = await program!.methods.moveUnit(selectedUnit.unitId, x, y).accounts(accounts).rpc();
-        console.log(`Move unit TX: https://explorer.solana.com/tx/${tx}?cluster=devnet`);
-        logMessage(`Unit #${selectedUnit.unitId} ${type} moved to (${x}, ${y})`);
-      } catch (error) {
-        console.error('Failed to move unit', error);
-      }
-      await fetchPlayerState();
-
-    } else {
-      console.log('Condition 2: Selecting unit');
-      const newUnits = units.map(unit => {
-        if (unit.x === x && unit.y === y && unit.type === type && !unit.npc) {
-          return { ...unit, isSelected: !unit.isSelected };
-        } else {
-          return { ...unit, isSelected: false };
-        }
-      });
-      setUnits(newUnits);
+  const moveUnit = async (selectedUnit: Unit, x: number, y: number) => {
+    console.log('Moving unit');
+    const [gameKey] = anchor.web3.PublicKey.findProgramAddressSync(
+      [Buffer.from("GAME"), provider!.publicKey.toBuffer()],
+      program!.programId
+    );
+    const [playerKey] = anchor.web3.PublicKey.findProgramAddressSync(
+      [Buffer.from("PLAYER"), gameKey.toBuffer(), provider!.publicKey.toBuffer()],
+      program!.programId
+    );
+    const accounts = {
+      playerAccount: playerKey,
+      player: provider!.publicKey,
+    };
+    try {
+      const tx = await program!.methods.moveUnit(selectedUnit.unitId, x, y).accounts(accounts).rpc();
+      console.log(`Move unit TX: https://explorer.solana.com/tx/${tx}?cluster=devnet`);
+      logMessage(`Unit #${selectedUnit.unitId} ${selectedUnit.type} moved to (${x}, ${y})`);
+    } catch (error) {
+      console.error('Failed to move unit', error);
     }
+    await fetchPlayerState();
+  };
+
+  const selectUnit = (x: number, y: number, type: string) => {
+    console.log('Selecting unit');
+    const newUnits = units.map(unit => {
+      if (unit.x === x && unit.y === y && unit.type === type && !unit.npc) {
+        return { ...unit, isSelected: !unit.isSelected };
+      } else {
+        return { ...unit, isSelected: false };
+      }
+    });
+    setUnits(newUnits);
+  };
+
+  const attackUnit = async (attackingUnit: Unit, defendingUnit: Unit) => {
+    const [gameKey] = anchor.web3.PublicKey.findProgramAddressSync(
+      [Buffer.from("GAME"), provider!.publicKey.toBuffer()],
+      program!.programId
+    );
+    const [playerKey] = anchor.web3.PublicKey.findProgramAddressSync(
+      [Buffer.from("PLAYER"), gameKey.toBuffer(), provider!.publicKey.toBuffer()],
+      program!.programId
+    );
+    const [npcKey] = anchor.web3.PublicKey.findProgramAddressSync(
+      [Buffer.from("NPC"), gameKey.toBuffer()],
+      program!.programId
+    );
+    const accounts = {
+      game: gameKey,
+      playerAccount: playerKey,
+      npcAccount: npcKey,
+      player: provider!.publicKey,
+    };
+    try {
+      const tx = await program!.methods.attackUnit(attackingUnit.unitId, defendingUnit.unitId).accounts(accounts).rpc();
+      console.log(`Attack TX: https://explorer.solana.com/tx/${tx}?cluster=devnet`);
+      logMessage(`Unit #${attackingUnit.unitId} attacked barbarian`);
+    } catch (error) {
+      console.error('Failed to attack unit', error);
+    }
+    await fetchPlayerState();
+    await fetchNpcs();
+  };
+
+  const canAttack = (unit: Unit) => {
+    // @todo: move this to Unit interface
+    const attackableUnitTypes = ['warrior', 'swordsman', 'archer'];
+    return attackableUnitTypes.includes(unit.type);
+  };
+
+  const unitAction = async (x: number, y: number, type: string) => {
+    const selectedUnit = units.find((unit) => unit.isSelected);
+    const targetUnit = units.find(unit => unit.x === x && unit.y === y);
+
+    // If the target tile is empty, and the new coords
+    // within the selected unit's movement range, move the unit.
+    if (selectedUnit && !targetUnit && isWithinDistance(selectedUnit.x, selectedUnit.y, x, y, selectedUnit.movementRange)) {
+      return moveUnit(selectedUnit, x, y);
+    }
+
+    // If the target tile is occupied by an NPC unit,
+    // and the selected unit can attack, attack the unit.
+    if (selectedUnit && targetUnit && targetUnit.npc && canAttack(selectedUnit)) {
+      console.log('Attacking unit');
+      return attackUnit(selectedUnit, targetUnit);
+    }
+
+    // else simply select the unit at clicked tile
+    return selectUnit(x, y, type);
   };
 
   const handleTileClick = (col: number, row: number) => {
@@ -253,12 +306,12 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
                 if (!currentUnit && !selectedUnit) {
                   return;
                 }
-                selectOrMoveUnit(col, row, currentUnit?.type || selectedUnit?.type || 'unknown');
+                unitAction(col, row, currentUnit?.type || selectedUnit?.type || 'unknown');
             }}
             >
               <Terrain x={col} y={row} imageIndex={currentTile.imageIndex} isInRange={isInRangeForAnyUnit} debug={debug} />
               {selectedUnit && selectedUnit.type === 'builder' && resourceAvailable && <div className="land-plot-resource"><img src={`/icons/${resourceAvailable}.png`} alt="" /></div>}
-              {currentUnit && <Unit {...currentUnit} onClick={() => selectOrMoveUnit(col, row, currentUnit.type)} />}
+              {currentUnit && <Unit {...currentUnit} onClick={() => unitAction(col, row, currentUnit.type)} />}
             </div>
           );
         })}
