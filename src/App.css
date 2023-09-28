@@ -81,6 +81,7 @@ header.top-navigation .balance-box {
   border: 1px solid #3d4a57;
   border-radius: 5px;
   font-size: 14px;
+  cursor: pointer;
 }
 
 header.top-navigation .balance-box img {
