@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import * as anchor from "@coral-xyz/anchor";
 import Button from "@mui/material/Button";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHourglassEnd, faSkullCrossbones } from "@fortawesome/free-solid-svg-icons";
 import { useWorkspace } from "../context/AnchorContext";
 import { useGameState } from "../context/GameStateContext";
 
@@ -82,11 +84,11 @@ const EndTurnButton: React.FC = () => {
 
   return (
     <>
-      <Button onClick={endTurn} disabled={isProcessing} variant="contained" color="primary">
-        ⌛ End Turn
+      <Button onClick={endTurn} disabled={isProcessing} variant="outlined" className="end-turn-button">
+        <FontAwesomeIcon icon={faHourglassEnd} />&nbsp; End Turn
       </Button>
-      <Button onClick={closeGame} variant="contained" color="error" className="end-game-button">
-        💀 End Game
+      <Button onClick={closeGame} variant="outlined" className="end-game-button">
+        <FontAwesomeIcon icon={faSkullCrossbones} />&nbsp; End Game
       </Button>
       {isProcessing && (
         <div

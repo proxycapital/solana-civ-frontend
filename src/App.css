@@ -260,12 +260,19 @@ img.upgraded-tile {
   justify-content: space-between;
 }
 
-.end-turn-button {
-  margin-left: auto;
+.top-navigation button {
+  margin: 0 5px;
 }
 
-.end-game-button {
-  margin-left: 10px !important;
+.top-navigation button.end-turn-button {
+  margin-left: auto;
+  color: #fff;
+  border: 1px solid #fff;
+}
+
+.top-navigation button.end-game-button {
+  color: #bbb;
+  border: 1px solid #bbb;
 }
 
 .no-select {
