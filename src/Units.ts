@@ -4,6 +4,7 @@ export type UnitType = {
   description?: string,
   goldCost: number;
   numberOfTurns: number;
+  requirement?: string,
 }
 
 export const Units: UnitType[] = [
@@ -15,8 +16,8 @@ export const Units: UnitType[] = [
     "numberOfTurns": 1
   },{
     "type": "builder",
-    "label": "Can build and gather resources",
-    "description": "",
+    "label": "Builder",
+    "description": "Can build and gather resources",
     "goldCost": 200,
     "numberOfTurns": 1
   },{
@@ -54,6 +55,7 @@ export const Units: UnitType[] = [
     "type": "tank",
     "label": "Tank",
     "goldCost": 200,
-    "numberOfTurns": 1
+    "numberOfTurns": 1,
+    "requirement": "Need to find Oil first"
   }
 ]

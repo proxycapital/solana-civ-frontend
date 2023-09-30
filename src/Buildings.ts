@@ -4,6 +4,7 @@ export type BuildingType = {
   description?: string,
   goldCost: number;
   numberOfTurns: number;
+  requirement?: string,
 }
 
 export const Buildings: BuildingType[] = [
@@ -12,7 +13,7 @@ export const Buildings: BuildingType[] = [
     "description": "Produces warriors",
     "label": "Barracks",
     "goldCost": 200,
-    "numberOfTurns": 1
+    "numberOfTurns": 1,
   },{
     "type": "wall",
     "label": "Wall",
@@ -23,17 +24,20 @@ export const Buildings: BuildingType[] = [
     "type": "wallMedieval",
     "label": "Medieval Wall",
     "goldCost": 200,
-    "numberOfTurns": 1
+    "numberOfTurns": 1,
+    "requirement": "Wall Lvl1",
   },{
     "type": "barwallRenaissanceracks",
     "label": "Renaissance Wall",
     "goldCost": 200,
-    "numberOfTurns": 1
+    "numberOfTurns": 1,
+    "requirement": "Wall Lvl2",
   },{
     "type": "wallIndustrial",
     "label": "Industrial Wall",
     "goldCost": 200,
-    "numberOfTurns": 1
+    "numberOfTurns": 1,
+    "requirement": "Wall Lvl3",
   },{
     "type": "library",
     "label": "Library",
