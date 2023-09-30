@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faVolumeHigh, faVolumeXmark, faFlask, faTrophy, faBook } from "@fortawesome/free-solid-svg-icons";
+import { faVolumeHigh, faVolumeXmark } from "@fortawesome/free-solid-svg-icons";
 import Tippy from '@tippyjs/react';
 
 import CustomModal from "./CustomModal";
@@ -60,22 +60,22 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
               </div>
             </Tippy>
             <Tippy content="Food">
-            <div className="balance-box">
-              <img src="/icons/food.png" width="32" alt="Food" />
-              {resources.food}
-            </div>
+              <div className="balance-box">
+                <img src="/icons/food.png" width="32" alt="Food" />
+                {resources.food}
+              </div>
             </Tippy>
             <Tippy content="Wood">
-            <div className="balance-box">
-              <img src="/icons/lumber.png" width="32" alt="Lumber" />
-              {resources.wood}
-            </div>
+              <div className="balance-box">
+                <img src="/icons/lumber.png" width="32" alt="Lumber" />
+                {resources.wood}
+              </div>
             </Tippy>
             <Tippy content="SOL">
-            <div className="balance-box">
-              <img src="/icons/solana.png" width="32" alt="SOL" />
-              {resources.sol ? resources.sol.toFixed(2) : 0}
-            </div>
+              <div className="balance-box">
+                <img src="/icons/solana.png" width="32" alt="SOL" />
+                {resources.sol ? resources.sol.toFixed(2) : 0}
+              </div>
             </Tippy>
           </div>
           <div className="button-container">

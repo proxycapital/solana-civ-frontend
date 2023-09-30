@@ -47,13 +47,6 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
     movementRange: number;
   }
 
-  const constructionOptions = [
-    { title: "Barracks", description: "Produces warriors", cost: 100, image: "/barracks.png" },
-    // { title: 'Farm', description: 'Increases food production', cost: 50, image: 'https://place-hold.it/100x100' },
-    { title: "Wall", description: "Enhances defense", cost: 75, image: "/wall.png" },
-    { title: "Warrior", description: "Basic combat unit", cost: 25, image: "/warrior.png" },
-    { title: "Worker", description: "Can build and gather resources", cost: 10, image: "/builder.png" },
-  ];
   const containerRef = useRef<HTMLDivElement | null>(null);
   let dragStart = { x: 0, y: 0 };
 
@@ -284,7 +277,10 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
 
   return (
     <div className="game-container" ref={containerRef}>
-      <VillageModal show={showVillageModal} onClose={() => setShowVillageModal(false)} options={constructionOptions} />
+      <VillageModal
+        show={showVillageModal}
+        onClose={() => setShowVillageModal(false)}
+      />
       {selectedUnit && (
         <UnitInfoWindow
           unit={selectedUnit}

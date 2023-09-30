@@ -211,6 +211,10 @@ img.upgraded-tile {
   width: 200px;
 }
 
+.unit-info-window strong {
+  font-size: 1.5rem;
+}
+
 .in-range {
   filter: grayscale(1);
 }
@@ -317,13 +321,6 @@ img.upgraded-tile {
 
 .modal:focus-visible {
   outline: none !important;
-}
-
-.close-button {
-  position: absolute;
-  right: 20px;
-  top: 20px;
-  cursor: pointer;
 }
 
 /* Console */

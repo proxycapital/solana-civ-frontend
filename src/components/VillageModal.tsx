@@ -2,22 +2,16 @@ import React from 'react';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
 
-interface ConstructionOption {
-  title: string;
-  description: string;
-  cost: number;
-  image: string;
-}
+import { Units } from '../units'
+import { Buildings } from '../buildings'
 
 interface VillageModalProps {
   show: boolean;
   onClose: () => void;
-  options: ConstructionOption[];
 }
 
-const VillageModal: React.FC<VillageModalProps> = ({ show, onClose, options }) => {
+const VillageModal: React.FC<VillageModalProps> = ({ show, onClose }) => {
   return (
     <Modal
       open={show}
@@ -25,30 +19,38 @@ const VillageModal: React.FC<VillageModalProps> = ({ show, onClose, options }) =
       aria-labelledby="village-modal-title"
       aria-describedby="village-modal-description"
     >
-      <Box className="modal" sx={{ 
-        position: 'absolute', 
-        top: '50%', 
-        left: '50%', 
-        transform: 'translate(-50%, -50%)', 
-        width: 600, 
-        maxHeight: 400,
-        overflow: 'auto',
-        bgcolor: 'background.paper', 
-        boxShadow: 24, 
-        p: 4
-      }}>
-        {options.map((option, index) => (
-          <Box key={index} sx={{ display: 'flex', justifyContent: 'space-between', marginBottom: 2 }}>
-            <img src={option.image} alt={option.title} width="100" />
-            <div style={{width: '50%'}}>
-              <Typography variant="body1">{option.title}</Typography>
-              <Typography variant="body2">{option.description}</Typography>
-            </div>
-            <Typography variant="body2">Cost: {option.cost}</Typography>
-            <Button style={{maxHeight: "30px"}} variant="contained" color="primary">Build</Button>
-          </Box>
-        ))}
-      </Box>
+      <div className="modal village-modal">
+        <div className="modal-header">
+          <h2>Choose Production</h2>
+          <div className="close-icon" />
+        </div>
+        <h3 className="primary-border-with-box-shadow">Buildings</h3>
+        <div className="modal-body">
+          {Buildings.map((building) => (
+            <Box className="body-item primary-border-with-box-shadow" key={building.type}>
+              <img src={`/${building.type}.png`} alt={building.label} width="50" />
+              <Typography variant="body1">{building.label}</Typography>
+              <div className="number-of-turns">
+                <span>{building.numberOfTurns}</span>
+                <img src="./icons/hourglass.png" width="20" alt="hourglass" />
+              </div>
+            </Box>
+          ))}
+        </div>
+        <h3 className="primary-border-with-box-shadow units-header">Units</h3>
+        <div className="modal-body">
+          {Units.map((unit) => (
+            <Box className="body-item primary-border-with-box-shadow" key={unit.type}>
+              <img src={`/${unit.type}.png`} alt={unit.label} width="50" />
+              <Typography variant="body1">{unit.label}</Typography>
+              <div className="number-of-turns">
+                <span>{unit.numberOfTurns}</span>
+                <img src="./icons/hourglass.png" width="20" alt="hourglass" />
+              </div>
+            </Box>
+          ))}
+        </div>
+      </div>
     </Modal>
   );
 };
