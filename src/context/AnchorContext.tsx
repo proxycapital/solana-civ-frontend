@@ -7,18 +7,12 @@ import {
 } from "@coral-xyz/anchor"
 import NodeWallet from "@coral-xyz/anchor/dist/cjs/nodewallet";
 import { Solciv, IDL } from "./idl"
-import { Connection, PublicKey, Keypair } from "@solana/web3.js"
+import { Connection, PublicKey, Keypair, clusterApiUrl } from "@solana/web3.js"
 import bs58 from "bs58";
 const WorkspaceContext = createContext({})
 
-const { REACT_APP_RPC: RPC, REACT_APP_PROGRAM_ID: PROGRAM_ADDRESS } = process.env;
-if (!PROGRAM_ADDRESS) {
-  throw new Error("REACT_APP_PROGRAM_ID is undefined")
-}
-if (!RPC) {
-  throw new Error("REACT_APP_RPC is undefined")
-}
-const programId = new PublicKey(PROGRAM_ADDRESS)
+const { REACT_APP_RPC: RPC } = process.env;
+const programId = new PublicKey(IDL.metadata.address)
 
 const burnerWallet = localStorage.getItem("burnerWallet");
 const wallet = burnerWallet ? Keypair.fromSecretKey(bs58.decode(burnerWallet)) : Keypair.generate();
@@ -33,7 +27,7 @@ interface WorkSpace {
 }
 
 const WorkspaceProvider = ({ children }: any) => {
-  const connection = new Connection(RPC, "confirmed");
+  const connection = new Connection(RPC || clusterApiUrl("devnet"), "confirmed");
   const provider = new AnchorProvider(connection, MockWallet, {})
 
   setProvider(provider)
