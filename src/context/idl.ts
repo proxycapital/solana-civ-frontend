@@ -669,6 +669,12 @@ export type Solciv = {
           },
           {
             "name": "AlreadyQueued"
+          },
+          {
+            "name": "InsufficientResources"
+          },
+          {
+            "name": "InvalidItem"
           }
         ]
       }
@@ -803,13 +809,16 @@ export type Solciv = {
         "kind": "enum",
         "variants": [
           {
-            "name": "TimberCamp"
+            "name": "LumberMill"
           },
           {
             "name": "StoneQuarry"
           },
           {
-            "name": "CornField"
+            "name": "Farm"
+          },
+          {
+            "name": "IronMine"
           }
         ]
       }
@@ -1543,6 +1552,12 @@ export const IDL: Solciv = {
           },
           {
             "name": "AlreadyQueued"
+          },
+          {
+            "name": "InsufficientResources"
+          },
+          {
+            "name": "InvalidItem"
           }
         ]
       }
@@ -1677,13 +1692,16 @@ export const IDL: Solciv = {
         "kind": "enum",
         "variants": [
           {
-            "name": "TimberCamp"
+            "name": "LumberMill"
           },
           {
             "name": "StoneQuarry"
           },
           {
-            "name": "CornField"
+            "name": "Farm"
+          },
+          {
+            "name": "IronMine"
           }
         ]
       }

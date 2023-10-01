@@ -100,13 +100,13 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
           if (upgradedCoordinates.has(`${col},${row},stoneQuarry`)) {
             overlayImageIndex = 11;
           }
-          if (upgradedCoordinates.has(`${col},${row},cornField`)) {
+          if (upgradedCoordinates.has(`${col},${row},farm`)) {
             overlayImageIndex = 12;
           }
           if (upgradedCoordinates.has(`${col},${row},ironMine`)) {
             overlayImageIndex = 13;
           }
-          if (upgradedCoordinates.has(`${col},${row},timberCamp`)) {
+          if (upgradedCoordinates.has(`${col},${row},lumberMill`)) {
             overlayImageIndex = 14;
           }
 
