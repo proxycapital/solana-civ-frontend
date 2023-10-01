@@ -4,6 +4,10 @@
   left: 0;
   padding: 1rem;
 
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+
   h3 {
     text-align: center;
     margin-top: -0.5rem;
@@ -37,7 +41,7 @@
   }
 }
 
-.village-modal {
+.city-modal {
   position: absolute;
   top: 106px; // height of header
   right: 0;
@@ -66,10 +70,9 @@
 
   .modal-header-tabs {
     width: fit-content;
-    margin-top: -1rem;
     margin-bottom: 2rem;
-    transform: translateX(50%);
-    
+    margin: 0.5rem auto;
+  
     button {
       color: white;
       font-size: 1rem;

@@ -18,6 +18,29 @@ export function weightedRandomTile() {
   return weightedIndices[randomIndex];
 }
 
+const CitiesNames = [
+  'Paris',
+  'New York City',
+  'London',
+  'Rome',
+  'Tokyo',
+  'Barcelona',
+  'Istanbul',
+  'Dubai',
+  'Los Angeles',
+  'Bangkok',
+  'Sydney',
+  'Amsterdam',
+  'Venice',
+  'San Francisco',
+  'Prague',
+  'Florence',
+  'Vienna',
+  'Seoul',
+  'Singapore',
+  'Hong Kong',
+];
+
 // Mapping of tile indices to their type
 export const TileType = {
   0: "Empty",
@@ -43,20 +66,31 @@ const Terrain: React.FC<TerrainProps> = ({ x, y, imageIndex, overlayImageIndex, 
   const imageUrl = `/terrain/Layer ${imageIndex}.png`;
   const overlayImageUrl = overlayImageIndex !== undefined ? `/terrain/Layer ${overlayImageIndex}.png` : "";
 
+  if (tileType.toLowerCase() === 'village') {
+    
+  }
+
   return (
     <div>
       {overlayImageIndex !== undefined && (
         <Tippy content={`${overlayTileType}`}>
-        <img
-          src={overlayImageUrl}
-          className={`terrain-overlay ${tileType.toLowerCase()}`}
-          alt={`${tileType}-overlay`}
-          draggable="false"
-        />
+          <img
+            src={overlayImageUrl}
+            className={`terrain-overlay ${tileType.toLowerCase()}`}
+            alt={`${tileType}-overlay`}
+            draggable="false"
+          />
         </Tippy>
       )}
       {imageIndex !== null && (
-        <img src={imageUrl} className={`terrain ${tileType.toLowerCase()}`} alt={tileType} draggable="false" />
+        <>
+          {tileType.toLowerCase() === 'village' ? (
+            <div className="city-header primary-border-with-box-shadow">
+              {CitiesNames[Math.floor(Math.random() * (CitiesNames.length - 0 + 1))]}
+            </div>
+          ) : null}
+          <img src={imageUrl} className={`terrain ${tileType.toLowerCase()}`} alt={tileType} draggable="false" />
+        </>
       )}
       {debug && <DebugCoordinates x={x} y={y} />}
     </div>

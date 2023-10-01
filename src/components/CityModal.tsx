@@ -151,7 +151,7 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
             )}
           </div>
         ) : null}
-        <div className="modal village-modal">
+        <div className="modal city-modal">
           <div onClick={onClose} role="button" className="close-icon">
             <img width="32" src="./icons/close.png" alt="Close" />
           </div>
