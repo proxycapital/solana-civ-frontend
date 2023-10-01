@@ -1,0 +1,102 @@
+.village-modal {
+  position: absolute;
+  top: 106px; // height of header
+  right: 0;
+  width: 25%;
+  height: 100%;
+  overflow-y: scroll;
+  -ms-overflow-style: none;  
+  scrollbar-width: none;
+  
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  .close-icon {
+    display: flex;
+    justify-content: flex-end;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .modal-header {
+    text-align: center;
+    margin-top: -2rem;
+  }
+
+  h3 {
+    text-align: center;
+    font-size: 1.3rem;
+    padding: 0.5rem;
+    margin: 0.5rem 2rem;  
+  }
+
+  h3.units-header {
+    margin-top: 2.5rem;
+  }
+
+  .modal-body {
+    padding: 0 2rem;
+
+    &:last-child {
+      // height of header
+      padding-bottom: 106px;
+    }
+
+    .body-item {
+      display: flex; 
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+      padding: 1rem;
+    
+      .number-of-turns {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        span {
+          font-weight: bold;
+          font-size: 0.9rem;
+          margin-right: 0.25rem;
+        }
+      }
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    .body-item.locked {
+      border: 1px solid #ccc;
+      &:hover {
+        cursor: not-allowed;
+      }
+    }
+  }
+}
+
+.custom-tooltip {
+  padding: 0 0.5rem;
+  margin-bottom: 1rem;
+
+  p.header {
+    font-weight: bold;
+    font-size: 1rem;
+  }
+
+  span {
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+
+    img {
+      margin-left: 0.5rem;
+    }
+  }
+}
