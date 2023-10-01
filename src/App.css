@@ -244,11 +244,24 @@ img.upgraded-tile {
   position: relative;
 }
 
+.game-tile img.terrain-overlay {
+  position: absolute;
+  z-index: 1;
+  top: 7px;
+  left: 7px;
+  width: 90%;
+  height: 90%;
+  border: 2px solid #fff;
+  border-radius: 90px;
+}
+
 .game-tile img.terrain.village {
   z-index: 1;
   width: 135%;
   top: -15px;
   left: -15px;
+  border: 2px solid #fff;
+  border-radius: 100px;
 }
 
 .game-tile img.terrain.village:hover {

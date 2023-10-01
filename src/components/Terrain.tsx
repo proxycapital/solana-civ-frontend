@@ -1,9 +1,11 @@
-import React from 'react';
+import React from "react";
+import Tippy from "@tippyjs/react";
 
 interface TerrainProps {
   x: number;
   y: number;
   imageIndex: number;
+  overlayImageIndex?: number;
   isInRange: boolean;
   debug: boolean;
 }
@@ -11,9 +13,7 @@ interface TerrainProps {
 // Weighted random index selection for terrain tile images
 // Used to initialize the map that will be stored in PDA
 export function weightedRandomTile() {
-  const weightedIndices = [
-    1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 4, 4, 4, 4, 5, 6, 7, 8, 8, 8
-  ];
+  const weightedIndices = [1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 4, 4, 4, 4, 5, 6, 7, 8, 8, 8];
   const randomIndex = Math.floor(Math.random() * weightedIndices.length);
   return weightedIndices[randomIndex];
 }
@@ -31,16 +31,31 @@ export const TileType = {
   8: "Plains",
   9: "Plains",
   10: "Village",
-  11: "upgraded-tile",
+  11: "Stone Quarry",
+  12: "Farm",
+  13: "Iron Mine",
+  14: "Lumber Mill",
 };
 
-const Terrain: React.FC<TerrainProps> = ({ x, y, imageIndex, isInRange, debug }) => {
+const Terrain: React.FC<TerrainProps> = ({ x, y, imageIndex, overlayImageIndex, isInRange, debug }) => {
   const tileType = TileType[imageIndex as keyof typeof TileType];
+  const overlayTileType = TileType[overlayImageIndex as keyof typeof TileType];
   const imageUrl = `/terrain/Layer ${imageIndex}.png`;
+  const overlayImageUrl = overlayImageIndex !== undefined ? `/terrain/Layer ${overlayImageIndex}.png` : "";
 
   return (
     <div>
-      { imageIndex !== null && (
+      {overlayImageIndex !== undefined && (
+        <Tippy content={`${overlayTileType}`}>
+        <img
+          src={overlayImageUrl}
+          className={`terrain-overlay ${tileType.toLowerCase()}`}
+          alt={`${tileType}-overlay`}
+          draggable="false"
+        />
+        </Tippy>
+      )}
+      {imageIndex !== null && (
         <img src={imageUrl} className={`terrain ${tileType.toLowerCase()}`} alt={tileType} draggable="false" />
       )}
       {debug && <DebugCoordinates x={x} y={y} />}
@@ -49,7 +64,7 @@ const Terrain: React.FC<TerrainProps> = ({ x, y, imageIndex, isInRange, debug })
 };
 
 // Helper function to display tile coordinates when debug is true
-const DebugCoordinates: React.FC<{ x: number, y: number }> = ({ x, y }) => (
+const DebugCoordinates: React.FC<{ x: number; y: number }> = ({ x, y }) => (
   <div className="tile-coordinate">{`(${x}, ${y})`}</div>
 );
 

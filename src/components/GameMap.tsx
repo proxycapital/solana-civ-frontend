@@ -21,6 +21,7 @@ interface Tile {
   x: number;
   y: number;
   imageIndex: number;
+  overlayImageIndex?: number;
   type: string;
 }
 
@@ -95,14 +96,23 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
             continue;
           }
           // if there is an upgraded tile at this coordinate, render it
+          let overlayImageIndex;
           if (upgradedCoordinates.has(`${col},${row},stoneQuarry`)) {
-            newTiles.push({ x: col, y: row, imageIndex: 11, type: "StoneQuarry" });
-            continue;
+            overlayImageIndex = 11;
+          }
+          if (upgradedCoordinates.has(`${col},${row},cornField`)) {
+            overlayImageIndex = 12;
+          }
+          if (upgradedCoordinates.has(`${col},${row},ironMine`)) {
+            overlayImageIndex = 13;
+          }
+          if (upgradedCoordinates.has(`${col},${row},timberCamp`)) {
+            overlayImageIndex = 14;
           }
 
           const tile = map[index];
           if (tile) {
-            newTiles.push({ x: col, y: row, imageIndex: tile, type: TileType[tile as keyof typeof TileType] });
+            newTiles.push({ x: col, y: row, imageIndex: tile, overlayImageIndex, type: TileType[tile as keyof typeof TileType] });
           } else {
             console.error("No tile at", col, row);
           }
@@ -345,6 +355,7 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
                 x={col}
                 y={row}
                 imageIndex={currentTile.imageIndex}
+                overlayImageIndex={currentTile.overlayImageIndex}
                 isInRange={isInRangeForAnyUnit}
                 debug={debug}
               />
