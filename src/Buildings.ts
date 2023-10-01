@@ -7,7 +7,7 @@ export type BuildingType = {
   requirement?: string,
 }
 
-export const Buildings: BuildingType[] = [
+export const AllBuildings: BuildingType[] = [
   {
     "type": "barracks",
     "description": "Produces warriors",

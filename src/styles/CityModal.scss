@@ -1,8 +1,47 @@
+.production-queue-modal {
+  position: absolute;
+  top: 106px;
+  left: 0;
+  padding: 1rem;
+
+  h3 {
+    text-align: center;
+    margin-top: -0.5rem;
+    padding: 1rem;
+  }
+
+  .production-item {
+    padding: 1rem;
+    margin-bottom: 0.25rem;
+
+    .body-item {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+
+      p {
+        margin-left: 1.5rem;
+        margin-right: 1.5rem;
+      }
+
+      .remove-button {
+        padding: 0.5rem;
+        border-color: crimson;
+
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
+
 .village-modal {
   position: absolute;
   top: 106px; // height of header
   right: 0;
-  width: 25%;
+  width: 30%;
   height: 100%;
   overflow-y: scroll;
   -ms-overflow-style: none;  
@@ -19,14 +58,23 @@
   .close-icon {
     display: flex;
     justify-content: flex-end;
+    z-index: 4;
     &:hover {
       cursor: pointer;
     }
   }
 
-  .modal-header {
-    text-align: center;
-    margin-top: -2rem;
+  .modal-header-tabs {
+    width: fit-content;
+    margin-top: -1rem;
+    margin-bottom: 2rem;
+    transform: translateX(25%);
+    
+    button {
+      color: white;
+      font-size: 1rem;
+      font-weight: bold;
+    }
   }
 
   h3 {

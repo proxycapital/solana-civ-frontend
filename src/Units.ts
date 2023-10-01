@@ -7,7 +7,7 @@ export type UnitType = {
   requirement?: string,
 }
 
-export const Units: UnitType[] = [
+export const AllUnits: UnitType[] = [
   {
     "type": "settler",
     "description": "",
