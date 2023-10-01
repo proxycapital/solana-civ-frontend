@@ -81,6 +81,11 @@ export const getPlayer = async (provider: AnchorProvider | undefined, program: P
   const cities = playerAccount ? playerAccount.cities : [];
   const tiles = playerAccount ? playerAccount.tiles : [];
 
+  // calculate "science" yield from all cities
+  balances.science = cities.reduce((acc: number, city: {scienceYield: number}) => {
+    return acc + city.scienceYield;
+  }, 0);
+
   try {
     const balance = await connection.getBalance(provider.publicKey);
     balances.sol = balance ? Number(balance) / 1e9 : 0;

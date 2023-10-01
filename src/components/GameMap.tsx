@@ -318,11 +318,13 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
           // @todo: refactor this to be more generic
           let resourceAvailable;
           if (currentTile.type === "Forest") {
-            resourceAvailable = "lumber";
+            resourceAvailable = "wood";
           } else if (currentTile.type === "Field") {
             resourceAvailable = "food";
           } else if (currentTile.type === "Rocks") {
             resourceAvailable = "stone";
+          } else if (currentTile.type === "Iron") {
+            resourceAvailable = "iron";
           }
 
           return (
