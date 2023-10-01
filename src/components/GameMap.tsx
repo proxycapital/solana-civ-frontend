@@ -5,7 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import Terrain, { TileType } from "./Terrain";
 import Unit from "./Unit";
 import UnitInfoWindow from "./UnitInfoWindow";
-import VillageModal from "./VillageModal";
+import CityModal from "./CityModal";
 import { useGameState } from "../context/GameStateContext";
 import { useWorkspace } from "../context/AnchorContext";
 import { useSound } from "../context/SoundContext";
@@ -280,7 +280,7 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
 
   return (
     <div className="game-container" ref={containerRef}>
-      <VillageModal
+      <CityModal
         show={showVillageModal}
         onClose={() => setShowVillageModal(false)}
         cityId={selectedCityId}

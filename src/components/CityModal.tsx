@@ -12,7 +12,7 @@ import { addToProductionQueue } from '../utils/solanaUtils';
 import { Units } from '../Units'
 import { Buildings, BuildingType } from '../Buildings'
 
-interface VillageModalProps {
+interface CityModalProps {
   show: boolean;
   onClose: () => void;
   cityId: number | null;
@@ -39,7 +39,7 @@ const CustomTooltip: React.FC<BuildingType> = ({ description, label, requirement
   )
 }
 
-const VillageModal: React.FC<VillageModalProps> = ({ cityId, show, onClose }) => {
+const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
   const { program, provider } = useWorkspace();
   const { playSound } = useSound();
   const { fetchPlayerState, cities } = useGameState();
@@ -124,4 +124,4 @@ const VillageModal: React.FC<VillageModalProps> = ({ cityId, show, onClose }) =>
   );
 };
 
-export default VillageModal;
+export default CityModal;
