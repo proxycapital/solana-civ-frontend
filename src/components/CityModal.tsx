@@ -35,7 +35,7 @@ const CustomTooltip: React.FC<BuildingType & { selectedTab: number }> = ({
             {selectedTab === 0 ? (
               <>
                 Cost: 240
-                <img src="./icons/gear.png" alt="gear" width="24" />
+                <img src="./icons/hammer.png" alt="gear" width="24" />
               </>
             ) : (
               <>
@@ -63,7 +63,10 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
   useEffect(() => {
     if (!cityData) return
     let buildingsToBuild = AllBuildings.filter((building1) => !cityData?.buildings.some((building2: any) => building1.type === Object.keys(building2)[0]))
-    buildingsToBuild = buildingsToBuild.filter((building1) => !cityData?.productionQueue.some((building2: any) => building1.type === Object.keys(building2["building"]["0"])[0]))
+    buildingsToBuild = buildingsToBuild.filter((building1) => !cityData?.productionQueue.some((building2: any) => {
+      const building2Type = building2["building"] ? Object.keys(building2["building"]["0"])[0] : null 
+      return building1.type === building2Type
+    }))
 
     setBuildingsToBuild(buildingsToBuild);
   }, [cityData]);
@@ -84,8 +87,11 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
         playSound("construction");
         console.log(`Add to production queue TX: https://explorer.solana.com/tx/${signature}?cluster=devnet`);
       }
-    } catch (error) {
+    } catch (error: any) {
       console.log("Error adding to production queue: ", error);
+      if (error.message.includes("QueueFull")) {
+        toast.error("Production queue is currently at full capacity.")
+      }
     }
     await fetchPlayerState();
   };
