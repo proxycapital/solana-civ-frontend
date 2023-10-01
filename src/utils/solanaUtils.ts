@@ -216,6 +216,27 @@ export const initializeGame = async (provider: AnchorProvider, program: Program<
   }
 };
 
+export const addToProductionQueue = async (provider: AnchorProvider, program: Program<Solciv>, cityId: number, item: any) => {
+  const [gameKey] = anchor.web3.PublicKey.findProgramAddressSync(
+    [Buffer.from("GAME"), provider.publicKey.toBuffer()],
+    program.programId
+  );
+
+  const [playerKey] = anchor.web3.PublicKey.findProgramAddressSync(
+    [Buffer.from("PLAYER"), gameKey.toBuffer(), provider.publicKey.toBuffer()],
+    program.programId
+  );
+
+  const accounts = {
+    game: gameKey,
+    player: provider.publicKey,
+    playerAccount: playerKey,
+    systemProgram: anchor.web3.SystemProgram.programId,
+  };
+
+  return program.methods.addToProductionQueue(cityId, item).accounts(accounts).rpc();
+}
+
 export const foundCity = async (provider: AnchorProvider, program: Program<Solciv>, unit: any) => {
   const [gameKey] = anchor.web3.PublicKey.findProgramAddressSync(
     [Buffer.from("GAME"), provider.publicKey.toBuffer()],

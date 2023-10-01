@@ -3,13 +3,19 @@ import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Tippy from '@tippyjs/react';
+import { toast } from "react-toastify";
 
+import { useGameState } from "../context/GameStateContext";
+import { useSound } from "../context/SoundContext";
+import { useWorkspace } from "../context/AnchorContext";
+import { addToProductionQueue } from '../utils/solanaUtils';
 import { Units } from '../Units'
 import { Buildings, BuildingType } from '../Buildings'
 
 interface VillageModalProps {
   show: boolean;
   onClose: () => void;
+  cityId: number | null;
 }
 
 
@@ -33,7 +39,31 @@ const CustomTooltip: React.FC<BuildingType> = ({ description, label, requirement
   )
 }
 
-const VillageModal: React.FC<VillageModalProps> = ({ show, onClose }) => {
+const VillageModal: React.FC<VillageModalProps> = ({ cityId, show, onClose }) => {
+  const { program, provider } = useWorkspace();
+  const { playSound } = useSound();
+  const { fetchPlayerState, cities } = useGameState();
+  const cityData = cities.find((city) => city.cityId === cityId);
+
+  const handleAddToProductionQueue = async (item: BuildingType) => {
+    const cityId = 0
+    try {
+      const tx = addToProductionQueue(provider!, program!, cityId, { building: { "0": { [item.type]: {} } } });
+      const signature = await toast.promise(tx, {
+        pending: "Adding to production queue",
+        success: "Added to production queue",
+        error: "Error adding to production queue",
+      });
+      if (typeof signature === "string") {
+        playSound("construction");
+        console.log(`Add to production queue TX: https://explorer.solana.com/tx/${signature}?cluster=devnet`);
+      }
+    } catch (error) {
+      console.log("Error adding to production queue: ", error);
+    }
+    await fetchPlayerState();
+  };
+
   return (
     <Modal
       open={show}
@@ -56,7 +86,10 @@ const VillageModal: React.FC<VillageModalProps> = ({ show, onClose }) => {
               placement="left"
               content={<CustomTooltip {...building} />}
             >
-              <Box className={`body-item ${building.requirement ? 'locked' : ''} primary-border-with-box-shadow`}>
+              <Box
+                onClick={() => handleAddToProductionQueue(building)}
+                className={`body-item ${building.requirement ? 'locked' : ''} primary-border-with-box-shadow`}
+              >
                 <img src={`/${building.type}.png`} alt={building.label} width="50" />
                 <Typography variant="body1">{building.label}</Typography>
                 <div className="number-of-turns">

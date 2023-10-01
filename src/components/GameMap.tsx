@@ -35,6 +35,7 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
 
   const [tiles, setTiles] = useState([] as Tile[]);
   const [units, setUnits] = useState<Unit[]>(allUnits);
+  const [selectedCityId, setSelectedCity] = useState<number | null>(null);
 
   interface Unit {
     unitId: number;
@@ -89,7 +90,8 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
           const index = row * 20 + col;
           // if there is a city at this coordinate, render it
           if (cityCoordinates.has(`${col},${row}`)) {
-            newTiles.push({ x: col, y: row, imageIndex: 10, type: "Village" });
+            const cityData = cities.find((city) => city.x === col && city.y === row)
+            newTiles.push({ x: col, y: row, imageIndex: 10, type: "Village", cityId: cityData.cityId });
             continue;
           }
           // if there is an upgraded tile at this coordinate, render it
@@ -267,9 +269,10 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
   };
 
   const handleTileClick = (col: number, row: number) => {
-    const tile = tiles.find((t) => t.x === col && t.y === row);
+    const tile: any = tiles.find((t) => t.x === col && t.y === row);
     if (tile && tile.type === "Village") {
       setShowVillageModal(true);
+      setSelectedCity(tile.cityId);
     }
   };
 
@@ -280,6 +283,7 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
       <VillageModal
         show={showVillageModal}
         onClose={() => setShowVillageModal(false)}
+        cityId={selectedCityId}
       />
       {selectedUnit && (
         <UnitInfoWindow
