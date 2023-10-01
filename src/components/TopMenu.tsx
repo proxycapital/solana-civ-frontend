@@ -53,28 +53,24 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
       >
         <Toolbar style={{ display: "flex", justifyContent: "space-between" }}>
           <div className="balance-container">
-            <Tippy content="Gold">
+            {Object.keys(resources).map((resourceKey) => {
+              const displayName = resourceKey.charAt(0).toUpperCase() + resourceKey.slice(1);
+              const imagePath = `/icons/${resourceKey}.png`;
+              const value = resources[resourceKey];
+
+              return (
+                <Tippy key={resourceKey} content={displayName}>
+                  <div className="balance-box">
+                    <img src={imagePath} width="32" alt={displayName} />
+                    {resourceKey === "sol" ? value.toFixed(2) : value}
+                  </div>
+                </Tippy>
+              );
+            })}
+            <Tippy key="gems" content="Gems - can be withdrawn to a personal wallet">
               <div className="balance-box">
-                <img src="/icons/gold.png" width="32" alt="Gold" />
-                {resources.gold}
-              </div>
-            </Tippy>
-            <Tippy content="Food">
-              <div className="balance-box">
-                <img src="/icons/food.png" width="32" alt="Food" />
-                {resources.food}
-              </div>
-            </Tippy>
-            <Tippy content="Wood">
-              <div className="balance-box">
-                <img src="/icons/lumber.png" width="32" alt="Lumber" />
-                {resources.wood}
-              </div>
-            </Tippy>
-            <Tippy content="SOL">
-              <div className="balance-box">
-                <img src="/icons/solana.png" width="32" alt="SOL" />
-                {resources.sol ? resources.sol.toFixed(2) : 0}
+                <img src="/icons/gems.png" width="32" alt="Gems" />
+                {resources.gems}
               </div>
             </Tippy>
           </div>

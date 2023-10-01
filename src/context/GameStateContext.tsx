@@ -13,7 +13,9 @@ type Resources = {
   wood: number;
   stone: number;
   iron: number;
+  science: number;
   sol: number;
+  [key: string]: number | 0;
 };
 
 interface GameStateContextType {

@@ -21,7 +21,7 @@ export function weightedRandomTile() {
 // Mapping of tile indices to their type
 export const TileType = {
   0: "Empty",
-  1: "Plains",
+  1: "Iron",
   2: "Forest",
   3: "Plains",
   4: "Plains",
