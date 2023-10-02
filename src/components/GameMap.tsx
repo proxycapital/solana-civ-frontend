@@ -37,7 +37,7 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
   const { program, provider } = useWorkspace();
   const { playSound } = useSound();
 
-  const [showLossModal, setShowLossModal] = useState(false);
+  const [showGameoverModal, setShowGameoverModal] = useState(false);
   const [tiles, setTiles] = useState([] as Tile[]);
   const [units, setUnits] = useState<Unit[]>(allUnits);
   const [selectedCityId, setSelectedCity] = useState<number | null>(null);
@@ -66,8 +66,8 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
   }, [allUnits, npcUnits]);
 
   useEffect(() => {
-    if (game.defeat === true) {
-      setShowLossModal(true);
+    if (game.defeat === true || game.victory === true) {
+      setShowGameoverModal(true);
     }
   }, [game]);
 
@@ -127,6 +127,7 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
               imageIndex: 15,
               type: "NPC Village",
               cityName: npcCityData.name,
+              health: npcCityData.health,
               cityId: npcCityData.cityId,
             });
             continue;
@@ -197,7 +198,7 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
     // const withinDistance = Math.abs(x1 - x2) <= distance && Math.abs(y1 - y2) <= distance;
     const withinDistance = Math.abs(x1 - x2) + Math.abs(y1 - y2) <= distance;
     const targetTile = tiles.find((t) => t.x === x2 && t.y === y2);
-    const blockedTileTypes = ["Village", "Mountains"];
+    const blockedTileTypes = ["Village", "NPC Village"];
     if (targetTile && blockedTileTypes.includes(targetTile.type)) {
       return false;
     }
@@ -280,21 +281,59 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
     await fetchNpcs();
   };
 
+  const attackCity = async (attackingUnit: Unit, defendingCity: {cityId: number}) => {
+    const [gameKey] = anchor.web3.PublicKey.findProgramAddressSync(
+      [Buffer.from("GAME"), provider!.publicKey.toBuffer()],
+      program!.programId
+    );
+    const [playerKey] = anchor.web3.PublicKey.findProgramAddressSync(
+      [Buffer.from("PLAYER"), gameKey.toBuffer(), provider!.publicKey.toBuffer()],
+      program!.programId
+    );
+    const [npcKey] = anchor.web3.PublicKey.findProgramAddressSync(
+      [Buffer.from("NPC"), gameKey.toBuffer()],
+      program!.programId
+    );
+    const accounts = {
+      game: gameKey,
+      playerAccount: playerKey,
+      npcAccount: npcKey,
+      player: provider!.publicKey,
+    };
+    try {
+      const tx = program!.methods.attackCity(attackingUnit.unitId, defendingCity.cityId).accounts(accounts).rpc();
+      const signature = await toast.promise(tx, {
+        pending: "Attacking barbarian village...",
+        success: "Barbarian village attacked",
+        error: "Failed to attack barbarian village",
+      });
+      console.log(`Attack TX: https://explorer.solana.com/tx/${signature}?cluster=devnet`);
+      logMessage(`Unit #${attackingUnit.unitId} attacked barbarian village`);
+      playSound("attack");
+    } catch (error) {
+      console.error("Failed to attack village", error);
+    }
+    await fetchPlayerState();
+    await fetchNpcs();
+  };
+
   const canAttack = (unit: Unit) => {
-    // @todo: move this to Unit interface
-    const attackableUnitTypes = ["warrior", "swordsman", "archer"];
-    return attackableUnitTypes.includes(unit.type);
+    // @todo: move this to Unit class
+    const cannotAttack = ["settler", "builder"];
+    return !cannotAttack.includes(unit.type);
   };
 
   const unitAction = async (x: number, y: number, type: string) => {
     const selectedUnit = units.find((unit) => unit.isSelected);
     const targetUnit = units.find((unit) => unit.x === x && unit.y === y);
+    const targetNpcCity = npcCities.find((city) => city.x === x && city.y === y);
 
     // If the target tile is empty, and the new coords
     // within the selected unit's movement range, move the unit.
     if (
       selectedUnit &&
       !targetUnit &&
+      !targetNpcCity &&
       isWithinDistance(selectedUnit.x, selectedUnit.y, x, y, selectedUnit.movementRange)
     ) {
       return moveUnit(selectedUnit, x, y);
@@ -307,6 +346,14 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
         toast.error("Unit has no moves left");
       } else {
         return attackUnit(selectedUnit, targetUnit);
+      }
+    }
+
+    if (selectedUnit && targetNpcCity && canAttack(selectedUnit)) {
+      if (selectedUnit.movementRange === 0) {
+        toast.error("Unit has no moves left");
+      } else {
+        return attackCity(selectedUnit, targetNpcCity);
       }
     }
 
@@ -415,8 +462,8 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
         pauseOnHover
         theme="dark"
       />
-      {showLossModal && (
-        <GameOverModal isOpen={showLossModal} onClose={() => { setShowLossModal(false); }} />
+      {showGameoverModal && (
+        <GameOverModal isOpen={showGameoverModal} onClose={() => { setShowGameoverModal(false); }} />
       )}
     </div>
   );

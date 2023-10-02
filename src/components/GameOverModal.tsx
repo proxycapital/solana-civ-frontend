@@ -4,6 +4,7 @@ import { Box } from "@mui/system";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import * as anchor from "@coral-xyz/anchor";
+import { useGameState } from "../context/GameStateContext";
 import { useWorkspace } from "../context/AnchorContext";
 
 interface GameOverModalProps {
@@ -13,6 +14,7 @@ interface GameOverModalProps {
   
   const GameOverModal: React.FC<GameOverModalProps> = ({ isOpen, onClose }) => {
     const { program, provider } = useWorkspace();
+    const { game } = useGameState();
 
     const handleEndGame = async() => {
         try {
@@ -53,10 +55,10 @@ interface GameOverModalProps {
       >
         <Box className="modal-end-game">
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            You Lost!
+            { game.defeat ? 'You Lost!' : 'You Won!' }
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            It seems you don’t have any more cities and units left.
+            { game.defeat ? "It seems you don’t have any more cities and units left." : "You have defeated all the enemy units and destroyed all the cities!" }
           </Typography>
           <Button onClick={handleEndGame} variant="contained" color="error" sx={{ mt: 2 }}>
             End Game

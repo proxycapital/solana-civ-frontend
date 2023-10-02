@@ -1,1785 +1,1867 @@
 export type Solciv = {
-  version: "0.1.0";
-  name: "solciv";
-  instructions: [
+  "version": "0.1.0",
+  "name": "solciv",
+  "instructions": [
     {
-      name: "initializeGame";
-      accounts: [
+      "name": "initializeGame",
+      "accounts": [
         {
-          name: "game";
-          isMut: true;
-          isSigner: false;
+          "name": "game",
+          "isMut": true,
+          "isSigner": false
         },
         {
-          name: "player";
-          isMut: true;
-          isSigner: true;
+          "name": "player",
+          "isMut": true,
+          "isSigner": true
         },
         {
-          name: "systemProgram";
-          isMut: false;
-          isSigner: false;
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
         }
-      ];
-      args: [
+      ],
+      "args": [
         {
-          name: "map";
-          type: {
-            array: ["u8", 400];
-          };
+          "name": "map",
+          "type": {
+            "array": [
+              "u8",
+              400
+            ]
+          }
         }
-      ];
+      ]
     },
     {
-      name: "initializePlayer";
-      accounts: [
+      "name": "initializePlayer",
+      "accounts": [
         {
-          name: "game";
-          isMut: false;
-          isSigner: false;
+          "name": "game",
+          "isMut": false,
+          "isSigner": false
         },
         {
-          name: "playerAccount";
-          isMut: true;
-          isSigner: false;
+          "name": "playerAccount",
+          "isMut": true,
+          "isSigner": false
         },
         {
-          name: "player";
-          isMut: true;
-          isSigner: true;
+          "name": "player",
+          "isMut": true,
+          "isSigner": true
         },
         {
-          name: "systemProgram";
-          isMut: false;
-          isSigner: false;
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
         }
-      ];
-      args: [];
+      ],
+      "args": []
     },
     {
-      name: "initializeNpc";
-      accounts: [
+      "name": "initializeNpc",
+      "accounts": [
         {
-          name: "game";
-          isMut: false;
-          isSigner: false;
+          "name": "game",
+          "isMut": false,
+          "isSigner": false
         },
         {
-          name: "npcAccount";
-          isMut: true;
-          isSigner: false;
+          "name": "npcAccount",
+          "isMut": true,
+          "isSigner": false
         },
         {
-          name: "player";
-          isMut: true;
-          isSigner: true;
+          "name": "player",
+          "isMut": true,
+          "isSigner": true
         },
         {
-          name: "systemProgram";
-          isMut: false;
-          isSigner: false;
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
         }
-      ];
-      args: [];
+      ],
+      "args": []
     },
     {
-      name: "moveUnit";
-      accounts: [
+      "name": "moveUnit",
+      "accounts": [
         {
-          name: "playerAccount";
-          isMut: true;
-          isSigner: false;
+          "name": "playerAccount",
+          "isMut": true,
+          "isSigner": false
         },
         {
-          name: "player";
-          isMut: true;
-          isSigner: true;
+          "name": "player",
+          "isMut": true,
+          "isSigner": true
         }
-      ];
-      args: [
+      ],
+      "args": [
         {
-          name: "unitId";
-          type: "u32";
+          "name": "unitId",
+          "type": "u32"
         },
         {
-          name: "x";
-          type: "u8";
+          "name": "x",
+          "type": "u8"
         },
         {
-          name: "y";
-          type: "u8";
+          "name": "y",
+          "type": "u8"
         }
-      ];
+      ]
     },
     {
-      name: "foundCity";
-      accounts: [
+      "name": "foundCity",
+      "accounts": [
         {
-          name: "game";
-          isMut: true;
-          isSigner: false;
+          "name": "game",
+          "isMut": true,
+          "isSigner": false
         },
         {
-          name: "playerAccount";
-          isMut: true;
-          isSigner: false;
+          "name": "playerAccount",
+          "isMut": true,
+          "isSigner": false
         },
         {
-          name: "player";
-          isMut: true;
-          isSigner: true;
+          "name": "player",
+          "isMut": true,
+          "isSigner": true
         },
         {
-          name: "systemProgram";
-          isMut: false;
-          isSigner: false;
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
         }
-      ];
-      args: [
+      ],
+      "args": [
         {
-          name: "x";
-          type: "u8";
+          "name": "x",
+          "type": "u8"
         },
         {
-          name: "y";
-          type: "u8";
+          "name": "y",
+          "type": "u8"
         },
         {
-          name: "unitId";
-          type: "u32";
+          "name": "unitId",
+          "type": "u32"
         },
         {
-          name: "name";
-          type: "string";
+          "name": "name",
+          "type": "string"
         }
-      ];
+      ]
     },
     {
-      name: "addToProductionQueue";
-      accounts: [
+      "name": "addToProductionQueue",
+      "accounts": [
         {
-          name: "playerAccount";
-          isMut: true;
-          isSigner: false;
+          "name": "playerAccount",
+          "isMut": true,
+          "isSigner": false
         },
         {
-          name: "player";
-          isMut: true;
-          isSigner: true;
+          "name": "player",
+          "isMut": true,
+          "isSigner": true
         }
-      ];
-      args: [
+      ],
+      "args": [
         {
-          name: "cityId";
-          type: "u32";
+          "name": "cityId",
+          "type": "u32"
         },
         {
-          name: "item";
-          type: {
-            defined: "ProductionItem";
-          };
+          "name": "item",
+          "type": {
+            "defined": "ProductionItem"
+          }
         }
-      ];
+      ]
     },
     {
-      name: "upgradeTile";
-      accounts: [
+      "name": "upgradeTile",
+      "accounts": [
         {
-          name: "game";
-          isMut: true;
-          isSigner: false;
+          "name": "game",
+          "isMut": true,
+          "isSigner": false
         },
         {
-          name: "playerAccount";
-          isMut: true;
-          isSigner: false;
+          "name": "playerAccount",
+          "isMut": true,
+          "isSigner": false
         },
         {
-          name: "player";
-          isMut: true;
-          isSigner: true;
+          "name": "player",
+          "isMut": true,
+          "isSigner": true
         }
-      ];
-      args: [
+      ],
+      "args": [
         {
-          name: "x";
-          type: "u8";
+          "name": "x",
+          "type": "u8"
         },
         {
-          name: "y";
-          type: "u8";
+          "name": "y",
+          "type": "u8"
         },
         {
-          name: "unitId";
-          type: "u32";
+          "name": "unitId",
+          "type": "u32"
         }
-      ];
+      ]
     },
     {
-      name: "attackUnit";
-      accounts: [
+      "name": "attackUnit",
+      "accounts": [
         {
-          name: "game";
-          isMut: true;
-          isSigner: false;
+          "name": "game",
+          "isMut": true,
+          "isSigner": false
         },
         {
-          name: "playerAccount";
-          isMut: true;
-          isSigner: false;
+          "name": "playerAccount",
+          "isMut": true,
+          "isSigner": false
         },
         {
-          name: "npcAccount";
-          isMut: true;
-          isSigner: false;
+          "name": "npcAccount",
+          "isMut": true,
+          "isSigner": false
         },
         {
-          name: "player";
-          isMut: true;
-          isSigner: true;
+          "name": "player",
+          "isMut": true,
+          "isSigner": true
         }
-      ];
-      args: [
+      ],
+      "args": [
         {
-          name: "attackerId";
-          type: "u32";
+          "name": "attackerId",
+          "type": "u32"
         },
         {
-          name: "defenderId";
-          type: "u32";
+          "name": "defenderId",
+          "type": "u32"
         }
-      ];
+      ]
     },
     {
-      name: "endTurn";
-      accounts: [
+      "name": "attackCity",
+      "accounts": [
         {
-          name: "game";
-          isMut: true;
-          isSigner: false;
+          "name": "game",
+          "isMut": true,
+          "isSigner": false
         },
         {
-          name: "playerAccount";
-          isMut: true;
-          isSigner: false;
+          "name": "playerAccount",
+          "isMut": true,
+          "isSigner": false
         },
         {
-          name: "npcAccount";
-          isMut: true;
-          isSigner: false;
+          "name": "npcAccount",
+          "isMut": true,
+          "isSigner": false
         },
         {
-          name: "player";
-          isMut: true;
-          isSigner: true;
+          "name": "player",
+          "isMut": true,
+          "isSigner": true
         }
-      ];
-      args: [];
+      ],
+      "args": [
+        {
+          "name": "attackerId",
+          "type": "u32"
+        },
+        {
+          "name": "cityId",
+          "type": "u32"
+        }
+      ]
     },
     {
-      name: "closeGame";
-      accounts: [
+      "name": "endTurn",
+      "accounts": [
         {
-          name: "game";
-          isMut: true;
-          isSigner: false;
+          "name": "game",
+          "isMut": true,
+          "isSigner": false
         },
         {
-          name: "playerAccount";
-          isMut: true;
-          isSigner: false;
+          "name": "playerAccount",
+          "isMut": true,
+          "isSigner": false
         },
         {
-          name: "npcAccount";
-          isMut: true;
-          isSigner: false;
+          "name": "npcAccount",
+          "isMut": true,
+          "isSigner": false
         },
         {
-          name: "player";
-          isMut: true;
-          isSigner: true;
+          "name": "player",
+          "isMut": true,
+          "isSigner": true
         }
-      ];
-      args: [];
+      ],
+      "args": []
+    },
+    {
+      "name": "closeGame",
+      "accounts": [
+        {
+          "name": "game",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "playerAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "npcAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "player",
+          "isMut": true,
+          "isSigner": true
+        }
+      ],
+      "args": []
     }
-  ];
-  accounts: [
+  ],
+  "accounts": [
     {
-      name: "Game";
-      type: {
-        kind: "struct";
-        fields: [
+      "name": "Game",
+      "type": {
+        "kind": "struct",
+        "fields": [
           {
-            name: "player";
-            type: "publicKey";
+            "name": "player",
+            "type": "publicKey"
           },
           {
-            name: "npc";
-            type: "publicKey";
+            "name": "npc",
+            "type": "publicKey"
           },
           {
-            name: "turn";
-            type: "u32";
+            "name": "turn",
+            "type": "u32"
           },
           {
-            name: "defeat";
-            type: "bool";
+            "name": "defeat",
+            "type": "bool"
           },
           {
-            name: "victory";
-            type: "bool";
+            "name": "victory",
+            "type": "bool"
           },
           {
-            name: "map";
-            type: {
-              array: ["u8", 400];
-            };
+            "name": "map",
+            "type": {
+              "array": [
+                "u8",
+                400
+              ]
+            }
           }
-        ];
-      };
+        ]
+      }
     },
     {
-      name: "Player";
-      type: {
-        kind: "struct";
-        fields: [
+      "name": "Player",
+      "type": {
+        "kind": "struct",
+        "fields": [
           {
-            name: "game";
-            type: "publicKey";
+            "name": "game",
+            "type": "publicKey"
           },
           {
-            name: "player";
-            type: "publicKey";
+            "name": "player",
+            "type": "publicKey"
           },
           {
-            name: "points";
-            type: "u32";
+            "name": "points",
+            "type": "u32"
           },
           {
-            name: "cities";
-            type: {
-              vec: {
-                defined: "City";
-              };
-            };
-          },
-          {
-            name: "tiles";
-            type: {
-              vec: {
-                defined: "Tile";
-              };
-            };
-          },
-          {
-            name: "units";
-            type: {
-              vec: {
-                defined: "Unit";
-              };
-            };
-          },
-          {
-            name: "resources";
-            type: {
-              defined: "Resources";
-            };
-          },
-          {
-            name: "nextCityId";
-            type: "u32";
-          },
-          {
-            name: "nextUnitId";
-            type: "u32";
-          }
-        ];
-      };
-    },
-    {
-      name: "Npc";
-      type: {
-        kind: "struct";
-        fields: [
-          {
-            name: "game";
-            type: "publicKey";
-          },
-          {
-            name: "player";
-            type: "publicKey";
-          },
-          {
-            name: "cities";
-            type: {
-              vec: {
-                defined: "City";
-              };
-            };
-          },
-          {
-            name: "units";
-            type: {
-              vec: {
-                defined: "Unit";
-              };
-            };
-          },
-          {
-            name: "nextCityId";
-            type: "u32";
-          },
-          {
-            name: "nextUnitId";
-            type: "u32";
-          }
-        ];
-      };
-    }
-  ];
-  types: [
-    {
-      name: "Resources";
-      type: {
-        kind: "struct";
-        fields: [
-          {
-            name: "gold";
-            type: "u32";
-          },
-          {
-            name: "food";
-            type: "u32";
-          },
-          {
-            name: "wood";
-            type: "u32";
-          },
-          {
-            name: "stone";
-            type: "u32";
-          },
-          {
-            name: "iron";
-            type: "u32";
-          }
-        ];
-      };
-    },
-    {
-      name: "City";
-      type: {
-        kind: "struct";
-        fields: [
-          {
-            name: "cityId";
-            type: "u32";
-          },
-          {
-            name: "name";
-            type: "string";
-          },
-          {
-            name: "player";
-            type: "publicKey";
-          },
-          {
-            name: "game";
-            type: "publicKey";
-          },
-          {
-            name: "x";
-            type: "u8";
-          },
-          {
-            name: "y";
-            type: "u8";
-          },
-          {
-            name: "health";
-            type: "u32";
-          },
-          {
-            name: "attack";
-            type: "u32";
-          },
-          {
-            name: "population";
-            type: "u32";
-          },
-          {
-            name: "goldYield";
-            type: "u32";
-          },
-          {
-            name: "foodYield";
-            type: "u32";
-          },
-          {
-            name: "productionYield";
-            type: "u32";
-          },
-          {
-            name: "scienceYield";
-            type: "u32";
-          },
-          {
-            name: "buildings";
-            type: {
-              vec: {
-                defined: "BuildingType";
-              };
-            };
-          },
-          {
-            name: "productionQueue";
-            type: {
-              vec: {
-                defined: "ProductionItem";
-              };
-            };
-          },
-          {
-            name: "accumulatedProduction";
-            type: "u32";
-          }
-        ];
-      };
-    },
-    {
-      name: "Unit";
-      type: {
-        kind: "struct";
-        fields: [
-          {
-            name: "unitId";
-            type: "u32";
-          },
-          {
-            name: "player";
-            type: "publicKey";
-          },
-          {
-            name: "game";
-            type: "publicKey";
-          },
-          {
-            name: "unitType";
-            type: {
-              defined: "UnitType";
-            };
-          },
-          {
-            name: "x";
-            type: "u8";
-          },
-          {
-            name: "y";
-            type: "u8";
-          },
-          {
-            name: "attack";
-            type: "u8";
-          },
-          {
-            name: "health";
-            type: "u8";
-          },
-          {
-            name: "movementRange";
-            type: "u8";
-          },
-          {
-            name: "remainingActions";
-            type: "u8";
-          },
-          {
-            name: "baseProductionCost";
-            type: "u32";
-          },
-          {
-            name: "baseGoldCost";
-            type: "u32";
-          },
-          {
-            name: "baseResourceCost";
-            type: "u32";
-          },
-          {
-            name: "isRanged";
-            type: "bool";
-          },
-          {
-            name: "isAlive";
-            type: "bool";
-          }
-        ];
-      };
-    },
-    {
-      name: "Tile";
-      type: {
-        kind: "struct";
-        fields: [
-          {
-            name: "tileType";
-            type: {
-              defined: "TileType";
-            };
-          },
-          {
-            name: "x";
-            type: "u8";
-          },
-          {
-            name: "y";
-            type: "u8";
-          }
-        ];
-      };
-    },
-    {
-      name: "BuildingError";
-      type: {
-        kind: "enum";
-        variants: [
-          {
-            name: "TileOccupied";
-          }
-        ];
-      };
-    },
-    {
-      name: "TileError";
-      type: {
-        kind: "enum";
-        variants: [
-          {
-            name: "NotUpgradeable";
-          },
-          {
-            name: "TileOccupied";
-          }
-        ];
-      };
-    },
-    {
-      name: "CityError";
-      type: {
-        kind: "enum";
-        variants: [
-          {
-            name: "QueueFull";
-          },
-          {
-            name: "BuildingAlreadyExists";
-          },
-          {
-            name: "CityNotFound";
-          },
-          {
-            name: "AlreadyQueued";
-          },
-          {
-            name: "InsufficientResources";
-          },
-          {
-            name: "InvalidItem";
-          }
-        ];
-      };
-    },
-    {
-      name: "ProductionItem";
-      type: {
-        kind: "enum";
-        variants: [
-          {
-            name: "Unit";
-            fields: [
-              {
-                defined: "UnitType";
+            "name": "cities",
+            "type": {
+              "vec": {
+                "defined": "City"
               }
-            ];
+            }
           },
           {
-            name: "Building";
-            fields: [
-              {
-                defined: "BuildingType";
+            "name": "tiles",
+            "type": {
+              "vec": {
+                "defined": "Tile"
               }
-            ];
+            }
+          },
+          {
+            "name": "units",
+            "type": {
+              "vec": {
+                "defined": "Unit"
+              }
+            }
+          },
+          {
+            "name": "resources",
+            "type": {
+              "defined": "Resources"
+            }
+          },
+          {
+            "name": "nextCityId",
+            "type": "u32"
+          },
+          {
+            "name": "nextUnitId",
+            "type": "u32"
           }
-        ];
-      };
+        ]
+      }
     },
     {
-      name: "BuildingType";
-      type: {
-        kind: "enum";
-        variants: [
+      "name": "Npc",
+      "type": {
+        "kind": "struct",
+        "fields": [
           {
-            name: "Barracks";
+            "name": "game",
+            "type": "publicKey"
           },
           {
-            name: "Wall";
+            "name": "player",
+            "type": "publicKey"
           },
           {
-            name: "WallMedieval";
+            "name": "cities",
+            "type": {
+              "vec": {
+                "defined": "City"
+              }
+            }
           },
           {
-            name: "WallRenaissance";
+            "name": "units",
+            "type": {
+              "vec": {
+                "defined": "Unit"
+              }
+            }
           },
           {
-            name: "WallIndustrial";
+            "name": "nextCityId",
+            "type": "u32"
           },
           {
-            name: "Library";
-          },
-          {
-            name: "School";
-          },
-          {
-            name: "University";
-          },
-          {
-            name: "Observatory";
-          },
-          {
-            name: "Forge";
-          },
-          {
-            name: "Factory";
-          },
-          {
-            name: "EnergyPlant";
-          },
-          {
-            name: "Market";
-          },
-          {
-            name: "Bank";
-          },
-          {
-            name: "StockExchange";
-          },
-          {
-            name: "Granary";
-          },
-          {
-            name: "Mill";
-          },
-          {
-            name: "Bakery";
-          },
-          {
-            name: "Supermarket";
+            "name": "nextUnitId",
+            "type": "u32"
           }
-        ];
-      };
-    },
-    {
-      name: "UnitType";
-      type: {
-        kind: "enum";
-        variants: [
-          {
-            name: "Settler";
-          },
-          {
-            name: "Builder";
-          },
-          {
-            name: "Warrior";
-          },
-          {
-            name: "Archer";
-          },
-          {
-            name: "Swordsman";
-          },
-          {
-            name: "Crossbowman";
-          },
-          {
-            name: "Musketman";
-          },
-          {
-            name: "Rifleman";
-          },
-          {
-            name: "Tank";
-          }
-        ];
-      };
-    },
-    {
-      name: "TileType";
-      type: {
-        kind: "enum";
-        variants: [
-          {
-            name: "LumberMill";
-          },
-          {
-            name: "StoneQuarry";
-          },
-          {
-            name: "Farm";
-          },
-          {
-            name: "IronMine";
-          }
-        ];
-      };
+        ]
+      }
     }
-  ];
-  errors: [
+  ],
+  "types": [
     {
-      code: 6000;
-      name: "UnitNotFound";
-      msg: "Unit with given ID not found";
+      "name": "Resources",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "gold",
+            "type": "u32"
+          },
+          {
+            "name": "food",
+            "type": "u32"
+          },
+          {
+            "name": "wood",
+            "type": "u32"
+          },
+          {
+            "name": "stone",
+            "type": "u32"
+          },
+          {
+            "name": "iron",
+            "type": "u32"
+          }
+        ]
+      }
     },
     {
-      code: 6001;
-      name: "CannotMove";
-      msg: "Unit cannot move this turn";
+      "name": "City",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "cityId",
+            "type": "u32"
+          },
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "player",
+            "type": "publicKey"
+          },
+          {
+            "name": "game",
+            "type": "publicKey"
+          },
+          {
+            "name": "x",
+            "type": "u8"
+          },
+          {
+            "name": "y",
+            "type": "u8"
+          },
+          {
+            "name": "health",
+            "type": "u32"
+          },
+          {
+            "name": "attack",
+            "type": "u32"
+          },
+          {
+            "name": "population",
+            "type": "u32"
+          },
+          {
+            "name": "goldYield",
+            "type": "u32"
+          },
+          {
+            "name": "foodYield",
+            "type": "u32"
+          },
+          {
+            "name": "productionYield",
+            "type": "u32"
+          },
+          {
+            "name": "scienceYield",
+            "type": "u32"
+          },
+          {
+            "name": "buildings",
+            "type": {
+              "vec": {
+                "defined": "BuildingType"
+              }
+            }
+          },
+          {
+            "name": "productionQueue",
+            "type": {
+              "vec": {
+                "defined": "ProductionItem"
+              }
+            }
+          },
+          {
+            "name": "accumulatedProduction",
+            "type": "u32"
+          }
+        ]
+      }
     },
     {
-      code: 6002;
-      name: "OutOfMovementRange";
-      msg: "Out of movement range";
+      "name": "Unit",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "unitId",
+            "type": "u32"
+          },
+          {
+            "name": "player",
+            "type": "publicKey"
+          },
+          {
+            "name": "game",
+            "type": "publicKey"
+          },
+          {
+            "name": "unitType",
+            "type": {
+              "defined": "UnitType"
+            }
+          },
+          {
+            "name": "x",
+            "type": "u8"
+          },
+          {
+            "name": "y",
+            "type": "u8"
+          },
+          {
+            "name": "attack",
+            "type": "u8"
+          },
+          {
+            "name": "health",
+            "type": "u8"
+          },
+          {
+            "name": "movementRange",
+            "type": "u8"
+          },
+          {
+            "name": "remainingActions",
+            "type": "u8"
+          },
+          {
+            "name": "baseProductionCost",
+            "type": "u32"
+          },
+          {
+            "name": "baseGoldCost",
+            "type": "u32"
+          },
+          {
+            "name": "baseResourceCost",
+            "type": "u32"
+          },
+          {
+            "name": "isRanged",
+            "type": "bool"
+          },
+          {
+            "name": "isAlive",
+            "type": "bool"
+          }
+        ]
+      }
     },
     {
-      code: 6003;
-      name: "OutOfMapBounds";
-      msg: "Out of map bounds";
+      "name": "Tile",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "tileType",
+            "type": {
+              "defined": "TileType"
+            }
+          },
+          {
+            "name": "x",
+            "type": "u8"
+          },
+          {
+            "name": "y",
+            "type": "u8"
+          }
+        ]
+      }
     },
     {
-      code: 6004;
-      name: "TileOccupied";
-      msg: "Tile is occupied by another unit";
+      "name": "BuildingError",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "TileOccupied"
+          }
+        ]
+      }
     },
     {
-      code: 6005;
-      name: "InvalidUnitType";
-      msg: "The provided unit cannot perform this action";
+      "name": "TileError",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "NotUpgradeable"
+          },
+          {
+            "name": "TileOccupied"
+          }
+        ]
+      }
     },
     {
-      code: 6006;
-      name: "UnitWrongPosition";
-      msg: "The provided unit is not at the required coordinates";
+      "name": "CityError",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "QueueFull"
+          },
+          {
+            "name": "BuildingAlreadyExists"
+          },
+          {
+            "name": "CityNotFound"
+          },
+          {
+            "name": "AlreadyQueued"
+          },
+          {
+            "name": "InsufficientResources"
+          },
+          {
+            "name": "InvalidItem"
+          }
+        ]
+      }
     },
     {
-      code: 6007;
-      name: "InvalidAttack";
-      msg: "The provided unit cannot attack";
+      "name": "ProductionItem",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Unit",
+            "fields": [
+              {
+                "defined": "UnitType"
+              }
+            ]
+          },
+          {
+            "name": "Building",
+            "fields": [
+              {
+                "defined": "BuildingType"
+              }
+            ]
+          }
+        ]
+      }
     },
     {
-      code: 6008;
-      name: "OutOfAttackRange";
-      msg: "The provided unit is out of attack range";
+      "name": "BuildingType",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Barracks"
+          },
+          {
+            "name": "Wall"
+          },
+          {
+            "name": "WallMedieval"
+          },
+          {
+            "name": "WallRenaissance"
+          },
+          {
+            "name": "WallIndustrial"
+          },
+          {
+            "name": "Library"
+          },
+          {
+            "name": "School"
+          },
+          {
+            "name": "University"
+          },
+          {
+            "name": "Observatory"
+          },
+          {
+            "name": "Forge"
+          },
+          {
+            "name": "Factory"
+          },
+          {
+            "name": "EnergyPlant"
+          },
+          {
+            "name": "Market"
+          },
+          {
+            "name": "Bank"
+          },
+          {
+            "name": "StockExchange"
+          },
+          {
+            "name": "Granary"
+          },
+          {
+            "name": "Mill"
+          },
+          {
+            "name": "Bakery"
+          },
+          {
+            "name": "Supermarket"
+          }
+        ]
+      }
     },
     {
-      code: 6009;
-      name: "NoMovementPoints";
-      msg: "No movement points left this turn";
+      "name": "UnitType",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Settler"
+          },
+          {
+            "name": "Builder"
+          },
+          {
+            "name": "Warrior"
+          },
+          {
+            "name": "Archer"
+          },
+          {
+            "name": "Swordsman"
+          },
+          {
+            "name": "Crossbowman"
+          },
+          {
+            "name": "Musketman"
+          },
+          {
+            "name": "Rifleman"
+          },
+          {
+            "name": "Tank"
+          }
+        ]
+      }
+    },
+    {
+      "name": "TileType",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "LumberMill"
+          },
+          {
+            "name": "StoneQuarry"
+          },
+          {
+            "name": "Farm"
+          },
+          {
+            "name": "IronMine"
+          }
+        ]
+      }
     }
-  ];
-  metadata: {
-    address: "GoiXQMoEhhLM8MSbfUFhHz4punJqXNHEQh6ysegmuHJz";
-  };
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "UnitNotFound",
+      "msg": "Unit with given ID not found"
+    },
+    {
+      "code": 6001,
+      "name": "CannotMove",
+      "msg": "Unit cannot move this turn"
+    },
+    {
+      "code": 6002,
+      "name": "OutOfMovementRange",
+      "msg": "Out of movement range"
+    },
+    {
+      "code": 6003,
+      "name": "OutOfMapBounds",
+      "msg": "Out of map bounds"
+    },
+    {
+      "code": 6004,
+      "name": "TileOccupied",
+      "msg": "Tile is occupied by another unit"
+    },
+    {
+      "code": 6005,
+      "name": "InvalidUnitType",
+      "msg": "The provided unit cannot perform this action"
+    },
+    {
+      "code": 6006,
+      "name": "UnitWrongPosition",
+      "msg": "The provided unit is not at the required coordinates"
+    },
+    {
+      "code": 6007,
+      "name": "InvalidAttack",
+      "msg": "The provided unit cannot attack"
+    },
+    {
+      "code": 6008,
+      "name": "OutOfAttackRange",
+      "msg": "The provided unit is out of attack range"
+    },
+    {
+      "code": 6009,
+      "name": "NoMovementPoints",
+      "msg": "No movement points left this turn"
+    }
+  ],
+  "metadata": {
+    "address": "GoiXQMoEhhLM8MSbfUFhHz4punJqXNHEQh6ysegmuHJz"
+  }
 };
 
 export const IDL: Solciv = {
-  version: "0.1.0",
-  name: "solciv",
-  instructions: [
+  "version": "0.1.0",
+  "name": "solciv",
+  "instructions": [
     {
-      name: "initializeGame",
-      accounts: [
+      "name": "initializeGame",
+      "accounts": [
         {
-          name: "game",
-          isMut: true,
-          isSigner: false,
+          "name": "game",
+          "isMut": true,
+          "isSigner": false
         },
         {
-          name: "player",
-          isMut: true,
-          isSigner: true,
+          "name": "player",
+          "isMut": true,
+          "isSigner": true
         },
         {
-          name: "systemProgram",
-          isMut: false,
-          isSigner: false,
-        },
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
       ],
-      args: [
+      "args": [
         {
-          name: "map",
-          type: {
-            array: ["u8", 400],
-          },
-        },
-      ],
+          "name": "map",
+          "type": {
+            "array": [
+              "u8",
+              400
+            ]
+          }
+        }
+      ]
     },
     {
-      name: "initializePlayer",
-      accounts: [
+      "name": "initializePlayer",
+      "accounts": [
         {
-          name: "game",
-          isMut: false,
-          isSigner: false,
+          "name": "game",
+          "isMut": false,
+          "isSigner": false
         },
         {
-          name: "playerAccount",
-          isMut: true,
-          isSigner: false,
+          "name": "playerAccount",
+          "isMut": true,
+          "isSigner": false
         },
         {
-          name: "player",
-          isMut: true,
-          isSigner: true,
+          "name": "player",
+          "isMut": true,
+          "isSigner": true
         },
         {
-          name: "systemProgram",
-          isMut: false,
-          isSigner: false,
-        },
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
       ],
-      args: [],
+      "args": []
     },
     {
-      name: "initializeNpc",
-      accounts: [
+      "name": "initializeNpc",
+      "accounts": [
         {
-          name: "game",
-          isMut: false,
-          isSigner: false,
+          "name": "game",
+          "isMut": false,
+          "isSigner": false
         },
         {
-          name: "npcAccount",
-          isMut: true,
-          isSigner: false,
+          "name": "npcAccount",
+          "isMut": true,
+          "isSigner": false
         },
         {
-          name: "player",
-          isMut: true,
-          isSigner: true,
+          "name": "player",
+          "isMut": true,
+          "isSigner": true
         },
         {
-          name: "systemProgram",
-          isMut: false,
-          isSigner: false,
-        },
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
       ],
-      args: [],
+      "args": []
     },
     {
-      name: "moveUnit",
-      accounts: [
+      "name": "moveUnit",
+      "accounts": [
         {
-          name: "playerAccount",
-          isMut: true,
-          isSigner: false,
+          "name": "playerAccount",
+          "isMut": true,
+          "isSigner": false
         },
         {
-          name: "player",
-          isMut: true,
-          isSigner: true,
-        },
+          "name": "player",
+          "isMut": true,
+          "isSigner": true
+        }
       ],
-      args: [
+      "args": [
         {
-          name: "unitId",
-          type: "u32",
+          "name": "unitId",
+          "type": "u32"
         },
         {
-          name: "x",
-          type: "u8",
+          "name": "x",
+          "type": "u8"
         },
         {
-          name: "y",
-          type: "u8",
-        },
-      ],
+          "name": "y",
+          "type": "u8"
+        }
+      ]
     },
     {
-      name: "foundCity",
-      accounts: [
+      "name": "foundCity",
+      "accounts": [
         {
-          name: "game",
-          isMut: true,
-          isSigner: false,
+          "name": "game",
+          "isMut": true,
+          "isSigner": false
         },
         {
-          name: "playerAccount",
-          isMut: true,
-          isSigner: false,
+          "name": "playerAccount",
+          "isMut": true,
+          "isSigner": false
         },
         {
-          name: "player",
-          isMut: true,
-          isSigner: true,
+          "name": "player",
+          "isMut": true,
+          "isSigner": true
         },
         {
-          name: "systemProgram",
-          isMut: false,
-          isSigner: false,
-        },
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
       ],
-      args: [
+      "args": [
         {
-          name: "x",
-          type: "u8",
+          "name": "x",
+          "type": "u8"
         },
         {
-          name: "y",
-          type: "u8",
+          "name": "y",
+          "type": "u8"
         },
         {
-          name: "unitId",
-          type: "u32",
+          "name": "unitId",
+          "type": "u32"
         },
         {
-          name: "name",
-          type: "string",
-        },
-      ],
+          "name": "name",
+          "type": "string"
+        }
+      ]
     },
     {
-      name: "addToProductionQueue",
-      accounts: [
+      "name": "addToProductionQueue",
+      "accounts": [
         {
-          name: "playerAccount",
-          isMut: true,
-          isSigner: false,
+          "name": "playerAccount",
+          "isMut": true,
+          "isSigner": false
         },
         {
-          name: "player",
-          isMut: true,
-          isSigner: true,
-        },
+          "name": "player",
+          "isMut": true,
+          "isSigner": true
+        }
       ],
-      args: [
+      "args": [
         {
-          name: "cityId",
-          type: "u32",
+          "name": "cityId",
+          "type": "u32"
         },
         {
-          name: "item",
-          type: {
-            defined: "ProductionItem",
-          },
-        },
-      ],
+          "name": "item",
+          "type": {
+            "defined": "ProductionItem"
+          }
+        }
+      ]
     },
     {
-      name: "upgradeTile",
-      accounts: [
+      "name": "upgradeTile",
+      "accounts": [
         {
-          name: "game",
-          isMut: true,
-          isSigner: false,
+          "name": "game",
+          "isMut": true,
+          "isSigner": false
         },
         {
-          name: "playerAccount",
-          isMut: true,
-          isSigner: false,
+          "name": "playerAccount",
+          "isMut": true,
+          "isSigner": false
         },
         {
-          name: "player",
-          isMut: true,
-          isSigner: true,
-        },
+          "name": "player",
+          "isMut": true,
+          "isSigner": true
+        }
       ],
-      args: [
+      "args": [
         {
-          name: "x",
-          type: "u8",
+          "name": "x",
+          "type": "u8"
         },
         {
-          name: "y",
-          type: "u8",
+          "name": "y",
+          "type": "u8"
         },
         {
-          name: "unitId",
-          type: "u32",
-        },
-      ],
+          "name": "unitId",
+          "type": "u32"
+        }
+      ]
     },
     {
-      name: "attackUnit",
-      accounts: [
+      "name": "attackUnit",
+      "accounts": [
         {
-          name: "game",
-          isMut: true,
-          isSigner: false,
+          "name": "game",
+          "isMut": true,
+          "isSigner": false
         },
         {
-          name: "playerAccount",
-          isMut: true,
-          isSigner: false,
+          "name": "playerAccount",
+          "isMut": true,
+          "isSigner": false
         },
         {
-          name: "npcAccount",
-          isMut: true,
-          isSigner: false,
+          "name": "npcAccount",
+          "isMut": true,
+          "isSigner": false
         },
         {
-          name: "player",
-          isMut: true,
-          isSigner: true,
-        },
+          "name": "player",
+          "isMut": true,
+          "isSigner": true
+        }
       ],
-      args: [
+      "args": [
         {
-          name: "attackerId",
-          type: "u32",
+          "name": "attackerId",
+          "type": "u32"
         },
         {
-          name: "defenderId",
-          type: "u32",
-        },
-      ],
+          "name": "defenderId",
+          "type": "u32"
+        }
+      ]
     },
     {
-      name: "endTurn",
-      accounts: [
+      "name": "attackCity",
+      "accounts": [
         {
-          name: "game",
-          isMut: true,
-          isSigner: false,
+          "name": "game",
+          "isMut": true,
+          "isSigner": false
         },
         {
-          name: "playerAccount",
-          isMut: true,
-          isSigner: false,
+          "name": "playerAccount",
+          "isMut": true,
+          "isSigner": false
         },
         {
-          name: "npcAccount",
-          isMut: true,
-          isSigner: false,
+          "name": "npcAccount",
+          "isMut": true,
+          "isSigner": false
         },
         {
-          name: "player",
-          isMut: true,
-          isSigner: true,
-        },
+          "name": "player",
+          "isMut": true,
+          "isSigner": true
+        }
       ],
-      args: [],
+      "args": [
+        {
+          "name": "attackerId",
+          "type": "u32"
+        },
+        {
+          "name": "cityId",
+          "type": "u32"
+        }
+      ]
     },
     {
-      name: "closeGame",
-      accounts: [
+      "name": "endTurn",
+      "accounts": [
         {
-          name: "game",
-          isMut: true,
-          isSigner: false,
+          "name": "game",
+          "isMut": true,
+          "isSigner": false
         },
         {
-          name: "playerAccount",
-          isMut: true,
-          isSigner: false,
+          "name": "playerAccount",
+          "isMut": true,
+          "isSigner": false
         },
         {
-          name: "npcAccount",
-          isMut: true,
-          isSigner: false,
+          "name": "npcAccount",
+          "isMut": true,
+          "isSigner": false
         },
         {
-          name: "player",
-          isMut: true,
-          isSigner: true,
-        },
+          "name": "player",
+          "isMut": true,
+          "isSigner": true
+        }
       ],
-      args: [],
+      "args": []
     },
+    {
+      "name": "closeGame",
+      "accounts": [
+        {
+          "name": "game",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "playerAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "npcAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "player",
+          "isMut": true,
+          "isSigner": true
+        }
+      ],
+      "args": []
+    }
   ],
-  accounts: [
+  "accounts": [
     {
-      name: "Game",
-      type: {
-        kind: "struct",
-        fields: [
+      "name": "Game",
+      "type": {
+        "kind": "struct",
+        "fields": [
           {
-            name: "player",
-            type: "publicKey",
+            "name": "player",
+            "type": "publicKey"
           },
           {
-            name: "npc",
-            type: "publicKey",
+            "name": "npc",
+            "type": "publicKey"
           },
           {
-            name: "turn",
-            type: "u32",
+            "name": "turn",
+            "type": "u32"
           },
           {
-            name: "defeat",
-            type: "bool",
+            "name": "defeat",
+            "type": "bool"
           },
           {
-            name: "victory",
-            type: "bool",
+            "name": "victory",
+            "type": "bool"
           },
           {
-            name: "map",
-            type: {
-              array: ["u8", 400],
-            },
-          },
-        ],
-      },
+            "name": "map",
+            "type": {
+              "array": [
+                "u8",
+                400
+              ]
+            }
+          }
+        ]
+      }
     },
     {
-      name: "Player",
-      type: {
-        kind: "struct",
-        fields: [
+      "name": "Player",
+      "type": {
+        "kind": "struct",
+        "fields": [
           {
-            name: "game",
-            type: "publicKey",
+            "name": "game",
+            "type": "publicKey"
           },
           {
-            name: "player",
-            type: "publicKey",
+            "name": "player",
+            "type": "publicKey"
           },
           {
-            name: "points",
-            type: "u32",
+            "name": "points",
+            "type": "u32"
           },
           {
-            name: "cities",
-            type: {
-              vec: {
-                defined: "City",
-              },
-            },
+            "name": "cities",
+            "type": {
+              "vec": {
+                "defined": "City"
+              }
+            }
           },
           {
-            name: "tiles",
-            type: {
-              vec: {
-                defined: "Tile",
-              },
-            },
+            "name": "tiles",
+            "type": {
+              "vec": {
+                "defined": "Tile"
+              }
+            }
           },
           {
-            name: "units",
-            type: {
-              vec: {
-                defined: "Unit",
-              },
-            },
+            "name": "units",
+            "type": {
+              "vec": {
+                "defined": "Unit"
+              }
+            }
           },
           {
-            name: "resources",
-            type: {
-              defined: "Resources",
-            },
+            "name": "resources",
+            "type": {
+              "defined": "Resources"
+            }
           },
           {
-            name: "nextCityId",
-            type: "u32",
+            "name": "nextCityId",
+            "type": "u32"
           },
           {
-            name: "nextUnitId",
-            type: "u32",
-          },
-        ],
-      },
+            "name": "nextUnitId",
+            "type": "u32"
+          }
+        ]
+      }
     },
     {
-      name: "Npc",
-      type: {
-        kind: "struct",
-        fields: [
+      "name": "Npc",
+      "type": {
+        "kind": "struct",
+        "fields": [
           {
-            name: "game",
-            type: "publicKey",
+            "name": "game",
+            "type": "publicKey"
           },
           {
-            name: "player",
-            type: "publicKey",
+            "name": "player",
+            "type": "publicKey"
           },
           {
-            name: "cities",
-            type: {
-              vec: {
-                defined: "City",
-              },
-            },
+            "name": "cities",
+            "type": {
+              "vec": {
+                "defined": "City"
+              }
+            }
           },
           {
-            name: "units",
-            type: {
-              vec: {
-                defined: "Unit",
-              },
-            },
+            "name": "units",
+            "type": {
+              "vec": {
+                "defined": "Unit"
+              }
+            }
           },
           {
-            name: "nextCityId",
-            type: "u32",
+            "name": "nextCityId",
+            "type": "u32"
           },
           {
-            name: "nextUnitId",
-            type: "u32",
-          },
-        ],
-      },
-    },
+            "name": "nextUnitId",
+            "type": "u32"
+          }
+        ]
+      }
+    }
   ],
-  types: [
+  "types": [
     {
-      name: "Resources",
-      type: {
-        kind: "struct",
-        fields: [
+      "name": "Resources",
+      "type": {
+        "kind": "struct",
+        "fields": [
           {
-            name: "gold",
-            type: "u32",
+            "name": "gold",
+            "type": "u32"
           },
           {
-            name: "food",
-            type: "u32",
+            "name": "food",
+            "type": "u32"
           },
           {
-            name: "wood",
-            type: "u32",
+            "name": "wood",
+            "type": "u32"
           },
           {
-            name: "stone",
-            type: "u32",
+            "name": "stone",
+            "type": "u32"
           },
           {
-            name: "iron",
-            type: "u32",
-          },
-        ],
-      },
+            "name": "iron",
+            "type": "u32"
+          }
+        ]
+      }
     },
     {
-      name: "City",
-      type: {
-        kind: "struct",
-        fields: [
+      "name": "City",
+      "type": {
+        "kind": "struct",
+        "fields": [
           {
-            name: "cityId",
-            type: "u32",
+            "name": "cityId",
+            "type": "u32"
           },
           {
-            name: "name",
-            type: "string",
+            "name": "name",
+            "type": "string"
           },
           {
-            name: "player",
-            type: "publicKey",
+            "name": "player",
+            "type": "publicKey"
           },
           {
-            name: "game",
-            type: "publicKey",
+            "name": "game",
+            "type": "publicKey"
           },
           {
-            name: "x",
-            type: "u8",
+            "name": "x",
+            "type": "u8"
           },
           {
-            name: "y",
-            type: "u8",
+            "name": "y",
+            "type": "u8"
           },
           {
-            name: "health",
-            type: "u32",
+            "name": "health",
+            "type": "u32"
           },
           {
-            name: "attack",
-            type: "u32",
+            "name": "attack",
+            "type": "u32"
           },
           {
-            name: "population",
-            type: "u32",
+            "name": "population",
+            "type": "u32"
           },
           {
-            name: "goldYield",
-            type: "u32",
+            "name": "goldYield",
+            "type": "u32"
           },
           {
-            name: "foodYield",
-            type: "u32",
+            "name": "foodYield",
+            "type": "u32"
           },
           {
-            name: "productionYield",
-            type: "u32",
+            "name": "productionYield",
+            "type": "u32"
           },
           {
-            name: "scienceYield",
-            type: "u32",
+            "name": "scienceYield",
+            "type": "u32"
           },
           {
-            name: "buildings",
-            type: {
-              vec: {
-                defined: "BuildingType",
-              },
-            },
+            "name": "buildings",
+            "type": {
+              "vec": {
+                "defined": "BuildingType"
+              }
+            }
           },
           {
-            name: "productionQueue",
-            type: {
-              vec: {
-                defined: "ProductionItem",
-              },
-            },
+            "name": "productionQueue",
+            "type": {
+              "vec": {
+                "defined": "ProductionItem"
+              }
+            }
           },
           {
-            name: "accumulatedProduction",
-            type: "u32",
-          },
-        ],
-      },
+            "name": "accumulatedProduction",
+            "type": "u32"
+          }
+        ]
+      }
     },
     {
-      name: "Unit",
-      type: {
-        kind: "struct",
-        fields: [
+      "name": "Unit",
+      "type": {
+        "kind": "struct",
+        "fields": [
           {
-            name: "unitId",
-            type: "u32",
+            "name": "unitId",
+            "type": "u32"
           },
           {
-            name: "player",
-            type: "publicKey",
+            "name": "player",
+            "type": "publicKey"
           },
           {
-            name: "game",
-            type: "publicKey",
+            "name": "game",
+            "type": "publicKey"
           },
           {
-            name: "unitType",
-            type: {
-              defined: "UnitType",
-            },
+            "name": "unitType",
+            "type": {
+              "defined": "UnitType"
+            }
           },
           {
-            name: "x",
-            type: "u8",
+            "name": "x",
+            "type": "u8"
           },
           {
-            name: "y",
-            type: "u8",
+            "name": "y",
+            "type": "u8"
           },
           {
-            name: "attack",
-            type: "u8",
+            "name": "attack",
+            "type": "u8"
           },
           {
-            name: "health",
-            type: "u8",
+            "name": "health",
+            "type": "u8"
           },
           {
-            name: "movementRange",
-            type: "u8",
+            "name": "movementRange",
+            "type": "u8"
           },
           {
-            name: "remainingActions",
-            type: "u8",
+            "name": "remainingActions",
+            "type": "u8"
           },
           {
-            name: "baseProductionCost",
-            type: "u32",
+            "name": "baseProductionCost",
+            "type": "u32"
           },
           {
-            name: "baseGoldCost",
-            type: "u32",
+            "name": "baseGoldCost",
+            "type": "u32"
           },
           {
-            name: "baseResourceCost",
-            type: "u32",
+            "name": "baseResourceCost",
+            "type": "u32"
           },
           {
-            name: "isRanged",
-            type: "bool",
+            "name": "isRanged",
+            "type": "bool"
           },
           {
-            name: "isAlive",
-            type: "bool",
-          },
-        ],
-      },
+            "name": "isAlive",
+            "type": "bool"
+          }
+        ]
+      }
     },
     {
-      name: "Tile",
-      type: {
-        kind: "struct",
-        fields: [
+      "name": "Tile",
+      "type": {
+        "kind": "struct",
+        "fields": [
           {
-            name: "tileType",
-            type: {
-              defined: "TileType",
-            },
+            "name": "tileType",
+            "type": {
+              "defined": "TileType"
+            }
           },
           {
-            name: "x",
-            type: "u8",
+            "name": "x",
+            "type": "u8"
           },
           {
-            name: "y",
-            type: "u8",
-          },
-        ],
-      },
+            "name": "y",
+            "type": "u8"
+          }
+        ]
+      }
     },
     {
-      name: "BuildingError",
-      type: {
-        kind: "enum",
-        variants: [
+      "name": "BuildingError",
+      "type": {
+        "kind": "enum",
+        "variants": [
           {
-            name: "TileOccupied",
-          },
-        ],
-      },
+            "name": "TileOccupied"
+          }
+        ]
+      }
     },
     {
-      name: "TileError",
-      type: {
-        kind: "enum",
-        variants: [
+      "name": "TileError",
+      "type": {
+        "kind": "enum",
+        "variants": [
           {
-            name: "NotUpgradeable",
+            "name": "NotUpgradeable"
           },
           {
-            name: "TileOccupied",
-          },
-        ],
-      },
+            "name": "TileOccupied"
+          }
+        ]
+      }
     },
     {
-      name: "CityError",
-      type: {
-        kind: "enum",
-        variants: [
+      "name": "CityError",
+      "type": {
+        "kind": "enum",
+        "variants": [
           {
-            name: "QueueFull",
+            "name": "QueueFull"
           },
           {
-            name: "BuildingAlreadyExists",
+            "name": "BuildingAlreadyExists"
           },
           {
-            name: "CityNotFound",
+            "name": "CityNotFound"
           },
           {
-            name: "AlreadyQueued",
+            "name": "AlreadyQueued"
           },
           {
-            name: "InsufficientResources",
+            "name": "InsufficientResources"
           },
           {
-            name: "InvalidItem",
-          },
-        ],
-      },
+            "name": "InvalidItem"
+          }
+        ]
+      }
     },
     {
-      name: "ProductionItem",
-      type: {
-        kind: "enum",
-        variants: [
+      "name": "ProductionItem",
+      "type": {
+        "kind": "enum",
+        "variants": [
           {
-            name: "Unit",
-            fields: [
+            "name": "Unit",
+            "fields": [
               {
-                defined: "UnitType",
-              },
-            ],
+                "defined": "UnitType"
+              }
+            ]
           },
           {
-            name: "Building",
-            fields: [
+            "name": "Building",
+            "fields": [
               {
-                defined: "BuildingType",
-              },
-            ],
-          },
-        ],
-      },
+                "defined": "BuildingType"
+              }
+            ]
+          }
+        ]
+      }
     },
     {
-      name: "BuildingType",
-      type: {
-        kind: "enum",
-        variants: [
+      "name": "BuildingType",
+      "type": {
+        "kind": "enum",
+        "variants": [
           {
-            name: "Barracks",
+            "name": "Barracks"
           },
           {
-            name: "Wall",
+            "name": "Wall"
           },
           {
-            name: "WallMedieval",
+            "name": "WallMedieval"
           },
           {
-            name: "WallRenaissance",
+            "name": "WallRenaissance"
           },
           {
-            name: "WallIndustrial",
+            "name": "WallIndustrial"
           },
           {
-            name: "Library",
+            "name": "Library"
           },
           {
-            name: "School",
+            "name": "School"
           },
           {
-            name: "University",
+            "name": "University"
           },
           {
-            name: "Observatory",
+            "name": "Observatory"
           },
           {
-            name: "Forge",
+            "name": "Forge"
           },
           {
-            name: "Factory",
+            "name": "Factory"
           },
           {
-            name: "EnergyPlant",
+            "name": "EnergyPlant"
           },
           {
-            name: "Market",
+            "name": "Market"
           },
           {
-            name: "Bank",
+            "name": "Bank"
           },
           {
-            name: "StockExchange",
+            "name": "StockExchange"
           },
           {
-            name: "Granary",
+            "name": "Granary"
           },
           {
-            name: "Mill",
+            "name": "Mill"
           },
           {
-            name: "Bakery",
+            "name": "Bakery"
           },
           {
-            name: "Supermarket",
-          },
-        ],
-      },
+            "name": "Supermarket"
+          }
+        ]
+      }
     },
     {
-      name: "UnitType",
-      type: {
-        kind: "enum",
-        variants: [
+      "name": "UnitType",
+      "type": {
+        "kind": "enum",
+        "variants": [
           {
-            name: "Settler",
+            "name": "Settler"
           },
           {
-            name: "Builder",
+            "name": "Builder"
           },
           {
-            name: "Warrior",
+            "name": "Warrior"
           },
           {
-            name: "Archer",
+            "name": "Archer"
           },
           {
-            name: "Swordsman",
+            "name": "Swordsman"
           },
           {
-            name: "Crossbowman",
+            "name": "Crossbowman"
           },
           {
-            name: "Musketman",
+            "name": "Musketman"
           },
           {
-            name: "Rifleman",
+            "name": "Rifleman"
           },
           {
-            name: "Tank",
-          },
-        ],
-      },
+            "name": "Tank"
+          }
+        ]
+      }
     },
     {
-      name: "TileType",
-      type: {
-        kind: "enum",
-        variants: [
+      "name": "TileType",
+      "type": {
+        "kind": "enum",
+        "variants": [
           {
-            name: "LumberMill",
+            "name": "LumberMill"
           },
           {
-            name: "StoneQuarry",
+            "name": "StoneQuarry"
           },
           {
-            name: "Farm",
+            "name": "Farm"
           },
           {
-            name: "IronMine",
-          },
-        ],
-      },
-    },
+            "name": "IronMine"
+          }
+        ]
+      }
+    }
   ],
-  errors: [
+  "errors": [
     {
-      code: 6000,
-      name: "UnitNotFound",
-      msg: "Unit with given ID not found",
+      "code": 6000,
+      "name": "UnitNotFound",
+      "msg": "Unit with given ID not found"
     },
     {
-      code: 6001,
-      name: "CannotMove",
-      msg: "Unit cannot move this turn",
+      "code": 6001,
+      "name": "CannotMove",
+      "msg": "Unit cannot move this turn"
     },
     {
-      code: 6002,
-      name: "OutOfMovementRange",
-      msg: "Out of movement range",
+      "code": 6002,
+      "name": "OutOfMovementRange",
+      "msg": "Out of movement range"
     },
     {
-      code: 6003,
-      name: "OutOfMapBounds",
-      msg: "Out of map bounds",
+      "code": 6003,
+      "name": "OutOfMapBounds",
+      "msg": "Out of map bounds"
     },
     {
-      code: 6004,
-      name: "TileOccupied",
-      msg: "Tile is occupied by another unit",
+      "code": 6004,
+      "name": "TileOccupied",
+      "msg": "Tile is occupied by another unit"
     },
     {
-      code: 6005,
-      name: "InvalidUnitType",
-      msg: "The provided unit cannot perform this action",
+      "code": 6005,
+      "name": "InvalidUnitType",
+      "msg": "The provided unit cannot perform this action"
     },
     {
-      code: 6006,
-      name: "UnitWrongPosition",
-      msg: "The provided unit is not at the required coordinates",
+      "code": 6006,
+      "name": "UnitWrongPosition",
+      "msg": "The provided unit is not at the required coordinates"
     },
     {
-      code: 6007,
-      name: "InvalidAttack",
-      msg: "The provided unit cannot attack",
+      "code": 6007,
+      "name": "InvalidAttack",
+      "msg": "The provided unit cannot attack"
     },
     {
-      code: 6008,
-      name: "OutOfAttackRange",
-      msg: "The provided unit is out of attack range",
+      "code": 6008,
+      "name": "OutOfAttackRange",
+      "msg": "The provided unit is out of attack range"
     },
     {
-      code: 6009,
-      name: "NoMovementPoints",
-      msg: "No movement points left this turn",
-    },
+      "code": 6009,
+      "name": "NoMovementPoints",
+      "msg": "No movement points left this turn"
+    }
   ],
-  metadata: {
-    address: "GoiXQMoEhhLM8MSbfUFhHz4punJqXNHEQh6ysegmuHJz",
-  },
+  "metadata": {
+    "address": "GoiXQMoEhhLM8MSbfUFhHz4punJqXNHEQh6ysegmuHJz"
+  }
 };
