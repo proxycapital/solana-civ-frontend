@@ -247,6 +247,15 @@ img.upgraded-tile {
   position: absolute;
 }
 
+.city-header .city-health-bar {
+  background: red;
+}
+
+.city-header .city-health-bar-fill {
+  background: green;
+  padding: 1px;
+}
+
 .game-tile img.terrain {
   /* width: 100%;
   height: 100%; */

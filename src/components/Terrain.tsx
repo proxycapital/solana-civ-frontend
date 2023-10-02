@@ -7,6 +7,7 @@ interface TerrainProps {
   imageIndex: number;
   overlayImageIndex?: number;
   cityName?: string | undefined;
+  health?: number;
   isInRange: boolean;
   debug: boolean;
 }
@@ -40,7 +41,7 @@ export const TileType = {
   15: "NPC Village",
 };
 
-const Terrain: React.FC<TerrainProps> = ({ x, y, imageIndex, overlayImageIndex, cityName, isInRange, debug }) => {
+const Terrain: React.FC<TerrainProps> = ({ x, y, imageIndex, overlayImageIndex, cityName, health, isInRange, debug }) => {
   const tileType = TileType[imageIndex as keyof typeof TileType];
   const overlayTileType = TileType[overlayImageIndex as keyof typeof TileType];
   const imageUrl = `/terrain/Layer ${imageIndex}.png`;
@@ -63,6 +64,9 @@ const Terrain: React.FC<TerrainProps> = ({ x, y, imageIndex, overlayImageIndex, 
           {cityName ? (
             <div className="city-header primary-border-with-box-shadow">
               {cityName}
+              <div className="city-health-bar">
+                <div className="city-health-bar-fill" style={{ width: `${health}%` }} />
+              </div>
             </div>
           ) : null}
           <img src={imageUrl} className={`terrain ${tileType.toLowerCase()}`} alt={tileType} draggable="false" />

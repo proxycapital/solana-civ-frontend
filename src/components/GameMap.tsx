@@ -23,6 +23,7 @@ interface Tile {
   imageIndex: number;
   overlayImageIndex?: number;
   cityName?: string | undefined;
+  health?: number;
   type: string;
 }
 
@@ -97,14 +98,29 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
           const index = row * 20 + col;
           // if there is a city at this coordinate, render it
           if (cityCoordinates.has(`${col},${row}`)) {
-            const cityData = cities.find((city) => city.x === col && city.y === row)
-            newTiles.push({ x: col, y: row, imageIndex: 10, type: "Village", cityName: cityData.name, cityId: cityData.cityId });
+            const cityData = cities.find((city) => city.x === col && city.y === row);
+            newTiles.push({
+              x: col,
+              y: row,
+              imageIndex: 10,
+              type: "Village",
+              cityName: cityData.name,
+              health: cityData.health,
+              cityId: cityData.cityId,
+            });
             continue;
           }
           // NPC cities
           if (npcCityCoordinates.has(`${col},${row}`)) {
-            const npcCityData = npcCities.find((city) => city.x === col && city.y === row)
-            newTiles.push({ x: col, y: row, imageIndex: 15, type: "NPC Village", cityName: npcCityData.name, cityId: npcCityData.cityId });
+            const npcCityData = npcCities.find((city) => city.x === col && city.y === row);
+            newTiles.push({
+              x: col,
+              y: row,
+              imageIndex: 15,
+              type: "NPC Village",
+              cityName: npcCityData.name,
+              cityId: npcCityData.cityId,
+            });
             continue;
           }
           // if there is an upgraded tile at this coordinate, render it
@@ -124,7 +140,13 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
 
           const tile = map[index];
           if (tile) {
-            newTiles.push({ x: col, y: row, imageIndex: tile, overlayImageIndex, type: TileType[tile as keyof typeof TileType] });
+            newTiles.push({
+              x: col,
+              y: row,
+              imageIndex: tile,
+              overlayImageIndex,
+              type: TileType[tile as keyof typeof TileType],
+            });
           } else {
             console.error("No tile at", col, row);
           }
@@ -189,14 +211,11 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
     };
     try {
       const tx = program!.methods.moveUnit(selectedUnit.unitId, x, y).accounts(accounts).rpc();
-      const signature = await toast.promise(
-        tx,
-        {
-          pending: 'Moving unit...',
-          success: 'Unit moved',
-          error: 'Failed to move unit'
-        }
-      );
+      const signature = await toast.promise(tx, {
+        pending: "Moving unit...",
+        success: "Unit moved",
+        error: "Failed to move unit",
+      });
       console.log(`Move unit TX: https://explorer.solana.com/tx/${signature}?cluster=devnet`);
       logMessage(`Unit #${selectedUnit.unitId} ${selectedUnit.type} moved to (${x}, ${y})`);
     } catch (error) {
@@ -238,14 +257,11 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
     };
     try {
       const tx = program!.methods.attackUnit(attackingUnit.unitId, defendingUnit.unitId).accounts(accounts).rpc();
-      const signature = await toast.promise(
-        tx,
-        {
-          pending: 'Attacking enemy...',
-          success: 'Enemy attacked',
-          error: 'Failed to attack enemy'
-        }
-      );
+      const signature = await toast.promise(tx, {
+        pending: "Attacking enemy...",
+        success: "Enemy attacked",
+        error: "Failed to attack enemy",
+      });
       console.log(`Attack TX: https://explorer.solana.com/tx/${signature}?cluster=devnet`);
       logMessage(`Unit #${attackingUnit.unitId} attacked barbarian`);
       playSound("attack");
@@ -302,11 +318,7 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
 
   return (
     <div className="game-container" ref={containerRef}>
-      <CityModal
-        show={showVillageModal}
-        onClose={() => setShowVillageModal(false)}
-        cityId={selectedCityId}
-      />
+      <CityModal show={showVillageModal} onClose={() => setShowVillageModal(false)} cityId={selectedCityId} />
       {selectedUnit && (
         <UnitInfoWindow
           unit={selectedUnit}
@@ -369,6 +381,7 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
                 imageIndex={currentTile.imageIndex}
                 overlayImageIndex={currentTile.overlayImageIndex}
                 cityName={currentTile.cityName}
+                health={currentTile.health}
                 isInRange={isInRangeForAnyUnit}
                 debug={debug}
               />
