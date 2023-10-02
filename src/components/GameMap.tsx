@@ -22,6 +22,7 @@ interface Tile {
   y: number;
   imageIndex: number;
   overlayImageIndex?: number;
+  cityName?: string | undefined;
   type: string;
 }
 
@@ -92,7 +93,7 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
           // if there is a city at this coordinate, render it
           if (cityCoordinates.has(`${col},${row}`)) {
             const cityData = cities.find((city) => city.x === col && city.y === row)
-            newTiles.push({ x: col, y: row, imageIndex: 10, type: "Village", cityId: cityData.cityId });
+            newTiles.push({ x: col, y: row, imageIndex: 10, type: "Village", cityName: cityData.name, cityId: cityData.cityId });
             continue;
           }
           // if there is an upgraded tile at this coordinate, render it
@@ -356,6 +357,7 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
                 y={row}
                 imageIndex={currentTile.imageIndex}
                 overlayImageIndex={currentTile.overlayImageIndex}
+                cityName={currentTile.cityName}
                 isInRange={isInRangeForAnyUnit}
                 debug={debug}
               />

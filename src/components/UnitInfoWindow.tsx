@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import Button from "@mui/material/Button";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faHammer } from "@fortawesome/free-solid-svg-icons";
+import config from "../config.json";
 import { foundCity, upgradeLandPlot } from "../utils/solanaUtils";
 import { useWorkspace } from "../context/AnchorContext";
 import { useGameState } from "../context/GameStateContext";
@@ -23,15 +24,25 @@ interface UnitInfoProps {
 
 const UnitInfoWindow: React.FC<UnitInfoProps> = ({ unit }) => {
   const { program, provider } = useWorkspace();
-  const { fetchPlayerState } = useGameState();
+  const { cities, fetchPlayerState } = useGameState();
   const { playSound } = useSound();
   const { type, movementRange, builds, strength } = unit;
   const displayType = type.charAt(0).toUpperCase() + type.slice(1);
 
+  const getUnusedCityName = () => {
+    const usedNames = cities.map(city => city.name);
+    const availableNames = config.cityNames.filter(name => !usedNames.includes(name));
+    if (availableNames.length === 0) {
+      return "City";
+    }
+    const randomIndex = Math.floor(Math.random() * availableNames.length);
+    return availableNames[randomIndex];
+  }
+
   const handleFoundCity = async (x: number, y: number, unitId: number) => {
-    const unit = { x, y, unitId };
+    const data = { x, y, unitId, name: getUnusedCityName() };
     try {
-      const tx = foundCity(provider!, program!, unit);
+      const tx = foundCity(provider!, program!, data);
       const signature = await toast.promise(tx, {
         pending: "Founding a city",
         success: "City founded",

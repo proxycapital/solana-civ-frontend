@@ -82,7 +82,7 @@ export const getPlayer = async (provider: AnchorProvider | undefined, program: P
   const tiles = playerAccount ? playerAccount.tiles : [];
 
   // calculate "science" yield from all cities
-  balances.science = cities.reduce((acc: number, city: {scienceYield: number}) => {
+  balances.science = cities.reduce((acc: number, city: { scienceYield: number }) => {
     return acc + city.scienceYield;
   }, 0);
 
@@ -221,7 +221,12 @@ export const initializeGame = async (provider: AnchorProvider, program: Program<
   }
 };
 
-export const addToProductionQueue = async (provider: AnchorProvider, program: Program<Solciv>, cityId: number, item: any) => {
+export const addToProductionQueue = async (
+  provider: AnchorProvider,
+  program: Program<Solciv>,
+  cityId: number,
+  item: any
+) => {
   const [gameKey] = anchor.web3.PublicKey.findProgramAddressSync(
     [Buffer.from("GAME"), provider.publicKey.toBuffer()],
     program.programId
@@ -240,9 +245,9 @@ export const addToProductionQueue = async (provider: AnchorProvider, program: Pr
   };
 
   return program.methods.addToProductionQueue(cityId, item).accounts(accounts).rpc();
-}
+};
 
-export const foundCity = async (provider: AnchorProvider, program: Program<Solciv>, unit: any) => {
+export const foundCity = async (provider: AnchorProvider, program: Program<Solciv>, data: any) => {
   const [gameKey] = anchor.web3.PublicKey.findProgramAddressSync(
     [Buffer.from("GAME"), provider.publicKey.toBuffer()],
     program.programId
@@ -260,7 +265,7 @@ export const foundCity = async (provider: AnchorProvider, program: Program<Solci
     systemProgram: anchor.web3.SystemProgram.programId,
   };
 
-  return program.methods.foundCity(unit.x, unit.y, unit.unitId).accounts(accounts).rpc();
+  return program.methods.foundCity(data.x, data.y, data.unitId, data.name).accounts(accounts).rpc();
   // try {
   //   const tx = await program.methods.foundCity(unit.x, unit.y, unit.unitId).accounts(accounts).rpc();
   //   console.log(`Found a city TX: https://explorer.solana.com/tx/${tx}?cluster=devnet`);

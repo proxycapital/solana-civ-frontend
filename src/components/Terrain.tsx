@@ -6,6 +6,7 @@ interface TerrainProps {
   y: number;
   imageIndex: number;
   overlayImageIndex?: number;
+  cityName?: string | undefined;
   isInRange: boolean;
   debug: boolean;
 }
@@ -18,28 +19,6 @@ export function weightedRandomTile() {
   return weightedIndices[randomIndex];
 }
 
-const CitiesNames = [
-  'Paris',
-  'New York City',
-  'London',
-  'Rome',
-  'Tokyo',
-  'Barcelona',
-  'Istanbul',
-  'Dubai',
-  'Los Angeles',
-  'Bangkok',
-  'Sydney',
-  'Amsterdam',
-  'Venice',
-  'San Francisco',
-  'Prague',
-  'Florence',
-  'Vienna',
-  'Seoul',
-  'Singapore',
-  'Hong Kong',
-];
 
 // Mapping of tile indices to their type
 export const TileType = {
@@ -60,15 +39,11 @@ export const TileType = {
   14: "Lumber Mill",
 };
 
-const Terrain: React.FC<TerrainProps> = ({ x, y, imageIndex, overlayImageIndex, isInRange, debug }) => {
+const Terrain: React.FC<TerrainProps> = ({ x, y, imageIndex, overlayImageIndex, cityName, isInRange, debug }) => {
   const tileType = TileType[imageIndex as keyof typeof TileType];
   const overlayTileType = TileType[overlayImageIndex as keyof typeof TileType];
   const imageUrl = `/terrain/Layer ${imageIndex}.png`;
   const overlayImageUrl = overlayImageIndex !== undefined ? `/terrain/Layer ${overlayImageIndex}.png` : "";
-
-  if (tileType.toLowerCase() === 'village') {
-    
-  }
 
   return (
     <div>
@@ -84,9 +59,9 @@ const Terrain: React.FC<TerrainProps> = ({ x, y, imageIndex, overlayImageIndex, 
       )}
       {imageIndex !== null && (
         <>
-          {tileType.toLowerCase() === 'village' ? (
+          {cityName ? (
             <div className="city-header primary-border-with-box-shadow">
-              {CitiesNames[Math.floor(Math.random() * (CitiesNames.length - 0 + 1))]}
+              {cityName}
             </div>
           ) : null}
           <img src={imageUrl} className={`terrain ${tileType.toLowerCase()}`} alt={tileType} draggable="false" />
