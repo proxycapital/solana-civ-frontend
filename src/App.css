@@ -259,10 +259,10 @@ img.upgraded-tile {
 .game-tile img.terrain-overlay {
   position: absolute;
   z-index: 1;
-  top: 7px;
-  left: 7px;
-  width: 90%;
-  height: 90%;
+  top: 15px;
+  left: 15px;
+  width: 75%;
+  height: 75%;
   border: 2px solid #fff;
   border-radius: 90px;
 }

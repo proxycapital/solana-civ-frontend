@@ -31,7 +31,7 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
   const cols = 20;
   const isDragging = useRef(false);
   const [showVillageModal, setShowVillageModal] = useState(false);
-  const { fetchPlayerState, fetchNpcs, cities, upgradedTiles, npcUnits, allUnits } = useGameState();
+  const { fetchPlayerState, fetchNpcs, cities, upgradedTiles, npcUnits, npcCities, allUnits } = useGameState();
   const { program, provider } = useWorkspace();
   const { playSound } = useSound();
 
@@ -81,6 +81,11 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
       cities.forEach((city) => {
         cityCoordinates.add(`${city.x},${city.y}`);
       });
+      // npc cities
+      const npcCityCoordinates = new Set();
+      npcCities.forEach((city) => {
+        npcCityCoordinates.add(`${city.x},${city.y}`);
+      });
       // extract coordinates of all upgraded saving also tileType
       const upgradedCoordinates = new Set();
       upgradedTiles.forEach((tile) => {
@@ -94,6 +99,12 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
           if (cityCoordinates.has(`${col},${row}`)) {
             const cityData = cities.find((city) => city.x === col && city.y === row)
             newTiles.push({ x: col, y: row, imageIndex: 10, type: "Village", cityName: cityData.name, cityId: cityData.cityId });
+            continue;
+          }
+          // NPC cities
+          if (npcCityCoordinates.has(`${col},${row}`)) {
+            const npcCityData = npcCities.find((city) => city.x === col && city.y === row)
+            newTiles.push({ x: col, y: row, imageIndex: 15, type: "NPC Village", cityName: npcCityData.name, cityId: npcCityData.cityId });
             continue;
           }
           // if there is an upgraded tile at this coordinate, render it
@@ -121,7 +132,7 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
       }
       setTiles(newTiles);
     })();
-  }, [cities, upgradedTiles]);
+  }, [cities, upgradedTiles, npcCities]);
 
   const startDrag = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     event.preventDefault();

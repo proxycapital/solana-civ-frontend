@@ -26,6 +26,7 @@ interface GameStateContextType {
   cities: any[];
   upgradedTiles: any[];
   npcUnits: any[];
+  npcCities: any[];
   resources: Resources,
   allUnits: any[];
 }
@@ -52,6 +53,7 @@ export const GameStateProvider: React.FC<BaseLayoutProps> = ({ children }) => {
   const [upgradedTiles, setUpgradedTiles] = useState([] as any[]);
   const [allUnits, setUnits] = useState([] as any[]);
   const [npcUnits, setNpcUnits] = useState([] as any[]);
+  const [npcCities, setNpcCities] = useState([] as any[]);
 
   // const updateUnits = (updatedUnits: any[]) => setUnits(updatedUnits);
 
@@ -71,6 +73,7 @@ export const GameStateProvider: React.FC<BaseLayoutProps> = ({ children }) => {
       const npcs = await getNpcs(provider, program);
       if (npcs) {
         setNpcUnits(npcs.units);
+        setNpcCities(npcs.cities);
       }
     } catch (error) {
       console.error('Failed to fetch npcs', error);
@@ -107,7 +110,7 @@ export const GameStateProvider: React.FC<BaseLayoutProps> = ({ children }) => {
   }, []);
 
   return (
-    <GameStateContext.Provider value={{ fetchPlayerState, fetchGameState, fetchNpcs, game, cities, upgradedTiles, resources, npcUnits, allUnits }}>
+    <GameStateContext.Provider value={{ fetchPlayerState, fetchGameState, fetchNpcs, game, cities, upgradedTiles, resources, npcUnits, npcCities, allUnits }}>
       {children}
     </GameStateContext.Provider>
   );

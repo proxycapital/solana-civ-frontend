@@ -37,6 +37,7 @@ export const TileType = {
   12: "Farm",
   13: "Iron Mine",
   14: "Lumber Mill",
+  15: "NPC Village",
 };
 
 const Terrain: React.FC<TerrainProps> = ({ x, y, imageIndex, overlayImageIndex, cityName, isInRange, debug }) => {
