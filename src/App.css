@@ -360,6 +360,23 @@ img.upgraded-tile {
   outline: none !important;
 }
 
+.modal-end-game {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  background: rgb(34, 47, 59);
+  background: radial-gradient(circle, rgba(34, 47, 59, 1) 0%, rgba(30, 39, 52, 1) 100%);
+  -ms-flex-negative: 0;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+  padding: 50px;
+  border: 1px solid #3c4a57;
+  border-radius: 10px;
+  text-align: center;
+  color: #fff;
+}
+
 /* Console */
 .console-container {
   padding: 10px;

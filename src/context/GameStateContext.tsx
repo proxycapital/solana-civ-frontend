@@ -5,6 +5,8 @@ import { getPlayer, getGame, getNpcs } from '../utils/solanaUtils';
 type Game = {
   turn: number,
   map: number[],
+  defeat: boolean,
+  victory: boolean,
 }
 
 type Resources = {
@@ -48,7 +50,7 @@ export const useGameState = () => {
 export const GameStateProvider: React.FC<BaseLayoutProps> = ({ children }) => {
   const { program, provider } = useWorkspace();
   const [resources, setResources] = useState({} as Resources);
-  const [game, setGame] = useState({turn: 1, map: []} as Game);
+  const [game, setGame] = useState({turn: 1, map: [], defeat: false, victory: false} as Game);
   const [cities, setCities] = useState([] as any[]);
   const [upgradedTiles, setUpgradedTiles] = useState([] as any[]);
   const [allUnits, setUnits] = useState([] as any[]);

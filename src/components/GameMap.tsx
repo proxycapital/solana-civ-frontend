@@ -11,6 +11,7 @@ import { useWorkspace } from "../context/AnchorContext";
 import { useSound } from "../context/SoundContext";
 import { getMap } from "../utils/solanaUtils";
 import "../App.css";
+import GameOverModal from "./GameOverModal";
 
 interface GameMapProps {
   debug: boolean;
@@ -32,10 +33,11 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
   const cols = 20;
   const isDragging = useRef(false);
   const [showVillageModal, setShowVillageModal] = useState(false);
-  const { fetchPlayerState, fetchNpcs, cities, upgradedTiles, npcUnits, npcCities, allUnits } = useGameState();
+  const { fetchPlayerState, fetchNpcs, game, cities, upgradedTiles, npcUnits, npcCities, allUnits } = useGameState();
   const { program, provider } = useWorkspace();
   const { playSound } = useSound();
 
+  const [showLossModal, setShowLossModal] = useState(false);
   const [tiles, setTiles] = useState([] as Tile[]);
   const [units, setUnits] = useState<Unit[]>(allUnits);
   const [selectedCityId, setSelectedCity] = useState<number | null>(null);
@@ -62,6 +64,12 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
     });
     setUnits(updatedUnits);
   }, [allUnits, npcUnits]);
+
+  useEffect(() => {
+    if (game.defeat === true) {
+      setShowLossModal(true);
+    }
+  }, [game]);
 
   useEffect(() => {
     (async () => {
@@ -407,6 +415,9 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
         pauseOnHover
         theme="dark"
       />
+      {showLossModal && (
+        <GameOverModal isOpen={showLossModal} onClose={() => { setShowLossModal(false); }} />
+      )}
     </div>
   );
 };

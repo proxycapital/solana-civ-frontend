@@ -322,6 +322,14 @@ export type Solciv = {
             type: "u32";
           },
           {
+            name: "defeat";
+            type: "bool";
+          },
+          {
+            name: "victory";
+            type: "bool";
+          },
+          {
             name: "map";
             type: {
               array: ["u8", 400];
@@ -1205,6 +1213,14 @@ export const IDL: Solciv = {
           {
             name: "turn",
             type: "u32",
+          },
+          {
+            name: "defeat",
+            type: "bool",
+          },
+          {
+            name: "victory",
+            type: "bool",
           },
           {
             name: "map",
