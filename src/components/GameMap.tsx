@@ -10,7 +10,6 @@ import { useGameState } from "../context/GameStateContext";
 import { useWorkspace } from "../context/AnchorContext";
 import { useSound } from "../context/SoundContext";
 import { getMap } from "../utils/solanaUtils";
-import "../App.css";
 import GameOverModal from "./GameOverModal";
 
 interface GameMapProps {

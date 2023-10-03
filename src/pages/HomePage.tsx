@@ -9,7 +9,6 @@ import { useWorkspace } from "../context/AnchorContext";
 import { initializeGame } from '../utils/solanaUtils';
 import * as anchor from "@coral-xyz/anchor";
 import { Program } from "@coral-xyz/anchor";
-import "../App.css";
 
 const HomePage: React.FC = () => {
   const navigate = useNavigate();

@@ -1,5 +1,4 @@
 import React from "react";
-import "../App.css";
 
 interface ConsoleProps {
   messages: Array<{ time: string; message: string; type?: "error" | undefined }>;
