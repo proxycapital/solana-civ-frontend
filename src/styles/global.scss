@@ -64,25 +64,38 @@ button.fixed-width-button-secondary {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 10000;
+  z-index: 100;
   width: 100%;
 }
 
-.top-nav-wrapper .bottom-nav {
+.bottom-nav {
   color: #fff;
-  /* display: flex; */
-  width: fit-content;
+  display: flex;
+  margin-left: auto;
+  position: fixed;
+  top: 64px; // height of top-navigation
   right: 0;
-  border: 1px solid red;
-  background: transparent !important;
+  z-index: 100;
+
+  .nav-buttons-box {
+    padding: 0.25rem;
+    background: rgb(32 43 55);
+    box-shadow: 0px 2px 7px 0px rgba(0, 0, 0, 0.75);
+    border-bottom-left-radius: 0.5rem;
+    -webkit-box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 2px 7px 0px rgba(0, 0, 0, 0.75);
+  
+    button {
+      height: 100%;
+
+      &:hover {
+        border-radius: 0.5rem;
+        outline: 1px solid #3c4a57;
+      }
+    }
+  }
 }
 
-.top-nav-wrapper .bottom-nav .nav-buttons-box {
-  background: rgb(32 43 55);
-  box-shadow: 0px 2px 7px 0px rgba(0, 0, 0, 0.75);
-  -webkit-box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.75);
-  -moz-box-shadow: 0px 2px 7px 0px rgba(0, 0, 0, 0.75);
-}
 
 header.top-navigation {
   background: rgb(34, 47, 59);

@@ -102,7 +102,7 @@ const EndTurnButton: React.FC = () => {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            zIndex: 1000,
+            zIndex: 10000,
           }}
         >
           <span style={{ color: "white", fontSize: "20px" }}>

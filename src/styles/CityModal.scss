@@ -50,6 +50,7 @@
   overflow-y: scroll;
   -ms-overflow-style: none;  
   scrollbar-width: none;
+  z-index: 10001;
   
   @media (max-width: 768px) {
     width: 100%;
