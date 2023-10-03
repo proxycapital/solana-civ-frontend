@@ -479,7 +479,6 @@ img.yield-icon {
   display: inline-block;
   vertical-align: middle;
   width: 32px;
-  /* margin-left: 5px; */
 }
 
 @keyframes flyUp {
@@ -488,7 +487,7 @@ img.yield-icon {
     top: 0;
   }
   100% {
-    opacity: 0.;
+    opacity: 0;
     top: -100px;
   }
 }

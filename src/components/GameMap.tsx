@@ -437,7 +437,6 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
                 cityName={currentTile.cityName}
                 health={currentTile.health}
                 turn={game.turn}
-                debug={debug}
               />
               {selectedUnit && selectedUnit.type === "builder" && resourceAvailable && (
                 <div className="land-plot-resource">

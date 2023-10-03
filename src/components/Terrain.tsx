@@ -9,7 +9,6 @@ interface TerrainProps {
   cityName?: string | undefined;
   health?: number;
   turn: number;
-  debug: boolean;
 }
 
 // Weighted random index selection for terrain tile images
@@ -47,7 +46,7 @@ const yieldTypes: { [key: string]: string } = {
   "Iron Mine": "iron",
 };
 
-const Terrain: React.FC<TerrainProps> = ({ x, y, imageIndex, overlayImageIndex, cityName, health, turn, debug }) => {
+const Terrain: React.FC<TerrainProps> = ({ x, y, imageIndex, overlayImageIndex, cityName, health, turn }) => {
   const [nextTurn, setNextTurn] = useState(false);
 
   useEffect(() => {
@@ -99,14 +98,8 @@ const Terrain: React.FC<TerrainProps> = ({ x, y, imageIndex, overlayImageIndex, 
           <img src={imageUrl} className={`terrain ${tileType.toLowerCase()}`} alt={tileType} draggable="false" />
         </>
       )}
-      {debug && <DebugCoordinates x={x} y={y} />}
     </div>
   );
 };
-
-// Helper function to display tile coordinates when debug is true
-const DebugCoordinates: React.FC<{ x: number; y: number }> = ({ x, y }) => (
-  <div className="tile-coordinate">{`(${x}, ${y})`}</div>
-);
 
 export default Terrain;
