@@ -436,7 +436,7 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
                 overlayImageIndex={currentTile.overlayImageIndex}
                 cityName={currentTile.cityName}
                 health={currentTile.health}
-                isInRange={isInRangeForAnyUnit}
+                turn={game.turn}
                 debug={debug}
               />
               {selectedUnit && selectedUnit.type === "builder" && resourceAvailable && (

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Tippy from "@tippyjs/react";
 
 interface TerrainProps {
@@ -8,7 +8,7 @@ interface TerrainProps {
   overlayImageIndex?: number;
   cityName?: string | undefined;
   health?: number;
-  isInRange: boolean;
+  turn: number;
   debug: boolean;
 }
 
@@ -19,7 +19,6 @@ export function weightedRandomTile() {
   const randomIndex = Math.floor(Math.random() * weightedIndices.length);
   return weightedIndices[randomIndex];
 }
-
 
 // Mapping of tile indices to their type
 export const TileType = {
@@ -41,7 +40,23 @@ export const TileType = {
   15: "NPC Village",
 };
 
-const Terrain: React.FC<TerrainProps> = ({ x, y, imageIndex, overlayImageIndex, cityName, health, isInRange, debug }) => {
+const yieldTypes: { [key: string]: string } = {
+  "Lumber Mill": "wood",
+  "Stone Quarry": "stone",
+  "Farm": "food",
+  "Iron Mine": "iron",
+};
+
+const Terrain: React.FC<TerrainProps> = ({ x, y, imageIndex, overlayImageIndex, cityName, health, turn, debug }) => {
+  const [nextTurn, setNextTurn] = useState(false);
+
+  useEffect(() => {
+    setNextTurn(true);
+    setTimeout(() => {
+      setNextTurn(false);
+    }, 2000);
+  }, [turn]);
+
   const tileType = TileType[imageIndex as keyof typeof TileType];
   const overlayTileType = TileType[overlayImageIndex as keyof typeof TileType];
   const imageUrl = `/terrain/Layer ${imageIndex}.png`;
@@ -50,14 +65,26 @@ const Terrain: React.FC<TerrainProps> = ({ x, y, imageIndex, overlayImageIndex, 
   return (
     <div>
       {overlayImageIndex !== undefined && (
-        <Tippy content={`${overlayTileType}`}>
-          <img
-            src={overlayImageUrl}
-            className={`terrain-overlay ${tileType.toLowerCase()}`}
-            alt={`${tileType}-overlay`}
-            draggable="false"
-          />
-        </Tippy>
+        <>
+          {yieldTypes[overlayTileType] && nextTurn && (
+            <div className="yield-effect">
+              +2{" "}
+              <img
+                src={`/icons/${yieldTypes[overlayTileType]}.png`}
+                alt={yieldTypes[overlayTileType]}
+                className="yield-icon"
+              />
+            </div>
+          )}
+          <Tippy content={`${overlayTileType}`}>
+            <img
+              src={overlayImageUrl}
+              className={`terrain-overlay ${tileType.toLowerCase()}`}
+              alt={`${tileType}-overlay`}
+              draggable="false"
+            />
+          </Tippy>
+        </>
       )}
       {imageIndex !== null && (
         <>
