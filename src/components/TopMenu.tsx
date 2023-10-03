@@ -9,6 +9,7 @@ import Tippy from "@tippyjs/react";
 
 import ResearchTree from "./research/ResearchTree";
 import Quests from "./quests/Quests";
+import Leaderboard from "./leaderboard/Leaderboard";
 import CustomModal from "./CustomModal";
 import EndTurnButton from "./EndTurnButton";
 import { useGameState } from "../context/GameStateContext";
@@ -133,7 +134,7 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
         <div>
           {modalContent === "Research" && <ResearchTree />}
           {modalContent === "Quests" && <Quests />}
-          {modalContent === "Leaderboard" && <div>Leaderboard Content</div>}
+          {modalContent === "Leaderboard" && <Leaderboard />}
         </div>
       </CustomModal>
     </div>
