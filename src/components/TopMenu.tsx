@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faVolumeHigh, faVolumeXmark } from "@fortawesome/free-solid-svg-icons";
 import Tippy from "@tippyjs/react";
 
+import ResearchTree from "./research/ResearchTree";
 import CustomModal from "./CustomModal";
 import EndTurnButton from "./EndTurnButton";
 import { useGameState } from "../context/GameStateContext";
@@ -129,7 +130,7 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
       {/* Modal */}
       <CustomModal isOpen={isModalOpen} onClose={handleCloseModal} title={modalContent}>
         <div>
-          {modalContent === "Research" && <div>Research Content</div>}
+          {modalContent === "Research" && <ResearchTree />}
           {modalContent === "Quests" && <div>Quests Content</div>}
           {modalContent === "Leaderboard" && <div>Leaderboard Content</div>}
         </div>
