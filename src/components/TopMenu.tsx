@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faVolumeHigh, faVolumeXmark } from "@fortawesome/free-solid-svg-icons";
-import Tippy from '@tippyjs/react';
+import Tippy from "@tippyjs/react";
 
 import CustomModal from "./CustomModal";
 import EndTurnButton from "./EndTurnButton";
@@ -44,13 +44,9 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
   };
 
   return (
-    <div style={{ display: "flex", justifyContent: "space-between", margin: "20px" }}>
-      {/* First AppBar for balances */}
-      <AppBar
-        position="static"
-        className="top-navigation"
-        style={{ flex: "2", marginRight: "10px", borderRadius: "8px" }}
-      >
+    <div className="top-nav-wrapper">
+      {/* First AppBar for balances & end turn buttons */}
+      <AppBar position="static" className="top-navigation" style={{ border: "none" }}>
         <Toolbar style={{ display: "flex", justifyContent: "space-between" }}>
           <div className="balance-container">
             {Object.keys(resources).map((resourceKey) => {
@@ -74,60 +70,7 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
               </div>
             </Tippy>
           </div>
-          <div className="button-container">
-            <Button
-              variant="text"
-              color="inherit"
-              onClick={() => {
-                handleOpenModal("Research");
-              }}
-            >
-              Research
-            </Button>
-            <Button
-              variant="text"
-              color="inherit"
-              onClick={() => {
-                handleOpenModal("Quests");
-              }}
-            >
-              Quests
-            </Button>
-            <Button
-              variant="text"
-              color="inherit"
-              onClick={() => {
-                handleOpenModal("Leaderboard");
-              }}
-            >
-              Leaderboard
-            </Button>
-          </div>
-          <CustomModal isOpen={isModalOpen} onClose={handleCloseModal} title={modalContent}>
-            <div>
-              {modalContent === "Research" && <div>Research Content</div>}
-              {modalContent === "Quests" && <div>Quests Content</div>}
-              {modalContent === "Leaderboard" && <div>Leaderboard Content</div>}
-            </div>
-          </CustomModal>
-        </Toolbar>
-      </AppBar>
-
-      {/* Second AppBar for Debug and End Turn */}
-      <AppBar
-        position="static"
-        className="top-navigation"
-        style={{ flex: "1", marginLeft: "10px", borderRadius: "8px" }}
-      >
-        <Toolbar>
           <div style={{ marginLeft: "auto" }}>
-            {/* <Switch
-              checked={debug}
-              onChange={() => setDebug(!debug)}
-              name="debug"
-              color="default"
-              inputProps={{ "aria-label": "Debug mode" }}
-            /> */}
             <Typography variant="h6" style={{ display: "inline", marginRight: "20px" }}>
               Day {game.turn}
             </Typography>
@@ -138,6 +81,59 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
           </div>
         </Toolbar>
       </AppBar>
+
+      {/* Second row of navigation */}
+      <div className="bottom-nav">
+        <div className="nav-buttons-box">
+        
+          <Button
+            variant="text"
+            color="inherit"
+            onClick={() => {
+              handleOpenModal("Research");
+            }}
+          >
+            <img src="/icons/science.png" width="42" alt="Research" />
+          </Button>
+          
+          <Button
+            variant="text"
+            color="inherit"
+            onClick={() => {
+              handleOpenModal("Quests");
+            }}
+          >
+            <img src="/icons/quests.png" width="42" alt="Quests" />
+          </Button>
+          <Button
+            variant="text"
+            color="inherit"
+            onClick={() => {
+              handleOpenModal("Leaderboard");
+            }}
+          >
+            <img src="/icons/leaderboard.png" width="42" alt="Leaderboard" />
+          </Button>
+          <Button
+            variant="text"
+            color="inherit"
+            onClick={() => {
+              handleOpenModal("Help");
+            }}
+          >
+            <span style={{fontSize: "40px", lineHeight: "30px"}}>?</span>
+          </Button>
+        </div>
+      </div>
+
+      {/* Modal */}
+      <CustomModal isOpen={isModalOpen} onClose={handleCloseModal} title={modalContent}>
+        <div>
+          {modalContent === "Research" && <div>Research Content</div>}
+          {modalContent === "Quests" && <div>Quests Content</div>}
+          {modalContent === "Leaderboard" && <div>Leaderboard Content</div>}
+        </div>
+      </CustomModal>
     </div>
   );
 };

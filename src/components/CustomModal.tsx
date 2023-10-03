@@ -14,7 +14,7 @@ interface CustomModalProps {
 
 const CustomModal: React.FC<CustomModalProps> = ({ isOpen, onClose, title, children }) => {
   return (
-    <Modal open={isOpen} onClose={onClose}>
+    <Modal open={isOpen} onClose={onClose} style={{ zIndex: "20000" }}>
       <Box
         sx={{
           position: "absolute",

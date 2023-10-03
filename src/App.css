@@ -56,13 +56,40 @@ button.fixed-width-button-secondary {
   width: 100%;
 }
 
+.top-nav-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  background: transparent !important;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10000;
+  width: 100%;
+}
+
+.top-nav-wrapper .bottom-nav {
+  color: #fff;
+  display: flex;
+  justify-content: flex-end;
+  background: transparent !important;
+}
+
+.top-nav-wrapper .bottom-nav .nav-buttons-box {
+  background: rgb(32 43 55);
+  padding: 10px;
+  border-bottom-left-radius: 25px;
+  box-shadow: 0px 2px 7px 0px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 2px 7px 0px rgba(0, 0, 0, 0.75);
+}
+
 header.top-navigation {
   background: rgb(34, 47, 59);
   background: radial-gradient(circle, rgba(34, 47, 59, 1) 0%, rgba(30, 39, 52, 1) 100%);
   -ms-flex-negative: 0;
   border: 1px solid #3c4a57;
   color: #fff;
-  border-radius: 10px;
   box-shadow: 0px 2px 7px 0px rgba(0, 0, 0, 0.75);
   -webkit-box-shadow: 0px 2px 7px 0px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: 0px 2px 7px 0px rgba(0, 0, 0, 0.75);
@@ -91,12 +118,12 @@ header.top-navigation .balance-box img {
 
 .game-container {
   width: 100%;
-  height: calc(100vh - 50px);
+  height: 100vh;
   overflow: auto;
 }
 
 .game-map {
-  margin-top: 3rem;
+  margin-top: 125px;
   display: grid;
   grid-template-columns: repeat(20, 100px);
   grid-template-rows: repeat(20, 100px);

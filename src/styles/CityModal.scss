@@ -1,7 +1,7 @@
 .production-queue-modal {
   position: absolute;
-  top: 106px;
-  left: 0;
+  top: 135px;
+  right: 0;
   padding: 1rem;
 
   @media (max-width: 768px) {
@@ -43,8 +43,8 @@
 
 .city-modal {
   position: absolute;
-  top: 106px; // height of header
-  right: 0;
+  top: 65px; // header height
+  left: 0;
   width: 30%;
   height: 100%;
   overflow-y: scroll;
