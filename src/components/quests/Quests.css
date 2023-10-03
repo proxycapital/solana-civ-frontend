@@ -1,0 +1,33 @@
+.quests {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .quest-block {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    transition: border-color 0.3s ease;
+  }
+  
+  .quest-block.completed {
+    border-color: gold;
+  }
+  
+  .quest-block.pending {
+    border-color: #656565;
+  }
+  
+  .quest-status {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+  }
+  
+  .quest-content {
+    flex: 1;
+  }
