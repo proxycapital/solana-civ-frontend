@@ -207,6 +207,33 @@ export type Solciv = {
       ];
     },
     {
+      name: "purchaseWithGold";
+      accounts: [
+        {
+          name: "playerAccount";
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: "player";
+          isMut: true;
+          isSigner: true;
+        }
+      ];
+      args: [
+        {
+          name: "cityId";
+          type: "u32";
+        },
+        {
+          name: "item";
+          type: {
+            defined: "ProductionItem";
+          };
+        }
+      ];
+    },
+    {
       name: "upgradeTile";
       accounts: [
         {
@@ -748,6 +775,9 @@ export type Solciv = {
           },
           {
             name: "QueueItemNotFound";
+          },
+          {
+            name: "InsufficientGold";
           }
         ];
       };
@@ -949,9 +979,6 @@ export type Solciv = {
       msg: "No movement points left this turn";
     }
   ];
-  metadata: {
-    address: "GoiXQMoEhhLM8MSbfUFhHz4punJqXNHEQh6ysegmuHJz";
-  };
 };
 
 export const IDL: Solciv = {
@@ -1159,6 +1186,33 @@ export const IDL: Solciv = {
         {
           name: "index",
           type: "u8",
+        },
+      ],
+    },
+    {
+      name: "purchaseWithGold",
+      accounts: [
+        {
+          name: "playerAccount",
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "player",
+          isMut: true,
+          isSigner: true,
+        },
+      ],
+      args: [
+        {
+          name: "cityId",
+          type: "u32",
+        },
+        {
+          name: "item",
+          type: {
+            defined: "ProductionItem",
+          },
         },
       ],
     },
@@ -1705,6 +1759,9 @@ export const IDL: Solciv = {
           {
             name: "QueueItemNotFound",
           },
+          {
+            name: "InsufficientGold",
+          },
         ],
       },
     },
@@ -1905,7 +1962,4 @@ export const IDL: Solciv = {
       msg: "No movement points left this turn",
     },
   ],
-  metadata: {
-    address: "GoiXQMoEhhLM8MSbfUFhHz4punJqXNHEQh6ysegmuHJz",
-  },
 };
