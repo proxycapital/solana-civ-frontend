@@ -12,49 +12,49 @@ export const AllUnits: UnitType[] = [
     "type": "settler",
     "description": "",
     "label": "Settler",
-    "goldCost": 200,
+    "goldCost": 500,
     "numberOfTurns": 1
   },{
     "type": "builder",
     "label": "Builder",
     "description": "Can build and gather resources",
-    "goldCost": 200,
+    "goldCost": 2,
     "numberOfTurns": 1
   },{
     "type": "warrior",
     "label": "Warrior",
     "description": "Basic combat unit",
-    "goldCost": 200,
+    "goldCost": 240,
     "numberOfTurns": 1
   },{
     "type": "archer",
     "label": "Archer",
-    "goldCost": 200,
+    "goldCost": 240,
     "numberOfTurns": 1
   },{
     "type": "swordsman",
     "label": "Swordsman",
-    "goldCost": 200,
+    "goldCost": 240,
     "numberOfTurns": 1
   },{
     "type": "crossbowman",
     "label": "Crossbowman",
-    "goldCost": 200,
+    "goldCost": 300,
     "numberOfTurns": 1
   },{
     "type": "musketman",
     "label": "Musketman",
-    "goldCost": 200,
+    "goldCost": 360,
     "numberOfTurns": 1
   },{
     "type": "rifleman",
     "label": "Rifleman",
-    "goldCost": 200,
+    "goldCost": 420,
     "numberOfTurns": 1
   },{
     "type": "tank",
     "label": "Tank",
-    "goldCost": 200,
+    "goldCost": 500,
     "numberOfTurns": 1,
     "requirement": "Need to find Oil first"
   }

@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 import { useGameState } from "../context/GameStateContext";
 import { useSound } from "../context/SoundContext";
 import { useWorkspace } from "../context/AnchorContext";
-import { addToProductionQueue, removeFromProductionQueue } from '../utils/solanaUtils';
+import { addToProductionQueue, removeFromProductionQueue, purchaseWithGold } from '../utils/solanaUtils';
 import { AllUnits, UnitType } from '../Units'
 import { AllBuildings, BuildingType } from '../Buildings'
 
@@ -113,6 +113,24 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
     await fetchPlayerState();
   }
 
+  const handlePurchaseWithGold = async (item: BuildingType | UnitType,  type: 'building' | 'unit') => {
+    try {
+      const tx = purchaseWithGold(provider!, program!, Number(cityId), { [type]: { "0": { [item.type]: {} } }});
+      const signature = await toast.promise(tx, {
+        pending: `Buying ${item.label}`,
+        success: `Bought ${item.label}`,
+        error: `Error during buying ${item.label}`,
+      });
+      if (typeof signature === "string") {
+        console.log(`Buy ${item.label} TX: https://explorer.solana.com/tx/${signature}?cluster=devnet`);
+      }
+    } catch (error: any) {
+      console.log(`Error buying ${item.label}: `, error);
+    }
+    await fetchPlayerState();
+  }
+
+
   return (
     <Modal
       open={show}
@@ -190,7 +208,13 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
                   content={<CustomTooltip {...building} selectedTab={selectedTab} />}
                 >
                   <Box
-                    onClick={() => handleAddToProductionQueue(building, 'building')}
+                    onClick={() => {
+                      if (selectedTab === 0) {
+                        handleAddToProductionQueue(building, 'building')
+                        return
+                      }
+                      handlePurchaseWithGold(building, 'building')
+                    }}
                     className={`body-item ${building.requirement ? 'locked' : ''} primary-border-with-box-shadow`}
                   >
                     <img src={`/${building.type}.png`} alt={building.label} width="50" />
@@ -221,7 +245,13 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
                   content={<CustomTooltip {...unit} selectedTab={selectedTab} />}
                 >
                   <Box
-                    onClick={() => handleAddToProductionQueue(unit, 'unit')}
+                    onClick={() => {
+                      if (selectedTab === 0) {
+                        handleAddToProductionQueue(unit, 'unit')
+                        return
+                      }
+                      handlePurchaseWithGold(unit, 'unit')
+                    }}
                     className="body-item primary-border-with-box-shadow" key={unit.type}
                   >
                     <img src={`/${unit.type}.png`} alt={unit.label} width="50" />
