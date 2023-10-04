@@ -10,11 +10,17 @@ interface IResearch {
 const ResearchBlock = ({ name, cost, unlocks }: IResearch) => {
   return (
     <div className="research-block">
-      <h3>{name}</h3>
-      <p>Unlocks: {unlocks.join(", ")}</p>
-      <div className="metadata">
-        Research points: {cost}{" "}
-        <img src="/icons/science.png" style={{ display: "inline-block", width: "24px" }} alt="" />
+      <img src="/research.png" width="100" alt="" className="research-icon" />
+      <div className="research-content">
+        <h3>{name}</h3>
+        <p>Unlocks: {unlocks.join(", ")}</p>
+        <div className="metadata">
+          Research points: {cost}{" "}
+          <img src="/icons/science.png" style={{ display: "inline-block", width: "24px" }} alt="" />
+        </div>
+      </div>
+      <div className="research-status">
+        <button className="research-button">Research</button>
       </div>
     </div>
   );
