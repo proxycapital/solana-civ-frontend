@@ -21,7 +21,7 @@ interface CityModalProps {
 }
 
 const CustomTooltip: React.FC<BuildingType & { selectedTab: number }> = ({
-  description, label, requirement, selectedTab,
+  description, label, requirement, selectedTab, goldCost,
 }) => {
   return (
     <div className="custom-tooltip">
@@ -39,7 +39,7 @@ const CustomTooltip: React.FC<BuildingType & { selectedTab: number }> = ({
               </>
             ) : (
               <>
-                Cost: 200
+                Cost: {goldCost}
                 <img src="./icons/gold.png" alt="gold" width="24" />
               </>
             )}
@@ -51,13 +51,16 @@ const CustomTooltip: React.FC<BuildingType & { selectedTab: number }> = ({
 }
 
 const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
-  const { program, provider } = useWorkspace();
-  const { playSound } = useSound();
-  const { fetchPlayerState, cities } = useGameState();
+  const { program, provider } = useWorkspace()
+  const { playSound } = useSound()
+  const { fetchPlayerState, cities } = useGameState()
+
   const [selectedTab, setSelectedTab] = useState(0)
   const [buildingsToBuild, setBuildingsToBuild] = useState<BuildingType[]>([])
 
   const cityData = cities.find((city) => city.cityId === cityId);
+
+  console.log(cityData)
 
   // remove buildings from Buildings
   useEffect(() => {
@@ -125,6 +128,9 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
         console.log(`Buy ${item.label} TX: https://explorer.solana.com/tx/${signature}?cluster=devnet`);
       }
     } catch (error: any) {
+      if (error.message.includes('InsufficientGold')) {
+        await toast.error('Insufficient Gold Balance')
+      }
       console.log(`Error buying ${item.label}: `, error);
     }
     await fetchPlayerState();
@@ -182,6 +188,39 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
             )}
           </div>
         ) : null}
+
+        {/* short info about city */}
+        {cityData ? (
+          <div className="modal-city-info primary-border-with-box-shadow">
+            <div className="city-name primary-border-with-box-shadow">
+              <h2>{cityData.name}</h2>
+            </div>
+            <div className="city-resources-income">
+              <div>
+                <img width="32" src="./icons/food.png" alt="apple" />
+                <span>+{cityData.foodYield}</span>
+              </div>
+              <div>
+                <img width="32" src="./icons/science.png" alt="scienct" />
+                <span>+{cityData.scienceYield}</span>
+              </div>
+              <div>
+                <img width="32" src="./icons/gold.png" alt="gold" />
+                <span>+{cityData.goldYield}</span>
+              </div>
+              <div>
+                <img width="32" src="./icons/hammer.png" alt="hummer" />
+                <span>+{cityData.productionYield}</span>
+              </div>
+            </div>
+            <div className="city-info primary-border-with-box-shadow">
+              <span>Health: {cityData.health}</span>
+              <span>Population: {cityData.population}</span>
+              <span>Attack: {cityData.attack}</span>
+            </div>
+          </div>
+        ) : null}
+
         <div className="modal city-modal">
           <div className="city-modal-header">
             <div onClick={onClose} role="button" className="close-icon">
