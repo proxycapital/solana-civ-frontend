@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 import { useGameState } from "../context/GameStateContext";
 import { useSound } from "../context/SoundContext";
 import { useWorkspace } from "../context/AnchorContext";
-import { addToProductionQueue } from '../utils/solanaUtils';
+import { addToProductionQueue, removeFromProductionQueue } from '../utils/solanaUtils';
 import { AllUnits, UnitType } from '../Units'
 import { AllBuildings, BuildingType } from '../Buildings'
 
@@ -96,8 +96,21 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
     await fetchPlayerState();
   };
 
-  const handleRemoveFromProductionQueue = async (item: BuildingType | UnitType, type: 'building' | 'unit') => {
-
+  const handleRemoveFromProductionQueue = async (item: BuildingType | UnitType, itemIndex: number) => {
+    try {
+      const tx = removeFromProductionQueue(provider!, program!, Number(cityId), itemIndex);
+      const signature = await toast.promise(tx, {
+        pending: "Removing from production queue",
+        success: "Removed from production queue",
+        error: "Error removing from production queue",
+      });
+      if (typeof signature === "string") {
+        console.log(`Remove from production queue TX: https://explorer.solana.com/tx/${signature}?cluster=devnet`);
+      }
+    } catch (error: any) {
+      console.log("Error removing from production queue: ", error);
+    }
+    await fetchPlayerState();
   }
 
   return (
@@ -111,7 +124,7 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
         {cityData?.productionQueue?.length > 0 ? (
           <div className="modal production-queue-modal">
             <h3 className="primary-border-with-box-shadow">Queue</h3>
-            {cityData?.productionQueue?.map((productionItem: any) => {
+            {cityData?.productionQueue?.map((productionItem: any, index: number) => {
               const item = productionItem["building"] ? productionItem["building"]["0"] : productionItem["unit"]["0"]
               const itemType = Object.keys(item)[0];
               let itemData: BuildingType | UnitType | undefined
@@ -128,7 +141,7 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
                       <img src={`/${itemData?.type}.png`} alt={itemData?.label} width="50" />
                       <Typography variant="body1">{itemData?.label}</Typography>
                       <span
-                        onClick={() => itemData && handleRemoveFromProductionQueue(itemData, 'unit')}
+                        onClick={() => itemData && handleRemoveFromProductionQueue(itemData, index)}
                         className="remove-button primary-border-with-box-shadow"
                       >
                         Remove
@@ -139,7 +152,7 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
                       <img src={`/${itemData?.type}.png`} alt={itemData?.label} width="50" />
                       <Typography variant="body1">{itemData?.label}</Typography>
                       <span
-                        onClick={() => itemData && handleRemoveFromProductionQueue(itemData, 'unit')}
+                        onClick={() => itemData && handleRemoveFromProductionQueue(itemData, index)}
                         className="remove-button primary-border-with-box-shadow"
                       >
                         Remove
