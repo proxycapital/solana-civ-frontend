@@ -165,81 +165,84 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
           </div>
         ) : null}
         <div className="modal city-modal">
-          <div onClick={onClose} role="button" className="close-icon">
-            <img width="32" src="./icons/close.png" alt="Close" />
+          <div className="city-modal-header">
+            <div onClick={onClose} role="button" className="close-icon">
+              <img width="32" src="./icons/close.png" alt="Close" />
+            </div>
+            <Tabs
+              TabIndicatorProps={{ style: { background: '#ccc', height: '2.5px' }}}
+              className="modal-header-tabs" 
+              value={selectedTab}
+              onChange={(_e, newValue) => setSelectedTab(newValue)}
+              centered
+            >
+              <Tab label="Production"/>
+              <Tab label="Insta Buy"/>
+            </Tabs>
           </div>
-          <Tabs
-            TabIndicatorProps={{ style: { background: '#ccc', height: '2.5px' }}}
-            className="modal-header-tabs" 
-            value={selectedTab}
-            onChange={(_e, newValue) => setSelectedTab(newValue)}
-            centered
-          >
-            <Tab label="Production"/>
-            <Tab label="Insta Buy"/>
-          </Tabs>
-      
-          <h3 className="primary-border-with-box-shadow">Buildings</h3>
-          <div className="modal-body">
-            {buildingsToBuild.map((building) => (
-              <Tippy
-                key={building.type}
-                placement="left"
-                content={<CustomTooltip {...building} selectedTab={selectedTab} />}
-              >
-                <Box
-                  onClick={() => handleAddToProductionQueue(building, 'building')}
-                  className={`body-item ${building.requirement ? 'locked' : ''} primary-border-with-box-shadow`}
+          <div className="city-modal-body">
+            <h3 className="primary-border-with-box-shadow">Buildings</h3>
+            <div className="modal-body">
+              {buildingsToBuild.map((building) => (
+                <Tippy
+                  key={building.type}
+                  placement="left"
+                  content={<CustomTooltip {...building} selectedTab={selectedTab} />}
                 >
-                  <img src={`/${building.type}.png`} alt={building.label} width="50" />
-                  <Typography variant="body1">{building.label}</Typography>
-                  <div className="number-of-turns">
-                    {selectedTab === 0 ? (
-                      <>
-                        <span>{building.numberOfTurns}</span>
-                        <img src="./icons/hourglass.png" width="20" alt="hourglass" />
-                      </>
-                    ) : (
-                      <>
-                        <span>{building.goldCost}</span>
-                        <img src="./icons/gold.png" width="20" alt="gold" />
-                      </>
-                    )}
-                  </div>
-                </Box>
-              </Tippy>
-            ))}
-          </div>
-          <h3 className="primary-border-with-box-shadow units-header">Units</h3>
-          <div className="modal-body">
-            {AllUnits.map((unit) => (
-              <Tippy
-                key={unit.type}
-                placement="left"
-                content={<CustomTooltip {...unit} selectedTab={selectedTab} />}
-              >
-                <Box
-                  onClick={() => handleAddToProductionQueue(unit, 'unit')}
-                  className="body-item primary-border-with-box-shadow" key={unit.type}
+                  <Box
+                    onClick={() => handleAddToProductionQueue(building, 'building')}
+                    className={`body-item ${building.requirement ? 'locked' : ''} primary-border-with-box-shadow`}
+                  >
+                    <img src={`/${building.type}.png`} alt={building.label} width="50" />
+                    <Typography variant="body1">{building.label}</Typography>
+                    <div className="number-of-turns">
+                      {selectedTab === 0 ? (
+                        <>
+                          <span>{building.numberOfTurns}</span>
+                          <img src="./icons/hourglass.png" width="20" alt="hourglass" />
+                        </>
+                      ) : (
+                        <>
+                          <span>{building.goldCost}</span>
+                          <img src="./icons/gold.png" width="20" alt="gold" />
+                        </>
+                      )}
+                    </div>
+                  </Box>
+                </Tippy>
+              ))}
+            </div>
+            <h3 className="primary-border-with-box-shadow units-header">Units</h3>
+            <div className="modal-body">
+              {AllUnits.map((unit) => (
+                <Tippy
+                  key={unit.type}
+                  placement="left"
+                  content={<CustomTooltip {...unit} selectedTab={selectedTab} />}
                 >
-                  <img src={`/${unit.type}.png`} alt={unit.label} width="50" />
-                  <Typography variant="body1">{unit.label}</Typography>
-                  <div className="number-of-turns">
-                    {selectedTab === 0 ? (
-                      <>
-                        <span>{unit.numberOfTurns}</span>
-                        <img src="./icons/hourglass.png" width="20" alt="hourglass" />
-                      </>
-                    ) : (
-                      <>
-                        <span>{unit.goldCost}</span>
-                        <img src="./icons/gold.png" width="20" alt="gold" />
-                      </>
-                    )}
-                  </div>
-                </Box>
-              </Tippy>
-            ))}
+                  <Box
+                    onClick={() => handleAddToProductionQueue(unit, 'unit')}
+                    className="body-item primary-border-with-box-shadow" key={unit.type}
+                  >
+                    <img src={`/${unit.type}.png`} alt={unit.label} width="50" />
+                    <Typography variant="body1">{unit.label}</Typography>
+                    <div className="number-of-turns">
+                      {selectedTab === 0 ? (
+                        <>
+                          <span>{unit.numberOfTurns}</span>
+                          <img src="./icons/hourglass.png" width="20" alt="hourglass" />
+                        </>
+                      ) : (
+                        <>
+                          <span>{unit.goldCost}</span>
+                          <img src="./icons/gold.png" width="20" alt="gold" />
+                        </>
+                      )}
+                    </div>
+                  </Box>
+                </Tippy>
+              ))}
+            </div>
           </div>
         </div>
       </>
