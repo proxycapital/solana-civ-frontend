@@ -979,6 +979,9 @@ export type Solciv = {
       msg: "No movement points left this turn";
     }
   ];
+  metadata: {
+    address: "GoiXQMoEhhLM8MSbfUFhHz4punJqXNHEQh6ysegmuHJz";
+  };
 };
 
 export const IDL: Solciv = {
@@ -1962,4 +1965,7 @@ export const IDL: Solciv = {
       msg: "No movement points left this turn",
     },
   ],
+  metadata: {
+    address: "GoiXQMoEhhLM8MSbfUFhHz4punJqXNHEQh6ysegmuHJz",
+  },
 };
