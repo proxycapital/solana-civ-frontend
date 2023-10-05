@@ -95,6 +95,9 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
       if (error.message.includes("QueueFull")) {
         toast.error("Production queue is currently at full capacity.")
       }
+      if (error.message.includes("TechnologyNotResearched")) {
+        toast.error("You need to unlock this technology via Research.")
+      }
     }
     await fetchPlayerState();
   };
