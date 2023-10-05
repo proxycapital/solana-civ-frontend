@@ -21,7 +21,7 @@ const darkTheme = createTheme({
 
 const EndTurnButton: React.FC = () => {
   const { program, provider } = useWorkspace();
-  const { technologies, fetchPlayerState, fetchGameState, fetchNpcs } = useGameState();
+  const { technologies, cities, allUnits, fetchPlayerState, fetchGameState, fetchNpcs } = useGameState();
   const [isProcessing, setIsProcessing] = useState(false);
   const [isClosingGame, setIsClosingGame] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
@@ -39,6 +39,13 @@ const EndTurnButton: React.FC = () => {
       toast.warning("You need to select a technology to research");
       return;
     }
+    for (let city of cities) {
+      if (city.productionQueue.length === 0 && allUnits.length < 20) {
+        toast.warning("You need to select production in all your cities");
+        return;
+      }
+    }
+    
     setIsProcessing(true);
     console.time("End turn");
     try {
