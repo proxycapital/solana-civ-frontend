@@ -234,6 +234,29 @@ export type Solciv = {
       ];
     },
     {
+      name: "startResearch";
+      accounts: [
+        {
+          name: "playerAccount";
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: "player";
+          isMut: true;
+          isSigner: true;
+        }
+      ];
+      args: [
+        {
+          name: "technologyType";
+          type: {
+            defined: "TechnologyType";
+          };
+        }
+      ];
+    },
+    {
       name: "upgradeTile";
       accounts: [
         {
@@ -471,6 +494,26 @@ export type Solciv = {
             type: {
               defined: "Resources";
             };
+          },
+          {
+            name: "researchedTechnologies";
+            type: {
+              vec: {
+                defined: "TechnologyType";
+              };
+            };
+          },
+          {
+            name: "currentResearch";
+            type: {
+              option: {
+                defined: "TechnologyType";
+              };
+            };
+          },
+          {
+            name: "researchAccumulatedPoints";
+            type: "u32";
           },
           {
             name: "nextCityId";
@@ -778,6 +821,35 @@ export type Solciv = {
           },
           {
             name: "InsufficientGold";
+          },
+          {
+            name: "TechnologyNotResearched";
+          }
+        ];
+      };
+    },
+    {
+      name: "ResearchError";
+      type: {
+        kind: "enum";
+        variants: [
+          {
+            name: "InvalidResearch";
+          },
+          {
+            name: "AlreadyResearching";
+          },
+          {
+            name: "ResearchAlreadyCompleted";
+          },
+          {
+            name: "CannotResearch";
+          },
+          {
+            name: "ResearchNotComplete";
+          },
+          {
+            name: "NoActiveResearch";
           }
         ];
       };
@@ -902,6 +974,65 @@ export type Solciv = {
           },
           {
             name: "Tank";
+          }
+        ];
+      };
+    },
+    {
+      name: "TechnologyType";
+      type: {
+        kind: "enum";
+        variants: [
+          {
+            name: "Archery";
+          },
+          {
+            name: "IronWorking";
+          },
+          {
+            name: "MedievalWarfare";
+          },
+          {
+            name: "Gunpowder";
+          },
+          {
+            name: "Ballistics";
+          },
+          {
+            name: "TanksAndArmor";
+          },
+          {
+            name: "Writing";
+          },
+          {
+            name: "Education";
+          },
+          {
+            name: "Economics";
+          },
+          {
+            name: "Academia";
+          },
+          {
+            name: "Astronomy";
+          },
+          {
+            name: "Capitalism";
+          },
+          {
+            name: "Agriculture";
+          },
+          {
+            name: "Construction";
+          },
+          {
+            name: "Industrialization";
+          },
+          {
+            name: "ElectricalPower";
+          },
+          {
+            name: "ModernFarming";
           }
         ];
       };
@@ -1220,6 +1351,29 @@ export const IDL: Solciv = {
       ],
     },
     {
+      name: "startResearch",
+      accounts: [
+        {
+          name: "playerAccount",
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "player",
+          isMut: true,
+          isSigner: true,
+        },
+      ],
+      args: [
+        {
+          name: "technologyType",
+          type: {
+            defined: "TechnologyType",
+          },
+        },
+      ],
+    },
+    {
       name: "upgradeTile",
       accounts: [
         {
@@ -1457,6 +1611,26 @@ export const IDL: Solciv = {
             type: {
               defined: "Resources",
             },
+          },
+          {
+            name: "researchedTechnologies",
+            type: {
+              vec: {
+                defined: "TechnologyType",
+              },
+            },
+          },
+          {
+            name: "currentResearch",
+            type: {
+              option: {
+                defined: "TechnologyType",
+              },
+            },
+          },
+          {
+            name: "researchAccumulatedPoints",
+            type: "u32",
           },
           {
             name: "nextCityId",
@@ -1765,6 +1939,35 @@ export const IDL: Solciv = {
           {
             name: "InsufficientGold",
           },
+          {
+            name: "TechnologyNotResearched",
+          },
+        ],
+      },
+    },
+    {
+      name: "ResearchError",
+      type: {
+        kind: "enum",
+        variants: [
+          {
+            name: "InvalidResearch",
+          },
+          {
+            name: "AlreadyResearching",
+          },
+          {
+            name: "ResearchAlreadyCompleted",
+          },
+          {
+            name: "CannotResearch",
+          },
+          {
+            name: "ResearchNotComplete",
+          },
+          {
+            name: "NoActiveResearch",
+          },
         ],
       },
     },
@@ -1888,6 +2091,65 @@ export const IDL: Solciv = {
           },
           {
             name: "Tank",
+          },
+        ],
+      },
+    },
+    {
+      name: "TechnologyType",
+      type: {
+        kind: "enum",
+        variants: [
+          {
+            name: "Archery",
+          },
+          {
+            name: "IronWorking",
+          },
+          {
+            name: "MedievalWarfare",
+          },
+          {
+            name: "Gunpowder",
+          },
+          {
+            name: "Ballistics",
+          },
+          {
+            name: "TanksAndArmor",
+          },
+          {
+            name: "Writing",
+          },
+          {
+            name: "Education",
+          },
+          {
+            name: "Economics",
+          },
+          {
+            name: "Academia",
+          },
+          {
+            name: "Astronomy",
+          },
+          {
+            name: "Capitalism",
+          },
+          {
+            name: "Agriculture",
+          },
+          {
+            name: "Construction",
+          },
+          {
+            name: "Industrialization",
+          },
+          {
+            name: "ElectricalPower",
+          },
+          {
+            name: "ModernFarming",
           },
         ],
       },

@@ -140,7 +140,7 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
 
         {/* Modal */}
         <CustomModal isOpen={isModalOpen} onClose={handleCloseModal} title={modalContent}>
-          <div>
+          <div style={{width: "100%", maxWidth: "1000px"}}>
             {modalContent === "Research" && <ResearchTree />}
             {modalContent === "Quests" && <Quests />}
             {modalContent === "Leaderboard" && <Leaderboard />}

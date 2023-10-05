@@ -1,13 +1,13 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { useWorkspace } from '../context/AnchorContext';
-import { getPlayer, getGame, getNpcs } from '../utils/solanaUtils';
+import { useWorkspace } from "../context/AnchorContext";
+import { getPlayer, getGame, getNpcs } from "../utils/solanaUtils";
 
 type Game = {
-  turn: number,
-  map: number[],
-  defeat: boolean,
-  victory: boolean,
-}
+  turn: number;
+  map: number[];
+  defeat: boolean;
+  victory: boolean;
+};
 
 type Resources = {
   gold: number;
@@ -24,12 +24,17 @@ interface GameStateContextType {
   fetchPlayerState: () => Promise<void>;
   fetchGameState: () => Promise<void>;
   fetchNpcs: () => Promise<void>;
-  game: Game,
+  game: Game;
+  technologies: {
+    currentResearch: null | any;
+    researchAccumulatedPoints: number;
+    researchedTechnologies: any[];
+  };
   cities: any[];
   upgradedTiles: any[];
   npcUnits: any[];
   npcCities: any[];
-  resources: Resources,
+  resources: Resources;
   allUnits: any[];
 }
 
@@ -50,7 +55,12 @@ export const useGameState = () => {
 export const GameStateProvider: React.FC<BaseLayoutProps> = ({ children }) => {
   const { program, provider } = useWorkspace();
   const [resources, setResources] = useState({} as Resources);
-  const [game, setGame] = useState({turn: 1, map: [], defeat: false, victory: false} as Game);
+  const [game, setGame] = useState({ turn: 1, map: [], defeat: false, victory: false } as Game);
+  const [technologies, setTechnologies] = useState({
+    currentResearch: null,
+    researchAccumulatedPoints: 0,
+    researchedTechnologies: [],
+  });
   const [cities, setCities] = useState([] as any[]);
   const [upgradedTiles, setUpgradedTiles] = useState([] as any[]);
   const [allUnits, setUnits] = useState([] as any[]);
@@ -66,7 +76,7 @@ export const GameStateProvider: React.FC<BaseLayoutProps> = ({ children }) => {
         setGame(game);
       }
     } catch (error) {
-      console.error('Failed to fetch game state', error);
+      console.error("Failed to fetch game state", error);
     }
   };
 
@@ -78,29 +88,23 @@ export const GameStateProvider: React.FC<BaseLayoutProps> = ({ children }) => {
         setNpcCities(npcs.cities);
       }
     } catch (error) {
-      console.error('Failed to fetch npcs', error);
+      console.error("Failed to fetch npcs", error);
     }
-  }
+  };
 
   const fetchPlayerState = async () => {
     try {
       const player = await getPlayer(provider, program);
-      console.log('[GameStateProvider] fetchPlayerState()', player);
-      if (player && player.balances) {
-        // setSol(player.balances.sol);
-        setResources(player.balances);
-      }
-      if (player && player.units) {
-        setUnits(player.units);
-      }
-      if (player && player.cities) {
-        setCities(player.cities);
-      }
-      if (player && player.tiles) {
-        setUpgradedTiles(player.tiles);
+      console.log("[GameStateProvider] fetchPlayerState()", player);
+      if (player) {
+        if (player.balances) setResources(player.balances);
+        if (player.units) setUnits(player.units);
+        if (player.cities) setCities(player.cities);
+        if (player.tiles) setUpgradedTiles(player.tiles);
+        if (player.technologies) setTechnologies(player.technologies);
       }
     } catch (error) {
-      console.error('Failed to fetch balance', error);
+      console.error("Failed to fetch balance", error);
       // @todo: alert for player ?
     }
   };
@@ -112,7 +116,21 @@ export const GameStateProvider: React.FC<BaseLayoutProps> = ({ children }) => {
   }, []);
 
   return (
-    <GameStateContext.Provider value={{ fetchPlayerState, fetchGameState, fetchNpcs, game, cities, upgradedTiles, resources, npcUnits, npcCities, allUnits }}>
+    <GameStateContext.Provider
+      value={{
+        fetchPlayerState,
+        fetchGameState,
+        fetchNpcs,
+        game,
+        technologies,
+        cities,
+        upgradedTiles,
+        resources,
+        npcUnits,
+        npcCities,
+        allUnits,
+      }}
+    >
       {children}
     </GameStateContext.Provider>
   );

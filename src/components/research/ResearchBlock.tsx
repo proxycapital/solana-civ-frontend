@@ -1,26 +1,78 @@
 import React from "react";
+import Button from "@mui/material/Button";
+import LinearProgress from "@mui/material/LinearProgress";
 import "./ResearchTree.css";
 
 interface IResearch {
   name: string;
   cost: number;
   unlocks: string[];
+  currentResearch: any;
+  researchAccumulatedPoints: number;
+  researchedTechnologies: any[];
+  onResearchClick: (name: string) => void;
 }
 
-const ResearchBlock = ({ name, cost, unlocks }: IResearch) => {
+function toCamelCase(str: string) {
+  return str
+    .replace(/[^a-zA-Z\s]/g, "")
+    .split(" ")
+    .map((word, index) => {
+      if (index === 0) {
+        return word.toLowerCase();
+      }
+      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+    })
+    .join("");
+}
+
+const ResearchBlock = ({
+  name,
+  cost,
+  unlocks,
+  currentResearch,
+  researchAccumulatedPoints,
+  researchedTechnologies,
+  onResearchClick,
+}: IResearch) => {
+  const researchedKeys = researchedTechnologies.map(tech => Object.keys(tech)[0]);
+  const currentResearchKey = currentResearch ? Object.keys(currentResearch)[0] : null;
+  const isCurrentResearch = toCamelCase(name) === currentResearchKey;
+  const progressPercentage = isCurrentResearch ? (researchAccumulatedPoints / cost) * 100 : 0;
+
   return (
     <div className="research-block">
-      <img src="/research.png" width="100" alt="" className="research-icon" />
-      <div className="research-content">
-        <h3>{name}</h3>
-        <p>Unlocks: {unlocks.join(", ")}</p>
-        <div className="metadata">
-          Research points: {cost}{" "}
-          <img src="/icons/science.png" style={{ display: "inline-block", width: "24px" }} alt="" />
+      <div className="top-section">
+        {/* <img src="/research.png" width="100" alt="" className="research-icon" /> */}
+        <div className="research-content">
+            <h3>{name}</h3>
+            <p>Unlocks: {unlocks.join(", ")}</p>
         </div>
       </div>
       <div className="research-status">
-        <button className="research-button">Research</button>
+        {isCurrentResearch && (
+          <div className="progress-wrapper">
+            <LinearProgress variant="determinate" style={{height: "14px"}} value={progressPercentage} />
+            <span className="progress-text">{progressPercentage.toFixed(2)}%</span>
+          </div>
+        )}
+        {researchedKeys.includes(toCamelCase(name)) && (
+          <div className="researched-text">✅ Researched</div>
+        )}
+        {!isCurrentResearch && !currentResearch && !researchedKeys.includes(toCamelCase(name)) && (
+          <Button
+            className="research-button"
+            variant="outlined"
+            //disabled={currentResearch}
+            onClick={() => {
+              onResearchClick(name);
+            }}
+          >
+            Research {"(" + cost}
+            <img src="/icons/science.png" style={{ display: "inline-block", width: "24px" }} alt="" />
+            {")"}
+          </Button>
+        )}
       </div>
     </div>
   );

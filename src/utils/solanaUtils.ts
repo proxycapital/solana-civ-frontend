@@ -76,10 +76,16 @@ export const getPlayer = async (provider: AnchorProvider | undefined, program: P
     console.log("Error while fetching player account: ", error);
   }
   console.log("[solanaUtils] getPlayer()", playerAccount);
-  const balances = playerAccount ? playerAccount.resources : {};
-  const units = playerAccount ? playerAccount.units : [];
-  const cities = playerAccount ? playerAccount.cities : [];
-  const tiles = playerAccount ? playerAccount.tiles : [];
+  const balances = playerAccount?.resources ?? {};
+  const units = playerAccount?.units ?? [];
+  const cities = playerAccount?.cities ?? [];
+  const tiles = playerAccount?.tiles ?? [];
+
+  const technologies = {
+    currentResearch: playerAccount?.currentResearch ?? null,
+    researchAccumulatedPoints: playerAccount?.researchAccumulatedPoints ?? 0,
+    researchedTechnologies: playerAccount?.researchedTechnologies ?? [],
+  };
 
   // calculate "science" yield from all cities
   balances.science = cities.reduce((acc: number, city: { scienceYield: number }) => {
@@ -92,7 +98,7 @@ export const getPlayer = async (provider: AnchorProvider | undefined, program: P
   } catch (error) {
     console.error("Failed to fetch balance", error);
   }
-  return { balances, units, cities, tiles };
+  return { balances, units, cities, tiles, technologies };
 };
 
 export const getNpcs = async (provider: AnchorProvider | undefined, program: Program<Solciv> | undefined) => {

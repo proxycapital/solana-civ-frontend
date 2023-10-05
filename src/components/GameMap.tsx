@@ -449,7 +449,7 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
         })}
       </div>
       <ToastContainer
-        style={{ top: "135px" }}
+        style={{ top: "135px", zIndex: 100000 }}
         position="top-right"
         autoClose={1000}
         hideProgressBar={false}

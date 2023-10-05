@@ -1,18 +1,44 @@
 import React, { useState } from "react";
 import * as anchor from "@coral-xyz/anchor";
 import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { toast } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHourglassEnd, faSkullCrossbones } from "@fortawesome/free-solid-svg-icons";
 import { useWorkspace } from "../context/AnchorContext";
 import { useGameState } from "../context/GameStateContext";
 
+const darkTheme = createTheme({
+  palette: {
+    mode: "dark",
+  },
+});
+
 const EndTurnButton: React.FC = () => {
   const { program, provider } = useWorkspace();
-  const { fetchPlayerState, fetchGameState, fetchNpcs } = useGameState();
+  const { technologies, fetchPlayerState, fetchGameState, fetchNpcs } = useGameState();
   const [isProcessing, setIsProcessing] = useState(false);
   const [isClosingGame, setIsClosingGame] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
+
+  const handleOpenDialog = () => {
+    setOpenDialog(true);
+  };
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+  };
 
   const endTurn = async () => {
+    if (!technologies.currentResearch && technologies.researchedTechnologies.length < 17) {
+      toast.warning("You need to select a technology to research");
+      return;
+    }
     setIsProcessing(true);
     console.time("End turn");
     try {
@@ -46,10 +72,8 @@ const EndTurnButton: React.FC = () => {
     setIsProcessing(false);
   };
 
-  const closeGame = async () => {
-    if (window.confirm("Are you sure that you want to end the game? All your progress will be lost 💀💀💀") === false) {
-      return;
-    }
+  const confirmCloseGame = async () => {
+    handleCloseDialog();
     setIsClosingGame(true);
     setIsProcessing(true);
     try {
@@ -85,10 +109,12 @@ const EndTurnButton: React.FC = () => {
   return (
     <>
       <Button onClick={endTurn} disabled={isProcessing} variant="outlined" className="end-turn-button">
-        <FontAwesomeIcon icon={faHourglassEnd} />&nbsp; End Turn
+        <FontAwesomeIcon icon={faHourglassEnd} />
+        &nbsp; End Turn
       </Button>
-      <Button onClick={closeGame} variant="outlined" className="end-game-button">
-        <FontAwesomeIcon icon={faSkullCrossbones} />&nbsp; End Game
+      <Button onClick={handleOpenDialog} variant="outlined" className="end-game-button">
+        <FontAwesomeIcon icon={faSkullCrossbones} />
+        &nbsp; End Game
       </Button>
       {isProcessing && (
         <div
@@ -111,6 +137,31 @@ const EndTurnButton: React.FC = () => {
           </span>
         </div>
       )}
+      <ThemeProvider theme={darkTheme}>
+        <Dialog
+          open={openDialog}
+          onClose={handleCloseDialog}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">{"End Game Confirmation"}</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Are you sure that you want to end the game? 
+              <br />
+              All your progress will be lost 💀💀💀
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseDialog} color="primary">
+              Cancel
+            </Button>
+            <Button onClick={confirmCloseGame} color="primary" autoFocus>
+              Confirm
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </ThemeProvider>
     </>
   );
 };

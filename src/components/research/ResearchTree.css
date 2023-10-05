@@ -22,8 +22,8 @@
 }
 
 .research-block {
-  display: flex;
-  background-color: #040406;
+  display: block;
+  background-color: #2e2e2e;
   border: 1px solid #fff;
   border-radius: 10px;
   margin-bottom: 20px;
@@ -37,13 +37,17 @@
   margin-right: 15px;
 }
 
+.top-section {
+  display: flex;
+}
+
 .research-content {
   flex: 1;
 }
 
 .research-status {
-  flex: 0 0 auto;
-  margin-left: 15px;
+  margin-top: 10px;
+  width: 100%;
 }
 
 .research-block::after {
@@ -65,4 +69,26 @@
   color: #777;
   font-size: 0.9em;
   margin-top: 10px;
+}
+
+button.research-button {
+  color: #fff;
+  border: 1px solid #fff;
+  width: 100%;
+}
+
+.progress-wrapper {
+  position: relative;
+  width: 100%;
+  margin: 10px 0;
+}
+
+.progress-text {
+  font-size: 12px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  font-weight: bold;
 }
