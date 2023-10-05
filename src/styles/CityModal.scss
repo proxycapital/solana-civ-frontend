@@ -120,7 +120,7 @@
       align-items: center;
       justify-content: space-between;
       margin-bottom: 0.5rem;
-      padding: 1rem;
+      padding: 5px;
     
       .number-of-turns {
         display: flex;
@@ -141,6 +141,7 @@
 
     .body-item.locked {
       border: 1px solid #ccc;
+      filter: blur(1px);
       &:hover {
         cursor: not-allowed;
       }
