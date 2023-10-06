@@ -21,7 +21,7 @@ const darkTheme = createTheme({
 
 const EndTurnButton: React.FC = () => {
   const { program, provider } = useWorkspace();
-  const { technologies, cities, allUnits, fetchPlayerState, fetchGameState, fetchNpcs } = useGameState();
+  const { game, technologies, cities, allUnits, fetchPlayerState, fetchGameState, fetchNpcs } = useGameState();
   const [isProcessing, setIsProcessing] = useState(false);
   const [isClosingGame, setIsClosingGame] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
@@ -117,7 +117,7 @@ const EndTurnButton: React.FC = () => {
     <>
       <Button onClick={endTurn} disabled={isProcessing} variant="outlined" className="end-turn-button">
         <FontAwesomeIcon icon={faHourglassEnd} />
-        &nbsp; End Turn
+        &nbsp; End Turn {game.turn}
       </Button>
       <Button onClick={handleOpenDialog} variant="outlined" className="end-game-button">
         <FontAwesomeIcon icon={faSkullCrossbones} />

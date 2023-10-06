@@ -1,19 +1,35 @@
 import React, { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faVolumeHigh, faVolumeXmark } from "@fortawesome/free-solid-svg-icons";
+import Box from "@mui/material/Box";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Tippy from "@tippyjs/react";
+import { toast } from "react-toastify";
+import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
+import { useWallet } from "@solana/wallet-adapter-react";
 
 import ResearchTree from "./research/ResearchTree";
 import Quests from "./quests/Quests";
 import Leaderboard from "./leaderboard/Leaderboard";
+import Marketplace from "./marketplace/Marketplace";
 import CustomModal from "./CustomModal";
 import EndTurnButton from "./EndTurnButton";
 import { useGameState } from "../context/GameStateContext";
 import { useSound } from "../context/SoundContext";
+
+const darkTheme = createTheme({
+  palette: {
+    mode: "dark",
+  },
+});
 
 interface TopMenuProps {
   debug: boolean;
@@ -21,11 +37,33 @@ interface TopMenuProps {
 }
 
 const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
-  const { resources, game } = useGameState();
+  const { wallet } = useWallet();
+  const { resources } = useGameState();
   const { toggleBackgroundMusic } = useSound();
-
   const [isModalOpen, setModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState("");
+  const [openDialog, setOpenDialog] = useState(false);
+
+  const handleOpenDialog = () => {
+    if (!wallet?.adapter.publicKey) {
+      toast.error("You need to connect your wallet");
+      return;
+    }
+    setOpenDialog(true);
+  };
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+  };
+
+  const handleWithdrawal = () => {
+    if (!wallet?.adapter.publicKey) {
+      toast.error("You need to connect your wallet");
+      return;
+    }
+    setOpenDialog(false);
+    alert(wallet.adapter.publicKey?.toBase58());
+  };
 
   const handleOpenModal = (content: string) => {
     setModalContent(content);
@@ -48,8 +86,8 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
 
   return (
     <>
-     {/* Second row of navigation */}
-     <div className="bottom-nav">
+      {/* Second row of navigation */}
+      <div className="bottom-nav">
         <div className="nav-buttons-box">
           <Tippy key="research" content="Research" placement="bottom">
             <Button
@@ -62,7 +100,7 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
               <img src="/icons/science.png" width="42" alt="Research" />
             </Button>
           </Tippy>
-          
+
           <Tippy key="quests" content="Quests" placement="bottom">
             <Button
               variant="text"
@@ -74,7 +112,7 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
               <img src="/icons/quests.png" width="42" alt="Quests" />
             </Button>
           </Tippy>
-      
+
           <Tippy key="leaderboard" content="Leaderboard" placement="bottom">
             <Button
               variant="text"
@@ -87,15 +125,15 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
             </Button>
           </Tippy>
 
-          <Tippy key="help" content="Help" placement="bottom">
+          <Tippy key="marketplace" content="Marketplace" placement="bottom">
             <Button
               variant="text"
               color="inherit"
               onClick={() => {
-                handleOpenModal("Help");
+                handleOpenModal("Marketplace");
               }}
             >
-              <span style={{fontSize: "40px", lineHeight: "30px"}}>?</span>
+              <img src="/icons/marketplace.png" width="42" alt="Marketplace" />
             </Button>
           </Tippy>
         </div>
@@ -120,33 +158,64 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
                   </Tippy>
                 );
               })}
-              <Tippy key="gems" content="Gems - can be withdrawn to a personal wallet">
+              <div className="vertical-divider" />
+              <Tippy key="gems" content="Click to withdraw">
                 <div className="balance-box">
-                  <img src="/icons/gems.png" width="32" alt="Gems" />
-                  {resources.gems}
+                  <Button style={{ padding: 0, margin: 0, color: "#fff" }} onClick={handleOpenDialog}>
+                    <img src="/icons/gems.png" width="32" alt="Gems" />
+                    {resources.gems}
+                  </Button>
                 </div>
               </Tippy>
             </div>
-            <div style={{ marginLeft: "auto" }}>
-              <Typography variant="h6" style={{ display: "inline", marginRight: "20px" }}>
-                Day {game.turn}
-              </Typography>
-              <EndTurnButton />
+            <div style={{ marginLeft: "auto", display: "flex" }}>
               <button onClick={handleToggleBackgroundMusic} className="music-toggle-button">
                 <FontAwesomeIcon icon={isMusicPlaying ? faVolumeHigh : faVolumeXmark} />
               </button>
+              <EndTurnButton />
+              <WalletMultiButton />
             </div>
           </Toolbar>
         </AppBar>
 
         {/* Modal */}
         <CustomModal isOpen={isModalOpen} onClose={handleCloseModal} title={modalContent}>
-          <div style={{width: "100%", maxWidth: "1000px"}}>
+          <div style={{ width: "100%", maxWidth: "1000px" }}>
             {modalContent === "Research" && <ResearchTree />}
             {modalContent === "Quests" && <Quests />}
             {modalContent === "Leaderboard" && <Leaderboard />}
+            {modalContent === "Marketplace" && <Marketplace />}
           </div>
         </CustomModal>
+
+        {/* Withdrawal confirmation */}
+        <ThemeProvider theme={darkTheme}>
+          <Dialog
+            open={openDialog}
+            onClose={handleCloseDialog}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <Box className="confirmation-modal">
+              <DialogTitle id="alert-dialog-title">{"Withdrawal confirmation"}</DialogTitle>
+              <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                  Do you want to withdraw <b>{resources.gems} gems</b> to the connected wallet?
+                  <br />
+                  {wallet?.adapter.publicKey?.toBase58()}
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleCloseDialog} color="primary">
+                  Cancel
+                </Button>
+                <Button onClick={handleWithdrawal} color="primary" autoFocus>
+                  Confirm
+                </Button>
+              </DialogActions>
+            </Box>
+          </Dialog>
+        </ThemeProvider>
       </div>
     </>
   );

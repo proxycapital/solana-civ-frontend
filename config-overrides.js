@@ -6,6 +6,12 @@ module.exports = function override (config, env) {
     loaders.fallback = {
         "process": false, // require.resolve("process/browser"),
         "fs": false,
+        "crypto": false,
+        "stream": false,
+        "http": false,
+        "https": false,
+        "zlib": false,
+        "url": false,
         buffer: require.resolve("buffer"),
     };
     config.plugins = [

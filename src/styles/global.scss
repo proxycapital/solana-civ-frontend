@@ -84,7 +84,7 @@ button.fixed-width-button-secondary {
     border-bottom-left-radius: 0.5rem;
     -webkit-box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: 0px 2px 7px 0px rgba(0, 0, 0, 0.75);
-  
+
     button {
       height: 100%;
 
@@ -95,7 +95,6 @@ button.fixed-width-button-secondary {
     }
   }
 }
-
 
 header.top-navigation {
   background: rgb(34, 47, 59);
@@ -448,6 +447,11 @@ img.upgraded-tile {
   color: #ccc;
 }
 
+.vertical-divider {
+  width: 5px;
+  height: 35px;
+  border-left: 1px dotted #3d4a57;
+}
 
 .primary-border-with-box-shadow {
   background: rgb(34, 47, 59);
@@ -458,6 +462,13 @@ img.upgraded-tile {
   box-shadow: 0px 2px 7px 0px rgba(0, 0, 0, 0.75);
   -webkit-box-shadow: 0px 2px 7px 0px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: 0px 2px 7px 0px rgba(0, 0, 0, 0.75);
+}
+
+.confirmation-modal {
+  background: radial-gradient(circle, rgb(34, 47, 59) 0%, rgb(30, 39, 52) 100%);
+  -ms-flex-negative: 0;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+  text-align: center;
 }
 
 .yield-effect {
