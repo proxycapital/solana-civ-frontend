@@ -268,7 +268,7 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
                     <div className="number-of-turns">
                       {selectedTab === 0 ? (
                         <>
-                          <span>{cityData ? Math.floor(unit.productionCost / cityData.productionYield) : ""}</span>
+                          <span>{cityData ? Math.round(unit.productionCost / cityData.productionYield) : ""}</span>
                           <img src="./icons/hourglass.png" width="20" alt="hourglass" />
                         </>
                       ) : (
@@ -304,7 +304,7 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
                     <div className="number-of-turns">
                       {selectedTab === 0 ? (
                         <>
-                          <span>{cityData ? Math.floor(building.productionCost / cityData.productionYield) : ""}</span>
+                          <span>{cityData ? Math.round(building.productionCost / cityData.productionYield) : ""}</span>
                           <img src="./icons/hourglass.png" width="20" alt="hourglass" />
                         </>
                       ) : (
