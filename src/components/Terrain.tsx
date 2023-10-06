@@ -91,7 +91,7 @@ const Terrain: React.FC<TerrainProps> = ({ x, y, imageIndex, overlayImageIndex, 
             <div className="city-header primary-border-with-box-shadow">
               {cityName}
               <div className="city-health-bar">
-                <div className="city-health-bar-fill" style={{ width: `${health}%` }} />
+                <div className="city-health-bar-fill" style={{ width: `${ health && imageIndex !== 15 ? health : (100 * health! / 1000)}%` }} />
               </div>
             </div>
           ) : null}
