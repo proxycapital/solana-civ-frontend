@@ -106,6 +106,7 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
           <Toolbar style={{ display: "flex", justifyContent: "space-between" }}>
             <div className="balance-container">
               {Object.keys(resources).map((resourceKey) => {
+                if (resourceKey === "gems") return null;
                 const displayName = resourceKey.charAt(0).toUpperCase() + resourceKey.slice(1);
                 const imagePath = `/icons/${resourceKey}.png`;
                 const value = resources[resourceKey];
