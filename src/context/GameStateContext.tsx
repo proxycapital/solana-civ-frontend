@@ -4,7 +4,7 @@ import { getPlayer, getGame, getNpcs } from "../utils/solanaUtils";
 
 type Game = {
   turn: number;
-  map: number[];
+  map: {terrain: number; discovered: boolean}[];
   defeat: boolean;
   victory: boolean;
 };

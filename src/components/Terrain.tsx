@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Tippy from "@tippyjs/react";
 
 interface TerrainProps {
+  discovered: boolean;
   x: number;
   y: number;
   imageIndex: number;
@@ -37,6 +38,7 @@ export const TileType = {
   13: "Iron Mine",
   14: "Lumber Mill",
   15: "NPC Village",
+  20: "Empty",
 };
 
 const yieldTypes: { [key: string]: string } = {
@@ -46,15 +48,25 @@ const yieldTypes: { [key: string]: string } = {
   "Iron Mine": "iron",
 };
 
-const Terrain: React.FC<TerrainProps> = ({ x, y, imageIndex, overlayImageIndex, cityName, health, turn }) => {
+const Terrain: React.FC<TerrainProps> = ({ x, y, discovered, imageIndex, overlayImageIndex, cityName, health, turn }) => {
   const [nextTurn, setNextTurn] = useState(false);
-
+  const [fadeIn, setFadeIn] = useState(false);
+  
   useEffect(() => {
     setNextTurn(true);
     setTimeout(() => {
       setNextTurn(false);
     }, 2000);
   }, [turn]);
+
+  useEffect(() => {
+    if (discovered) {
+      setFadeIn(true);
+      setTimeout(() => {
+        setFadeIn(false);
+      }, 1000);
+    }
+  }, [discovered]);
 
   const tileType = TileType[imageIndex as keyof typeof TileType];
   const overlayTileType = TileType[overlayImageIndex as keyof typeof TileType];
@@ -63,7 +75,7 @@ const Terrain: React.FC<TerrainProps> = ({ x, y, imageIndex, overlayImageIndex, 
 
   return (
     <div>
-      {overlayImageIndex !== undefined && (
+      {discovered && overlayImageIndex !== undefined && (
         <>
           {yieldTypes[overlayTileType] && nextTurn && (
             <div className="yield-effect">
@@ -85,8 +97,8 @@ const Terrain: React.FC<TerrainProps> = ({ x, y, imageIndex, overlayImageIndex, 
           </Tippy>
         </>
       )}
-      {imageIndex !== null && (
-        <>
+      {discovered && imageIndex !== null && (
+        <div className={`terrain-container ${fadeIn ? 'fade-in' : ''}`}>
           {cityName ? (
             <div className="city-header primary-border-with-box-shadow">
               {cityName}
@@ -96,7 +108,10 @@ const Terrain: React.FC<TerrainProps> = ({ x, y, imageIndex, overlayImageIndex, 
             </div>
           ) : null}
           <img src={imageUrl} className={`terrain ${tileType.toLowerCase()}`} alt={tileType} draggable="false" />
-        </>
+        </div>
+      )}
+      {!discovered && (
+        <img src="/terrain/Layer 20.png" className="terrain undiscovered" alt="undiscovered" draggable="false" />
       )}
     </div>
   );

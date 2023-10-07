@@ -18,6 +18,7 @@ interface GameMapProps {
 }
 
 interface Tile {
+  discovered: boolean;
   x: number;
   y: number;
   imageIndex: number;
@@ -32,7 +33,7 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
   const cols = 20;
   const isDragging = useRef(false);
   const [showVillageModal, setShowVillageModal] = useState(false);
-  const { fetchPlayerState, fetchNpcs, game, cities, upgradedTiles, npcUnits, npcCities, allUnits } = useGameState();
+  const { fetchPlayerState, fetchGameState, fetchNpcs, game, cities, upgradedTiles, npcUnits, npcCities, allUnits } = useGameState();
   const { program, provider } = useWorkspace();
   const { playSound } = useSound();
 
@@ -79,7 +80,7 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
 
   useEffect(() => {
     (async () => {
-      const map = await getMap(provider, program);
+      const map = await getMap(provider, program); // game.map ?
       if (!map) {
         return;
       }
@@ -103,10 +104,14 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
       for (let row = 0; row < 20; row++) {
         for (let col = 0; col < 20; col++) {
           const index = row * 20 + col;
+          if (map[index] && map[index].discovered) {
+            console.log(`Discovered tile at (${col}, ${row})`)
+          }
           // if there is a city at this coordinate, render it
           if (cityCoordinates.has(`${col},${row}`)) {
             const cityData = cities.find((city) => city.x === col && city.y === row);
             newTiles.push({
+              discovered: map[index] ? map[index].discovered : false,
               x: col,
               y: row,
               imageIndex: 10,
@@ -121,6 +126,7 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
           if (npcCityCoordinates.has(`${col},${row}`)) {
             const npcCityData = npcCities.find((city) => city.x === col && city.y === row);
             newTiles.push({
+              discovered: map[index] ? map[index].discovered : false,
               x: col,
               y: row,
               imageIndex: 15,
@@ -149,11 +155,12 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
           const tile = map[index];
           if (tile) {
             newTiles.push({
+              discovered: tile.discovered,
               x: col,
               y: row,
-              imageIndex: tile,
+              imageIndex: tile.terrain,
               overlayImageIndex,
-              type: TileType[tile as keyof typeof TileType],
+              type: TileType[tile.terrain as keyof typeof TileType],
             });
           } else {
             console.error("No tile at", col, row);
@@ -162,7 +169,7 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
       }
       setTiles(newTiles);
     })();
-  }, [cities, upgradedTiles, npcCities]);
+  }, [cities, upgradedTiles, npcCities, game.map]);
 
   const startDrag = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     event.preventDefault();
@@ -214,6 +221,7 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
       program!.programId
     );
     const accounts = {
+      game: gameKey,
       playerAccount: playerKey,
       player: provider!.publicKey,
     };
@@ -230,6 +238,7 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
       console.error("Failed to move unit", error);
     }
     await fetchPlayerState();
+    await fetchGameState();
   };
 
   const selectUnit = (x: number, y: number, type: string) => {
@@ -395,14 +404,14 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
           const col = index % cols;
           /* render the tile or default Plains */
           const currentTile = tiles.find((t) => t.x === col && t.y === row) || {
-            imageIndex: 0,
+            discovered: false,
+            imageIndex: 20,
             type: "Empty",
             x: col,
             y: row,
           };
           const currentUnit = units.find((u) => u.x === col && u.y === row);
           const isInRangeForAnyUnit = units.some((u) => isInRange(u, col, row));
-
           // @todo: refactor this to be more generic
           let resourceAvailable;
           if (currentTile.type === "Forest") {
@@ -430,6 +439,7 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
               }}
             >
               <Terrain
+                discovered={currentTile.discovered}
                 x={col}
                 y={row}
                 imageIndex={currentTile.imageIndex}
@@ -438,12 +448,12 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
                 health={currentTile.health}
                 turn={game.turn}
               />
-              {selectedUnit && selectedUnit.type === "builder" && resourceAvailable && (
+              {currentTile.discovered && selectedUnit && selectedUnit.type === "builder" && resourceAvailable && (
                 <div className="land-plot-resource">
                   <img src={`/icons/${resourceAvailable}.png`} alt="" />
                 </div>
               )}
-              {currentUnit && <Unit {...currentUnit} onClick={() => ""} />}
+              {currentTile.discovered && currentUnit && <Unit {...currentUnit} onClick={() => ""} />}
             </div>
           );
         })}

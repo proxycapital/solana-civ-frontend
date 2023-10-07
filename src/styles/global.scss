@@ -304,6 +304,10 @@ img.upgraded-tile {
   position: relative;
 }
 
+img.terrain.undiscovered {
+  filter: blur(3px);
+}
+
 .game-tile img.terrain-overlay {
   position: absolute;
   z-index: 1;
@@ -500,5 +504,18 @@ img.yield-icon {
   100% {
     opacity: 0;
     top: -100px;
+  }
+}
+
+.fade-in {
+  animation: fadeIn 1s forwards;
+}
+
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+  }
+  to {
+      opacity: 1;
   }
 }

@@ -89,6 +89,11 @@ export type Solciv = {
       "name": "moveUnit",
       "accounts": [
         {
+          "name": "game",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
           "name": "playerAccount",
           "isMut": true,
           "isSigner": false
@@ -497,7 +502,9 @@ export type Solciv = {
             "name": "map",
             "type": {
               "array": [
-                "u8",
+                {
+                  "defined": "Terrain"
+                },
                 400
               ]
             }
@@ -701,6 +708,22 @@ export type Solciv = {
           {
             "name": "accumulatedProduction",
             "type": "u32"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Terrain",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "terrain",
+            "type": "u8"
+          },
+          {
+            "name": "discovered",
+            "type": "bool"
           }
         ]
       }
@@ -1278,6 +1301,11 @@ export const IDL: Solciv = {
       "name": "moveUnit",
       "accounts": [
         {
+          "name": "game",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
           "name": "playerAccount",
           "isMut": true,
           "isSigner": false
@@ -1686,7 +1714,9 @@ export const IDL: Solciv = {
             "name": "map",
             "type": {
               "array": [
-                "u8",
+                {
+                  "defined": "Terrain"
+                },
                 400
               ]
             }
@@ -1890,6 +1920,22 @@ export const IDL: Solciv = {
           {
             "name": "accumulatedProduction",
             "type": "u32"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Terrain",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "terrain",
+            "type": "u8"
+          },
+          {
+            "name": "discovered",
+            "type": "bool"
           }
         ]
       }
@@ -2374,4 +2420,4 @@ export const IDL: Solciv = {
   "metadata": {
     "address": "BqbchBiRnWv7u2n9jBRWdC4bgVG54qpdVEvNPBDxx5Lm"
   }
-};
+}
