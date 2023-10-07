@@ -1,4 +1,4 @@
-import { Connection, clusterApiUrl } from "@solana/web3.js";
+import { Connection, clusterApiUrl, PublicKey } from "@solana/web3.js";
 import { Buffer } from "buffer";
 import { weightedRandomTile } from "../components/Terrain";
 import * as anchor from "@coral-xyz/anchor";
@@ -359,4 +359,35 @@ export const upgradeLandPlot = async (provider: AnchorProvider, program: Program
   //   return false;
   // }
   // return true;
+};
+
+export const withdrawGems = async (provider: AnchorProvider, program: Program<Solciv>, owner: PublicKey) => {
+  const [gameKey] = anchor.web3.PublicKey.findProgramAddressSync(
+    [Buffer.from("GAME"), provider.publicKey.toBuffer()],
+    program.programId
+  );
+  const [playerKey] = anchor.web3.PublicKey.findProgramAddressSync(
+    [Buffer.from("PLAYER"), gameKey.toBuffer(), provider.publicKey.toBuffer()],
+    program.programId
+  );
+  const MINT_SEED = "mint";
+  const [mint] = anchor.web3.PublicKey.findProgramAddressSync([Buffer.from(MINT_SEED)], program.programId);
+  const destination = await anchor.utils.token.associatedAddress({
+    mint: mint,
+    owner,
+  });
+
+  const accounts = {
+    mint,
+    owner,
+    destination,
+    playerAccount: playerKey,
+    player: provider.publicKey,
+    rent: anchor.web3.SYSVAR_RENT_PUBKEY,
+    systemProgram: anchor.web3.SystemProgram.programId,
+    tokenProgram: anchor.utils.token.TOKEN_PROGRAM_ID,
+    associatedTokenProgram: anchor.utils.token.ASSOCIATED_PROGRAM_ID,
+  };
+
+  return await program.methods.mintGems().accounts(accounts).rpc();
 };

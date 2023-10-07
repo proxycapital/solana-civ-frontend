@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import * as anchor from "@coral-xyz/anchor";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
@@ -23,7 +24,9 @@ import Marketplace from "./marketplace/Marketplace";
 import CustomModal from "./CustomModal";
 import EndTurnButton from "./EndTurnButton";
 import { useGameState } from "../context/GameStateContext";
+import { useWorkspace } from "../context/AnchorContext";
 import { useSound } from "../context/SoundContext";
+import { withdrawGems } from "../utils/solanaUtils";
 
 const darkTheme = createTheme({
   palette: {
@@ -37,8 +40,9 @@ interface TopMenuProps {
 }
 
 const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
+  const { provider, program } = useWorkspace();
   const { wallet } = useWallet();
-  const { resources } = useGameState();
+  const { resources, fetchPlayerState } = useGameState();
   const { toggleBackgroundMusic } = useSound();
   const [isModalOpen, setModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState("");
@@ -56,13 +60,28 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
     setOpenDialog(false);
   };
 
-  const handleWithdrawal = () => {
+  const handleWithdrawal = async () => {
     if (!wallet?.adapter.publicKey) {
       toast.error("You need to connect your wallet");
       return;
     }
     setOpenDialog(false);
-    alert(wallet.adapter.publicKey?.toBase58());
+    try {
+      const tx = withdrawGems(provider!, program!, wallet.adapter.publicKey);
+      const signature = await toast.promise(tx, {
+        pending: "Withdrawing gems...",
+        success: "Withdrawal successful",
+        error: "Failed to withdraw gems",
+      });
+    } catch (err) {
+      if (err instanceof Error) {
+        if (err.message.includes("NotEnoughGems")) {
+          toast.error("Your balance is 0 gems");
+        }
+      }
+      console.error(err);
+    }
+    await fetchPlayerState();
   };
 
   const handleOpenModal = (content: string) => {

@@ -364,6 +364,57 @@ export type Solciv = {
       ]
     },
     {
+      "name": "mintGems",
+      "accounts": [
+        {
+          "name": "mint",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "destination",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "owner",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "playerAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "player",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "associatedTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
       "name": "endTurn",
       "accounts": [
         {
@@ -865,6 +916,17 @@ export type Solciv = {
       }
     },
     {
+      "name": "GameError",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "NotEnoughGems"
+          }
+        ]
+      }
+    },
+    {
       "name": "ProductionItem",
       "type": {
         "kind": "enum",
@@ -1121,7 +1183,7 @@ export type Solciv = {
     }
   ],
   "metadata": {
-    "address": "GoiXQMoEhhLM8MSbfUFhHz4punJqXNHEQh6ysegmuHJz"
+    "address": "BqbchBiRnWv7u2n9jBRWdC4bgVG54qpdVEvNPBDxx5Lm"
   }
 };
 
@@ -1491,6 +1553,57 @@ export const IDL: Solciv = {
       ]
     },
     {
+      "name": "mintGems",
+      "accounts": [
+        {
+          "name": "mint",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "destination",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "owner",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "playerAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "player",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "associatedTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
       "name": "endTurn",
       "accounts": [
         {
@@ -1992,6 +2105,17 @@ export const IDL: Solciv = {
       }
     },
     {
+      "name": "GameError",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "NotEnoughGems"
+          }
+        ]
+      }
+    },
+    {
       "name": "ProductionItem",
       "type": {
         "kind": "enum",
@@ -2248,6 +2372,6 @@ export const IDL: Solciv = {
     }
   ],
   "metadata": {
-    "address": "GoiXQMoEhhLM8MSbfUFhHz4punJqXNHEQh6ysegmuHJz"
+    "address": "BqbchBiRnWv7u2n9jBRWdC4bgVG54qpdVEvNPBDxx5Lm"
   }
 };
