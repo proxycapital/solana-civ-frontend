@@ -1,4 +1,3 @@
-import React from "react";
 import * as anchor from "@coral-xyz/anchor";
 import { toast } from "react-toastify";
 import { useGameState } from "../../context/GameStateContext";
@@ -46,7 +45,7 @@ const ResearchTree = () => {
     };
     try {
       const tx = program!.methods.startResearch(technology).accounts(accounts).rpc();
-      const signature = await toast.promise(tx, {
+      await toast.promise(tx, {
         pending: "Starting new research...",
         success: "Research started!",
         error: "Failed to start research",

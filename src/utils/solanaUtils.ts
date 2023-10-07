@@ -18,11 +18,6 @@ export const getMap = async (provider: AnchorProvider | undefined, program: Prog
     program.programId
   );
 
-  const [playerKey] = anchor.web3.PublicKey.findProgramAddressSync(
-    [Buffer.from("PLAYER"), gameKey.toBuffer(), provider.publicKey.toBuffer()],
-    program.programId
-  );
-
   let gameAccount;
   try {
     // @ts-ignore

@@ -3,12 +3,9 @@ import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import { useNavigate } from "react-router-dom";
-import { Connection, Keypair, PublicKey, LAMPORTS_PER_SOL } from "@solana/web3.js";
-import bs58 from "bs58";
+import { Connection, PublicKey, LAMPORTS_PER_SOL } from "@solana/web3.js";
 import { useWorkspace } from "../context/AnchorContext";
 import { initializeGame } from '../utils/solanaUtils';
-import * as anchor from "@coral-xyz/anchor";
-import { Program } from "@coral-xyz/anchor";
 
 const HomePage: React.FC = () => {
   const navigate = useNavigate();

@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from "react";
+import React, { useMemo } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import { ConnectionProvider, WalletProvider } from "@solana/wallet-adapter-react";

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import * as anchor from "@coral-xyz/anchor";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
@@ -68,7 +67,7 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
     setOpenDialog(false);
     try {
       const tx = withdrawGems(provider!, program!, wallet.adapter.publicKey);
-      const signature = await toast.promise(tx, {
+      await toast.promise(tx, {
         pending: "Withdrawing gems...",
         success: "Withdrawal successful",
         error: "Failed to withdraw gems",
