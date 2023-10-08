@@ -78,6 +78,7 @@ const EndTurnButton: React.FC<EndTurnButtonProps> = ({ setShowOnboardingType }) 
       await fetchPlayerState();
       await fetchGameState();
       await fetchNpcs();
+      setShowOnboardingType(null);
     } catch (error) {
       console.error("Failed to end turn", error);
     }

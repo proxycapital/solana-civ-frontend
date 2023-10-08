@@ -39,24 +39,60 @@ interface TopMenuProps {
   setDebug: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+const researchSteps = [
+  { target: '.nav-buttons-box.research button', content: <div>Open Research Tree and selected of the researches</div> },
+]
+
+const productionSteps = [
+  { target: '.terrain.village', content: <div>Click on city and add unit or building to production queue</div> },
+]
+
+const CustomBalanceTooltip = ({ resource, displayName, totalValues }: any) => {
+  if (totalValues[resource]) {
+    return <span>{displayName}  (+{totalValues[resource]})</span>
+  }
+  return <span>{displayName}</span>
+}
 const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
   const { provider, program } = useWorkspace();
   const { wallet } = useWallet();
-  const { resources, fetchPlayerState } = useGameState();
+  const { resources, fetchPlayerState, cities, upgradedTiles } = useGameState();
   const { toggleBackgroundMusic } = useSound();
   const [isModalOpen, setModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState("");
   const [openDialog, setOpenDialog] = useState(false);
   const [showOnboardingType, setShowOnboardingType] = useState<'production' | 'research' | null>(null);
-  const researchButtonRef = React.useRef(null)
 
-  const researchSteps = [
-    { target: '.nav-buttons-box.research button', content: <div>Open Research Tree and selected of the researches</div> },
-  ]
+  let totalFoodYield = 0;
+  let totalScienceYield = 0;
+  let totalGoldYield = 0;
+  let totalWoodYield = 0;
+  let totalStoneYield = 0;
+  let totalIronYiled = 0;
 
-  const productionSteps = [
-    { target: '.terrain.village', content: <div>Click on city and add unit or building to production queue</div> },
-  ]
+  upgradedTiles.forEach((upgradedTile) => {
+    const tileType = Object.keys(upgradedTile.tileType)[0];
+    console.log(tileType);
+
+    if (tileType === "farm") {
+      totalFoodYield += 2;
+    }
+    if (tileType === "lumberMill") {
+      totalWoodYield += 2;
+    }
+    if (tileType === "stoneQuarry") {
+      totalStoneYield += 2;
+    }
+    if (tileType === "ironMine") {
+      totalIronYiled += 2;
+    }
+  })
+
+  cities.forEach((city) => {
+    totalFoodYield += city.foodYield;
+    totalScienceYield += city.scienceYield;
+    totalGoldYield += city.goldYield
+  })
 
   const handleOpenDialog = () => {
     if (!wallet?.adapter.publicKey) {
@@ -120,12 +156,12 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
         <div className="nav-buttons-box research">
           <Tippy key="research" content="Research" placement="bottom">
             <Button
-              ref={researchButtonRef}
               className="tutorial-research-button"
               variant="text"
               color="inherit"
               onClick={() => {
                 handleOpenModal("Research");
+                setShowOnboardingType(null);
               }}
             >
               <img src="/icons/science.png" width="42" alt="Research" />
@@ -184,7 +220,21 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
                 const value = resources[resourceKey];
 
                 return (
-                  <Tippy key={resourceKey} content={displayName}>
+                  <Tippy
+                    key={resourceKey}
+                    content={<CustomBalanceTooltip
+                      resource={resourceKey}
+                      displayName={displayName}
+                      totalValues={{
+                        food: totalFoodYield,
+                        science: totalScienceYield,
+                        gold: totalGoldYield,
+                        stone: totalStoneYield,
+                        wood: totalWoodYield,
+                        iron: totalIronYiled,
+                      }}
+                    />
+                  }>
                     <div className={`balance-box ${resourceKey}-resource`}>
                       <img src={imagePath} width="32" alt={displayName} />
                       {resourceKey === "sol" ? value.toFixed(2) : value}
@@ -258,6 +308,8 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
         steps={showOnboardingType === 'production' ? productionSteps : researchSteps}
         styles={{
           options: {
+            backgroundColor: "rgb(34, 47, 59)",
+            textColor: "#fff",
             primaryColor: '#512da8',
           },
         }}

@@ -116,6 +116,7 @@ const GamePage: React.FC = () => {
           options: {
             backgroundColor: "rgb(34, 47, 59)",
             textColor: "#fff",
+            primaryColor: '#512da8',
           },
         }}
       />
