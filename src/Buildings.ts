@@ -14,6 +14,7 @@ export type BuildingType = {
     resourceCost?: string;
     resourceType?: string;
   };
+  isUnlocked?: boolean;
 };
 
 export const AllBuildings: BuildingType[] = [

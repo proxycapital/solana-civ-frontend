@@ -121,6 +121,7 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
           <Tippy key="research" content="Research" placement="bottom">
             <Button
               ref={researchButtonRef}
+              className="tutorial-research-button"
               variant="text"
               color="inherit"
               onClick={() => {
@@ -133,6 +134,7 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
 
           <Tippy key="quests" content="Quests" placement="bottom">
             <Button
+              className="quests-button"
               variant="text"
               color="inherit"
               onClick={() => {
@@ -157,6 +159,7 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
 
           <Tippy key="marketplace" content="Marketplace" placement="bottom">
             <Button
+              className="marketplace-button"
               variant="text"
               color="inherit"
               onClick={() => {
@@ -182,7 +185,7 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
 
                 return (
                   <Tippy key={resourceKey} content={displayName}>
-                    <div className="balance-box">
+                    <div className={`balance-box ${resourceKey}-resource`}>
                       <img src={imagePath} width="32" alt={displayName} />
                       {resourceKey === "sol" ? value.toFixed(2) : value}
                     </div>
@@ -191,7 +194,7 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
               })}
               <div className="vertical-divider" />
               <Tippy key="gems" content="Click to withdraw">
-                <div className="balance-box">
+                <div className="balance-box gems-resource">
                   <Button style={{ padding: 0, margin: 0, color: "#fff" }} onClick={handleOpenDialog}>
                     <img src="/icons/gems.png" width="32" alt="Gems" />
                     {resources.gems}
@@ -204,7 +207,9 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
                 <FontAwesomeIcon icon={isMusicPlaying ? faVolumeHigh : faVolumeXmark} />
               </button>
               <EndTurnButton setShowOnboardingType={setShowOnboardingType} />
-              <WalletMultiButton />
+              <div className="wallet-button-tutorial">
+                <WalletMultiButton />
+              </div>
             </div>
           </Toolbar>
         </AppBar>

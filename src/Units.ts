@@ -14,6 +14,7 @@ export type UnitType = {
     resourceType?: string;
     yield?: string;
   };
+  isUnlocked?: boolean;
 };
 
 export const AllUnits: UnitType[] = [
