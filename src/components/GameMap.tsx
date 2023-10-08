@@ -104,9 +104,6 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
       for (let row = 0; row < 20; row++) {
         for (let col = 0; col < 20; col++) {
           const index = row * 20 + col;
-          if (map[index] && map[index].discovered) {
-            console.log(`Discovered tile at (${col}, ${row})`)
-          }
           // if there is a city at this coordinate, render it
           if (cityCoordinates.has(`${col},${row}`)) {
             const cityData = cities.find((city) => city.x === col && city.y === row);
@@ -283,6 +280,11 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
       logMessage(`Unit #${attackingUnit.unitId} attacked barbarian`);
       playSound("attack");
     } catch (error) {
+      if (error instanceof Error) {
+        if (error.message.includes("OutOfAttackRange")) {
+          toast.error("Target is too far away");
+        }
+      }
       console.error("Failed to attack unit", error);
     }
     await fetchPlayerState();
@@ -319,6 +321,11 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
       logMessage(`Unit #${attackingUnit.unitId} attacked barbarian village`);
       playSound("attack");
     } catch (error) {
+      if (error instanceof Error) {
+        if (error.message.includes("OutOfAttackRange")) {
+          toast.error("Target is too far away");
+        }
+      }
       console.error("Failed to attack village", error);
     }
     await fetchPlayerState();
@@ -370,6 +377,11 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
   };
 
   const handleTileClick = (col: number, row: number) => {
+    // check if any unit is on this tile
+    const unit: any = units.find((u) => u.x === col && u.y === row && u.movementRange > 0);
+    if (unit) {
+      return;
+    }
     const tile: any = tiles.find((t) => t.x === col && t.y === row);
     if (tile && tile.type === "Village") {
       setShowVillageModal(true);
