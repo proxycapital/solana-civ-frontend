@@ -22,25 +22,55 @@ interface CityModalProps {
 
 const CustomTooltip: React.FC<BuildingType & { selectedTab: number }> = ({
   description,
-  label,
+  stats,
   requirement,
+  tech,
+  productionCost,
   selectedTab,
   goldCost,
 }) => {
   return (
     <div className="custom-tooltip">
-      <p className="header">{label}</p>
+      {/* <p className="header">{label}</p> */}
       {requirement ? (
-        <p>LOCKED: {requirement}</p>
+        <p>
+          Research required: <b>{tech}</b>
+        </p>
       ) : (
         <>
           <p>{description}</p>
+
+          {stats?.builds && (
+            <span>
+              <b>Builds:&nbsp;</b> {stats.builds}
+            </span>
+          )}
+          {stats?.attack && (
+            <span>
+              <b>Attack:&nbsp;</b> {stats.attack}
+            </span>
+          )}
+          {stats?.movement && (
+            <span>
+              <b>Movement:&nbsp;</b> {stats.movement}
+            </span>
+          )}
+          {stats?.yield && (
+            <span>
+              <b>Yield:&nbsp; {stats.yield}</b>
+            </span>
+          )}
+          {stats?.resourceCost && (
+            <span>
+              <b>{stats.resourceCost}</b>
+            </span>
+          )}
           <span>
             {selectedTab === 0 ? (
-              <>
-                Cost: 240
+              <span>
+                Production cost: {productionCost}
                 <img src="./icons/hammer.png" alt="gear" width="24" />
-              </>
+              </span>
             ) : (
               <>
                 Cost: {goldCost}
@@ -57,29 +87,38 @@ const CustomTooltip: React.FC<BuildingType & { selectedTab: number }> = ({
 const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
   const { program, provider } = useWorkspace();
   const { playSound } = useSound();
-  const { fetchPlayerState, cities } = useGameState();
+  const { fetchPlayerState, cities, technologies } = useGameState();
 
   const [selectedTab, setSelectedTab] = useState(0);
   const [buildingsToBuild, setBuildingsToBuild] = useState<BuildingType[]>([]);
 
   const cityData = cities.find((city) => city.cityId === cityId);
-  console.log(cityData);
+  const researchedTechnologies = new Set(technologies.researchedTechnologies.map((tech) => Object.keys(tech)[0]));
 
-  // remove buildings from Buildings
   useEffect(() => {
     if (!cityData) return;
-    let buildingsToBuild = AllBuildings.filter(
-      (building1) => !cityData?.buildings.some((building2: any) => building1.type === Object.keys(building2)[0])
-    );
-    buildingsToBuild = buildingsToBuild.filter(
-      (building1) =>
-        !cityData?.productionQueue.some((building2: any) => {
-          const building2Type = building2["building"] ? Object.keys(building2["building"]["0"])[0] : null;
-          return building1.type === building2Type;
-        })
+
+    const extractBuildingType = (building: any) => {
+      if (building["building"]) {
+        return Object.keys(building["building"]["0"])[0];
+      }
+      return Object.keys(building)[0];
+    };
+
+    const existingBuildings = new Set(cityData.buildings.map(extractBuildingType));
+    const buildingsInQueue = new Set(cityData.productionQueue.map(extractBuildingType));
+
+    const buildingsToBuild = AllBuildings.filter(
+      (building) => !existingBuildings.has(building.type) && !buildingsInQueue.has(building.type)
     );
 
-    setBuildingsToBuild(buildingsToBuild);
+    const sortedBuildings = buildingsToBuild.sort((a, b) => {
+      const isAUnlocked = a.requirement ? researchedTechnologies.has(a.requirement) : true;
+      const isBUnlocked = b.requirement ? researchedTechnologies.has(b.requirement) : true;
+      return +isBUnlocked - +isAUnlocked;
+    });
+
+    setBuildingsToBuild(sortedBuildings);
   }, [cityData]);
 
   useEffect(() => {
@@ -169,30 +208,17 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
               }
 
               return (
-                <div className="production-item primary-border-with-box-shadow">
-                  {productionItem["building"] ? (
-                    <Box className="body-item">
-                      <img src={`/${itemData?.type}.png`} alt={itemData?.label} width="50" />
-                      <Typography variant="body1">{itemData?.label}</Typography>
-                      <span
-                        onClick={() => itemData && handleRemoveFromProductionQueue(itemData, index)}
-                        className="remove-button primary-border-with-box-shadow"
-                      >
-                        Remove
-                      </span>
-                    </Box>
-                  ) : (
-                    <Box className="body-item">
-                      <img src={`/${itemData?.type}.png`} alt={itemData?.label} width="50" />
-                      <Typography variant="body1">{itemData?.label}</Typography>
-                      <span
-                        onClick={() => itemData && handleRemoveFromProductionQueue(itemData, index)}
-                        className="remove-button primary-border-with-box-shadow"
-                      >
-                        Remove
-                      </span>
-                    </Box>
-                  )}
+                <div key={`production-queue-item-${index}`} className="production-item primary-border-with-box-shadow">
+                  <Box className="body-item">
+                    {!productionItem["building"] && <img src={`/${itemData?.type}.png`} alt={itemData?.label} width="50" />}
+                    <Typography variant="body1">{itemData?.label}</Typography>
+                    <span
+                      onClick={() => itemData && handleRemoveFromProductionQueue(itemData, index)}
+                      className="remove-button primary-border-with-box-shadow"
+                    >
+                      Remove
+                    </span>
+                  </Box>
                 </div>
               );
             })}
@@ -248,75 +274,97 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
             </Tabs>
           </div>
           <div className="city-modal-body">
-            <h3 className="primary-border-with-box-shadow units-header">Units</h3>
+            <h3 className="">Units</h3>
             <div className="modal-body">
-              {AllUnits.map((unit) => (
-                <Tippy key={unit.type} placement="left" content={<CustomTooltip {...unit} selectedTab={selectedTab} />}>
-                  <Box
-                    onClick={() => {
-                      if (selectedTab === 0) {
-                        handleAddToProductionQueue(unit, "unit");
-                        return;
-                      }
-                      handlePurchaseWithGold(unit, "unit");
-                    }}
-                    className="body-item primary-border-with-box-shadow"
+              {AllUnits.map((unit) => {
+                const isUnlocked = unit.requirement ? researchedTechnologies.has(unit.requirement) : true;
+                return (
+                  <Tippy
                     key={unit.type}
+                    placement="left"
+                    content={<CustomTooltip {...unit} selectedTab={selectedTab} />}
                   >
-                    <img src={`/${unit.type}.png`} alt={unit.label} width="50" />
-                    <Typography variant="body1">{unit.label}</Typography>
-                    <div className="number-of-turns">
-                      {selectedTab === 0 ? (
-                        <>
-                          <span>{cityData ? Math.round(unit.productionCost / cityData.productionYield) : ""}</span>
-                          <img src="./icons/hourglass.png" width="20" alt="hourglass" />
-                        </>
-                      ) : (
-                        <>
-                          <span>{unit.goldCost}</span>
-                          <img src="./icons/gold.png" width="20" alt="gold" />
-                        </>
-                      )}
-                    </div>
-                  </Box>
-                </Tippy>
-              ))}
+                    <Box
+                      onClick={() => {
+                        if (!isUnlocked) {
+                          toast.error(`You need to research "${unit.tech}"`);
+                          return;
+                        }
+                        if (selectedTab === 0) {
+                          handleAddToProductionQueue(unit, "unit");
+                          return;
+                        }
+                        handlePurchaseWithGold(unit, "unit");
+                      }}
+                      className={`body-item ${!isUnlocked ? "locked" : ""} primary-border-with-box-shadow`}
+                      key={unit.type}
+                    >
+                      <img src={`/${unit.type}.png`} alt={unit.label} width="50" />
+                      <Typography variant="body1">{unit.label}</Typography>
+                      <div className="number-of-turns">
+                        {selectedTab === 0 ? (
+                          <>
+                            <span>
+                              {cityData ? `${Math.round(unit.productionCost / cityData.productionYield)} Turns` : ""}
+                            </span>
+                            {/* <img src="./icons/hourglass.png" width="20" alt="hourglass" /> */}
+                          </>
+                        ) : (
+                          <>
+                            <span>{unit.goldCost}</span>
+                            <img src="./icons/gold.png" width="20" alt="gold" />
+                          </>
+                        )}
+                      </div>
+                    </Box>
+                  </Tippy>
+                );
+              })}
             </div>
-            <h3 className="primary-border-with-box-shadow">Buildings</h3>
+            <h3 className="">Buildings</h3>
             <div className="modal-body">
-              {buildingsToBuild.map((building) => (
-                <Tippy
-                  key={building.type}
-                  placement="left"
-                  content={<CustomTooltip {...building} selectedTab={selectedTab} />}
-                >
-                  <Box
-                    onClick={() => {
-                      if (selectedTab === 0) {
-                        handleAddToProductionQueue(building, "building");
-                        return;
-                      }
-                      handlePurchaseWithGold(building, "building");
-                    }}
-                    className={`body-item ${building.requirement ? "locked" : ""} primary-border-with-box-shadow`}
+              {buildingsToBuild.map((building) => {
+                const isUnlocked = building.requirement ? researchedTechnologies.has(building.requirement) : true;
+                return (
+                  <Tippy
+                    key={building.type}
+                    placement="left"
+                    content={<CustomTooltip {...building} selectedTab={selectedTab} />}
                   >
-                    <Typography variant="body1">{building.label}</Typography>
-                    <div className="number-of-turns">
-                      {selectedTab === 0 ? (
-                        <>
-                          <span>{cityData ? Math.round(building.productionCost / cityData.productionYield) : ""}</span>
-                          <img src="./icons/hourglass.png" width="20" alt="hourglass" />
-                        </>
-                      ) : (
-                        <>
-                          <span>{building.goldCost}</span>
-                          <img src="./icons/gold.png" width="20" alt="gold" />
-                        </>
-                      )}
-                    </div>
-                  </Box>
-                </Tippy>
-              ))}
+                    <Box
+                      onClick={() => {
+                        if (!isUnlocked) {
+                          toast.error(`You need to research "${building.tech}"`);
+                          return;
+                        }
+                        if (selectedTab === 0) {
+                          handleAddToProductionQueue(building, "building");
+                          return;
+                        }
+                        handlePurchaseWithGold(building, "building");
+                      }}
+                      className={`body-item ${!isUnlocked ? "locked" : ""} primary-border-with-box-shadow`}
+                    >
+                      <Typography variant="body1">{building.label}</Typography>
+                      <div className="number-of-turns">
+                        {selectedTab === 0 ? (
+                          <>
+                            <span>
+                              {cityData ? Math.round(building.productionCost / cityData.productionYield) : ""}
+                            </span>
+                            <img src="./icons/hourglass.png" width="20" alt="hourglass" />
+                          </>
+                        ) : (
+                          <>
+                            <span>{building.goldCost}</span>
+                            <img src="./icons/gold.png" width="20" alt="gold" />
+                          </>
+                        )}
+                      </div>
+                    </Box>
+                  </Tippy>
+                );
+              })}
             </div>
           </div>
         </div>

@@ -5,126 +5,220 @@ export type BuildingType = {
   productionCost: number;
   goldCost: number;
   requirement?: string;
+  tech?: string;
+  stats?: {
+    yield?: string;
+    builds?: number;
+    attack?: number;
+    movement?: number;
+    resourceCost?: string;
+  };
 };
 
 export const AllBuildings: BuildingType[] = [
   {
     type: "barracks",
-    description: "Produces warriors",
     label: "Barracks",
-    goldCost: 4,
-    productionCost: 4,
+    goldCost: 100,
+    productionCost: 6,
+    stats: {
+      yield: "+2 city defense"
+    }
   },
   {
     type: "wall",
     label: "Wall",
-    description: "Enhances defense",
-    goldCost: 4,
-    productionCost: 4,
+    goldCost: 100,
+    productionCost: 10,
+    stats: {
+      yield: "+5 city defense"
+    }
   },
   {
     type: "wallMedieval",
     label: "Medieval Wall",
-    goldCost: 4,
-    productionCost: 4,
-    requirement: "Wall Lvl1",
+    goldCost: 200,
+    productionCost: 16,
+    stats: {
+      yield: "+10 city defense"
+    },
+    requirement: "medievalWarfare",
+    tech: "Medieval Warfare"
   },
   {
-    type: "barwallRenaissanceracks",
+    type: "wallRenaissance",
     label: "Renaissance Wall",
-    goldCost: 4,
-    productionCost: 4,
-    requirement: "Wall Lvl2",
+    goldCost: 250,
+    productionCost: 20,
+    stats: {
+      yield: "+10 city defense"
+    },
+    requirement: "gunpowder",
+    tech: "Gunpowder"
   },
   {
     type: "wallIndustrial",
     label: "Industrial Wall",
-    goldCost: 4,
-    productionCost: 4,
-    requirement: "Wall Lvl3",
+    goldCost: 300,
+    productionCost: 28,
+    stats: {
+      yield: "+10 city defense"
+    },
+    requirement: "tanksAndArmor",
+    tech: "Tanks and Armor"
   },
   {
     type: "library",
     label: "Library",
-    goldCost: 4,
-    productionCost: 4,
+    goldCost: 100,
+    productionCost: 10,
+    stats: {
+      yield: "+2 science"
+    },
+    requirement: "writing",
+    tech: "Writing"
   },
   {
     type: "school",
     label: "School",
-    goldCost: 4,
-    productionCost: 4,
+    goldCost: 150,
+    productionCost: 20,
+    stats: {
+      yield: "+3 science"
+    },
+    requirement: "education",
+    tech: "Education"
   },
   {
     type: "university",
     label: "University",
-    goldCost: 4,
-    productionCost: 4,
+    goldCost: 200,
+    productionCost: 30,
+    stats: {
+      yield: "+4 science"
+    },
+    requirement: "academia",
+    tech: "Academia"
   },
   {
     type: "observatory",
     label: "Observatory",
-    goldCost: 4,
-    productionCost: 4,
+    goldCost: 300,
+    productionCost: 40,
+    stats: {
+      yield: "+5 science"
+    },
+    requirement: "astronomy",
+    tech: "Astronomy"
   },
   {
     type: "forge",
     label: "Forge",
-    goldCost: 4,
-    productionCost: 4,
+    goldCost: 100,
+    productionCost: 10,
+    stats: {
+      yield: "+2 production"
+    },
+    requirement: "ironWorking",
+    tech: "Iron Working"
   },
   {
     type: "factory",
     label: "Factory",
-    goldCost: 4,
-    productionCost: 4,
+    goldCost: 200,
+    productionCost: 20,
+    stats: {
+      yield: "+3 production"
+    },
+    requirement: "industrialization",
+    tech: "Industrialization"
   },
   {
     type: "energyPlant",
     label: "Energy Plant",
-    goldCost: 4,
-    productionCost: 4,
+    goldCost: 300,
+    productionCost: 30,
+    stats: {
+      yield: "+4 production"
+    },
+    requirement: "electricalPower",
+    tech: "Electrical Power"
   },
   {
     type: "market",
     label: "Market",
-    goldCost: 4,
-    productionCost: 4,
+    goldCost: 100,
+    productionCost: 10,
+    stats: {
+      yield: "+2 gold"
+    },
+    requirement: "economics",
+    tech: "Economics"
   },
   {
     type: "bank",
     label: "Bank",
-    goldCost: 4,
-    productionCost: 4,
+    goldCost: 200,
+    productionCost: 20,
+    stats: {
+      yield: "+3 gold"
+    },
+    requirement: "economics",
+    tech: "Economics"
   },
   {
     type: "stockExchange",
     label: "Stock Excahnge",
-    goldCost: 4,
-    productionCost: 4,
+    goldCost: 300,
+    productionCost: 30,
+    stats: {
+      yield: "+4 gold"
+    },
+    requirement: "capitalism",
+    tech: "Capitalism"
   },
   {
     type: "granary",
     label: "Granary",
-    goldCost: 4,
-    productionCost: 4,
+    goldCost: 100,
+    productionCost: 10,
+    stats: {
+      yield: "+2 food"
+    },
+    requirement: "agriculture",
+    tech: "Agriculture"
   },
   {
     type: "mill",
     label: "Mill",
-    goldCost: 4,
-    productionCost: 4,
+    goldCost: 200,
+    productionCost: 20,
+    stats: {
+      yield: "+2 food"
+    },
+    requirement: "agriculture",
+    tech: "Agriculture"
   },
   {
     type: "bakery",
     label: "Bakery",
-    goldCost: 4,
-    productionCost: 4,
+    goldCost: 300,
+    productionCost: 30,
+    stats: {
+      yield: "+3 food"
+    },
+    requirement: "construction",
+    tech: "Construction"
   },
   {
     type: "supermarket",
     label: "Supermarket",
-    goldCost: 4,
-    productionCost: 4,
+    goldCost: 400,
+    productionCost: 40,
+    stats: {
+      yield: "+4 food"
+    },
+    requirement: "modernFarming",
+    tech: "Modern Farming"
   },
 ];

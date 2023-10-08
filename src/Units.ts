@@ -5,65 +5,125 @@ export type UnitType = {
   productionCost: number;
   goldCost: number;
   requirement?: string;
+  tech?: string;
+  stats?: {
+    builds?: number;
+    attack?: number;
+    movement?: number;
+    resourceCost?: string;
+    yield?: string;
+  };
 };
 
 export const AllUnits: UnitType[] = [
   {
     type: "settler",
-    description: "",
+    description: "Settlers can found new cities",
     label: "Settler",
     productionCost: 20,
-    goldCost: 500,
+    goldCost: 100,
+    requirement: "",
+    stats: {
+      builds: 1,
+      movement: 2,
+      resourceCost: "Food cost: 60",
+    }
   },
   {
     type: "builder",
     label: "Builder",
-    description: "Can build and gather resources",
+    description: "Builders can upgrade tiles to produce more resources",
     productionCost: 20,
-    goldCost: 2,
+    goldCost: 100,
+    requirement: "",
+    stats: {
+      builds: 1,
+      movement: 2,
+    }
   },
   {
     type: "warrior",
     label: "Warrior",
-    description: "Basic combat unit",
+    description: "The most basic combat unit",
     productionCost: 20,
-    goldCost: 240,
+    goldCost: 200,
+    requirement: "",
+    stats: {
+      attack: 8,
+      movement: 2,
+    }
   },
   {
     type: "archer",
     label: "Archer",
     productionCost: 20,
-    goldCost: 240,
+    goldCost: 200,
+    requirement: "archery",
+    tech: "Archery",
+    stats: {
+      attack: 10,
+      movement: 2,
+    }
   },
   {
     type: "swordsman",
     label: "Swordsman",
     productionCost: 30,
     goldCost: 240,
+    requirement: "ironWorking",
+    tech: "Iron Working",
+    stats: {
+      attack: 14,
+      movement: 2,
+      resourceCost: "Iron cost: 10",
+    }
   },
   {
     type: "crossbowman",
     label: "Crossbowman",
     productionCost: 40,
-    goldCost: 300,
+    goldCost: 240,
+    requirement: "medievalWarfare",
+    tech: "Medieval Warfare",
+    stats: {
+      attack: 24,
+      movement: 2,
+    }
   },
   {
     type: "musketman",
     label: "Musketman",
     productionCost: 50,
     goldCost: 360,
+    requirement: "gunpowder",
+    tech: "Gunpowder",
+    stats: {
+      attack: 32,
+      movement: 2,
+    }
   },
   {
     type: "rifleman",
     label: "Rifleman",
     productionCost: 60,
     goldCost: 420,
+    requirement: "ballistics",
+    tech: "Ballistics",
+    stats: {
+      attack: 40,
+      movement: 3,
+    }
   },
   {
     type: "tank",
     label: "Tank",
     productionCost: 80,
     goldCost: 500,
-    requirement: "Need to find Oil first",
+    requirement: "tanksAndArmor",
+    tech: "Tanks and Armor",
+    stats: {
+      attack: 50,
+      movement: 4,
+    }
   },
 ];
