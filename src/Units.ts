@@ -13,6 +13,7 @@ export type UnitType = {
     resourceCost?: string;
     yield?: string;
   };
+  isUnlocked?: boolean;
 };
 
 export const AllUnits: UnitType[] = [

@@ -13,6 +13,7 @@ export type BuildingType = {
     movement?: number;
     resourceCost?: string;
   };
+  isUnlocked?: boolean;
 };
 
 export const AllBuildings: BuildingType[] = [

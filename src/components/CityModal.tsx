@@ -28,11 +28,12 @@ const CustomTooltip: React.FC<BuildingType & { selectedTab: number }> = ({
   productionCost,
   selectedTab,
   goldCost,
+  isUnlocked,
 }) => {
   return (
     <div className="custom-tooltip">
       {/* <p className="header">{label}</p> */}
-      {requirement ? (
+      {requirement && !isUnlocked ? (
         <p>
           Research required: <b>{tech}</b>
         </p>
@@ -89,14 +90,18 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
   const { playSound } = useSound();
   const { fetchPlayerState, cities, technologies } = useGameState();
 
+  const [researchedTechnologies, setResearchTechnologies] = useState(new Set<string>());
   const [selectedTab, setSelectedTab] = useState(0);
   const [buildingsToBuild, setBuildingsToBuild] = useState<BuildingType[]>([]);
 
   const cityData = cities.find((city) => city.cityId === cityId);
-  const researchedTechnologies = new Set(technologies.researchedTechnologies.map((tech) => Object.keys(tech)[0]));
+  
 
   useEffect(() => {
     if (!cityData) return;
+
+    const unlockedTech = new Set(technologies.researchedTechnologies.map((tech) => Object.keys(tech)[0]));
+    setResearchTechnologies(unlockedTech);
 
     const extractBuildingType = (building: any) => {
       if (building["building"]) {
@@ -113,13 +118,14 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
     );
 
     const sortedBuildings = buildingsToBuild.sort((a, b) => {
-      const isAUnlocked = a.requirement ? researchedTechnologies.has(a.requirement) : true;
-      const isBUnlocked = b.requirement ? researchedTechnologies.has(b.requirement) : true;
+      const isAUnlocked = a.requirement ? unlockedTech.has(a.requirement) : true;
+      const isBUnlocked = b.requirement ? unlockedTech.has(b.requirement) : true;
       return +isBUnlocked - +isAUnlocked;
     });
+    console.log(unlockedTech);
 
     setBuildingsToBuild(sortedBuildings);
-  }, [cityData]);
+  }, [cityData, technologies.researchedTechnologies]);
 
   useEffect(() => {
     if (!show) setSelectedTab(0);
@@ -144,6 +150,9 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
       }
       if (error.message.includes("TechnologyNotResearched")) {
         toast.error("You need to unlock this technology via Research.");
+      }
+      if (error.message.includes("InsufficientResources")) {
+        toast.error("Not enough resources. See unit tooltip for more info.");
       }
     }
     await fetchPlayerState();
@@ -282,7 +291,7 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
                   <Tippy
                     key={unit.type}
                     placement="left"
-                    content={<CustomTooltip {...unit} selectedTab={selectedTab} />}
+                    content={<CustomTooltip {...unit} isUnlocked={isUnlocked} selectedTab={selectedTab} />}
                   >
                     <Box
                       onClick={() => {
@@ -329,7 +338,7 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
                   <Tippy
                     key={building.type}
                     placement="left"
-                    content={<CustomTooltip {...building} selectedTab={selectedTab} />}
+                    content={<CustomTooltip {...building} isUnlocked={isUnlocked} selectedTab={selectedTab} />}
                   >
                     <Box
                       onClick={() => {
