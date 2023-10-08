@@ -11,6 +11,7 @@ export type UnitType = {
     attack?: number;
     movement?: number;
     resourceCost?: string;
+    resourceType?: string;
     yield?: string;
   };
 };
@@ -26,7 +27,8 @@ export const AllUnits: UnitType[] = [
     stats: {
       builds: 1,
       movement: 2,
-      resourceCost: "Food cost: 60",
+      resourceCost: "Cost: 60",
+      resourceType: "food",
     }
   },
   {
@@ -75,7 +77,8 @@ export const AllUnits: UnitType[] = [
     stats: {
       attack: 14,
       movement: 2,
-      resourceCost: "Iron cost: 10",
+      resourceCost: "Cost: 10",
+      resourceType: "iron",
     }
   },
   {

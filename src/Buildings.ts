@@ -12,6 +12,7 @@ export type BuildingType = {
     attack?: number;
     movement?: number;
     resourceCost?: string;
+    resourceType?: string;
   };
 };
 

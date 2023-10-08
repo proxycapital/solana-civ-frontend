@@ -63,6 +63,7 @@ const CustomTooltip: React.FC<BuildingType & { selectedTab: number }> = ({
           {stats?.resourceCost && (
             <span>
               <b>{stats.resourceCost}</b>
+              <img width="24" src={`./icons/${stats?.resourceType}.png`} alt={stats?.resourceType} />
             </span>
           )}
           <span>

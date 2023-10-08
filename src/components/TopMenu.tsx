@@ -15,6 +15,7 @@ import Tippy from "@tippyjs/react";
 import { toast } from "react-toastify";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 import { useWallet } from "@solana/wallet-adapter-react";
+import Joyride, { STATUS } from "react-joyride";
 
 import ResearchTree from "./research/ResearchTree";
 import Quests from "./quests/Quests";
@@ -46,6 +47,16 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState("");
   const [openDialog, setOpenDialog] = useState(false);
+  const [showOnboardingType, setShowOnboardingType] = useState<'production' | 'research' | null>(null);
+  const researchButtonRef = React.useRef(null)
+
+  const researchSteps = [
+    { target: '.nav-buttons-box.research button', content: <div>Open Research Tree and selected of the researches</div> },
+  ]
+
+  const productionSteps = [
+    { target: '.terrain.village', content: <div>Click on city and add unit or building to production queue</div> },
+  ]
 
   const handleOpenDialog = () => {
     if (!wallet?.adapter.publicKey) {
@@ -106,9 +117,10 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
     <>
       {/* Second row of navigation */}
       <div className="bottom-nav">
-        <div className="nav-buttons-box">
+        <div className="nav-buttons-box research">
           <Tippy key="research" content="Research" placement="bottom">
             <Button
+              ref={researchButtonRef}
               variant="text"
               color="inherit"
               onClick={() => {
@@ -163,6 +175,7 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
             <div className="balance-container">
               {Object.keys(resources).map((resourceKey) => {
                 if (resourceKey === "gems") return null;
+              
                 const displayName = resourceKey.charAt(0).toUpperCase() + resourceKey.slice(1);
                 const imagePath = `/icons/${resourceKey}.png`;
                 const value = resources[resourceKey];
@@ -190,7 +203,7 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
               <button onClick={handleToggleBackgroundMusic} className="music-toggle-button">
                 <FontAwesomeIcon icon={isMusicPlaying ? faVolumeHigh : faVolumeXmark} />
               </button>
-              <EndTurnButton />
+              <EndTurnButton setShowOnboardingType={setShowOnboardingType} />
               <WalletMultiButton />
             </div>
           </Toolbar>
@@ -235,6 +248,20 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
           </Dialog>
         </ThemeProvider>
       </div>
+      <Joyride
+        run={showOnboardingType}
+        steps={showOnboardingType === 'production' ? productionSteps : researchSteps}
+        styles={{
+          options: {
+            primaryColor: '#512da8',
+          },
+        }}
+        callback={(state: any) => {
+          if ([STATUS.SKIPPED, STATUS.FINISHED].includes(state.status)) {
+            setShowOnboardingType(null)
+          }
+        }}
+      />
     </>
   );
 };

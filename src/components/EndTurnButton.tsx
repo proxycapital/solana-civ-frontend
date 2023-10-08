@@ -19,7 +19,11 @@ const darkTheme = createTheme({
   },
 });
 
-const EndTurnButton: React.FC = () => {
+interface EndTurnButtonProps {
+  setShowOnboardingType: (onboardingType: 'production' | 'research' | null) => void;
+}
+
+const EndTurnButton: React.FC<EndTurnButtonProps> = ({ setShowOnboardingType }) => {
   const { program, provider } = useWorkspace();
   const { game, technologies, cities, allUnits, fetchPlayerState, fetchGameState, fetchNpcs } = useGameState();
   const [isProcessing, setIsProcessing] = useState(false);
@@ -37,11 +41,13 @@ const EndTurnButton: React.FC = () => {
   const endTurn = async () => {
     if (!technologies.currentResearch && technologies.researchedTechnologies.length < 17) {
       toast.warning("You need to select a technology to research");
+      setShowOnboardingType('research')
       return;
     }
     for (let city of cities) {
       if (city.productionQueue.length === 0 && allUnits.length < 20) {
         toast.warning("You need to select production in all your cities");
+        setShowOnboardingType('production')
         return;
       }
     }
