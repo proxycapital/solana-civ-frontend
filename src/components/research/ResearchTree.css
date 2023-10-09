@@ -17,19 +17,49 @@
   top: 0;
   bottom: 0;
   left: 50%;
-  border-left: 2px dashed #fff;
+  border-left: 2px dashed #927f61;
   z-index: -1;
 }
 
 .research-block {
   display: block;
-  background-color: #2e2e2e;
-  border: 1px solid #fff;
+  border-radius: 8px;
+  border: 2px solid #927f61;
+  background: linear-gradient(180deg, #5e4831 0%, #2b2217 100%);
   border-radius: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 35px;
   padding: 10px;
   position: relative;
   align-items: center;
+}
+
+.research-block.unlocked {
+  border: 2px solid #927f61;
+  background: linear-gradient(180deg, #a18354 0%, #342b19 100%);
+}
+
+.research-block.locked {
+  border-radius: 8px;
+  border: 2px solid #808080;
+  background: linear-gradient(180deg, #373737 0%, #282828 100%);
+}
+
+.research-block .bottom-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.research-block .star-icon {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 24px;
+  margin-left: 3px;
+}
+
+.research-cost {
+  color: #cdbe91;
 }
 
 .research-icon {
@@ -72,9 +102,12 @@
 }
 
 button.research-button {
-  color: #fff;
-  border: 1px solid #fff;
-  width: 100%;
+  border-radius: 2px;
+  border: 1px solid var(--light-gradient, #927f61);
+  background: linear-gradient(180deg, #75583e 0%, #3f2f20 100%);
+  backdrop-filter: blur(6px);
+  text-transform: none;
+  color: #dfd6b9;
 }
 
 .progress-wrapper {

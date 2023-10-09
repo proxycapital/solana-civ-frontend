@@ -493,6 +493,50 @@ img.terrain.undiscovered {
   color: #fff;
 }
 
+.custom-modal {
+  background: rgba(55, 47, 38, 0.90);
+  backdrop-filter: blur(16px);
+
+  .title {
+    background-image: url('../../public/icons/title-bg.png');
+    padding: 10px 50px;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    color: #2E3A5B;
+    margin: 0 10px;
+  }
+
+  .star-icon.left {
+    left: 0;
+    position: absolute;
+    margin-left: -20px;
+  }
+
+  .star-icon.right {
+    right: 0;
+    position: absolute;
+    margin-right: -20px;
+  }
+
+  .line-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+    height: 32px;
+    width: 80%;
+    margin: 30px 0;
+  }
+
+  .line-container::before,
+  .line-container::after {
+    content: "";
+    flex-grow: 1;
+    height: 2px;
+    background: linear-gradient(180deg, #927f61 0%, #ffd48e 48.96%, #927f61 100%);
+    position: relative;
+  }
+}
+
 /* Console */
 .console-container {
   padding: 10px;

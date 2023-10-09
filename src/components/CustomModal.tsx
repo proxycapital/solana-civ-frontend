@@ -16,12 +16,12 @@ const CustomModal: React.FC<CustomModalProps> = ({ isOpen, onClose, title, child
   return (
     <Modal open={isOpen} onClose={onClose} style={{ zIndex: "20000" }}>
       <Box
+        className="custom-modal"
         sx={{
           position: "absolute",
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",
-          bgcolor: "rgba(0, 0, 0, 0.8)",
           color: "white",
           p: 3,
           backdropFilter: "blur(8px)",
@@ -47,15 +47,15 @@ const CustomModal: React.FC<CustomModalProps> = ({ isOpen, onClose, title, child
         >
           <FontAwesomeIcon icon={faClose} />
         </IconButton>
-        <h2
-          style={{
-            border: "1px solid #fff",
-            borderRadius: "5px",
-            padding: "10px 15px",
-          }}
-        >
-          {title}
-        </h2>
+        <div className="line-container">
+          <div className="star-icon left">
+            <img src="/icons/star.png" width="12" alt="" />
+          </div>
+          <h2 className="title">{title}</h2>
+          <div className="star-icon right">
+            <img src="/icons/star.png" width="12" alt="" />
+          </div>
+        </div>
         {children}
       </Box>
     </Modal>
