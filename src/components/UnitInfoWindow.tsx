@@ -18,7 +18,7 @@ interface UnitInfoProps {
     movementRange: number;
     health: number;
     builds?: number;
-    strength?: number;
+    attack?: number;
   };
 }
 
@@ -26,18 +26,18 @@ const UnitInfoWindow: React.FC<UnitInfoProps> = ({ unit }) => {
   const { program, provider } = useWorkspace();
   const { cities, fetchPlayerState } = useGameState();
   const { playSound } = useSound();
-  const { type, movementRange, builds, strength } = unit;
+  const { type, movementRange, builds, attack } = unit;
   const displayType = type.charAt(0).toUpperCase() + type.slice(1);
-
+  console.log(unit);
   const getUnusedCityName = () => {
-    const usedNames = cities.map(city => city.name);
-    const availableNames = config.cityNames.filter(name => !usedNames.includes(name));
+    const usedNames = cities.map((city) => city.name);
+    const availableNames = config.cityNames.filter((name) => !usedNames.includes(name));
     if (availableNames.length === 0) {
       return "City";
     }
     const randomIndex = Math.floor(Math.random() * availableNames.length);
     return availableNames[randomIndex];
-  }
+  };
 
   const handleFoundCity = async (x: number, y: number, unitId: number) => {
     const data = { x, y, unitId, name: getUnusedCityName() };
@@ -78,24 +78,45 @@ const UnitInfoWindow: React.FC<UnitInfoProps> = ({ unit }) => {
   };
   return (
     <div className="unit-info-window">
-      <img src={`/${type}.png`} alt={type} />
+      <img src={`/${type}.png`} className="avatar" alt={type} />
       <div>
         <strong>{displayType}</strong>
       </div>
-      <div>HP: {unit.health}/100</div>
-      <div>
-        Movements: {movementRange}/{movementRange}
+      <div className="line-container">
+        <img src="/icons/diamond.png" alt="" width="32" className="center-image" />
       </div>
-      {builds !== undefined && <div>Builds: {builds}/1</div>}
-      {strength !== undefined && <div>Strength: {strength}</div>}
+      <div className="unit-stats">
+        <img src="/icons/health.png" alt="" className="unit-icon" /> Health:&nbsp;<b>{unit.health}/100</b>
+      </div>
+      <div className="unit-stats">
+        <img src="/icons/movement.png" alt="" className="unit-icon" />
+        Movements:&nbsp;
+        <b>
+          {movementRange}
+        </b>
+      </div>
+      {attack !== 0 && (
+        <div className="unit-stats">
+          <img src="/icons/attack.png" alt="" className="unit-icon" />
+          Strength:&nbsp;<b>{attack}</b>
+        </div>
+      )}
       {type === "settler" && (
-        <Button className="unit-action-button" variant="outlined" onClick={() => handleFoundCity(unit.x, unit.y, unit.unitId)}>
-          Found a City
+        <Button
+          className="unit-action-button"
+          variant="outlined"
+          onClick={() => handleFoundCity(unit.x, unit.y, unit.unitId)}
+        >
+          <img src="/icons/build.png" alt="" className="unit-icon" /> Found a City
         </Button>
       )}
       {type === "builder" && (
-        <Button className="unit-action-button" variant="outlined" onClick={() => handleBuild(unit.x, unit.y, unit.unitId)}>
-          Build
+        <Button
+          className="unit-action-button"
+          variant="outlined"
+          onClick={() => handleBuild(unit.x, unit.y, unit.unitId)}
+        >
+          <img src="/icons/build.png" alt="" className="unit-icon" /> Build
         </Button>
       )}
     </div>

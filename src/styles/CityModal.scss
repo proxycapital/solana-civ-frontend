@@ -46,6 +46,7 @@
   top: 65px; // header height
   left: 0;
   width: 30%;
+  max-width: 500px;
   height: 100%;
   overflow-y: scroll;
   -ms-overflow-style: none;  
@@ -55,7 +56,10 @@
   .city-modal-header {
     position: fixed;
     width: 30%;
+    max-width: 500px;
     height: 100px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
     background: rgb(49 44 38);
     background: linear-gradient(180deg, rgba(168, 110, 50, 0.2) 0%, rgba(79, 38, 0, 0.2) 100%), rgba(30, 35, 40, 0.95);
     box-shadow: 0px 2px 7px 0px rgba(0, 0, 0, 0.75);
