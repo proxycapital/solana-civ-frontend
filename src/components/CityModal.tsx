@@ -206,7 +206,7 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
       <>
         {cityData?.productionQueue?.length > 0 ? (
           <div className="modal production-queue-modal">
-            <h3 className="primary-border-with-box-shadow">Queue</h3>
+            <h3 className="">Production Queue</h3>
             {cityData?.productionQueue?.map((productionItem: any, index: number) => {
               const item = productionItem["building"] ? productionItem["building"]["0"] : productionItem["unit"]["0"];
               const itemType = Object.keys(item)[0];
