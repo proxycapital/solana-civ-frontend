@@ -64,22 +64,41 @@ const ResearchTree = () => {
     }
     await fetchPlayerState();
   };
+  const researchedKeys = technologies.researchedTechnologies.map((tech) => Object.keys(tech)[0]);
 
   return (
     <div className="research-tree">
       <div className="research-column">
-        {column1.map((data) => (
-          <ResearchBlock {...data} {...technologies} onResearchClick={handleResearch} />
+        {column1.map((data, index) => (
+          <ResearchBlock
+            {...data}
+            {...technologies}
+            onResearchClick={handleResearch}
+            index={index}
+            prevResearched={index === 0 ? true : researchedKeys.includes(toCamelCase(column1[index - 1].name))}
+          />
         ))}
       </div>
       <div className="research-column">
-        {column2.map((data) => (
-          <ResearchBlock {...data} {...technologies} onResearchClick={handleResearch} />
+        {column2.map((data, index) => (
+          <ResearchBlock
+            {...data}
+            {...technologies}
+            onResearchClick={handleResearch}
+            index={index}
+            prevResearched={index === 0 ? true : researchedKeys.includes(toCamelCase(column2[index - 1].name))}
+          />
         ))}
       </div>
       <div className="research-column">
-        {column3.map((data) => (
-          <ResearchBlock {...data} {...technologies} onResearchClick={handleResearch} />
+        {column3.map((data, index) => (
+          <ResearchBlock
+            {...data}
+            {...technologies}
+            onResearchClick={handleResearch}
+            index={index}
+            prevResearched={index === 0 ? true : researchedKeys.includes(toCamelCase(column3[index - 1].name))}
+          />
         ))}
       </div>
     </div>

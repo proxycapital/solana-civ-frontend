@@ -10,6 +10,8 @@ interface IResearch {
   currentResearch: any;
   researchAccumulatedPoints: number;
   researchedTechnologies: any[];
+  index: number;
+  prevResearched: boolean;
   onResearchClick: (name: string) => void;
 }
 
@@ -34,15 +36,19 @@ const ResearchBlock = ({
   researchAccumulatedPoints,
   researchedTechnologies,
   onResearchClick,
+  index,
+  prevResearched,
 }: IResearch) => {
   const researchedKeys = researchedTechnologies.map((tech) => Object.keys(tech)[0]);
   const currentResearchKey = currentResearch ? Object.keys(currentResearch)[0] : null;
   const isCurrentResearch = toCamelCase(name) === currentResearchKey;
   const progressPercentage = isCurrentResearch ? (researchAccumulatedPoints / cost) * 100 : 0;
   const isUnlocked = researchedKeys.includes(toCamelCase(name));
-
+  const isLocked = index !== 0 && !prevResearched;
+  console.log(`${name} is locked:`, isLocked);
+  console.log(`${name} is unlocked:`, isUnlocked);
   return (
-    <div className={`research-block ${isUnlocked ? "unlocked" : ""}`}>
+    <div key={name} className={`research-block ${isUnlocked ? "unlocked" : ""} ${isLocked ? "locked" : ""}`}>
       <div className="top-section">
         {/* <img src="/research.png" width="100" alt="" className="research-icon" /> */}
         <div className="research-content">
@@ -70,16 +76,18 @@ const ResearchBlock = ({
                 Research points: <b>{cost}</b>
               </span>
             </div>
-            <Button
-              className="research-button"
-              variant="outlined"
-              //disabled={currentResearch}
-              onClick={() => {
-                onResearchClick(name);
-              }}
-            >
-              Research
-            </Button>
+            {!isLocked && (
+              <Button
+                className="research-button"
+                variant="outlined"
+                //disabled={currentResearch}
+                onClick={() => {
+                  onResearchClick(name);
+                }}
+              >
+                Research
+              </Button>
+            )}
           </div>
         )}
       </div>
