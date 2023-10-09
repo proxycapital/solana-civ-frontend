@@ -1,6 +1,6 @@
 .production-queue-modal {
   position: absolute;
-  top: 135px;
+  top: 65px;
   right: 0;
   padding: 1rem;
 
@@ -12,10 +12,11 @@
     text-align: center;
     margin-top: -0.5rem;
     padding: 1rem;
+    margin-bottom: 0;
   }
 
   .production-item {
-    padding: 1rem;
+    padding: 5px;
     margin-bottom: 0.25rem;
 
     .body-item {
