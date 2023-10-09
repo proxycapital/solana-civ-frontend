@@ -70,7 +70,7 @@ const Terrain: React.FC<TerrainProps> = ({ x, y, discovered, imageIndex, overlay
 
   const tileType = TileType[imageIndex as keyof typeof TileType];
   const overlayTileType = TileType[overlayImageIndex as keyof typeof TileType];
-  const imageUrl = `/terrain/Layer ${imageIndex}.png`;
+  const imageUrl = !discovered && imageIndex === 15 ? `/terrain/Layer 2.png` : `/terrain/Layer ${imageIndex}.png`;
   const overlayImageUrl = overlayImageIndex !== undefined ? `/terrain/Layer ${overlayImageIndex}.png` : "";
 
   return (
@@ -111,7 +111,8 @@ const Terrain: React.FC<TerrainProps> = ({ x, y, discovered, imageIndex, overlay
         </div>
       )}
       {!discovered && (
-        <img src="/terrain/Layer 20.png" className="terrain undiscovered" alt="undiscovered" draggable="false" />
+        // <img src="/terrain/Layer 20.png" className="terrain undiscovered" alt="undiscovered" draggable="false" />
+        <img src={imageUrl} className={`terrain undiscovered`} alt={tileType} draggable="false" />
       )}
     </div>
   );

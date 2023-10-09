@@ -365,7 +365,7 @@ img.upgraded-tile {
 }
 
 img.terrain.undiscovered {
-  filter: blur(3px);
+  filter: brightness(0.5);
 }
 
 .game-tile img.terrain-overlay {
