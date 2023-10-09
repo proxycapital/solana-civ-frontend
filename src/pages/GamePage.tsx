@@ -100,7 +100,6 @@ const GamePage: React.FC = () => {
       return newMessages;
     });
   };
-
   return (
     <div className="full-screen">
       <TopMenu debug={debug} setDebug={setDebug} />
@@ -112,12 +111,17 @@ const GamePage: React.FC = () => {
         continuous={true}
         disableBeacon={true}
         callback={handleJoyrideCallback}
+        className="joyride-modal"
         styles={{
           options: {
-            backgroundColor: "rgb(34, 47, 59)",
+            backgroundColor: "#36302a",
             textColor: "#fff",
-            primaryColor: '#512da8',
+            primaryColor: '#C8AA6E',
+            border: "2px solid #C8AA6E",
           },
+          main: {
+            border: "2px solid #C8AA6E",
+          }
         }}
       />
     </div>
