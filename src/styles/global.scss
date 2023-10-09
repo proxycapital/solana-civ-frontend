@@ -1,6 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC:wght@400;700&display=swap');
+
 body {
   background: rgb(46, 63, 75);
   background: linear-gradient(180deg, rgba(46, 63, 75, 1) 0%, rgba(30, 39, 52, 1) 100%);
+  font-family: 'Alegreya Sans SC', sans-serif;
+}
+
+button {
+  font-family: 'Alegreya Sans SC', sans-serif;
 }
 
 body.light-mode {
@@ -11,6 +18,11 @@ body.light-mode {
 
 h6 {
   font-size: 14px !important;
+}
+
+.react-joyride__tooltip {
+  background: linear-gradient(180deg, rgba(168, 110, 50, 0.2) 0%, rgba(79, 38, 0, 0.2) 100%), rgba(30, 35, 40, 0.95);
+    border: 2px solid #C8AA6E;
 }
 
 .home-container {
@@ -73,38 +85,39 @@ button.fixed-width-button-secondary {
   display: flex;
   margin-left: auto;
   position: fixed;
-  top: 64px; // height of top-navigation
-  right: 0;
+  top: 75px; // height of top-navigation
+  right: 30px;
   z-index: 100;
 
   .nav-buttons-box {
+    display: flex;
+    flex-direction: column;
     padding: 0.25rem;
-    background: rgb(32 43 55);
-    box-shadow: 0px 2px 7px 0px rgba(0, 0, 0, 0.75);
-    border-bottom-left-radius: 0.5rem;
-    -webkit-box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.75);
-    -moz-box-shadow: 0px 2px 7px 0px rgba(0, 0, 0, 0.75);
 
     button {
       height: 100%;
+      background-image: url('../../public/icons/round-button.png');
+      background-size: 100% 100%;
+      padding: 10px;
+      margin: 5px 0;
+      border-radius: 45px;
 
       &:hover {
-        border-radius: 0.5rem;
-        outline: 1px solid #3c4a57;
+        box-shadow: 0 0 5px 2px #c8aa6e;
+        border-radius: 45px;
       }
     }
   }
 }
 
+
 header.top-navigation {
-  background: rgb(34, 47, 59);
-  background: radial-gradient(circle, rgba(34, 47, 59, 1) 0%, rgba(30, 39, 52, 1) 100%);
-  -ms-flex-negative: 0;
-  border: 1px solid #3c4a57;
   color: #fff;
-  box-shadow: 0px 2px 7px 0px rgba(0, 0, 0, 0.75);
-  -webkit-box-shadow: 0px 2px 7px 0px rgba(0, 0, 0, 0.75);
-  -moz-box-shadow: 0px 2px 7px 0px rgba(0, 0, 0, 0.75);
+  background: linear-gradient(180deg, rgba(168, 110, 50, 0.20) 0%, rgba(79, 38, 0, 0.20) 100%), rgba(30, 35, 40, 0.95);
+    border: 2px solid #C8AA6E;
+    box-shadow: inset 0px 0px 0px 1px #000000b0, 0px 0px 0px 1px #000000b0;
+    -webkit-box-shadow: inset 0px 0px 0px 1px #000000b0, 0px 0px 0px 1px #000000b0;
+    -moz-box-shadow: inset 0px 0px 0px 1px #000000b0, 0px 0px 0px 1px #000000b0;
 }
 
 header.top-navigation .balance-container {
@@ -117,10 +130,15 @@ header.top-navigation .balance-box {
   align-items: center;
   margin-right: 5px;
   padding: 5px 10px;
-  border: 1px solid #3d4a57;
-  border-radius: 5px;
-  font-size: 14px;
+  font-size: 16px;
   cursor: pointer;
+  background-image: url('../../public/icons/balance-bg.png');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+header.top-navigation .balance-box.gems-resource {
+  background-image: url('../../public/icons/balance-bg-light.png');
 }
 
 header.top-navigation .balance-box img {
@@ -158,29 +176,26 @@ div.unit {
   transform: translate(-50%, -50%);
   font-size: 64px;
   z-index: 1;
-  width: 80%;
-  height: 80%;
+  width: 90%;
+  height: 90%;
+  margin: 5px;
 }
 
 div.unit img {
   border-radius: 45px;
-  border: 1px solid white;
+  box-shadow: 0px 2px 5px 0px #0000009a;
 }
 
 .unit.selected {
-  box-shadow: 0 0 5px 2px gold;
+  box-shadow: 0 0 5px 2px #bea27a;
   filter: none !important;
   border-radius: 45px;
 }
 
 .unit.npc {
-  box-shadow: 0 0 5px 2px red;
+  box-shadow: 0 0 5px 2px #b62d3a;
   filter: none !important;
   border-radius: 45px;
-}
-
-div.unit.npc img {
-  border: 1px solid red;
 }
 
 .unit .health-bar {
@@ -339,19 +354,30 @@ img.terrain.undiscovered {
   justify-content: space-between;
 }
 
+.star-icon {
+  padding-right: 5px;
+}
+
 .top-navigation button {
   margin: 0 5px;
+  font-family: "Alegreya Sans SC", sans-serif;
 }
 
 .top-navigation button.end-turn-button {
   margin-left: auto;
-  color: #fff;
-  border: 1px solid #fff;
+  color: #DFD6B9;
+  text-transform: none;
+  border-radius: 3px;
+  border: 1px solid var(--light-gradient, #927F61);
+  background: linear-gradient(180deg, #A38E5E 0%, #6B5B38 100%);
 }
 
 .top-navigation button.end-game-button {
-  color: #bbb;
-  border: 1px solid #bbb;
+  color: #CDBE91;
+  text-transform: none;
+  border-radius: 3px;
+  border: 1px solid var(--light-gradient, #927F61);
+  background: linear-gradient(180deg, #75583E 0%, #3F2F20 100%);
 }
 
 .no-select {
@@ -442,19 +468,19 @@ img.terrain.undiscovered {
 .music-toggle-button {
   background: none;
   border: none;
-  color: #fff;
+  color: #CAB37D;
   cursor: pointer;
   font-size: 20px;
   vertical-align: middle;
 }
 .music-toggle-button:hover {
-  color: #ccc;
+  color: #6B5830;
 }
 
 .vertical-divider {
   width: 5px;
   height: 35px;
-  border-left: 1px dotted #3d4a57;
+  border-left: 1px dotted #c8aa6e;
 }
 
 .primary-border-with-box-shadow {

@@ -40,19 +40,23 @@ interface TopMenuProps {
 }
 
 const researchSteps = [
-  { target: '.nav-buttons-box.research button', content: <div>Open Research Tree and selected of the researches</div> },
-]
+  { target: ".nav-buttons-box.research button", content: <div>Open Research Tree and selected of the researches</div> },
+];
 
 const productionSteps = [
-  { target: '.terrain.village', content: <div>Click on city and add unit or building to production queue</div> },
-]
+  { target: ".terrain.village", content: <div>Click on city and add unit or building to production queue</div> },
+];
 
 const CustomBalanceTooltip = ({ resource, displayName, totalValues }: any) => {
   if (totalValues[resource]) {
-    return <span>{displayName}  (+{totalValues[resource]})</span>
+    return (
+      <span>
+        {displayName} (+{totalValues[resource]})
+      </span>
+    );
   }
-  return <span>{displayName}</span>
-}
+  return <span>{displayName}</span>;
+};
 const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
   const { provider, program } = useWorkspace();
   const { wallet } = useWallet();
@@ -61,7 +65,7 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState("");
   const [openDialog, setOpenDialog] = useState(false);
-  const [showOnboardingType, setShowOnboardingType] = useState<'production' | 'research' | null>(null);
+  const [showOnboardingType, setShowOnboardingType] = useState<"production" | "research" | null>(null);
 
   let totalFoodYield = 0;
   let totalScienceYield = 0;
@@ -86,13 +90,13 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
     if (tileType === "ironMine") {
       totalIronYiled += 2;
     }
-  })
+  });
 
   cities.forEach((city) => {
     totalFoodYield += city.foodYield;
     totalScienceYield += city.scienceYield;
-    totalGoldYield += city.goldYield
-  })
+    totalGoldYield += city.goldYield;
+  });
 
   const handleOpenDialog = () => {
     if (!wallet?.adapter.publicKey) {
@@ -154,7 +158,7 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
       {/* Second row of navigation */}
       <div className="bottom-nav">
         <div className="nav-buttons-box research">
-          <Tippy key="research" content="Research" placement="bottom">
+          <Tippy key="research" content="Research" placement="left">
             <Button
               className="tutorial-research-button"
               variant="text"
@@ -168,7 +172,7 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
             </Button>
           </Tippy>
 
-          <Tippy key="quests" content="Quests" placement="bottom">
+          <Tippy key="quests" content="Quests" placement="left">
             <Button
               className="quests-button"
               variant="text"
@@ -181,7 +185,7 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
             </Button>
           </Tippy>
 
-          <Tippy key="leaderboard" content="Leaderboard" placement="bottom">
+          <Tippy key="leaderboard" content="Leaderboard" placement="left">
             <Button
               variant="text"
               color="inherit"
@@ -193,7 +197,7 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
             </Button>
           </Tippy>
 
-          <Tippy key="marketplace" content="Marketplace" placement="bottom">
+          <Tippy key="marketplace" content="Marketplace" placement="left">
             <Button
               className="marketplace-button"
               variant="text"
@@ -209,12 +213,15 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
       </div>
       <div className="top-nav-wrapper">
         {/* First AppBar for balances & end turn buttons */}
-        <AppBar position="static" className="top-navigation" style={{ border: "none" }}>
+        <AppBar position="static" className="top-navigation">
           <Toolbar style={{ display: "flex", justifyContent: "space-between" }}>
             <div className="balance-container">
+              <div className="star-icon">
+                <img src="/icons/star.png" width="12" alt="" />
+              </div>
               {Object.keys(resources).map((resourceKey) => {
                 if (resourceKey === "gems") return null;
-              
+
                 const displayName = resourceKey.charAt(0).toUpperCase() + resourceKey.slice(1);
                 const imagePath = `/icons/${resourceKey}.png`;
                 const value = resources[resourceKey];
@@ -222,19 +229,21 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
                 return (
                   <Tippy
                     key={resourceKey}
-                    content={<CustomBalanceTooltip
-                      resource={resourceKey}
-                      displayName={displayName}
-                      totalValues={{
-                        food: totalFoodYield,
-                        science: totalScienceYield,
-                        gold: totalGoldYield,
-                        stone: totalStoneYield,
-                        wood: totalWoodYield,
-                        iron: totalIronYiled,
-                      }}
-                    />
-                  }>
+                    content={
+                      <CustomBalanceTooltip
+                        resource={resourceKey}
+                        displayName={displayName}
+                        totalValues={{
+                          food: totalFoodYield,
+                          science: totalScienceYield,
+                          gold: totalGoldYield,
+                          stone: totalStoneYield,
+                          wood: totalWoodYield,
+                          iron: totalIronYiled,
+                        }}
+                      />
+                    }
+                  >
                     <div className={`balance-box ${resourceKey}-resource`}>
                       <img src={imagePath} width="32" alt={displayName} />
                       {resourceKey === "sol" ? value.toFixed(2) : value}
@@ -251,6 +260,9 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
                   </Button>
                 </div>
               </Tippy>
+              <div className="star-icon">
+                <img src="/icons/star.png" width="12" alt="" />
+              </div>
             </div>
             <div style={{ marginLeft: "auto", display: "flex" }}>
               <button onClick={handleToggleBackgroundMusic} className="music-toggle-button">
@@ -305,17 +317,17 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
       </div>
       <Joyride
         run={showOnboardingType}
-        steps={showOnboardingType === 'production' ? productionSteps : researchSteps}
+        steps={showOnboardingType === "production" ? productionSteps : researchSteps}
         styles={{
           options: {
             backgroundColor: "rgb(34, 47, 59)",
             textColor: "#fff",
-            primaryColor: '#512da8',
+            primaryColor: "#512da8",
           },
         }}
         callback={(state: any) => {
           if ([STATUS.SKIPPED, STATUS.FINISHED].includes(state.status)) {
-            setShowOnboardingType(null)
+            setShowOnboardingType(null);
           }
         }}
       />
