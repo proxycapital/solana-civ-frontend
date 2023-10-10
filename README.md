@@ -12,3 +12,7 @@ If you want to run frontend locally:
 cp .env.sample .env
 yarn install && yarn start
 ```
+
+### Preview:
+
+<img width="800" alt="screenshot" src="https://github.com/proxycapital/solana-civ-frontend/assets/65243529/34593409-b404-4947-95d2-28622d9f57f9">
