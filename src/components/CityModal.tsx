@@ -259,10 +259,18 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
                 <span>+{cityData.productionYield}</span>
               </div>
             </div>
-            <div className="city-info primary-border-with-box-shadow">
-              <span>Health: {cityData.health}</span>
-              <span>Population: {cityData.population}</span>
-              <span>Attack: {cityData.attack}</span>
+            <div className="line-container">
+              <img src="/icons/diamond.png" alt="" width="32" className="center-image" />
+            </div>
+            <div className="city-stats">
+              <img src="/icons/health.png" alt="health" /> Health:&nbsp;<b>{cityData.health}/100</b>
+            </div>
+            <div className="city-stats">
+              <img src="/icons/health.png" alt="population" /> Population:&nbsp;<b>{cityData.population}</b>
+            </div>
+            <div className="city-stats">
+              <img src="/icons/attack.png" alt="strength" />
+              Strength:&nbsp;<b>{cityData.attack}</b>
             </div>
           </div>
         ) : null}

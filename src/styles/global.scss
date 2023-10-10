@@ -287,14 +287,6 @@ img.upgraded-tile {
     background: linear-gradient(180deg, #927f61 0%, #ffd48e 48.96%, #927f61 100%);
     position: relative;
   }
-
-  .line-container::before {
-    /* */
-  }
-
-  .line-container::after {
-    /* */
-  }
 }
 
 .unit-info-window button.unit-action-button {
@@ -406,6 +398,9 @@ img.terrain.undiscovered {
 }
 
 .star-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center; 
   padding-right: 5px;
 }
 
@@ -468,7 +463,7 @@ img.terrain.undiscovered {
 .modal {
   background: rgb(49 44 38);
   background: linear-gradient(180deg, rgba(168, 110, 50, 0.2) 0%, rgba(79, 38, 0, 0.2) 100%), rgba(30, 35, 40, 0.95);
-  border: 2px solid #c8aa6e;
+  border: 4px solid var(--light-gradient, #927f61);
   -ms-flex-negative: 0;
   color: #fff;
   border-radius: 10px;
