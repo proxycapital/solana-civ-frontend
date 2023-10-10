@@ -319,7 +319,8 @@ img.upgraded-tile {
 }
 
 .in-range {
-  filter: brightness(2);
+  /* filter: brightness(1.5); */
+  filter: grayscale(1);
 }
 
 .game-tile:hover {
