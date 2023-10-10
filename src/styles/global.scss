@@ -57,15 +57,30 @@ h6 {
 
 button.fixed-width-button {
   width: 200px;
-  margin-top: 15px !important;
-  background-color: #1c97e7;
+  margin-top: 1rem !important;
+  color: #DFD6B9;
+  font-size: 1rem;
+  text-transform: none;
+  font-family: "Alegreya Sans SC", sans-serif;
+  border-radius: 0.25rem;
+  border: 1px solid var(--light-gradient, #927F61) !important;
+  background: linear-gradient(180deg, #A38E5E 0%, #6B5B38 100%) !important;
+  box-shadow: none;
 }
 
 button.fixed-width-button-secondary {
   width: 200px;
-  margin-top: 15px !important;
-  border: 1px solid rgb(51 51 52);
-  color: #333;
+  margin-top: 1rem !important;
+  color: #CDBE91;
+  font-size: 1rem;
+  text-transform: none;
+  font-family: "Alegreya Sans SC", sans-serif;
+  border-radius: 0.25rem;
+  border: 1px solid var(--light-gradient, #927F61);
+  background: linear-gradient(180deg, #75583E 0%, #3F2F20 100%) !important;
+  backdrop-filter: blur(5.818181037902832px);
+  box-shadow: none;
+
 }
 
 .full-screen {

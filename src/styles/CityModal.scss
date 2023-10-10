@@ -189,14 +189,16 @@
 
   .city-name {
     padding: 0.5rem 0.25rem;
-
+    border: 2px solid var(--light-gradient, #927f61) !important;
+    border-radius: 0.5rem;
+    
     h2 {
       margin: 0;
     }
   }
 
   .city-resources-income {
-    margin-top: 0.5rem;
+    margin-top: 0.75rem;
     margin-bottom: 0.5rem;
     display: flex;
     align-items: center;

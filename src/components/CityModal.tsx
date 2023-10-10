@@ -238,7 +238,7 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
         {/* short info about city */}
         {cityData ? (
           <div className="modal-city-info primary-border-with-box-shadow">
-            <div className="city-name primary-border-with-box-shadow">
+            <div className="city-name">
               <h2>{cityData.name}</h2>
             </div>
             <div className="city-resources-income">
