@@ -113,7 +113,7 @@ button.fixed-width-button-secondary {
 header.top-navigation {
   color: #fff;
   background: linear-gradient(180deg, rgba(168, 110, 50, 0.2) 0%, rgba(79, 38, 0, 0.2) 100%), rgba(30, 35, 40, 0.95);
-  border: 2px solid #c8aa6e;
+  border-bottom: 2px solid #c8aa6e;
   box-shadow: inset 0px 0px 0px 1px #000000b0, 0px 0px 0px 1px #000000b0;
   -webkit-box-shadow: inset 0px 0px 0px 1px #000000b0, 0px 0px 0px 1px #000000b0;
   -moz-box-shadow: inset 0px 0px 0px 1px #000000b0, 0px 0px 0px 1px #000000b0;
@@ -319,7 +319,7 @@ img.upgraded-tile {
 }
 
 .in-range {
-  filter: grayscale(1);
+  filter: brightness(2);
 }
 
 .game-tile:hover {
@@ -585,8 +585,10 @@ img.terrain.undiscovered {
   -moz-box-shadow: 0px 2px 7px 0px rgba(0, 0, 0, 0.75);
 }
 
-.confirmation-modal {
-  background: radial-gradient(circle, rgb(34, 47, 59) 0%, rgb(30, 39, 52) 100%);
+div.confirmation-modal {
+  color: #fff;
+  background: linear-gradient(180deg, rgba(168, 110, 50, 0.2) 0%, rgba(79, 38, 0, 0.2) 100%), rgba(30, 35, 40, 0.95);
+  border: 2px solid #c8aa6e;
   -ms-flex-negative: 0;
   box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
   text-align: center;

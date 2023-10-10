@@ -270,7 +270,7 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
               </button>
               <EndTurnButton setShowOnboardingType={setShowOnboardingType} />
               <div className="wallet-button-tutorial">
-                <WalletMultiButton />
+                <WalletMultiButton className="wallet-button" />
               </div>
             </div>
           </Toolbar>

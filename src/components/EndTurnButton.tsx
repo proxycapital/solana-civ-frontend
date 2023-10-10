@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import * as anchor from "@coral-xyz/anchor";
+import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -20,7 +21,7 @@ const darkTheme = createTheme({
 });
 
 interface EndTurnButtonProps {
-  setShowOnboardingType: (onboardingType: 'production' | 'research' | null) => void;
+  setShowOnboardingType: (onboardingType: "production" | "research" | null) => void;
 }
 
 const EndTurnButton: React.FC<EndTurnButtonProps> = ({ setShowOnboardingType }) => {
@@ -41,17 +42,17 @@ const EndTurnButton: React.FC<EndTurnButtonProps> = ({ setShowOnboardingType }) 
   const endTurn = async () => {
     if (!technologies.currentResearch && technologies.researchedTechnologies.length < 17) {
       toast.warning("You need to select a technology to research");
-      setShowOnboardingType('research')
+      setShowOnboardingType("research");
       return;
     }
     for (let city of cities) {
       if (city.productionQueue.length === 0 && allUnits.length < 20) {
         toast.warning("You need to select production in all your cities");
-        setShowOnboardingType('production')
+        setShowOnboardingType("production");
         return;
       }
     }
-    
+
     setIsProcessing(true);
     console.time("End turn");
     try {
@@ -128,7 +129,6 @@ const EndTurnButton: React.FC<EndTurnButtonProps> = ({ setShowOnboardingType }) 
       </Button>
       <Button onClick={handleOpenDialog} variant="outlined" className="end-game-button">
         <FontAwesomeIcon icon={faSkullCrossbones} />
-        &nbsp; End Game
       </Button>
       {isProcessing && (
         <div
@@ -158,22 +158,24 @@ const EndTurnButton: React.FC<EndTurnButtonProps> = ({ setShowOnboardingType }) 
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
-          <DialogTitle id="alert-dialog-title">{"End Game Confirmation"}</DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-description">
-              Are you sure that you want to end the game? 
-              <br />
-              All your progress will be lost 💀💀💀
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleCloseDialog} color="primary">
-              Cancel
-            </Button>
-            <Button onClick={confirmCloseGame} color="primary" autoFocus>
-              Confirm
-            </Button>
-          </DialogActions>
+          <Box className="confirmation-modal">
+            <DialogTitle id="alert-dialog-title">{"End Game Confirmation"}</DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                Are you sure that you want to end the game?
+                <br />
+                All your progress will be lost 💀💀💀
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleCloseDialog} color="primary">
+                Cancel
+              </Button>
+              <Button onClick={confirmCloseGame} color="primary" autoFocus>
+                Confirm
+              </Button>
+            </DialogActions>
+          </Box>
         </Dialog>
       </ThemeProvider>
     </>
