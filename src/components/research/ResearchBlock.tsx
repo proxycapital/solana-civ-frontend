@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "@mui/material/Button";
 import LinearProgress from "@mui/material/LinearProgress";
-import "./ResearchTree.css";
+import "./ResearchTree.scss";
 
 interface IResearch {
   name: string;
@@ -67,14 +67,29 @@ const ResearchBlock = ({
             <span className="progress-text">{progressPercentage.toFixed(2)}%</span>
           </div>
         )}
-        {isUnlocked && <div className="researched-text">✅ Researched</div>}
+        {isUnlocked && (
+          <div className="researched-wrapper">
+            <img width="32" src="/icons/maps.png" alt="maps" />
+            <span>Researched</span>
+          </div>
+        )}
         {!isCurrentResearch && !currentResearch && !isUnlocked && (
           <div className="bottom-section">
             <div className="bottom-section">
-              <img src="/icons/science.png" style={{ display: "inline-block", width: "24px" }} alt="" />
-              <span className="research-cost">
-                Research points: <b>{cost}</b>
-              </span>
+              {isLocked ? (
+                <>
+                  <img src="/icons/padlock.png" alt="padlock" width="32" />
+                  <span>Locked</span>
+                </>
+              ) : (
+                <>
+                  <img src="/icons/reward.png" width="32" alt="" />
+                  <span className="research-cost">
+                    Research points: <b>{cost}</b>
+                  </span>
+                </>
+              )}
+              
             </div>
             {!isLocked && (
               <Button

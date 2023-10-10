@@ -39,10 +39,10 @@ const CustomModal: React.FC<CustomModalProps> = ({ isOpen, onClose, title, child
             position: "absolute",
             top: 0,
             right: 0,
-            padding: "10px 15px",
             color: "#979797",
-            borderRadius: "0",
-            border: "1px solid #979797",
+            padding: "5px 8px",
+            borderRadius: "8px",
+            border: "2px solid var(--light-gradient, #927f61)"
           }}
         >
           <FontAwesomeIcon icon={faClose} />

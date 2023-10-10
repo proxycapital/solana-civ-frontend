@@ -431,6 +431,8 @@ img.terrain.undiscovered {
   border-radius: 3px;
   border: 1px solid var(--light-gradient, #927f61);
   background: linear-gradient(180deg, #a38e5e 0%, #6b5b38 100%);
+  font-size: 0.9rem;
+  font-weight: bold;
 }
 
 .top-navigation button.end-game-button,
@@ -579,9 +581,10 @@ img.terrain.undiscovered {
   cursor: pointer;
   font-size: 20px;
   vertical-align: middle;
-}
-.music-toggle-button:hover {
-  color: #6b5830;
+
+  &:hover {
+    color: #6b5830;
+  }
 }
 
 .vertical-divider {

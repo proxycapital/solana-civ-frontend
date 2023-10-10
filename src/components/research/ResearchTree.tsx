@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import { useGameState } from "../../context/GameStateContext";
 import { useWorkspace } from "../../context/AnchorContext";
 import ResearchBlock from "./ResearchBlock";
-import "./ResearchTree.css";
+import "./ResearchTree.scss";
 
 import config from "../../config.json";
 const researchData = config.science;
