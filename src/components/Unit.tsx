@@ -16,7 +16,7 @@ const Unit: React.FC<UnitProps> = ({ x, y, type, npc, health, isSelected, onClic
   const img = npc ? `npc-${type}` : type;
 
   return (
-    <div className={`unit ${isSelected ? "selected" : ""} ${npc ? "npc" : ""}`} onClick={handleClick}>
+    <div className={`unit unit-${type} ${isSelected ? "selected" : ""} ${npc ? "npc" : ""}`} onClick={handleClick}>
       {health && health < 100 && (
         <div className="health-bar">
           <div className="health" style={{ width: `${health}%` }}></div>

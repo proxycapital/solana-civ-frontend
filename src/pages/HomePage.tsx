@@ -105,7 +105,7 @@ const HomePage: React.FC = () => {
               </Button>
             </Grid>
             <Grid item xs={12}>
-            <Button variant="outlined" color="secondary" className="fixed-width-button-secondary">
+            <Button variant="text" color="secondary" className="tw-x-link">
                 <a href="https://twitter.com/solanaciv" target="_blank" rel="noreferrer" style={{ textDecoration: "none", color: "inherit" }}>
                   Twitter | X
                 </a>

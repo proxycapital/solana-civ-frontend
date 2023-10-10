@@ -40,11 +40,11 @@ interface TopMenuProps {
 }
 
 const researchSteps = [
-  { target: ".nav-buttons-box.research button", content: <div>Open Research Tree and selected of the researches</div> },
+  { target: ".nav-buttons-box.research button", content: <div>Select here a new technology to research.</div> },
 ];
 
 const productionSteps = [
-  { target: ".terrain.village", content: <div>Click on city and add unit or building to production queue</div> },
+  { target: ".terrain.village", content: <div>Click on the city and add unit or building to the production queue.</div> },
 ];
 
 const CustomBalanceTooltip = ({ resource, displayName, totalValues }: any) => {

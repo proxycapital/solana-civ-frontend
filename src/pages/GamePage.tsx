@@ -72,7 +72,22 @@ const GamePage: React.FC = () => {
       target: ".wallet-button-tutorial",
       content: "You need to connect the wallet only if you want to withdraw gems. For the rest in-game actions, the auto-generated burner wallet will be used for your convenience.",
     },
-    // ... more steps
+    {
+      target: ".tutorial-research-button",
+      content: "Here you can research new technologies. Each technology unlocks new buildings and units. You can research only one technology at a time. Researching takes time and it depends on amount of science that your cities produce.",
+    },
+    {
+      target: ".unit-builder",
+      content: "Builder unit can upgrade tiles on the map. Four upgrades are available: Lumber Mill for wood, Quarry for stone, Mine for iron and Farm for food.",
+    },
+    {
+      target: ".unit-warrior",
+      content: "Warrior unit can attack barbarians and other players. You can also use it to defend your cities. This is most basic unit in the game. Later you will be able to research more advanced units.",
+    },
+    {
+      target: ".unit-settler",
+      content: "Settler unit can found new cities. Each city can build units and buildings. You will be defeated if you lose all your cities and units. Start by selecting your Settler and founding a new city. Click the 'Found a City' button in the unit's card.",
+    },
   ]);
 
   const handleJoyrideCallback = (data: any) => {

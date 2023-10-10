@@ -28,7 +28,8 @@ const Leaderboard = () => {
   ];
   return (
     <ThemeProvider theme={darkTheme}>
-      <Table>
+      <h2 style={{textAlign: 'center'}}>Coming soon</h2>
+      <Table style={{display: 'none'}}>
         <TableHead>
           <TableRow>
             <TableCell>Player</TableCell>
