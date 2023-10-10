@@ -99,8 +99,15 @@ const HomePage: React.FC = () => {
             </Grid>
             <Grid item xs={12}>
               <Button variant="outlined" color="secondary" className="fixed-width-button-secondary">
-                <a href="/" style={{ textDecoration: "none", color: "inherit" }}>
+                <a href="https://github.com/proxycapital/solana-civ#game-design" target="_blank" rel="noreferrer" style={{ textDecoration: "none", color: "inherit" }}>
                   Documentation
+                </a>
+              </Button>
+            </Grid>
+            <Grid item xs={12}>
+            <Button variant="outlined" color="secondary" className="fixed-width-button-secondary">
+                <a href="https://twitter.com/solanaciv" target="_blank" rel="noreferrer" style={{ textDecoration: "none", color: "inherit" }}>
+                  Twitter | X
                 </a>
               </Button>
             </Grid>
