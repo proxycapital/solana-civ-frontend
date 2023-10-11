@@ -16,6 +16,13 @@ import { toast } from "react-toastify";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 import { useWallet } from "@solana/wallet-adapter-react";
 import Joyride, { STATUS } from "react-joyride";
+import IconButton from "@mui/material/IconButton";
+import Drawer from "@mui/material/Drawer";
+import MenuIcon from "@mui/icons-material/Menu";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
 
 import ResearchTree from "./research/ResearchTree";
 import Quests from "./quests/Quests";
@@ -44,7 +51,10 @@ const researchSteps = [
 ];
 
 const productionSteps = [
-  { target: ".terrain.village", content: <div>Click on the city and add unit or building to the production queue.</div> },
+  {
+    target: ".terrain.village",
+    content: <div>Click on the city and add unit or building to the production queue.</div>,
+  },
 ];
 
 const CustomBalanceTooltip = ({ resource, displayName, totalValues }: any) => {
@@ -57,6 +67,7 @@ const CustomBalanceTooltip = ({ resource, displayName, totalValues }: any) => {
   }
   return <span>{displayName}</span>;
 };
+
 const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
   const { provider, program } = useWorkspace();
   const { wallet } = useWallet();
@@ -66,6 +77,7 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
   const [modalContent, setModalContent] = useState("");
   const [openDialog, setOpenDialog] = useState(false);
   const [showOnboardingType, setShowOnboardingType] = useState<"production" | "research" | null>(null);
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   let totalFoodYield = 0;
   let totalScienceYield = 0;
@@ -97,6 +109,49 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
     totalScienceYield += city.scienceYield;
     totalGoldYield += city.goldYield;
   });
+
+  const BalancesDrawer = () => (
+    <Drawer anchor="right" open={drawerOpen} onClose={toggleDrawer(false)}>
+      <Box className="mobile-balances">
+        <List>
+          {Object.keys(resources).map((resourceKey) => {
+            if (resourceKey === "gems") return null;
+            const displayName = resourceKey.charAt(0).toUpperCase() + resourceKey.slice(1);
+            const imagePath = `/icons/${resourceKey}.png`;
+            const value = resources[resourceKey];
+
+            return (
+              <ListItem className="balance-box" key={resourceKey}>
+                <ListItemIcon>
+                  <img src={imagePath} width="32" alt={displayName} />
+                </ListItemIcon>
+                <ListItemText primary={resourceKey === "sol" ? value.toFixed(2) : value} />
+              </ListItem>
+            );
+          })}
+          <ListItem className="balance-box gems-resource" key="gems-resource">
+            <Button style={{ padding: 0, margin: 0, color: "#fff" }} onClick={handleOpenDialog}>
+              <ListItemIcon>
+                <img src="/icons/gems.png" width="32" alt="Gems" />
+              </ListItemIcon>
+              <ListItemText primary={resources.gems} />
+            </Button>
+          </ListItem>
+        </List>
+      </Box>
+    </Drawer>
+  );
+
+  const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
+    if (
+      event &&
+      event.type === "keydown" &&
+      ((event as React.KeyboardEvent).key === "Tab" || (event as React.KeyboardEvent).key === "Shift")
+    ) {
+      return;
+    }
+    setDrawerOpen(open);
+  };
 
   const handleOpenDialog = () => {
     if (!wallet?.adapter.publicKey) {
@@ -215,7 +270,17 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
         {/* First AppBar for balances & end turn buttons */}
         <AppBar position="static" className="top-navigation">
           <Toolbar style={{ display: "flex", justifyContent: "space-between" }}>
-            <div className="balance-container">
+            <IconButton
+              edge="end"
+              color="inherit"
+              aria-label="menu"
+              onClick={toggleDrawer(true)}
+              className="mobile-only"
+            >
+              <MenuIcon style={{color: "#cab47d"}} />
+            </IconButton>
+            <BalancesDrawer />
+            <div className="balance-container desktop-only">
               <div className="star-icon">
                 <img src="/icons/star.png" width="12" alt="" />
               </div>
@@ -269,7 +334,7 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
                 <FontAwesomeIcon icon={isMusicPlaying ? faVolumeHigh : faVolumeXmark} />
               </button>
               <EndTurnButton setShowOnboardingType={setShowOnboardingType} />
-              <div className="wallet-button-tutorial">
+              <div className="wallet-button-tutorial desktop-only">
                 <WalletMultiButton className="wallet-button" />
               </div>
             </div>
