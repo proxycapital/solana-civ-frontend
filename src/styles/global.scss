@@ -16,9 +16,13 @@ body.light-mode {
   background: linear-gradient(to right, #cfdef3, #e0eafc);
 }
 
-.tw-x-link {
-  margin-top: 10px;
-  color: #333;
+.home-container .btn-text {
+  margin-top: 15px;
+}
+
+.home-container .btn-text a {
+  text-decoration: none;
+  color: #dfd6b9;
 }
 
 h6 {
@@ -43,7 +47,7 @@ h6 {
 
 .center-grid {
   min-height: 100vh;
-  margin-top: -100px;
+  // margin-top: -100px;
   display: flex;
   flex-direction: column;
   justify-content: center;

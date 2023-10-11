@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
+import { faLock } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import { Connection, PublicKey, LAMPORTS_PER_SOL } from "@solana/web3.js";
 import { useWorkspace } from "../context/AnchorContext";
-import { initializeGame } from '../utils/solanaUtils';
+import { initializeGame } from "../utils/solanaUtils";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const HomePage: React.FC = () => {
   const navigate = useNavigate();
@@ -17,19 +19,11 @@ const HomePage: React.FC = () => {
   ]);
   const [showButtons, setShowButtons] = useState(true);
 
-  useEffect(() => {
-    document.body.classList.add('light-mode');
-    return () => {
-      document.body.classList.remove('light-mode');
-    };
-  }, []);
-
   const updateStepStatus = (stepName: string, status: string) => {
     setInitializationSteps((steps) => steps.map((step) => (step.name === stepName ? { ...step, status } : step)));
   };
 
   const createWalletAndStartGame = async () => {
-
     setShowButtons(false);
     const connection = workspace.connection as Connection;
     const wallet = {
@@ -39,14 +33,14 @@ const HomePage: React.FC = () => {
     try {
       // get sol balance
       const balance = await connection.getBalance(wallet.publicKey);
-      console.log("Balance: ", balance)
+      console.log("Balance: ", balance);
       if (balance >= 0.1 * LAMPORTS_PER_SOL) {
         updateStepStatus("Requesting airdrop", "completed");
       } else {
         const airdropSignature = await connection.requestAirdrop(wallet.publicKey, 1 * LAMPORTS_PER_SOL);
 
         const latestBlockHash = await connection.getLatestBlockhash();
-  
+
         await connection.confirmTransaction({
           blockhash: latestBlockHash.blockhash,
           lastValidBlockHeight: latestBlockHash.lastValidBlockHeight,
@@ -57,7 +51,9 @@ const HomePage: React.FC = () => {
     } catch (error) {
       console.log("Error while requesting airdrop: ", error);
       updateStepStatus("Requesting airdrop", "failed");
-      setErrorMsg(`Send devnet SOL to your in-game address and try again: ${wallet.publicKey.toBase58()}. Airdrop request failed: ${error}`);
+      setErrorMsg(
+        `Send devnet SOL to your in-game address and try again: ${wallet.publicKey.toBase58()}. Airdrop request failed: ${error}`
+      );
       setShowButtons(true);
       return;
     }
@@ -94,27 +90,33 @@ const HomePage: React.FC = () => {
                 className="fixed-width-button"
                 onClick={createWalletAndStartGame}
               >
-                Start New Game
+                Play with bots
               </Button>
             </Grid>
             <Grid item xs={12}>
-              <Button variant="outlined" color="secondary" className="fixed-width-button-secondary">
-                <a href="https://github.com/proxycapital/solana-civ#game-design" target="_blank" rel="noreferrer" style={{ textDecoration: "none", color: "inherit" }}>
+              <Button disabled variant="contained" color="primary" className="fixed-width-button">
+                <FontAwesomeIcon icon={faLock} />
+                &nbsp; Multiplayer
+              </Button>
+            </Grid>
+            <Grid item xs={12}>
+              <div className="btn-text">
+                <a href="https://github.com/proxycapital/solana-civ#game-design" target="_blank" rel="noreferrer">
                   Documentation
                 </a>
-              </Button>
+              </div>
             </Grid>
             <Grid item xs={12}>
-            <Button variant="text" color="secondary" className="tw-x-link">
-                <a href="https://twitter.com/solanaciv" target="_blank" rel="noreferrer" style={{ textDecoration: "none", color: "inherit" }}>
+              <div className="btn-text">
+                <a href="https://twitter.com/solanaciv" target="_blank" rel="noreferrer">
                   Twitter | X
                 </a>
-              </Button>
+              </div>
             </Grid>
           </>
         ) : (
           initializationSteps.map((step, index) => (
-            <Grid item xs={12} key={index} style={{ textAlign: "left", width: "200px" }}>
+            <Grid item xs={12} key={index} style={{ textAlign: "left", width: "200px", color: '#fff' }}>
               <pre>
                 {step.status === "completed" && "✅ "}
                 {step.status === "failed" && "❌ "}
