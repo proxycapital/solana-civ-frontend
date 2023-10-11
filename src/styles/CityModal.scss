@@ -6,6 +6,8 @@
 
   @media (max-width: 768px) {
     width: 100%;
+    box-sizing: border-box;
+    top: 115px;
   }
 
   h3 {
@@ -71,11 +73,17 @@
   .city-modal-body {
     background: rgb(49 44 38);
     background: linear-gradient(180deg, rgba(168, 110, 50, 0.2) 0%, rgba(79, 38, 0, 0.2) 100%), rgba(30, 35, 40, 0.95);
-    padding-top: calc(100px + 0.5rem); // height of city-modal-header + 0.5rem
   }
 
   @media (max-width: 768px) {
+    left: 0;
+    top: 0;
+    height: auto;
+    overflow-y: scroll;
+    box-sizing: border-box;
+    margin: 0;
     width: 100%;
+    max-width: 100%;
   }
 
   &::-webkit-scrollbar {
@@ -253,5 +261,30 @@
       width: 24px;
       padding: 0 5px;
     }
+  }
+}
+
+@media (max-width: 768px) {
+  .modal-city-info {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .city-modal {
+    width: 100%;
+    left: 0;
+    top: 0;
+    // max-height: 100vh;
+    overflow-y: scroll;
+  }
+  .city-modal-body {
+    max-height: 100vh; // calc(100vh - 165px);
+    overflow-y: auto;
+  }
+
+  .city-modal .city-modal-header {
+    position: relative;
+    width: 100%;
   }
 }

@@ -680,4 +680,41 @@ img.yield-icon {
   .mobile-only {
     display: block !important;
   }
+
+  .bottom-nav {
+    right: 0;
+  }
+
+  .unit-info-window {
+    display: flex;
+    width: 100%;
+    bottom: 0;
+    right: 0;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 10px; 
+    border-radius: 0; 
+    flex-direction: row; 
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .unit-info-window img.avatar {
+    max-width: 32px; 
+  }
+
+  .unit-stats,
+  .unit-info-window strong {
+    font-size: 0.8rem; 
+  }
+
+  .unit-info-window img.unit-icon {
+    width: 16px; 
+  }
+
+  .unit-info-window button.unit-action-button {
+    width: auto;
+    margin: 0 10px; 
+    font-size: 0.8rem;
+  }
 }

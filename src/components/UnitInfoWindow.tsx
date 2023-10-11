@@ -79,10 +79,10 @@ const UnitInfoWindow: React.FC<UnitInfoProps> = ({ unit }) => {
   return (
     <div className="unit-info-window">
       <img src={`/${type}.png`} className="avatar" alt={type} />
-      <div>
+      <div className="desktop-only">
         <strong>{displayType}</strong>
       </div>
-      <div className="line-container">
+      <div className="line-container desktop-only">
         <img src="/icons/diamond.png" alt="" width="32" className="center-image" />
       </div>
       <div className="unit-stats">
