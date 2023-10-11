@@ -1118,7 +1118,7 @@
   dependencies:
     regenerator-runtime "^0.14.0"
 
-"@babel/runtime@^7.21.0":
+"@babel/runtime@^7.21.0", "@babel/runtime@^7.23.1":
   version "7.23.1"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.23.1.tgz#72741dc4d413338a91dcb044a86f3c0bc402646d"
   integrity sha512-hC2v6p8ZSI/W0HUzh3V8C5g+NwSKzKPtJwSpTjwl0o297GP9+ZLQSkdvHz46CM3LqyoXxq+5G9komY+eSqSO0g==
@@ -2043,6 +2043,13 @@
   version "5.14.7"
   resolved "https://registry.yarnpkg.com/@mui/core-downloads-tracker/-/core-downloads-tracker-5.14.7.tgz#95bed2487bf59632125a13b8eb8f4c21e460afec"
   integrity sha512-sCWTUNElBPgB30iLvWe3PU7SIlTKZNf6/E/sko85iHVeHCM6WPkDw+y89CrZYjhFNmPqt2fIQM/pZu+rP2lFLA==
+
+"@mui/icons-material@^5.14.13":
+  version "5.14.13"
+  resolved "https://registry.yarnpkg.com/@mui/icons-material/-/icons-material-5.14.13.tgz#d5169f804cc97c86282e85b5b7fdb523fb04689d"
+  integrity sha512-fxKE1UrjI4xVxHe9IAGuVQZrc18dSBJg0P+Sqi2SZmcDUCShmgRq6Jq7l7GduvuMIkOSqAJdNgLtXmtmZkjtLg==
+  dependencies:
+    "@babel/runtime" "^7.23.1"
 
 "@mui/material@^5.14.7":
   version "5.14.7"

@@ -96,7 +96,19 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
   const [buildingsToBuild, setBuildingsToBuild] = useState<BuildingType[]>([]);
 
   const cityData = cities.find((city) => city.cityId === cityId);
-  
+
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   useEffect(() => {
     if (!cityData) return;
@@ -289,9 +301,13 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
             >
               <Tab label="Production" />
               <Tab label="Purchase" />
+              {isMobile && <Tab label="Queue" />}
             </Tabs>
           </div>
-          <div className="city-modal-body">
+          {/* {isMobile && selectedTab === 2 && (
+            <span> Queue</span>
+          )} */}
+          {selectedTab !== 2 && (<div className="city-modal-body">
             <h3 className="">Units</h3>
             <div className="modal-body">
               {AllUnits.map((unit) => {
@@ -384,7 +400,7 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
                 );
               })}
             </div>
-          </div>
+          </div>)}
         </div>
       </>
     </Modal>
