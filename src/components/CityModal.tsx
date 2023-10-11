@@ -241,6 +241,7 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
                       Remove
                     </span>
                   </Box>
+                  {index === 0 && (<p style={{margin: 0, textAlign: 'center'}}>Ready in&nbsp;<b>{itemData?.productionCost ? Math.round((itemData?.productionCost - cityData.accumulatedProduction) / cityData.productionYield) : ''}</b> turns</p>)}
                 </div>
               );
             })}
