@@ -71,6 +71,7 @@
   }
 
   .city-modal-body {
+    margin-top: 100px;
     background: rgb(49 44 38);
     background: linear-gradient(180deg, rgba(168, 110, 50, 0.2) 0%, rgba(79, 38, 0, 0.2) 100%), rgba(30, 35, 40, 0.95);
   }
@@ -281,6 +282,7 @@
   .city-modal-body {
     max-height: 100vh; // calc(100vh - 165px);
     overflow-y: auto;
+    margin-top: 0 !important;
   }
 
   .city-modal .city-modal-header {
