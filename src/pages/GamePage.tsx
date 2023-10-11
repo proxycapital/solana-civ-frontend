@@ -92,7 +92,6 @@ const GamePage: React.FC = () => {
 
   const handleJoyrideCallback = (data: any) => {
     const { status } = data;
-    console.log(status);
     if ([STATUS.FINISHED, STATUS.SKIPPED].includes(status)) {
       setRun(false);
     }
