@@ -95,7 +95,6 @@ export const GameStateProvider: React.FC<BaseLayoutProps> = ({ children }) => {
   const fetchPlayerState = async () => {
     try {
       const player = await getPlayer(provider, program);
-      console.log("[GameStateProvider] fetchPlayerState()", player);
       if (player) {
         if (player.balances) setResources(player.balances);
         if (player.units) setUnits(player.units);

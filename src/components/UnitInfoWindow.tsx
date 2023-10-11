@@ -28,7 +28,6 @@ const UnitInfoWindow: React.FC<UnitInfoProps> = ({ unit }) => {
   const { playSound } = useSound();
   const { type, movementRange, builds, attack } = unit;
   const displayType = type.charAt(0).toUpperCase() + type.slice(1);
-  console.log(unit);
   const getUnusedCityName = () => {
     const usedNames = cities.map((city) => city.name);
     const availableNames = config.cityNames.filter((name) => !usedNames.includes(name));

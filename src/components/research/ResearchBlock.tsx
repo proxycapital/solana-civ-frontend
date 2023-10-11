@@ -45,8 +45,7 @@ const ResearchBlock = ({
   const progressPercentage = isCurrentResearch ? (researchAccumulatedPoints / cost) * 100 : 0;
   const isUnlocked = researchedKeys.includes(toCamelCase(name));
   const isLocked = index !== 0 && !prevResearched;
-  console.log(`${name} is locked:`, isLocked);
-  console.log(`${name} is unlocked:`, isUnlocked);
+
   return (
     <div key={name} className={`research-block ${isUnlocked ? "unlocked" : ""} ${isLocked ? "locked" : ""}`}>
       <div className="top-section">

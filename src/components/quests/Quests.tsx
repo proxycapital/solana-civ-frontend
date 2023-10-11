@@ -91,7 +91,7 @@ const Quests = () => {
   };
 
   const hasDefeatedBarbarian = (npcs: any) => {
-    return !npcs.some((npc: any) => npc.unitType && npc.unitType.unitId === 0);
+    return !npcs.some((npc: any) => npc.unitType && npc.unitId === 0);
   };
 
   const hasResearchedArchery = (technologies: any) => {

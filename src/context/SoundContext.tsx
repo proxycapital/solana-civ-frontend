@@ -33,7 +33,6 @@ export const SoundProvider: React.FC<BaseLayoutProps> = ({ children }) => {
       autoplay: false,
       volume: 0.3,
       onload: () => {
-        console.log("Background sound has loaded!");
         if (isMusicPlaying) {
           backgroundSound.current!.play();
         }

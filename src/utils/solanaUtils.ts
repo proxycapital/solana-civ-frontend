@@ -25,7 +25,6 @@ export const getMap = async (provider: AnchorProvider | undefined, program: Prog
   } catch (error) {
     console.log("Error while fetching game account: ", error);
   }
-  console.log("[solanaUtils] getMap()", gameAccount);
   return gameAccount ? gameAccount.map : null;
 };
 
@@ -41,7 +40,6 @@ export const getGame = async (provider: AnchorProvider | undefined, program: Pro
   try {
     // @ts-ignore
     const gameAccount = await program.account.game.fetch(gameKey);
-    console.log("[solanaUtils] getGame()", gameAccount);
     return gameAccount;
   } catch (error) {
     console.log("Error while fetching game account: ", error);
@@ -70,7 +68,6 @@ export const getPlayer = async (provider: AnchorProvider | undefined, program: P
   } catch (error) {
     console.log("Error while fetching player account: ", error);
   }
-  console.log("[solanaUtils] getPlayer()", playerAccount);
   const balances = playerAccount?.resources ?? {};
   const units = playerAccount?.units ?? [];
   const cities = playerAccount?.cities ?? [];
@@ -117,7 +114,6 @@ export const getNpcs = async (provider: AnchorProvider | undefined, program: Pro
   } catch (error) {
     console.log("Error while fetching npc account: ", error);
   }
-  console.log("[solanaUtils] getNpcs()", npcAccount);
   const units = npcAccount ? npcAccount.units : [];
   const cities = npcAccount ? npcAccount.cities : [];
 

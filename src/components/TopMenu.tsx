@@ -88,7 +88,6 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
 
   upgradedTiles.forEach((upgradedTile) => {
     const tileType = Object.keys(upgradedTile.tileType)[0];
-    console.log(tileType);
 
     if (tileType === "farm") {
       totalFoodYield += 2;

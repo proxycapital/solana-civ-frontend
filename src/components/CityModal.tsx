@@ -135,7 +135,6 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
       const isBUnlocked = b.requirement ? unlockedTech.has(b.requirement) : true;
       return +isBUnlocked - +isAUnlocked;
     });
-    console.log(unlockedTech);
 
     setBuildingsToBuild(sortedBuildings);
   }, [cityData, technologies.researchedTechnologies]);

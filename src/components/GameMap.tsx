@@ -239,7 +239,6 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
   };
 
   const selectUnit = (x: number, y: number, type: string) => {
-    console.log("Selecting unit");
     const newUnits = units.map((unit) => {
       if (unit.x === x && unit.y === y && unit.type === type && !unit.npc) {
         return { ...unit, isSelected: !unit.isSelected };
@@ -441,7 +440,6 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
               key={index}
               className={`game-tile ${isInRangeForAnyUnit ? "in-range" : ""}`}
               onClick={() => {
-                console.log(`Tile clicked at ${col}, ${row}`);
                 handleTileClick(col, row);
                 const selectedUnit = units.find((u) => u.isSelected);
                 if (!currentUnit && !selectedUnit) {
