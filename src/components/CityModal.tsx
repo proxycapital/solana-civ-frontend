@@ -104,9 +104,9 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
       setIsMobile(window.innerWidth <= 768);
     };
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
@@ -232,7 +232,9 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
               return (
                 <div key={`production-queue-item-${index}`} className="production-item primary-border-with-box-shadow">
                   <Box className="body-item">
-                    {!productionItem["building"] && <img src={`/${itemData?.type}.png`} alt={itemData?.label} width="50" />}
+                    {!productionItem["building"] && (
+                      <img src={`/${itemData?.type}.png`} alt={itemData?.label} width="50" />
+                    )}
                     <Typography variant="body1">{itemData?.label}</Typography>
                     <span
                       onClick={() => itemData && handleRemoveFromProductionQueue(itemData, index)}
@@ -241,7 +243,19 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
                       Remove
                     </span>
                   </Box>
-                  {index === 0 && (<p style={{margin: 0, textAlign: 'center'}}>Ready in&nbsp;<b>{itemData?.productionCost ? Math.round((itemData?.productionCost - cityData.accumulatedProduction) / cityData.productionYield) : ''}</b> turns</p>)}
+                  {index === 0 && (
+                    <p style={{ margin: 0, textAlign: "center" }}>
+                      Ready in&nbsp;
+                      <b>
+                        {itemData?.productionCost
+                          ? Math.round(
+                              (itemData?.productionCost - cityData.accumulatedProduction) / cityData.productionYield
+                            )
+                          : ""}
+                      </b>{" "}
+                      turns
+                    </p>
+                  )}
                 </div>
               );
             })}
@@ -308,100 +322,102 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
           {/* {isMobile && selectedTab === 2 && (
             <span> Queue</span>
           )} */}
-          {selectedTab !== 2 && (<div className="city-modal-body">
-            <h3 className="">Units</h3>
-            <div className="modal-body">
-              {AllUnits.map((unit) => {
-                const isUnlocked = unit.requirement ? researchedTechnologies.has(unit.requirement) : true;
-                return (
-                  <Tippy
-                    key={unit.type}
-                    placement="left"
-                    content={<CustomTooltip {...unit} isUnlocked={isUnlocked} selectedTab={selectedTab} />}
-                  >
-                    <Box
-                      onClick={() => {
-                        if (!isUnlocked) {
-                          toast.error(`You need to research "${unit.tech}"`);
-                          return;
-                        }
-                        if (selectedTab === 0) {
-                          handleAddToProductionQueue(unit, "unit");
-                          return;
-                        }
-                        handlePurchaseWithGold(unit, "unit");
-                      }}
-                      className={`body-item ${!isUnlocked ? "locked" : ""} primary-border-with-box-shadow`}
+          {selectedTab !== 2 && (
+            <div className="city-modal-body">
+              <h3 className="">Units</h3>
+              <div className="modal-body">
+                {AllUnits.map((unit) => {
+                  const isUnlocked = unit.requirement ? researchedTechnologies.has(unit.requirement) : true;
+                  return (
+                    <Tippy
                       key={unit.type}
+                      placement="left"
+                      content={<CustomTooltip {...unit} isUnlocked={isUnlocked} selectedTab={selectedTab} />}
                     >
-                      <img src={`/${unit.type}.png`} alt={unit.label} width="50" />
-                      <Typography variant="body1">{unit.label}</Typography>
-                      <div className="number-of-turns">
-                        {selectedTab === 0 ? (
-                          <>
-                            <span>
-                              {cityData ? `${Math.round(unit.productionCost / cityData.productionYield)} Turns` : ""}
-                            </span>
-                            {/* <img src="./icons/hourglass.png" width="20" alt="hourglass" /> */}
-                          </>
-                        ) : (
-                          <>
-                            <span>{unit.goldCost}</span>
-                            <img src="./icons/gold.png" width="20" alt="gold" />
-                          </>
-                        )}
-                      </div>
-                    </Box>
-                  </Tippy>
-                );
-              })}
-            </div>
-            <h3 className="">Buildings</h3>
-            <div className="modal-body">
-              {buildingsToBuild.map((building) => {
-                const isUnlocked = building.requirement ? researchedTechnologies.has(building.requirement) : true;
-                return (
-                  <Tippy
-                    key={building.type}
-                    placement="left"
-                    content={<CustomTooltip {...building} isUnlocked={isUnlocked} selectedTab={selectedTab} />}
-                  >
-                    <Box
-                      onClick={() => {
-                        if (!isUnlocked) {
-                          toast.error(`You need to research "${building.tech}"`);
-                          return;
-                        }
-                        if (selectedTab === 0) {
-                          handleAddToProductionQueue(building, "building");
-                          return;
-                        }
-                        handlePurchaseWithGold(building, "building");
-                      }}
-                      className={`body-item ${!isUnlocked ? "locked" : ""} primary-border-with-box-shadow`}
+                      <Box
+                        onClick={() => {
+                          if (!isUnlocked) {
+                            toast.error(`You need to research "${unit.tech}"`);
+                            return;
+                          }
+                          if (selectedTab === 0) {
+                            handleAddToProductionQueue(unit, "unit");
+                            return;
+                          }
+                          handlePurchaseWithGold(unit, "unit");
+                        }}
+                        className={`body-item ${!isUnlocked ? "locked" : ""} primary-border-with-box-shadow`}
+                        key={unit.type}
+                      >
+                        <img src={`/${unit.type}.png`} alt={unit.label} width="50" />
+                        <Typography variant="body1">{unit.label}</Typography>
+                        <div className="number-of-turns">
+                          {selectedTab === 0 ? (
+                            <>
+                              <span>
+                                {cityData ? `${Math.round(unit.productionCost / cityData.productionYield)} Turns` : ""}
+                              </span>
+                              {/* <img src="./icons/hourglass.png" width="20" alt="hourglass" /> */}
+                            </>
+                          ) : (
+                            <>
+                              <span>{unit.goldCost}</span>
+                              <img src="./icons/gold.png" width="20" alt="gold" />
+                            </>
+                          )}
+                        </div>
+                      </Box>
+                    </Tippy>
+                  );
+                })}
+              </div>
+              <h3 className="">Buildings</h3>
+              <div className="modal-body">
+                {buildingsToBuild.map((building) => {
+                  const isUnlocked = building.requirement ? researchedTechnologies.has(building.requirement) : true;
+                  return (
+                    <Tippy
+                      key={building.type}
+                      placement="left"
+                      content={<CustomTooltip {...building} isUnlocked={isUnlocked} selectedTab={selectedTab} />}
                     >
-                      <Typography variant="body1">{building.label}</Typography>
-                      <div className="number-of-turns">
-                        {selectedTab === 0 ? (
-                          <>
-                            <span>
-                              {cityData ? Math.round(building.productionCost / cityData.productionYield) : ""}
-                            </span>
-                            <img src="./icons/hourglass.png" width="20" alt="hourglass" />
-                          </>
-                        ) : (
-                          <>
-                            <span>{building.goldCost}</span>
-                            <img src="./icons/gold.png" width="20" alt="gold" />
-                          </>
-                        )}
-                      </div>
-                    </Box>
-                  </Tippy>
-                );
-              })}
+                      <Box
+                        onClick={() => {
+                          if (!isUnlocked) {
+                            toast.error(`You need to research "${building.tech}"`);
+                            return;
+                          }
+                          if (selectedTab === 0) {
+                            handleAddToProductionQueue(building, "building");
+                            return;
+                          }
+                          handlePurchaseWithGold(building, "building");
+                        }}
+                        className={`body-item ${!isUnlocked ? "locked" : ""} primary-border-with-box-shadow`}
+                      >
+                        <Typography variant="body1">{building.label}</Typography>
+                        <div className="number-of-turns">
+                          {selectedTab === 0 ? (
+                            <>
+                              <span>
+                                {cityData ? Math.round(building.productionCost / cityData.productionYield) : ""}
+                              </span>
+                              <img src="./icons/hourglass.png" width="20" alt="hourglass" />
+                            </>
+                          ) : (
+                            <>
+                              <span>{building.goldCost}</span>
+                              <img src="./icons/gold.png" width="20" alt="gold" />
+                            </>
+                          )}
+                        </div>
+                      </Box>
+                    </Tippy>
+                  );
+                })}
+              </div>
             </div>
-          </div>)}
+          )}
         </div>
       </>
     </Modal>

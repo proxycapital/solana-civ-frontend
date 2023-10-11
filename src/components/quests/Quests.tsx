@@ -1,8 +1,10 @@
 import React from "react";
 import QuestBlock from "./QuestBlock";
+import { useGameState } from "../../context/GameStateContext";
 import "./Quests.css";
 
 const Quests = () => {
+  const { upgradedTiles, allUnits, cities, technologies, npcUnits, npcCities } = useGameState();
   const questData = [
     {
       title: "Found a City",
@@ -74,6 +76,66 @@ const Quests = () => {
       reward: "100 gems",
     },
   ];
+
+  const hasFoundedCity = (cities: any) => {
+    return cities.length > 0;
+  };
+
+  const hasConstructedIronMine = (upgradedTiles: any) => {
+    return upgradedTiles.some((tile: any) => tile.tileType && tile.tileType.ironMine);
+  };
+
+  const hasRecruitedTwoWarriors = (allUnits: any) => {
+    const warriorCount = allUnits.filter((unit: any) => unit.unitType && unit.unitType.warrior).length;
+    return warriorCount >= 2;
+  };
+
+  const hasDefeatedBarbarian = (npcs: any) => {
+    return !npcs.some((npc: any) => npc.unitType && npc.unitType.unitId === 0);
+  };
+
+  const hasResearchedArchery = (technologies: any) => {
+    return technologies.researchedTechnologies.some((tech: any) => tech.hasOwnProperty("archery"));
+  };
+
+  const hasBuiltBarracksAndWalls = (cities: any) => {
+    return cities.some((city: any) => {
+      const buildings = city.buildings || [];
+      const hasBarracks = buildings.some((building: any) => building.hasOwnProperty("barracks"));
+      const hasWalls = buildings.some((building: any) => building.hasOwnProperty("wall"));
+      return hasBarracks && hasWalls;
+    });
+  };
+
+  const hasConstructedForge = (cities: any) => {
+    return cities.some((city: any) => {
+      const buildings = city.buildings || [];
+      return buildings.some((building: any) => building.hasOwnProperty("forge"));
+    });
+  };
+
+  const hasEstablishedSecondCity = (cities: any) => {
+    return cities.length >= 2;
+  };
+
+  const hasMasteredAllTechnologies = (technologies: any) => {
+    return technologies.researchedTechnologies.length >= 17;
+  };
+
+  const hasEliminatedAllBarbarianCamps = (npcCities: any) => {
+    return npcCities.length === 0;
+  };
+
+  questData[0].status = hasFoundedCity(cities) ? "completed" : "pending";
+  questData[1].status = hasConstructedIronMine(upgradedTiles) ? "completed" : "pending";
+  questData[2].status = hasRecruitedTwoWarriors(allUnits) ? "completed" : "pending";
+  questData[3].status = hasDefeatedBarbarian(npcUnits) ? "completed" : "pending";
+  questData[4].status = hasResearchedArchery(technologies) ? "completed" : "pending";
+  questData[5].status = hasBuiltBarracksAndWalls(cities) ? "completed" : "pending";
+  questData[6].status = hasConstructedForge(cities) ? "completed" : "pending";
+  questData[7].status = hasEstablishedSecondCity(cities) ? "completed" : "pending";
+  questData[8].status = hasMasteredAllTechnologies(technologies) ? "completed" : "pending";
+  questData[9].status = hasEliminatedAllBarbarianCamps(npcCities) ? "completed" : "pending";
 
   return (
     <div className="quests">

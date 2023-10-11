@@ -8,7 +8,7 @@ interface IQuests {
     reward: string;
 }
 
-const QuestBlock = ({ status, title, description, reward }: IQuests) => {
+const QuestBlock = ({ status, title, description, reward}: IQuests) => {
   return (
     <div className={`quest-block ${status}`}>
       <img src={`/icons/${status}.png`} alt={status} className="quest-status" />
