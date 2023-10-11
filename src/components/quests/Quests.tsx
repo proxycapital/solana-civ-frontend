@@ -139,8 +139,8 @@ const Quests = () => {
 
   return (
     <div className="quests">
-      {questData.map((quest) => (
-        <QuestBlock {...quest} />
+      {questData.map((quest, index) => (
+        <QuestBlock {...quest} key={`quest-${index}`} />
       ))}
     </div>
   );

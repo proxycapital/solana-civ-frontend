@@ -74,6 +74,7 @@ const ResearchTree = () => {
             {...data}
             {...technologies}
             onResearchClick={handleResearch}
+            key={`${data.name}-${index}`}
             index={index}
             prevResearched={index === 0 ? true : researchedKeys.includes(toCamelCase(column1[index - 1].name))}
           />
@@ -85,6 +86,7 @@ const ResearchTree = () => {
             {...data}
             {...technologies}
             onResearchClick={handleResearch}
+            key={`${data.name}-${index}`}
             index={index}
             prevResearched={index === 0 ? true : researchedKeys.includes(toCamelCase(column2[index - 1].name))}
           />
@@ -96,6 +98,7 @@ const ResearchTree = () => {
             {...data}
             {...technologies}
             onResearchClick={handleResearch}
+            key={`${data.name}-${index}`}
             index={index}
             prevResearched={index === 0 ? true : researchedKeys.includes(toCamelCase(column3[index - 1].name))}
           />

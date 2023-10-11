@@ -47,7 +47,7 @@ const ResearchBlock = ({
   const isLocked = index !== 0 && !prevResearched;
 
   return (
-    <div key={name} className={`research-block ${isUnlocked ? "unlocked" : ""} ${isLocked ? "locked" : ""}`}>
+    <div className={`research-block ${isUnlocked ? "unlocked" : ""} ${isLocked ? "locked" : ""}`}>
       <div className="top-section">
         {/* <img src="/research.png" width="100" alt="" className="research-icon" /> */}
         <div className="research-content">
