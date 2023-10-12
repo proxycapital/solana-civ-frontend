@@ -9,6 +9,8 @@ import { useWorkspace } from "../context/AnchorContext";
 import { initializeGame } from "../utils/solanaUtils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+const { REACT_APP_HELIUS_RPC } = process.env;
+
 const HomePage: React.FC = () => {
   const navigate = useNavigate();
   const workspace = useWorkspace();
@@ -49,13 +51,28 @@ const HomePage: React.FC = () => {
         updateStepStatus("Requesting airdrop", "completed");
       }
     } catch (error) {
-      console.log("Error while requesting airdrop: ", error);
-      updateStepStatus("Requesting airdrop", "failed");
-      setErrorMsg(
-        `Send devnet SOL to your in-game address and try again: ${wallet.publicKey.toBase58()}. Airdrop request failed: ${error}`
-      );
-      setShowButtons(true);
-      return;
+      try {
+        // retry airdrop with a different RPC
+        const heliusConnection = new Connection(REACT_APP_HELIUS_RPC || "https://api.devnet.solana.com", "confirmed");
+        const airdropSignature = await heliusConnection.requestAirdrop(wallet.publicKey, 0.5 * LAMPORTS_PER_SOL);
+
+        const latestBlockHash = await heliusConnection.getLatestBlockhash();
+
+        await heliusConnection.confirmTransaction({
+          blockhash: latestBlockHash.blockhash,
+          lastValidBlockHeight: latestBlockHash.lastValidBlockHeight,
+          signature: airdropSignature,
+        });
+        updateStepStatus("Requesting airdrop", "completed");
+      } catch(e) {
+        console.log("Error while requesting airdrop: ", error);
+        updateStepStatus("Requesting airdrop", "failed");
+        setErrorMsg(
+          `Send devnet SOL to your in-game address and try again: ${wallet.publicKey.toBase58()}. Airdrop request failed: ${error}`
+        );
+        setShowButtons(true);
+        return;
+      }
     }
 
     try {
