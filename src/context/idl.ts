@@ -470,6 +470,27 @@ export type Solciv = {
         }
       ],
       "args": []
+    },
+    {
+      "name": "repairCity",
+      "accounts": [
+        {
+          "name": "playerAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "player",
+          "isMut": true,
+          "isSigner": true
+        }
+      ],
+      "args": [
+        {
+          "name": "cityId",
+          "type": "u32"
+        }
+      ]
     }
   ],
   "accounts": [
@@ -908,6 +929,15 @@ export type Solciv = {
           },
           {
             "name": "TechnologyNotResearched"
+          },
+          {
+            "name": "InsufficientWood"
+          },
+          {
+            "name": "InsufficientStone"
+          },
+          {
+            "name": "NotDamagedCity"
           }
         ]
       }
@@ -1206,7 +1236,7 @@ export type Solciv = {
     }
   ],
   "metadata": {
-    "address": "BqbchBiRnWv7u2n9jBRWdC4bgVG54qpdVEvNPBDxx5Lm"
+    "address": "FTeZaEMVPs1MDNyCJZ9srKsXiPLkD7Xbd1AQXLCvD6hg"
   }
 };
 
@@ -1682,6 +1712,27 @@ export const IDL: Solciv = {
         }
       ],
       "args": []
+    },
+    {
+      "name": "repairCity",
+      "accounts": [
+        {
+          "name": "playerAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "player",
+          "isMut": true,
+          "isSigner": true
+        }
+      ],
+      "args": [
+        {
+          "name": "cityId",
+          "type": "u32"
+        }
+      ]
     }
   ],
   "accounts": [
@@ -2120,6 +2171,15 @@ export const IDL: Solciv = {
           },
           {
             "name": "TechnologyNotResearched"
+          },
+          {
+            "name": "InsufficientWood"
+          },
+          {
+            "name": "InsufficientStone"
+          },
+          {
+            "name": "NotDamagedCity"
           }
         ]
       }
@@ -2418,6 +2478,6 @@ export const IDL: Solciv = {
     }
   ],
   "metadata": {
-    "address": "BqbchBiRnWv7u2n9jBRWdC4bgVG54qpdVEvNPBDxx5Lm"
+    "address": "FTeZaEMVPs1MDNyCJZ9srKsXiPLkD7Xbd1AQXLCvD6hg"
   }
 }

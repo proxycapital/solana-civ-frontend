@@ -1,8 +1,6 @@
 import React from "react";
 import { toast } from "react-toastify";
 import Button from "@mui/material/Button";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faHammer } from "@fortawesome/free-solid-svg-icons";
 import config from "../config.json";
 import { foundCity, upgradeLandPlot } from "../utils/solanaUtils";
 import { useWorkspace } from "../context/AnchorContext";
@@ -26,7 +24,7 @@ const UnitInfoWindow: React.FC<UnitInfoProps> = ({ unit }) => {
   const { program, provider } = useWorkspace();
   const { cities, fetchPlayerState } = useGameState();
   const { playSound } = useSound();
-  const { type, movementRange, builds, attack } = unit;
+  const { type, movementRange, attack } = unit;
   const displayType = type.charAt(0).toUpperCase() + type.slice(1);
   const getUnusedCityName = () => {
     const usedNames = cities.map((city) => city.name);

@@ -206,6 +206,33 @@
     }
   }
 
+  .unit-action-button {
+    width: 100%;
+    margin-top: 15px;
+    border: 1px solid #928061;
+    color: #ccbf91;
+    font-size: 16px;
+
+    .unit-icon {
+      width: 24px;
+      padding: 0 5px;
+    }
+
+    &:hover {
+      border: 1px solid #3f2f20 !important;
+      border-radius: 4px;
+    }
+  }
+
+  .unit-action-button.disabled {
+    cursor: not-allowed;
+    background: linear-gradient(180deg, #373737 0%, #282828 100%);
+
+    &:hover {
+      border: 1px solid #928061 !important;
+    }
+  }
+
   .city-resources-income {
     margin-top: 0.75rem;
     margin-bottom: 0.5rem;

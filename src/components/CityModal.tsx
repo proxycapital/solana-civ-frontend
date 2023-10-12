@@ -6,11 +6,12 @@ import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 import Tippy from "@tippyjs/react";
 import { toast } from "react-toastify";
+import Button from "@mui/material/Button";
 
 import { useGameState } from "../context/GameStateContext";
 import { useSound } from "../context/SoundContext";
 import { useWorkspace } from "../context/AnchorContext";
-import { addToProductionQueue, removeFromProductionQueue, purchaseWithGold } from "../utils/solanaUtils";
+import { addToProductionQueue, removeFromProductionQueue, purchaseWithGold, repairCity } from "../utils/solanaUtils";
 import { AllUnits, UnitType } from "../Units";
 import { AllBuildings, BuildingType } from "../Buildings";
 
@@ -187,6 +188,33 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
     await fetchPlayerState();
   };
 
+  const handleRepairCity = async () => {
+    try {
+      const tx = repairCity(provider!, program!, Number(cityId));
+      const signature = await toast.promise(tx, {
+        pending: 'Repairing city',
+        success: 'City repaired',
+        error: 'Error during city repair',
+      });
+      if (typeof signature === "string") {
+        console.log(`Repair City, TX: https://explorer.solana.com/tx/${signature}?cluster=devnet`);
+      }
+    } catch (error: any) {
+      console.log(error.message)
+      if (error.message.includes("NotDamagedCity")) {
+        await toast.error("Cannt repair full HP city");
+      }
+      if (error.message.includes("InsufficientStone")) {
+        await toast.error("Not enough stone");  
+      }
+      if (error.message.includes("InsufficientWood")) {
+        await toast.error("Not enough wood");  
+      }
+      console.log(`Error repairing city ${cityId}: `, error);
+    }
+    await fetchPlayerState();
+  };
+
   const handlePurchaseWithGold = async (item: BuildingType | UnitType, type: "building" | "unit") => {
     try {
       const tx = purchaseWithGold(provider!, program!, Number(cityId), { [type]: { "0": { [item.type]: {} } } });
@@ -298,6 +326,14 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
               <img src="/icons/attack.png" alt="strength" />
               Strength:&nbsp;<b>{cityData.attack}</b>
             </div>
+            <Button
+              className={`unit-action-button ${cityData.health === 100 && 'disabled'}`}
+              variant="outlined"
+              onClick={handleRepairCity}
+            >
+              <img src="/icons/build.png" alt="" className="unit-icon" />
+              Repair
+            </Button>
           </div>
         ) : null}
 
