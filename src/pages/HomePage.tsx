@@ -64,11 +64,11 @@ const HomePage: React.FC = () => {
           signature: airdropSignature,
         });
         updateStepStatus("Requesting airdrop", "completed");
-      } catch(e) {
+      } catch (e) {
         console.log("Error while requesting airdrop: ", error);
         updateStepStatus("Requesting airdrop", "failed");
         setErrorMsg(
-          `Send devnet SOL to your in-game address and try again: ${wallet.publicKey.toBase58()}. Airdrop request failed: ${error}`
+          `Airdrop request failed: ${error}`
         );
         setShowButtons(true);
         return;
@@ -133,7 +133,7 @@ const HomePage: React.FC = () => {
           </>
         ) : (
           initializationSteps.map((step, index) => (
-            <Grid item xs={12} key={index} style={{ textAlign: "left", width: "200px", color: '#fff' }}>
+            <Grid item xs={12} key={index} style={{ textAlign: "left", width: "200px", color: "#fff" }}>
               <pre>
                 {step.status === "completed" && "✅ "}
                 {step.status === "failed" && "❌ "}
@@ -146,6 +146,14 @@ const HomePage: React.FC = () => {
         {errorMsg && (
           <div className="error-container">
             <span className="error-message">{errorMsg}</span>
+            <p style={{ color: "#fff", textAlign: "center" }}>
+              Address: <b>{workspace.provider?.publicKey.toBase58()}</b>
+              <br />
+              Devnet faucet:{" "}
+              <a href="https://faucet.solana.com/" style={{ color: "#fff" }} rel="noreferrer" target="_blank">
+                https://faucet.solana.com/
+              </a>
+            </p>
           </div>
         )}
       </Grid>
