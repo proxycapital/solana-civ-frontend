@@ -25,61 +25,104 @@ const HomePage: React.FC = () => {
     setInitializationSteps((steps) => steps.map((step) => (step.name === stepName ? { ...step, status } : step)));
   };
 
+  async function requestBackendAirdrop(address: string): Promise<boolean> {
+    try {
+      const response = await fetch("http://api.solciv.com/airdrop", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ address }),
+      });
+      if (response.ok) {
+        const data = await response.json();
+        return data.success;
+      } else {
+        throw new Error("Failed to request airdrop from backend.");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      return false;
+    }
+  }
+
+  const requestSolanaAirdrop = async (connection: Connection, address: PublicKey) => {
+    const airdropSignature = await connection.requestAirdrop(address, 1 * LAMPORTS_PER_SOL);
+    const latestBlockHash = await connection.getLatestBlockhash();
+    await connection.confirmTransaction({
+      blockhash: latestBlockHash.blockhash,
+      lastValidBlockHeight: latestBlockHash.lastValidBlockHeight,
+      signature: airdropSignature,
+    });
+  };
+
+  async function registerPlayerAddress(address: string): Promise<boolean> {
+    try {
+      const response = await fetch("http://api.solciv.com/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ address }),
+      });
+      if (response.ok) {
+        const data = await response.json();
+        return data.success;
+      } else {
+        throw new Error("Failed to register player address.");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      return false;
+    }
+  }
+
   const createWalletAndStartGame = async () => {
     setShowButtons(false);
     const connection = workspace.connection as Connection;
     const wallet = {
       publicKey: workspace.provider?.publicKey as PublicKey,
     };
-
+    const minAmount = 0.25;
     try {
-      // get sol balance
       const balance = await connection.getBalance(wallet.publicKey);
-
-      if (balance >= 0.5 * LAMPORTS_PER_SOL) {
-        updateStepStatus("Requesting airdrop", "completed");
-      } else {
-        const airdropSignature = await connection.requestAirdrop(wallet.publicKey, 1 * LAMPORTS_PER_SOL);
-
-        const latestBlockHash = await connection.getLatestBlockhash();
-
-        await connection.confirmTransaction({
-          blockhash: latestBlockHash.blockhash,
-          lastValidBlockHeight: latestBlockHash.lastValidBlockHeight,
-          signature: airdropSignature,
-        });
+      if (balance < minAmount * LAMPORTS_PER_SOL) {
+        try {
+          // First airdrop attempt
+          await requestSolanaAirdrop(connection, wallet.publicKey);
+        } catch (error1) {
+          console.log("First airdrop attempt failed:", error1);
+          try {
+            // Second airdrop attempt using a different RPC
+            const heliusConnection = new Connection(
+              REACT_APP_HELIUS_RPC || "https://api.devnet.solana.com",
+              "confirmed"
+            );
+            await requestSolanaAirdrop(heliusConnection, wallet.publicKey);
+          } catch (error2) {
+            console.log("Second airdrop attempt failed:", error2);
+            // Third airdrop attempt using backend
+            const backendSuccess = await requestBackendAirdrop(wallet.publicKey.toBase58());
+            if (!backendSuccess) {
+              throw new Error("All airdrop attempts failed. Please fund your wallet using web faucet:");
+            }
+          }
+        }
         updateStepStatus("Requesting airdrop", "completed");
       }
     } catch (error) {
-      try {
-        // retry airdrop with a different RPC
-        const heliusConnection = new Connection(REACT_APP_HELIUS_RPC || "https://api.devnet.solana.com", "confirmed");
-        const airdropSignature = await heliusConnection.requestAirdrop(wallet.publicKey, 0.5 * LAMPORTS_PER_SOL);
-
-        const latestBlockHash = await heliusConnection.getLatestBlockhash();
-
-        await heliusConnection.confirmTransaction({
-          blockhash: latestBlockHash.blockhash,
-          lastValidBlockHeight: latestBlockHash.lastValidBlockHeight,
-          signature: airdropSignature,
-        });
-        updateStepStatus("Requesting airdrop", "completed");
-      } catch (e) {
-        console.log("Error while requesting airdrop: ", error);
-        updateStepStatus("Requesting airdrop", "failed");
-        setErrorMsg(
-          `Airdrop request failed: ${error}`
-        );
-        setShowButtons(true);
-        return;
-      }
+      console.log("Error while requesting airdrop: ", error);
+      updateStepStatus("Requesting airdrop", "failed");
+      setErrorMsg(`Airdrop request failed: ${error}`);
+      setShowButtons(true);
+      return;
     }
 
     try {
-      // @todo: add better checks for workspace/provider/program
       const provider = workspace.provider!;
       const program = workspace.program!;
       await initializeGame(provider, program);
+      await registerPlayerAddress(wallet.publicKey.toBase58());
       updateStepStatus("Initializing game", "completed");
     } catch (error) {
       console.log("Error while initializing the game: ", error);
