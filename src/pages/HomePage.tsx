@@ -27,7 +27,7 @@ const HomePage: React.FC = () => {
 
   async function requestBackendAirdrop(address: string): Promise<boolean> {
     try {
-      const response = await fetch("http://api.solciv.com/airdrop", {
+      const response = await fetch("https://api.solciv.com/airdrop", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -58,7 +58,7 @@ const HomePage: React.FC = () => {
 
   async function registerPlayerAddress(address: string): Promise<boolean> {
     try {
-      const response = await fetch("http://api.solciv.com/register", {
+      const response = await fetch("https://api.solciv.com/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
