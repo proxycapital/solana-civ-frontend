@@ -2,7 +2,7 @@ import React from "react";
 import { toast } from "react-toastify";
 import Button from "@mui/material/Button";
 import config from "../config.json";
-import { foundCity, upgradeLandPlot } from "../utils/solanaUtils";
+import { foundCity, upgradeLandPlot, healUnit } from "../utils/solanaUtils";
 import { useWorkspace } from "../context/AnchorContext";
 import { useGameState } from "../context/GameStateContext";
 import { useSound } from "../context/SoundContext";
@@ -73,6 +73,26 @@ const UnitInfoWindow: React.FC<UnitInfoProps> = ({ unit }) => {
     }
     await fetchPlayerState();
   };
+
+  const handleHealing = async (unitId: number) => {
+    const tx = healUnit(provider!, program!, unitId);
+    try {
+      await toast.promise(tx, {
+        pending: "Healing unit",
+        success: "Unit healed",
+        error: "Error healing unit",
+      });
+    } catch (error) {
+      if (error instanceof Error) {
+        if (error.message.includes("NotEnoughResources")) {
+          toast.error("Not enough of food to heal unit");
+        }
+      }
+      console.log("Error healing unit: ", error);
+    }
+    await fetchPlayerState();
+  };
+
   return (
     <div className="unit-info-window">
       <img src={`/${type}.png`} className="avatar" alt={type} />
@@ -114,6 +134,15 @@ const UnitInfoWindow: React.FC<UnitInfoProps> = ({ unit }) => {
           onClick={() => handleBuild(unit.x, unit.y, unit.unitId)}
         >
           <img src="/icons/build.png" alt="" className="unit-icon" /> Build
+        </Button>
+      )}
+      {unit.health < 100 && (
+        <Button
+          className="unit-action-button"
+          variant="outlined"
+          onClick={() => handleHealing(unit.unitId)}
+        >
+          <img src="/icons/health.png" alt="" className="unit-icon" /> Heal ({100 - unit.health} food)
         </Button>
       )}
     </div>

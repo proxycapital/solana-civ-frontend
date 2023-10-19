@@ -340,14 +340,6 @@ export const foundCity = async (provider: AnchorProvider, program: Program<Solci
   };
 
   return program.methods.foundCity(data.x, data.y, data.unitId, data.name).accounts(accounts).rpc();
-  // try {
-  //   const tx = await program.methods.foundCity(unit.x, unit.y, unit.unitId).accounts(accounts).rpc();
-  //   console.log(`Found a city TX: https://explorer.solana.com/tx/${tx}?cluster=devnet`);
-  // } catch (error) {
-  //   console.log("Error while founding city: ", error);
-  //   return error;
-  // }
-  // return true;
 };
 
 export const upgradeLandPlot = async (provider: AnchorProvider, program: Program<Solciv>, unit: any) => {
@@ -367,14 +359,24 @@ export const upgradeLandPlot = async (provider: AnchorProvider, program: Program
     playerAccount: playerKey,
   };
   return program.methods.upgradeTile(unit.x, unit.y, unit.unitId).accounts(accounts).rpc();
-  // try {
-  //   const tx = await program.methods.upgradeTile(unit.x, unit.y, unit.unitId).accounts(accounts).rpc();
-  //   console.log(`Upgrade land plot TX: https://explorer.solana.com/tx/${tx}?cluster=devnet`);
-  // } catch (error) {
-  //   console.log("Error while upgrading land: ", error);
-  //   return false;
-  // }
-  // return true;
+};
+
+export const healUnit = async (provider: AnchorProvider, program: Program<Solciv>, unitId: number) => {
+  const [gameKey] = anchor.web3.PublicKey.findProgramAddressSync(
+    [Buffer.from("GAME"), provider.publicKey.toBuffer()],
+    program.programId
+  );
+
+  const [playerKey] = anchor.web3.PublicKey.findProgramAddressSync(
+    [Buffer.from("PLAYER"), gameKey.toBuffer(), provider.publicKey.toBuffer()],
+    program.programId
+  );
+
+  const accounts = {
+    player: provider.publicKey,
+    playerAccount: playerKey,
+  };
+  return program.methods.healUnit(unitId).accounts(accounts).rpc();
 };
 
 export const withdrawGems = async (provider: AnchorProvider, program: Program<Solciv>, owner: PublicKey) => {
