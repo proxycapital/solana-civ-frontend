@@ -780,7 +780,7 @@ export type Solciv = {
         "fields": [
           {
             "name": "gold",
-            "type": "u32"
+            "type": "i32"
           },
           {
             "name": "food",
@@ -887,6 +887,10 @@ export type Solciv = {
             "type": "u32"
           },
           {
+            "name": "maintenanceCost",
+            "type": "i32"
+          },
+          {
             "name": "isRanged",
             "type": "bool"
           },
@@ -962,6 +966,9 @@ export type Solciv = {
           },
           {
             "name": "NotDamagedCity"
+          },
+          {
+            "name": "InsufficientGoldForMaintenance"
           }
         ]
       }
@@ -1270,7 +1277,7 @@ export type Solciv = {
     }
   ],
   "metadata": {
-    "address": "BqbchBiRnWv7u2n9jBRWdC4bgVG54qpdVEvNPBDxx5Lm"
+    "address": "8xCcmvZWb7EERLeJ1iwEfuV64EJBXxA6EGG7HpQtt64i"
   }
 };
 
@@ -2056,7 +2063,7 @@ export const IDL: Solciv = {
         "fields": [
           {
             "name": "gold",
-            "type": "u32"
+            "type": "i32"
           },
           {
             "name": "food",
@@ -2163,6 +2170,10 @@ export const IDL: Solciv = {
             "type": "u32"
           },
           {
+            "name": "maintenanceCost",
+            "type": "i32"
+          },
+          {
             "name": "isRanged",
             "type": "bool"
           },
@@ -2238,6 +2249,9 @@ export const IDL: Solciv = {
           },
           {
             "name": "NotDamagedCity"
+          },
+          {
+            "name": "InsufficientGoldForMaintenance"
           }
         ]
       }
@@ -2546,6 +2560,6 @@ export const IDL: Solciv = {
     }
   ],
   "metadata": {
-    "address": "BqbchBiRnWv7u2n9jBRWdC4bgVG54qpdVEvNPBDxx5Lm"
+    "address": "8xCcmvZWb7EERLeJ1iwEfuV64EJBXxA6EGG7HpQtt64i"
   }
 };

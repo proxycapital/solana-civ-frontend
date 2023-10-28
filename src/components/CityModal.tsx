@@ -68,6 +68,12 @@ const CustomTooltip: React.FC<BuildingType & { selectedTab: number }> = ({
               <img width="24" src={`./icons/${stats?.resourceType}.png`} alt={stats?.resourceType} />
             </span>
           )}
+          {stats?.maintenanceCost && (
+            <span>
+              Maintenance:&nbsp;<b>{stats.maintenanceCost} </b>
+              <img width="24" src={`./icons/gold.png`} alt='gold' />
+            </span>
+          )}
           <span>
             {selectedTab === 0 ? (
               <span>
@@ -166,6 +172,9 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
       }
       if (error.message.includes("InsufficientResources")) {
         toast.error("Not enough resources. See unit tooltip for more info.");
+      }
+      if (error.message.includes("InsufficientGoldForMaintenance")) {
+        toast.error("You don't have enough of gold for unit maintenance.");
       }
     }
     await fetchPlayerState();

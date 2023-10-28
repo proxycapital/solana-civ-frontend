@@ -13,6 +13,7 @@ export type UnitType = {
     resourceCost?: string;
     resourceType?: string;
     yield?: string;
+    maintenanceCost?: number;
   };
   isUnlocked?: boolean;
 };
@@ -66,6 +67,7 @@ export const AllUnits: UnitType[] = [
     stats: {
       attack: 10,
       movement: 2,
+      maintenanceCost: 1,
     }
   },
   {
@@ -80,6 +82,7 @@ export const AllUnits: UnitType[] = [
       movement: 2,
       resourceCost: "Cost: 10",
       resourceType: "iron",
+      maintenanceCost: 1,
     }
   },
   {
@@ -92,6 +95,7 @@ export const AllUnits: UnitType[] = [
     stats: {
       attack: 24,
       movement: 2,
+      maintenanceCost: 2,
     }
   },
   {
@@ -104,6 +108,7 @@ export const AllUnits: UnitType[] = [
     stats: {
       attack: 32,
       movement: 2,
+      maintenanceCost: 2,
     }
   },
   {
@@ -116,6 +121,7 @@ export const AllUnits: UnitType[] = [
     stats: {
       attack: 40,
       movement: 3,
+      maintenanceCost: 4,
     }
   },
   {
@@ -128,6 +134,7 @@ export const AllUnits: UnitType[] = [
     stats: {
       attack: 50,
       movement: 4,
+      maintenanceCost: 7,
     }
   },
 ];

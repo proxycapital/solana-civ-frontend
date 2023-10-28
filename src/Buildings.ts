@@ -13,6 +13,7 @@ export type BuildingType = {
     movement?: number;
     resourceCost?: string;
     resourceType?: string;
+    maintenanceCost?: number;
   };
   isUnlocked?: boolean;
 };
