@@ -6,6 +6,7 @@ import Terrain, { TileType } from "./Terrain";
 import Unit from "./Unit";
 import UnitInfoWindow from "./UnitInfoWindow";
 import CityModal from "./CityModal";
+import UpgradedTileModal, { UpgradedTileType } from "./UpgradedTileModal";
 import { useGameState } from "../context/GameStateContext";
 import { useWorkspace } from "../context/AnchorContext";
 import { useSound } from "../context/SoundContext";
@@ -33,14 +34,18 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
   const cols = 20;
   const isDragging = useRef(false);
   const [showVillageModal, setShowVillageModal] = useState(false);
-  const { fetchPlayerState, fetchGameState, fetchNpcs, game, cities, upgradedTiles, npcUnits, npcCities, allUnits } = useGameState();
+  const [showUpgradedTileModal, setShowUpgradedTileModal] = useState(true);
+  const {
+    fetchPlayerState, fetchGameState, fetchNpcs, game, cities, upgradedTiles, npcUnits, npcCities, allUnits,
+  } = useGameState();
   const { program, provider } = useWorkspace();
   const { playSound } = useSound();
-
+  
   const [showGameoverModal, setShowGameoverModal] = useState(false);
   const [tiles, setTiles] = useState([] as Tile[]);
   const [units, setUnits] = useState<Unit[]>(allUnits);
   const [selectedCityId, setSelectedCity] = useState<number | null>(null);
+  const [selectedTileType, setSelectedTileType] = useState<UpgradedTileType | null>(null);
 
   interface Unit {
     unitId: number;
@@ -189,7 +194,7 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
     isDragging.current = false;
   };
 
-  const isInRange = (unit: any, x: number, y: number) => {
+  const isInRange = (unit: any, x: number, y: number): boolean => {
     // do not consider "in range" the tile with the selected unit
     if (unit.x === x && unit.y === y) {
       return false;
@@ -370,7 +375,6 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
         return attackCity(selectedUnit, targetNpcCity);
       }
     }
-
     // else simply select the unit at clicked tile
     return selectUnit(x, y, type);
   };
@@ -385,6 +389,18 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
     if (tile && tile.type === "Village") {
       setShowVillageModal(true);
       setSelectedCity(tile.cityId);
+      return
+    }
+
+    // dont show modal if unit will move to upgraded tile
+    if (selectedUnit) return
+
+    const upgradedTile: { tileType: {[key: string]: {}}, x: number, y: number } = upgradedTiles.find((ut) => ut.x === col && ut.y === row);
+
+    if (upgradedTile) {
+      const upgradedTileName: UpgradedTileType = Object.keys(upgradedTile.tileType)[0] as UpgradedTileType;
+      setSelectedTileType(upgradedTileName);
+      setShowUpgradedTileModal(true);
     }
   };
 
@@ -393,6 +409,7 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
   return (
     <div className="game-container" ref={containerRef}>
       <CityModal show={showVillageModal} onClose={() => setShowVillageModal(false)} cityId={selectedCityId} />
+      <UpgradedTileModal show={showUpgradedTileModal} onClose={() => setShowUpgradedTileModal(false)} selectedTileType={selectedTileType} />
       {selectedUnit && (
         <UnitInfoWindow
           unit={selectedUnit}
@@ -441,10 +458,10 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
               className={`game-tile ${isInRangeForAnyUnit ? "in-range" : ""}`}
               onClick={() => {
                 handleTileClick(col, row);
-                const selectedUnit = units.find((u) => u.isSelected);
-                if (!currentUnit && !selectedUnit) {
-                  return;
-                }
+
+                const selectedUnit = units.find((unit) => unit.isSelected);
+                if (!currentUnit && !selectedUnit) return;
+
                 unitAction(col, row, currentUnit?.type || selectedUnit?.type || "unknown");
               }}
             >

@@ -105,6 +105,7 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
   const cityData = cities.find((city) => city.cityId === cityId);
 
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  console.log('render City Modal');
 
   useEffect(() => {
     const handleResize = () => {
@@ -335,14 +336,16 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
               <img src="/icons/attack.png" alt="strength" />
               Strength:&nbsp;<b>{cityData.attack}</b>
             </div>
-            <Button
-              className={`unit-action-button ${cityData.health === 100 && 'disabled'}`}
-              variant="outlined"
-              onClick={handleRepairCity}
-            >
-              <img src="/icons/build.png" alt="" className="unit-icon" />
-              Repair
-            </Button>
+            {cityData.health < 100 && (
+              <Button
+                className={`unit-action-button ${cityData.health === 100 && 'disabled'}`}
+                variant="outlined"
+                onClick={handleRepairCity}
+              >
+                <img src="/icons/build.png" alt="" className="unit-icon" />
+                Repair
+              </Button>
+            )}
           </div>
         ) : null}
 
