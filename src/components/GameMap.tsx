@@ -408,8 +408,14 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
 
   return (
     <div className="game-container" ref={containerRef}>
-      <CityModal show={showVillageModal} onClose={() => setShowVillageModal(false)} cityId={selectedCityId} />
-      <UpgradedTileModal show={showUpgradedTileModal} onClose={() => setShowUpgradedTileModal(false)} selectedTileType={selectedTileType} />
+      {showVillageModal && <CityModal show={showVillageModal} onClose={() => setShowVillageModal(false)} cityId={selectedCityId} />}
+      {showUpgradedTileModal && (
+        <UpgradedTileModal
+          show={showUpgradedTileModal}
+          onClose={() => setShowUpgradedTileModal(false)}
+          selectedTileType={selectedTileType}
+        />
+      )}
       {selectedUnit && (
         <UnitInfoWindow
           unit={selectedUnit}

@@ -1,7 +1,6 @@
 import React, { memo } from "react";
 import { Modal } from "@mui/material";
 
-
 const UpgradedTiles = {
   "lumberMill": 14,
   "farm": 12,
