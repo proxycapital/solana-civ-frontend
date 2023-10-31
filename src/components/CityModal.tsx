@@ -31,7 +31,7 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
   const [selectedTab, setSelectedTab] = useState(0);
   const [buildingsToBuild, setBuildingsToBuild] = useState<BuildingType[]>([]);
 
-  const cityData = cities.find((city) => city.cityId === cityId);
+  const city = cities.find((city) => city.cityId === cityId);
 
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
@@ -47,7 +47,7 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
   }, []);
 
   useEffect(() => {
-    if (!cityData) return;
+    if (!city) return;
 
     const unlockedTech = new Set(technologies.researchedTechnologies.map((tech) => Object.keys(tech)[0]));
     setResearchTechnologies(unlockedTech);
@@ -59,8 +59,8 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
       return Object.keys(building)[0];
     };
 
-    const existingBuildings = new Set(cityData.buildings.map(extractBuildingType));
-    const buildingsInQueue = new Set(cityData.productionQueue.map(extractBuildingType));
+    const existingBuildings = new Set(city.buildings.map(extractBuildingType));
+    const buildingsInQueue = new Set(city.productionQueue.map(extractBuildingType));
 
     const buildingsToBuild = AllBuildings.filter(
       (building) => !existingBuildings.has(building.type) && !buildingsInQueue.has(building.type)
@@ -73,7 +73,7 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
     });
 
     setBuildingsToBuild(sortedBuildings);
-  }, [cityData, technologies.researchedTechnologies]);
+  }, [city, technologies.researchedTechnologies]);
 
   useEffect(() => {
     if (!show) setSelectedTab(0);
@@ -183,10 +183,10 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
       aria-describedby="village-modal-description"
     >
       <>
-        {cityData?.productionQueue?.length > 0 ? (
+        {city?.productionQueue?.length > 0 ? (
           <div className="modal production-queue-modal">
             <h3 className="">Production Queue</h3>
-            {cityData?.productionQueue?.map((productionItem: any, index: number) => {
+            {city?.productionQueue?.map((productionItem: any, index: number) => {
               const item = productionItem["building"] ? productionItem["building"]["0"] : productionItem["unit"]["0"];
               const itemType = Object.keys(item)[0];
               let itemData: BuildingType | UnitType | undefined;
@@ -216,7 +216,7 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
                       <b>
                         {itemData?.productionCost
                           ? Math.round(
-                              (itemData?.productionCost - cityData.accumulatedProduction) / cityData.productionYield
+                              (itemData?.productionCost - city.accumulatedProduction) / city.productionYield
                             )
                           : ""}
                       </b>{" "}
@@ -230,50 +230,52 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
         ) : null}
 
         {/* short info about city */}
-        {cityData ? (
+        {city ? (
           <div className="modal-city-info primary-border-with-box-shadow">
             <div className="city-name">
-              <h2>{cityData.name}</h2>
+              <h2>{city.name}</h2>
             </div>
             <div className="city-resources-income">
               <div>
                 <img width="32" src="./icons/food.png" alt="apple" />
-                <span>+{cityData.foodYield}</span>
+                <span>+{city.foodYield}</span>
               </div>
               <div>
                 <img width="32" src="./icons/science.png" alt="scienct" />
-                <span>+{cityData.scienceYield}</span>
+                <span>+{city.scienceYield}</span>
               </div>
               <div>
                 <img width="32" src="./icons/gold.png" alt="gold" />
-                <span>+{cityData.goldYield}</span>
+                <span>+{city.goldYield}</span>
               </div>
               <div>
                 <img width="32" src="./icons/hammer.png" alt="hummer" />
-                <span>+{cityData.productionYield}</span>
+                <span>+{city.productionYield}</span>
               </div>
             </div>
             <div className="line-container">
               <img src="/icons/diamond.png" alt="" width="32" className="center-image" />
             </div>
             <div className="city-stats">
-              <img src="/icons/health.png" alt="health" /> Health:&nbsp;<b>{cityData.health}/100</b>
+              <img src="/icons/health.png" alt="health" /> Health:&nbsp;<b>{city.health}/100</b>
             </div>
             <div className="city-stats">
-              <img src="/icons/health.png" alt="population" /> Population:&nbsp;<b>{cityData.population}</b>
+              <img src="/icons/health.png" alt="population" /> Population:&nbsp;<b>{city.population}</b>
             </div>
             <div className="city-stats">
               <img src="/icons/attack.png" alt="strength" />
-              Strength:&nbsp;<b>{cityData.attack}</b>
+              Strength:&nbsp;<b>{city.attack}</b>
             </div>
-            {cityData.health < 100 && (
+            {city.health < 100 && (
               <Button
-                className={`unit-action-button ${cityData.health === 100 && 'disabled'}`}
+                className={`unit-action-button ${city.health === 100 && 'disabled'}`}
                 variant="outlined"
                 onClick={handleRepairCity}
               >
                 <img src="/icons/build.png" alt="" className="unit-icon" />
-                Repair
+                Repair ({(100 - city.health) * 2}
+                  <img className="unit-icon" src="/icons/wood.png" alt="stone" /> + {(100 - city.health) * 2}
+                  <img className="unit-icon stone-icon" src="/icons/stone.png" alt="stone" />)
               </Button>
             )}
           </div>
@@ -332,7 +334,7 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
                           {selectedTab === 0 ? (
                             <>
                               <span>
-                                {cityData ? `${Math.round(unit.productionCost / cityData.productionYield)} Turns` : ""}
+                                {city ? `${Math.round(unit.productionCost / city.productionYield)} Turns` : ""}
                               </span>
                               {/* <img src="./icons/hourglass.png" width="20" alt="hourglass" /> */}
                             </>
@@ -377,7 +379,7 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
                           {selectedTab === 0 ? (
                             <>
                               <span>
-                                {cityData ? Math.round(building.productionCost / cityData.productionYield) : ""}
+                                {city ? Math.round(building.productionCost / city.productionYield) : ""}
                               </span>
                               <img src="./icons/hourglass.png" width="20" alt="hourglass" />
                             </>
