@@ -28,6 +28,7 @@ import ResearchTree from "./research/ResearchTree";
 import Quests from "./quests/Quests";
 import Leaderboard from "./leaderboard/Leaderboard";
 import Marketplace from "./marketplace/Marketplace";
+import Achievements from "./achievements/Achievements";
 import CustomModal from "./CustomModal";
 import EndTurnButton from "./EndTurnButton";
 import { useGameState } from "../context/GameStateContext";
@@ -251,6 +252,18 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
             </Button>
           </Tippy>
 
+          <Tippy key="achievements" content="Achievements" placement="left">
+            <Button
+              variant="text"
+              color="inherit"
+              onClick={() => {
+                handleOpenModal("Achievements");
+              }}
+            >
+              <img src="/icons/achievements.png" width="42" alt="Achievements" />
+            </Button>
+          </Tippy>
+
           {/* <Tippy key="marketplace" content="Marketplace" placement="left">
             <Button
               className="marketplace-button"
@@ -346,6 +359,7 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
             {modalContent === "Research" && <ResearchTree />}
             {modalContent === "Quests" && <Quests />}
             {modalContent === "Leaderboard" && <Leaderboard />}
+            {modalContent === "Achievements" && <Achievements />}
             {modalContent === "Marketplace" && <Marketplace />}
           </div>
         </CustomModal>

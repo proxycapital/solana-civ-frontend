@@ -1,0 +1,51 @@
+.achievements-item {
+    border: 1px solid rgb(107 107 107);
+    margin: 10px;
+    padding: 10px;
+    width: 25%;
+    max-width: 150px;
+    border-radius: 10px;
+  }
+  
+  .achievements-item .item-title {
+    padding: 5px;
+    text-align: center;
+    border-bottom: 1px solid #6b6b6b;
+    color: #ffffff;
+  }
+  
+  .achievements-items-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
+  }
+  
+  .achievements-item button.buy-button {
+    margin-top: 10px;
+    width: 100%;
+    color: #fff;
+    border: 1px solid #fff;
+  }
+  
+  .achievements-item button.buy-button:hover {
+    background: #77777761;
+  }
+  
+  p.coming-soon {
+    text-align: center;
+    color: #ffffff85;
+  }
+  
+  @media (max-width: 768px) {
+    
+    .achievements-item {
+      width: 100%;
+      margin: 15px 0;
+    }
+    
+    .achievements-items-row {
+      justify-content: center;
+    }
+  
+  }
+  
