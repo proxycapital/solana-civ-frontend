@@ -251,7 +251,7 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
             </Button>
           </Tippy>
 
-          <Tippy key="marketplace" content="Marketplace" placement="left">
+          {/* <Tippy key="marketplace" content="Marketplace" placement="left">
             <Button
               className="marketplace-button"
               variant="text"
@@ -262,7 +262,7 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
             >
               <img src="/icons/marketplace.png" width="42" alt="Marketplace" />
             </Button>
-          </Tippy>
+          </Tippy> */}
         </div>
       </div>
       <div className="top-nav-wrapper">
