@@ -173,8 +173,6 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
     await fetchPlayerState();
   };
 
-  console.log('rendered')
-
   return (
     <Modal
       open={show}
@@ -183,7 +181,7 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
       aria-describedby="village-modal-description"
     >
       <>
-        {city?.productionQueue?.length > 0 ? (
+        {city?.productionQueue && city?.productionQueue?.length > 0 ? (
           <div className="modal production-queue-modal">
             <h3 className="">Production Queue</h3>
             {city?.productionQueue?.map((productionItem: any, index: number) => {
@@ -258,6 +256,9 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
             </div>
             <div className="city-stats">
               <img src="/icons/health.png" alt="health" /> Health:&nbsp;<b>{city.health}/100</b>
+            </div>
+            <div className="city-stats">
+              <img src="/icons/health.png" alt="health" /> Health:&nbsp;<b>{city.wallHealth}/100</b>
             </div>
             <div className="city-stats">
               <img src="/icons/health.png" alt="population" /> Population:&nbsp;<b>{city.population}</b>

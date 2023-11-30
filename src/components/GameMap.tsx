@@ -118,9 +118,9 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
               y: row,
               imageIndex: 10,
               type: "Village",
-              cityName: cityData.name,
-              health: cityData.health,
-              cityId: cityData.cityId,
+              cityName: cityData?.name,
+              health: cityData?.health,
+              cityId: cityData?.cityId,
             });
             continue;
           }

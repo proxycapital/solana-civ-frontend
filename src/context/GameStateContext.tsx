@@ -20,6 +20,25 @@ type Resources = {
   [key: string]: number | 0;
 };
 
+type City = {
+  cityId: number;
+  x: number;
+  y: number;
+  name: string;
+  population: number;
+  health: number;
+  wallHealth: number;
+  attack: number;
+  accumulatedProduction: number;
+  buildings: any[];
+  game: any;
+  goldYield: number;
+  foodYield: number;
+  productionQueue: any[];
+  productionYield: number;
+  scienceYield: number;
+}
+
 interface GameStateContextType {
   fetchPlayerState: () => Promise<void>;
   fetchGameState: () => Promise<void>;
@@ -30,7 +49,7 @@ interface GameStateContextType {
     researchAccumulatedPoints: number;
     researchedTechnologies: any[];
   };
-  cities: any[];
+  cities: City[];
   upgradedTiles: any[];
   npcUnits: any[];
   npcCities: any[];
