@@ -270,7 +270,7 @@ export const removeFromProductionQueue = async (
   return program.methods.removeFromProductionQueue(cityId, itemIndex).accounts(accounts).rpc();
 };
 
-export const repairCity = async (
+export const repairWall = async (
   provider: AnchorProvider,
   program: Program<Solciv>,
   cityId: number,
@@ -292,7 +292,7 @@ export const repairCity = async (
     systemProgram: anchor.web3.SystemProgram.programId,
   };
 
-  return program.methods.repairCity(cityId).accounts(accounts).rpc();
+  return program.methods.repairWall(cityId).accounts(accounts).rpc();
 }
 
 export const purchaseWithGold = async (
