@@ -4,7 +4,12 @@
   flex-direction: column;
   gap: 10px;
   max-height: 90vh;
-  overflow-y: auto;
+  overflow: scroll;
+  -ms-overflow-style: none;
+	scrollbar-width: none;
+	&::-webkit-scrollbar {
+		display: none;
+	}
 }
 
 .quest-block {

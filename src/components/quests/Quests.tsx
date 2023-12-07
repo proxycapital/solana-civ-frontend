@@ -1,7 +1,7 @@
 import React from "react";
 import QuestBlock from "./QuestBlock";
 import { useGameState } from "../../context/GameStateContext";
-import "./Quests.css";
+import "./Quests.scss";
 
 const Quests = () => {
   const { upgradedTiles, allUnits, cities, technologies, npcUnits, npcCities } = useGameState();

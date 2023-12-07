@@ -1,11 +1,11 @@
 import React from 'react';
-import './Quests.css';
+import './Quests.scss';
 
 interface IQuests {
-    status: string;
-    title: string;
-    description: string;
-    reward: string;
+  status: string;
+  title: string;
+  description: string;
+  reward: string;
 }
 
 const QuestBlock = ({ status, title, description, reward}: IQuests) => {
