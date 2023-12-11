@@ -16,22 +16,24 @@ const CityTile = ({ imageIndex, health, cityName, wallHealth }: CityTileProps) =
   })
 
   let wallMaxHealth = null
-  if (cityBuildings?.includes('wall')) {
-    wallMaxHealth = 50
-  } else if (cityBuildings?.includes('wallMedieval')) {
-    wallMaxHealth = 100
+  if (cityBuildings?.includes('wallIndustrial')) {
+    wallMaxHealth = 200
   } else if (cityBuildings?.includes('wallRenaissance')) {
     wallMaxHealth = 150
-  } else if (cityBuildings?.includes('wallIndustrial')) {
-    wallMaxHealth = 200
+  } else if (cityBuildings?.includes('wallMedieval')) {
+    wallMaxHealth = 100
+  } else if (cityBuildings?.includes('wall')) {
+    wallMaxHealth = 50
   }
-
+  
   return (
     <div className="city-header primary-border-with-box-shadow">
       {cityName}
       {wallMaxHealth && (
-        <div className="city-wall-bar">
-          <div className="city-wall-bar-fill" style={{ width: `${ wallHealth !== wallMaxHealth ? (wallHealth! / wallMaxHealth * 100) : 100}%` }} />
+        <div className="city-wall-bar" style={wallHealth === 0 ? { padding: '1.5px'} : {}}>
+          {wallHealth ? (
+            <div className="city-wall-bar-fill" style={{ width: `${ wallHealth !== wallMaxHealth ? (wallHealth! / wallMaxHealth * 100) : 100}%` }} />
+          ) : null}
         </div>  
       )}
       <div className="city-health-bar">

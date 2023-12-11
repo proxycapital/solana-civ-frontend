@@ -178,14 +178,14 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
   })
 
   let wallMaxHealth = null
-  if (cityBuildings?.includes('wall')) {
-    wallMaxHealth = 50
+  if (cityBuildings?.includes('wallIndustrial')) {
+    wallMaxHealth = 200
+  } else if (cityBuildings?.includes('wallRenaissance')) {
+    wallMaxHealth = 150
   } else if (cityBuildings?.includes('wallMedieval')) {
     wallMaxHealth = 100
-  } else if (cityBuildings?.includes('wallRenaissance')) {
-    wallMaxHealth = 175
-  } else if (cityBuildings?.includes('wallIndustrial')) {
-    wallMaxHealth = 225
+  } else if (cityBuildings?.includes('wall')) {
+    wallMaxHealth = 50
   }
 
   return (
@@ -224,7 +224,7 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
                     </span>
                   </Box>
                   {index === 0 && (
-                    <p style={{ margin: 0, textAlign: "center" }}>
+                    <p className="ready-in-text">
                       Ready in&nbsp;
                       <b>
                         {itemData?.productionCost
