@@ -2,6 +2,7 @@ import Button from "@mui/material/Button";
 import LinearProgress from "@mui/material/LinearProgress";
 import Tippy from "@tippyjs/react";
 
+import toCamelCase from "../../utils";
 import ResearchTippy from "./ResearchTippy";
 import "./ResearchTree.scss";
 
@@ -15,19 +16,6 @@ interface IResearch {
   index: number;
   prevResearched: boolean;
   onResearchClick: (name: string) => void;
-}
-
-function toCamelCase(str: string) {
-  return str
-    .replace(/[^a-zA-Z\s]/g, "")
-    .split(" ")
-    .map((word, index) => {
-      if (index === 0) {
-        return word.toLowerCase();
-      }
-      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-    })
-    .join("");
 }
 
 const ResearchBlock = ({

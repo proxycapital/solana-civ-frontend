@@ -1,25 +1,13 @@
 import * as anchor from "@coral-xyz/anchor";
 import { toast } from "react-toastify";
+
 import { useGameState } from "../../context/GameStateContext";
 import { useWorkspace } from "../../context/AnchorContext";
 import ResearchBlock from "./ResearchBlock";
 import "./ResearchTree.scss";
-
+import toCamelCase from "../../utils";
 import config from "../../config.json";
 const researchData = config.science;
-
-function toCamelCase(str: string) {
-  return str
-    .replace(/[^a-zA-Z\s]/g, "")
-    .split(" ")
-    .map((word, index) => {
-      if (index === 0) {
-        return word.toLowerCase();
-      }
-      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-    })
-    .join("");
-}
 
 const ResearchTree = () => {
   const { program, provider } = useWorkspace();
