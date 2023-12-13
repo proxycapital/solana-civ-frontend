@@ -53,8 +53,6 @@ const Terrain: React.FC<TerrainProps> = ({ x, y, discovered, imageIndex, overlay
   const [nextTurn, setNextTurn] = useState(false);
   const [fadeIn, setFadeIn] = useState(false);
   
-  console.log('Terrarian Rendered')
-
   useEffect(() => {
     setNextTurn(true);
     setTimeout(() => {
