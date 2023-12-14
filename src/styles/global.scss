@@ -361,7 +361,17 @@ img.upgraded-tile {
   top: -3rem;
   left: -1rem;
   position: absolute;
+}
 
+.city-name-wrapper {
+  margin-bottom: 4px;
+}
+
+.city-name-wrapper .population {
+  padding: 0 6px;
+  border-radius: 32px;
+  border: 1px solid #fff;
+  background: #c8aa6e;
 }
 
 .city-header .city-wall-bar {

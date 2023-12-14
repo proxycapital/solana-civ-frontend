@@ -26,6 +26,7 @@ interface Tile {
   imageIndex: number;
   overlayImageIndex?: number;
   cityName?: string | undefined;
+  population?: number;
   health?: number;
   wallHealth?: number;
   type: string;
@@ -121,6 +122,7 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
               imageIndex: 10,
               type: "Village",
               cityName: cityData?.name,
+              population: cityData?.population,
               wallHealth: cityData?.wallHealth,
               health: cityData?.health,
               cityId: cityData?.cityId,
@@ -481,6 +483,7 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
                   cityName={currentTile.cityName}
                   wallHealth={currentTile.wallHealth}
                   health={currentTile.health}
+                  population={currentTile.population}
                 />
               )}
               <Terrain
