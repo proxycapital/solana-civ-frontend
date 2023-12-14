@@ -3,6 +3,7 @@ import * as anchor from "@coral-xyz/anchor";
 import { ToastContainer, toast } from "react-toastify";
 
 import Terrain, { TileType } from "./Terrain";
+import CityTile from './CityTile';
 import Unit from "./Unit";
 import UnitInfoWindow from "./UnitInfoWindow";
 import CityModal from "./CityModal";
@@ -26,6 +27,7 @@ interface Tile {
   overlayImageIndex?: number;
   cityName?: string | undefined;
   health?: number;
+  wallHealth?: number;
   type: string;
 }
 
@@ -118,9 +120,10 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
               y: row,
               imageIndex: 10,
               type: "Village",
-              cityName: cityData.name,
-              health: cityData.health,
-              cityId: cityData.cityId,
+              cityName: cityData?.name,
+              wallHealth: cityData?.wallHealth,
+              health: cityData?.health,
+              cityId: cityData?.cityId,
             });
             continue;
           }
@@ -458,6 +461,7 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
             resourceAvailable = "iron";
           }
 
+
           return (
             <div
               key={index}
@@ -471,6 +475,14 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
                 unitAction(col, row, currentUnit?.type || selectedUnit?.type || "unknown");
               }}
             >
+              {currentTile.cityName && (
+                <CityTile
+                  imageIndex={currentTile.imageIndex}
+                  cityName={currentTile.cityName}
+                  wallHealth={currentTile.wallHealth}
+                  health={currentTile.health}
+                />
+              )}
               <Terrain
                 discovered={currentTile.discovered}
                 x={col}
@@ -478,6 +490,7 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
                 imageIndex={currentTile.imageIndex}
                 overlayImageIndex={currentTile.overlayImageIndex}
                 cityName={currentTile.cityName}
+                wallHealth={currentTile.wallHealth}
                 health={currentTile.health}
                 turn={game.turn}
               />
@@ -492,7 +505,7 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
         })}
       </div>
       <ToastContainer
-        style={{ top: "135px", zIndex: 100000 }}
+        style={{ top: "70px", zIndex: 100000 }}
         position="top-right"
         autoClose={1000}
         hideProgressBar={false}

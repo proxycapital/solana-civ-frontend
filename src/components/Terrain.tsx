@@ -9,6 +9,7 @@ interface TerrainProps {
   overlayImageIndex?: number;
   cityName?: string | undefined;
   health?: number;
+  wallHealth?: number;
   turn: number;
 }
 
@@ -48,7 +49,7 @@ const yieldTypes: { [key: string]: string } = {
   "Iron Mine": "iron",
 };
 
-const Terrain: React.FC<TerrainProps> = ({ x, y, discovered, imageIndex, overlayImageIndex, cityName, health, turn }) => {
+const Terrain: React.FC<TerrainProps> = ({ x, y, discovered, imageIndex, overlayImageIndex, cityName, health, turn, wallHealth }) => {
   const [nextTurn, setNextTurn] = useState(false);
   const [fadeIn, setFadeIn] = useState(false);
   
@@ -99,14 +100,6 @@ const Terrain: React.FC<TerrainProps> = ({ x, y, discovered, imageIndex, overlay
       )}
       {discovered && imageIndex !== null && (
         <div className={`terrain-container ${fadeIn ? 'fade-in' : ''}`}>
-          {cityName ? (
-            <div className="city-header primary-border-with-box-shadow">
-              {cityName}
-              <div className="city-health-bar">
-                <div className="city-health-bar-fill" style={{ width: `${ health && imageIndex !== 15 ? health : (100 * health! / 1000)}%` }} />
-              </div>
-            </div>
-          ) : null}
           <img src={imageUrl} className={`terrain ${tileType.toLowerCase()}`} alt={tileType} draggable="false" />
         </div>
       )}
@@ -118,4 +111,4 @@ const Terrain: React.FC<TerrainProps> = ({ x, y, discovered, imageIndex, overlay
   );
 };
 
-export default Terrain;
+export default React.memo(Terrain);

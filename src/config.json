@@ -2,6 +2,11 @@
   "science": {
     "Military Tree": [
       {
+        "name": "Animal Husbandry",
+        "cost": 5,
+        "unlocks": ["Archery"]
+      },
+      {
         "name": "Archery",
         "cost": 15,
         "unlocks": ["Archer"]

@@ -11,7 +11,7 @@ import Button from "@mui/material/Button";
 import { useGameState } from "../context/GameStateContext";
 import { useSound } from "../context/SoundContext";
 import { useWorkspace } from "../context/AnchorContext";
-import { addToProductionQueue, removeFromProductionQueue, purchaseWithGold, repairCity } from "../utils/solanaUtils";
+import { addToProductionQueue, removeFromProductionQueue, purchaseWithGold, repairWall } from "../utils/solanaUtils";
 import { AllUnits, UnitType } from "../Units";
 import { AllBuildings, BuildingType } from "../Buildings";
 import CustomTooltip from "./CustomTooltip";
@@ -126,9 +126,9 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
     await fetchPlayerState();
   };
 
-  const handleRepairCity = async () => {
+  const handleRepairWall = async () => {
     try {
-      const tx = repairCity(provider!, program!, Number(cityId));
+      const tx = repairWall(provider!, program!, Number(cityId));
       const signature = await toast.promise(tx, {
         pending: 'Repairing city',
         success: 'City repaired',
@@ -173,7 +173,20 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
     await fetchPlayerState();
   };
 
-  console.log('rendered')
+  const cityBuildings = city?.buildings.map((building) => {
+    return Object.keys(building)[0]
+  })
+
+  let wallMaxHealth = null
+  if (cityBuildings?.includes('wallIndustrial')) {
+    wallMaxHealth = 200
+  } else if (cityBuildings?.includes('wallRenaissance')) {
+    wallMaxHealth = 150
+  } else if (cityBuildings?.includes('wallMedieval')) {
+    wallMaxHealth = 100
+  } else if (cityBuildings?.includes('wall')) {
+    wallMaxHealth = 50
+  }
 
   return (
     <Modal
@@ -183,7 +196,7 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
       aria-describedby="village-modal-description"
     >
       <>
-        {city?.productionQueue?.length > 0 ? (
+        {city?.productionQueue && city?.productionQueue?.length > 0 ? (
           <div className="modal production-queue-modal">
             <h3 className="">Production Queue</h3>
             {city?.productionQueue?.map((productionItem: any, index: number) => {
@@ -211,7 +224,7 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
                     </span>
                   </Box>
                   {index === 0 && (
-                    <p style={{ margin: 0, textAlign: "center" }}>
+                    <p className="ready-in-text">
                       Ready in&nbsp;
                       <b>
                         {itemData?.productionCost
@@ -259,6 +272,12 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
             <div className="city-stats">
               <img src="/icons/health.png" alt="health" /> Health:&nbsp;<b>{city.health}/100</b>
             </div>
+            {/* only show if user has any level of wall */}
+            {wallMaxHealth && (
+              <div className="city-stats">
+                <img src="/icons/wall.png" alt="health" /> Wall:&nbsp;<b>{city.wallHealth}/ {wallMaxHealth}</b>
+              </div>
+            )}
             <div className="city-stats">
               <img src="/icons/health.png" alt="population" /> Population:&nbsp;<b>{city.population}</b>
             </div>
@@ -266,15 +285,15 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
               <img src="/icons/attack.png" alt="strength" />
               Strength:&nbsp;<b>{city.attack}</b>
             </div>
-            {city.health < 100 && (
+            {wallMaxHealth && (wallMaxHealth !== city.wallHealth) && (
               <Button
-                className={`unit-action-button ${city.health === 100 && 'disabled'}`}
+                className={`unit-action-button ${city.wallHealth === wallMaxHealth && 'disabled'}`}
                 variant="outlined"
-                onClick={handleRepairCity}
+                onClick={handleRepairWall}
               >
                 <img src="/icons/build.png" alt="" className="unit-icon" />
-                Repair ({(100 - city.health) * 2}
-                  <img className="unit-icon" src="/icons/wood.png" alt="stone" /> + {(100 - city.health) * 2}
+                Repair Wall ({(wallMaxHealth - city.wallHealth) * 2}
+                  <img className="unit-icon" src="/icons/wood.png" alt="stone" /> + {(wallMaxHealth - city.wallHealth) * 2}
                   <img className="unit-icon stone-icon" src="/icons/stone.png" alt="stone" />)
               </Button>
             )}

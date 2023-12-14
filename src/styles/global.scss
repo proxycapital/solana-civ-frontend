@@ -152,6 +152,7 @@ header.top-navigation .balance-box {
   align-items: center;
   margin-right: 5px;
   padding: 5px 10px;
+  min-width: 45px;
   font-size: 16px;
   cursor: pointer;
   background-image: url("../../public/icons/balance-bg.png");
@@ -360,15 +361,29 @@ img.upgraded-tile {
   top: -3rem;
   left: -1rem;
   position: absolute;
+
+}
+
+.city-header .city-wall-bar {
+  background-color: #828282;
+  margin-top: -2px;
+  margin-bottom: 2px;
+  overflow: hidden;
+}
+
+.city-header .city-wall-bar-fill {
+  background: #ccc;
+  padding: 1.5px;
 }
 
 .city-header .city-health-bar {
   background: red;
+  overflow: hidden;
 }
 
 .city-header .city-health-bar-fill {
   background: green;
-  padding: 1px;
+  padding: 1.5px;
 }
 
 .game-tile img.terrain {
@@ -717,4 +732,12 @@ img.yield-icon {
     margin: 0 10px; 
     font-size: 0.8rem;
   }
+}
+
+.underline-text {
+  text-decoration: underline;
+}
+
+.bold-text {
+  font-weight: bold;
 }

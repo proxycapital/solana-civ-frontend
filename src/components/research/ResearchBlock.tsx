@@ -1,6 +1,8 @@
-import React from "react";
 import Button from "@mui/material/Button";
 import LinearProgress from "@mui/material/LinearProgress";
+import Tippy from "@tippyjs/react";
+
+import ResearchTippy from "./ResearchTippy";
 import "./ResearchTree.scss";
 
 interface IResearch {
@@ -52,9 +54,19 @@ const ResearchBlock = ({
         {/* <img src="/research.png" width="100" alt="" className="research-icon" /> */}
         <div className="research-content">
           <h3>{name}</h3>
-          <p>Unlocks: {unlocks.join(", ")}</p>
+          <p>Unlocks:
+            {unlocks.map((unlock, index) => (
+              <span key={unlock}>
+                <Tippy className="research-tippy" content={ResearchTippy(unlock)} placement="top" key="test">
+                  <span className="underline-text">{unlock}</span>
+                </Tippy>
+                {index !== unlocks.length - 1 ? ', ' : null}
+              </span>
+            ))}
+          </p>
         </div>
       </div>
+
       <div className="research-status">
         {isCurrentResearch && (
           <div className="progress-wrapper">

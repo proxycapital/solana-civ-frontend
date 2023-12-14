@@ -1,6 +1,7 @@
 import React from "react";
 import { toast } from "react-toastify";
 import Button from "@mui/material/Button";
+
 import config from "../config.json";
 import { foundCity, upgradeLandPlot, healUnit } from "../utils/solanaUtils";
 import { useWorkspace } from "../context/AnchorContext";
@@ -142,7 +143,10 @@ const UnitInfoWindow: React.FC<UnitInfoProps> = ({ unit }) => {
           variant="outlined"
           onClick={() => handleHealing(unit.unitId)}
         >
-          <img src="/icons/health.png" alt="" className="unit-icon" /> Heal ({100 - unit.health} food)
+          <img src="/icons/health.png" alt="Health" className="unit-icon" />
+          Heal ({100 - unit.health}
+          <img src="icons/food.png" alt="Food" className="unit-icon" />
+          )
         </Button>
       )}
     </div>

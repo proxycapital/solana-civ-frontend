@@ -161,6 +161,36 @@ button.research-button {
   font-weight: bold;
 }
 
+.research-tippy {
+  .unit-stats-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    img {
+      width: 60px;
+      height: 60px;
+    }
+
+    .unit-stats {
+      display: flex;
+      flex-direction: column;
+      margin-left: 0.5rem;
+      
+      p {
+        margin: 0;
+        padding: 0;
+
+        span {
+          font-weight: bold;
+          font-size: 1.25rem;
+          line-height: 0;
+        }
+      }
+    }
+  }
+}
+
 @media (max-width: 768px) { 
   .research-tree {
     flex-direction: column; 
