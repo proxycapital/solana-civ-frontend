@@ -5,10 +5,10 @@ import { toast } from "react-toastify";
 import { useGameState } from "../../context/GameStateContext";
 import { useWorkspace } from "../../context/AnchorContext";
 import ResearchBlock from "./ResearchBlock";
-import "./ResearchTree.scss";
-import toCamelCase from "../../utils";
+import { toCamelCase } from "../../utils";
 import config from "../../config.json";
 import { useEffect } from "react";
+import "./ResearchTree.scss";
 const researchData = config.science;
 
 const ResearchTree = () => {
@@ -22,8 +22,6 @@ const ResearchTree = () => {
   const researchedKeys = technologies.researchedTechnologies.map((tech) => Object.keys(tech)[0]);
 
   useEffect(() => {
-    // check if we have something in researchQueue in localStorage 
-    // if we have - display it in UI 
     getResearchQueue()
   }, [])
 
@@ -45,6 +43,9 @@ const ResearchTree = () => {
 
       // click on same techology, that already in current research
       if (currentResearchKey === selectedResearchTreeKeys[selectedResearchIndex]) {
+        if (localStorage.getItem('researchQueue')) {
+          toast.warning("Research queue removed");
+        }
         resetResearchQueue();
         return;
       }
@@ -64,9 +65,11 @@ const ResearchTree = () => {
     
     localStorage.setItem('researchQueue', JSON.stringify(formatedResearches));
     getResearchQueue();
+
+    toast.success("Research queue created");
   }
 
-  // user click on Research button
+  // user click on research button
   const handleResearch = async (name: string) => {
     resetResearchQueue()
     
@@ -109,6 +112,7 @@ const ResearchTree = () => {
 
   const resetResearchQueue = () => {
     localStorage.removeItem('researchQueue');
+    localStorage.removeItem('prevTech');
     setResearchQueue([]);
   }
 

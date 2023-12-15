@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as anchor from "@coral-xyz/anchor";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -13,7 +13,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHourglassEnd, faSkullCrossbones } from "@fortawesome/free-solid-svg-icons";
 import { useWorkspace } from "../context/AnchorContext";
 import { useGameState } from "../context/GameStateContext";
-import toCamelCase from "../utils";
 
 const darkTheme = createTheme({
   palette: {
@@ -23,15 +22,15 @@ const darkTheme = createTheme({
 
 interface EndTurnButtonProps {
   setShowOnboardingType: (onboardingType: "production" | "research" | null) => void;
+  openNewResearchModal: () => void;
 }
 
-const EndTurnButton: React.FC<EndTurnButtonProps> = ({ setShowOnboardingType }) => {
+const EndTurnButton: React.FC<EndTurnButtonProps> = ({ setShowOnboardingType, openNewResearchModal }) => {
   const { program, provider } = useWorkspace();
   const { game, technologies, cities, allUnits, fetchPlayerState, fetchGameState, fetchNpcs } = useGameState();
   const [isProcessing, setIsProcessing] = useState(false);
   const [isClosingGame, setIsClosingGame] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
-  const [prevResearchedTechnologies, setPrevResearchedTechnologies] = useState<any[]>([]);
 
   const handleOpenDialog = () => {
     setOpenDialog(true);
@@ -41,15 +40,48 @@ const EndTurnButton: React.FC<EndTurnButtonProps> = ({ setShowOnboardingType }) 
     setOpenDialog(false);
   };
 
-  const handleResearchFinished = async () => {
-    await fetchPlayerState(); // not sure that I need to here
-    console.log("Current technologies: ", technologies);
-    // when where is no currentResearch + researchedTechnologies.length increased by one
-    if (!technologies.currentResearch && technologies.researchedTechnologies.length > prevResearchedTechnologies.length) {
-      console.log("Some research is completed, need to check diff")
-      // show modal + drop item from localStorage and reset it
+  useEffect(() => {
+    async function handleResearchComplete() {
+      const numberOfResearchedTech = technologies.researchedTechnologies.length;
+      let prevResearchedTechnologies: any = localStorage.getItem('prevTech');
+      prevResearchedTechnologies = prevResearchedTechnologies ? JSON.parse(prevResearchedTechnologies) : [];
+
+      const numberOfPrevResearchedTech = prevResearchedTechnologies.length;
+
+      if ((numberOfResearchedTech - numberOfPrevResearchedTech) === 1) {
+        const researchedKeys = technologies.researchedTechnologies.map((tech) => Object.keys(tech)[0]);
+        const prevResearchedKeys = prevResearchedTechnologies.map((tech: any) => Object.keys(tech)[0]);
+        
+        const newTechnology = researchedKeys.filter((tech) => !prevResearchedKeys.includes(tech));
+        
+        if (newTechnology.length === 1) {
+          localStorage.setItem('prevTech', JSON.stringify(technologies.researchedTechnologies));
+          
+          // show modal
+          openNewResearchModal();
+
+          const researchQueue: any = localStorage.getItem('researchQueue');
+          const researchQueueArr: Array<any> = JSON.parse(researchQueue);
+          if (!researchQueueArr) return
+
+          if (researchQueueArr.length === 1) {
+            // last research was finished
+            localStorage.removeItem('researchQueue');
+            localStorage.removeItem('prevTech');
+            return;
+          }
+
+          const newResearchQueue = researchQueueArr.filter((tech) => tech !== newTechnology[0]);
+
+          if (newResearchQueue.length !== researchQueueArr.length) {
+            localStorage.setItem('researchQueue', JSON.stringify(newResearchQueue));
+          }
+        }
+      }
     }
-  }
+    handleResearchComplete();
+
+  }, [technologies.researchedTechnologies])
 
   const startResearchAuto = async (technologyName: any) => {   
     const technology = { [technologyName]: {} } as any;
@@ -99,20 +131,16 @@ const EndTurnButton: React.FC<EndTurnButtonProps> = ({ setShowOnboardingType }) 
     } else {
       const researchQueueArr = JSON.parse(researchQueue);
 
-      // if there is no currentResearch - we need to make tx ourselves 
+      // if no currentResearch - we need to make tx ourselves 
       if (!technologies.currentResearch) {
-        console.log("Tech to start: ", researchQueueArr[0]);
         await startResearchAuto(researchQueueArr[0]);
-      } else {
-        console.log("Waiting until research will complete");
       }
-      // if there is any currentResearch - no need to do something 
-
-      // also if we just research last reseatch from researchQueue - we need to reset it and still show alert
     }
 
     setIsProcessing(true);
     console.time("End turn");
+    localStorage.setItem('prevTech', JSON.stringify(technologies.researchedTechnologies));
+
     try {
       const [gameKey] = anchor.web3.PublicKey.findProgramAddressSync(
         [Buffer.from("GAME"), provider!.publicKey.toBuffer()],
@@ -138,15 +166,11 @@ const EndTurnButton: React.FC<EndTurnButtonProps> = ({ setShowOnboardingType }) 
       await fetchGameState();
       await fetchNpcs();
       setShowOnboardingType(null);
-      setPrevResearchedTechnologies([...technologies.researchedTechnologies]);
     } catch (error) {
       console.error("Failed to end turn", error);
     }
     console.timeEnd("End turn");
     setIsProcessing(false);
-
-    // show in Modal if some researches are complete
-    setTimeout(() =>  handleResearchFinished, 100);
   };
 
   const confirmCloseGame = async () => {

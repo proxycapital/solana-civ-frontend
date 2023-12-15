@@ -2,7 +2,7 @@ import Button from "@mui/material/Button";
 import LinearProgress from "@mui/material/LinearProgress";
 import Tippy from "@tippyjs/react";
 
-import toCamelCase from "../../utils";
+import { toCamelCase } from "../../utils";
 import ResearchTippy from "./ResearchTippy";
 import "./ResearchTree.scss";
 
@@ -10,24 +10,30 @@ interface IResearch {
   name: string;
   cost: number;
   unlocks: string[];
+  treeType: string;
   currentResearch: any;
   researchAccumulatedPoints: number;
   researchedTechnologies: any[];
   index: number;
   prevResearched: boolean;
   onResearchClick: (name: string) => void;
+  onResearchQueueClick: (index: number, treeType: string) => void;
+  researchQueue?: Array<any>;
 }
 
 const ResearchBlock = ({
   name,
   cost,
   unlocks,
+  treeType,
   currentResearch,
   researchAccumulatedPoints,
   researchedTechnologies,
   onResearchClick,
+  onResearchQueueClick,
   index,
   prevResearched,
+  researchQueue = [],
 }: IResearch) => {
   const researchedKeys = researchedTechnologies.map((tech) => Object.keys(tech)[0]);
   const currentResearchKey = currentResearch ? Object.keys(currentResearch)[0] : null;
@@ -37,9 +43,13 @@ const ResearchBlock = ({
   const isLocked = index !== 0 && !prevResearched;
 
   return (
-    <div className={`research-block ${isUnlocked ? "unlocked" : ""} ${isLocked ? "locked" : ""}`}>
+    <div
+      className={`research-block ${isUnlocked ? "unlocked" : ""} ${isLocked ? "locked" : ""}`}
+      onClick={() => onResearchQueueClick(index, treeType)}
+    >
       <div className="top-section">
         {/* <img src="/research.png" width="100" alt="" className="research-icon" /> */}
+        {researchQueue.includes(toCamelCase(name)) ? <div className="research-queue-number">{researchQueue.indexOf(toCamelCase(name)) + 1}</div> : null}
         <div className="research-content">
           <h3>{name}</h3>
           <p>Unlocks:

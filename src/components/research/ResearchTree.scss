@@ -2,6 +2,7 @@
   display: flex;
   justify-content: space-between;
   padding: 0 20px;
+  padding-top: 11px; // to show queue number 
   height: calc(100vh - 100px);
   overflow: scroll;
 
@@ -37,6 +38,22 @@
   padding: 10px;
   position: relative;
   align-items: center;
+  
+  &:hover {
+    cursor: pointer;
+  }
+
+  .research-queue-number {
+    position: absolute;
+    top: -13px;
+    left: -15px;
+    border: 2px solid #927f61;
+    background: linear-gradient(180deg, #5e4831 0%, #2b2217 100%);
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    text-align: center;
+  }
 }
 
 .research-block.unlocked {
@@ -188,6 +205,16 @@ button.research-button {
         }
       }
     }
+  }
+}
+
+.new-research-block {
+  padding: 0 16px;
+  text-align: center;
+
+  h3 {
+    font-size: 1.5rem;
+    font-weight: normal;
   }
 }
 
