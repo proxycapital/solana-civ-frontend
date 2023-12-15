@@ -1,3 +1,4 @@
+import { useState } from "react";
 import * as anchor from "@coral-xyz/anchor";
 import { toast } from "react-toastify";
 
@@ -7,16 +8,68 @@ import ResearchBlock from "./ResearchBlock";
 import "./ResearchTree.scss";
 import toCamelCase from "../../utils";
 import config from "../../config.json";
+import { useEffect } from "react";
 const researchData = config.science;
 
 const ResearchTree = () => {
+  const [researchQueue, setResearchQueue] = useState([])
   const { program, provider } = useWorkspace();
   const { technologies, fetchPlayerState } = useGameState();
   const column1 = researchData["Science and Economy Tree"];
   const column2 = researchData["Production and Agriculture Tree"];
   const column3 = researchData["Military Tree"];
 
+  const researchedKeys = technologies.researchedTechnologies.map((tech) => Object.keys(tech)[0]);
+
+  useEffect(() => {
+    // check if we have something in researchQueue in localStorage 
+    // if we have - display it in UI 
+    getResearchQueue()
+  }, [])
+
+  const getResearchQueue = () => {
+    const researchQueue = localStorage.getItem('researchQueue');
+    if (!researchQueue) return
+
+    setResearchQueue(JSON.parse(researchQueue))
+  }
+
+  const handleResearchQueue = (selectedResearchIndex: number, treeType: string) => {
+    const allTreeResearches: any = researchData;
+    const selectedResearchTree: Array<any> = allTreeResearches[treeType];
+    const selectedResearchTreeKeys = selectedResearchTree.map((tech) => toCamelCase(String(Object.values(tech)[0])));
+
+    let formatedResearches = [];
+    if (technologies.currentResearch) {
+      const currentResearchKey = Object.keys(technologies.currentResearch)[0];
+
+      // click on same techology, that already in current research
+      if (currentResearchKey === selectedResearchTreeKeys[selectedResearchIndex]) {
+        resetResearchQueue();
+        return;
+      }
+
+      // add current research only if user select different tree
+      if (!selectedResearchTreeKeys.includes(currentResearchKey)) {
+        formatedResearches.push(currentResearchKey);
+      }
+    }
+    
+    const leftResearchesInTree = selectedResearchTreeKeys.filter((tech) => !researchedKeys.includes(String(tech)));
+    const additionalResearch = leftResearchesInTree.length === selectedResearchTree.length ? 1 : 0;
+
+    formatedResearches = [...formatedResearches, ...leftResearchesInTree.slice(0, selectedResearchIndex + additionalResearch)]
+    
+    if (formatedResearches.length === 1) return;
+    
+    localStorage.setItem('researchQueue', JSON.stringify(formatedResearches));
+    getResearchQueue();
+  }
+
+  // user click on Research button
   const handleResearch = async (name: string) => {
+    resetResearchQueue()
+    
     const key = toCamelCase(name);
     const technology = { [key]: {} } as any;
 
@@ -31,6 +84,7 @@ const ResearchTree = () => {
     const accounts = {
       playerAccount: playerKey,
     };
+    
     try {
       const tx = program!.methods.startResearch(technology).accounts(accounts).rpc();
       await toast.promise(tx, {
@@ -52,7 +106,11 @@ const ResearchTree = () => {
     }
     await fetchPlayerState();
   };
-  const researchedKeys = technologies.researchedTechnologies.map((tech) => Object.keys(tech)[0]);
+
+  const resetResearchQueue = () => {
+    localStorage.removeItem('researchQueue');
+    setResearchQueue([]);
+  }
 
   return (
     <div className="research-tree">
@@ -61,7 +119,10 @@ const ResearchTree = () => {
           <ResearchBlock
             {...data}
             {...technologies}
+            researchQueue={researchQueue}
+            treeType="Science and Economy Tree"
             onResearchClick={handleResearch}
+            onResearchQueueClick={handleResearchQueue}
             key={`${data.name}-${index}`}
             index={index}
             prevResearched={index === 0 ? true : researchedKeys.includes(toCamelCase(column1[index - 1].name))}
@@ -73,7 +134,10 @@ const ResearchTree = () => {
           <ResearchBlock
             {...data}
             {...technologies}
+            researchQueue={researchQueue}
+            treeType="Production and Agriculture Tree"
             onResearchClick={handleResearch}
+            onResearchQueueClick={handleResearchQueue}
             key={`${data.name}-${index}`}
             index={index}
             prevResearched={index === 0 ? true : researchedKeys.includes(toCamelCase(column2[index - 1].name))}
@@ -85,7 +149,10 @@ const ResearchTree = () => {
           <ResearchBlock
             {...data}
             {...technologies}
+            researchQueue={researchQueue}
+            treeType="Military Tree"
             onResearchClick={handleResearch}
+            onResearchQueueClick={handleResearchQueue}
             key={`${data.name}-${index}`}
             index={index}
             prevResearched={index === 0 ? true : researchedKeys.includes(toCamelCase(column3[index - 1].name))}
