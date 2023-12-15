@@ -482,7 +482,7 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
                 unitAction(col, row, currentUnit?.type || selectedUnit?.type || "unknown");
               }}
             >
-              {currentTile.cityName && (
+              {currentTile.discovered && currentTile.cityName && (
                 <CityTile
                   imageIndex={currentTile.imageIndex}
                   cityName={currentTile.cityName}
