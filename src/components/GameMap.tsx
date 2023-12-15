@@ -158,6 +158,9 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
           if (upgradedCoordinates.has(`${col},${row},lumberMill`)) {
             overlayImageIndex = 14;
           }
+          if (upgradedCoordinates.has(`${col},${row},pasture`)) {
+            overlayImageIndex = 16;
+          }
 
           const tile = map[index];
           if (tile) {
@@ -461,6 +464,8 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
             resourceAvailable = "stone";
           } else if (currentTile.type === "Iron") {
             resourceAvailable = "iron";
+          } else if (currentTile.type === "Pasture") {
+            resourceAvailable = "horses";
           }
 
 

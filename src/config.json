@@ -12,6 +12,11 @@
         "unlocks": ["Archer"]
       },
       {
+        "name": "Horseback Riding",
+        "cost": 20,
+        "unlocks": ["Horseman"]
+      },
+      {
         "name": "Iron Working",
         "cost": 21,
         "unlocks": ["Swordsman", "Forge"]

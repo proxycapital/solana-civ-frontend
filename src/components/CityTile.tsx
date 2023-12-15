@@ -30,7 +30,8 @@ const CityTile = ({ imageIndex, health, cityName, wallHealth, population }: City
   return (
     <div className="city-header primary-border-with-box-shadow">
       <div className="city-name-wrapper">
-        <span className="population">{population}</span> {cityName}
+        {population && <span className="population">{population}</span>}&nbsp;
+        {cityName}
       </div>
 
       {wallMaxHealth && (

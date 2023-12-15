@@ -71,6 +71,21 @@ export const AllUnits: UnitType[] = [
     }
   },
   {
+    type: "horseman",
+    label: "Horseman",
+    productionCost: 30,
+    goldCost: 280,
+    requirement: "horsebackRiding",
+    tech: "Horseback Riding",
+    stats: {
+      attack: 14,
+      movement: 3,
+      resourceCost: "Cost: 10",
+      resourceType: "horses",
+      maintenanceCost: 2,
+    }
+  },
+  {
     type: "swordsman",
     label: "Swordsman",
     productionCost: 30,

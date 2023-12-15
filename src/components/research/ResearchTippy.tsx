@@ -70,6 +70,8 @@ const ResearchTippy = (researchName: string): ReactNode => {
 
     case "Archer": 
       return <TippyUnitStats name={researchName} attack={10} movement={2} maintenance={1} />
+    case "Horseman":
+      return <TippyUnitStats name={researchName} attack={14} movement={3} maintenance={2} />
     case "Swordsman":
       return <TippyUnitStats name={researchName} attack={14} movement={2} maintenance={1} />
     case "Crossbowman":
