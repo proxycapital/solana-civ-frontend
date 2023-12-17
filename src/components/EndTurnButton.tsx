@@ -46,10 +46,9 @@ const EndTurnButton: React.FC<EndTurnButtonProps> = ({ setShowOnboardingType }) 
       return;
     }
     for (let city of cities) {
-      if (city.productionQueue.length === 0 && allUnits.length < 20) {
-        toast.warning("You need to select production in all your cities");
+      if (city.productionQueue.length === 0) {
+        toast.warning(`${city.name}: production queue is empty`);
         setShowOnboardingType("production");
-        return;
       }
     }
 

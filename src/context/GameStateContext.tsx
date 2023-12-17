@@ -37,6 +37,7 @@ type City = {
   productionQueue: any[];
   productionYield: number;
   scienceYield: number;
+  accumulatedFood: number;
 }
 
 interface GameStateContextType {

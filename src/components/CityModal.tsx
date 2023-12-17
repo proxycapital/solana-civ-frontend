@@ -79,6 +79,10 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
     if (!show) setSelectedTab(0);
   }, [show]);
 
+  const getFoodNeededForGrowth = (population: number) => {
+    return Math.floor(0.1082 * Math.pow(population, 2) + 10.171 * population + 1.929);
+  }
+
   const handleAddToProductionQueue = async (item: BuildingType, type: "building" | "unit") => {
     try {
       const tx = addToProductionQueue(provider!, program!, Number(cityId), { [type]: { "0": { [item.type]: {} } } });
@@ -251,7 +255,10 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
             <div className="city-resources-income">
               <div>
                 <img width="32" src="./icons/food.png" alt="apple" />
-                <span>+{city.foodYield}</span>
+                <span>
+                  {city.foodYield - (city.population * 2) >= 0 ? '+' : ''}
+                  {city.foodYield - (city.population * 2)}
+                </span>
               </div>
               <div>
                 <img width="32" src="./icons/science.png" alt="scienct" />
@@ -279,7 +286,7 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
               </div>
             )}
             <div className="city-stats">
-              <img src="/icons/health.png" alt="population" /> Population:&nbsp;<b>{city.population}</b>
+              <img src="/icons/population.png" alt="population" /> Population:&nbsp;<b>{city.population} ({city.accumulatedFood}/{getFoodNeededForGrowth(city.population)} food)</b>
             </div>
             <div className="city-stats">
               <img src="/icons/attack.png" alt="strength" />
