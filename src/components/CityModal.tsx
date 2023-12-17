@@ -277,6 +277,13 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
               <img src="/icons/diamond.png" alt="" width="32" className="center-image" />
             </div>
             <div className="city-stats">
+              <img src="/icons/population.png" alt="population" /> Population:&nbsp;<b>{city.population} of {city.housing}</b>
+              
+            </div>
+            {city.population < city.housing && (<div className="city-stats">
+              <span>({city.accumulatedFood}/{getFoodNeededForGrowth(city.population)} food for growth)</span>
+            </div>)}
+            <div className="city-stats">
               <img src="/icons/health.png" alt="health" /> Health:&nbsp;<b>{city.health}/100</b>
             </div>
             {/* only show if user has any level of wall */}
@@ -285,9 +292,6 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
                 <img src="/icons/wall.png" alt="health" /> Wall:&nbsp;<b>{city.wallHealth}/ {wallMaxHealth}</b>
               </div>
             )}
-            <div className="city-stats">
-              <img src="/icons/population.png" alt="population" /> Population:&nbsp;<b>{city.population} ({city.accumulatedFood}/{getFoodNeededForGrowth(city.population)} food)</b>
-            </div>
             <div className="city-stats">
               <img src="/icons/attack.png" alt="strength" />
               Strength:&nbsp;<b>{city.attack}</b>

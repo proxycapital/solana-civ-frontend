@@ -25,7 +25,7 @@ export const AllBuildings: BuildingType[] = [
     goldCost: 100,
     productionCost: 6,
     stats: {
-      yield: "+2 city defense"
+      yield: "+2 city defense | +1 housing"
     }
   },
   {
@@ -98,7 +98,7 @@ export const AllBuildings: BuildingType[] = [
     goldCost: 200,
     productionCost: 30,
     stats: {
-      yield: "+4 science"
+      yield: "+4 science | +1 housing"
     },
     requirement: "academia",
     tech: "Academia"
@@ -186,7 +186,7 @@ export const AllBuildings: BuildingType[] = [
     goldCost: 100,
     productionCost: 10,
     stats: {
-      yield: "+2 food"
+      yield: "+2 food | +2 housing"
     },
     requirement: "agriculture",
     tech: "Agriculture"
@@ -223,5 +223,16 @@ export const AllBuildings: BuildingType[] = [
     },
     requirement: "modernFarming",
     tech: "Modern Farming"
+  },
+  {
+    type: "residentialComplex",
+    label: "Residential Complex",
+    goldCost: 600,
+    productionCost: 40,
+    stats: {
+      yield: "+5 housing"
+    },
+    requirement: "urbanization",
+    tech: "Urbanization"
   },
 ];

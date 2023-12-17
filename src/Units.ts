@@ -29,8 +29,7 @@ export const AllUnits: UnitType[] = [
     stats: {
       builds: 1,
       movement: 2,
-      resourceCost: "Cost: 60",
-      resourceType: "food",
+      resourceCost: "-1 population",
     }
   },
   {

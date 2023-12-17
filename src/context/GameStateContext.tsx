@@ -38,6 +38,7 @@ type City = {
   productionYield: number;
   scienceYield: number;
   accumulatedFood: number;
+  housing: number;
 }
 
 interface GameStateContextType {
