@@ -11,8 +11,10 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { toast } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHourglassEnd, faSkullCrossbones } from "@fortawesome/free-solid-svg-icons";
+
 import { useWorkspace } from "../context/AnchorContext";
 import { useGameState } from "../context/GameStateContext";
+import resetResearchStorage from "../utils/storage";
 
 const darkTheme = createTheme({
   palette: {
@@ -43,14 +45,14 @@ const EndTurnButton: React.FC<EndTurnButtonProps> = ({ setShowOnboardingType, op
   useEffect(() => {
     async function handleResearchComplete() {
       const numberOfResearchedTech = technologies.researchedTechnologies.length;
-      let prevResearchedTechnologies: any = localStorage.getItem('prevTech');
-      prevResearchedTechnologies = prevResearchedTechnologies ? JSON.parse(prevResearchedTechnologies) : [];
+      let prevResearchedTech: any = localStorage.getItem('prevTech');
+      prevResearchedTech = prevResearchedTech ? JSON.parse(prevResearchedTech) : [];
 
-      const numberOfPrevResearchedTech = prevResearchedTechnologies.length;
+      const numberOfPrevResearchedTech = prevResearchedTech.length;
 
       if ((numberOfResearchedTech - numberOfPrevResearchedTech) === 1) {
         const researchedKeys = technologies.researchedTechnologies.map((tech) => Object.keys(tech)[0]);
-        const prevResearchedKeys = prevResearchedTechnologies.map((tech: any) => Object.keys(tech)[0]);
+        const prevResearchedKeys = prevResearchedTech.map((tech: any) => Object.keys(tech)[0]);
         
         const newTechnology = researchedKeys.filter((tech) => !prevResearchedKeys.includes(tech));
         
@@ -66,8 +68,7 @@ const EndTurnButton: React.FC<EndTurnButtonProps> = ({ setShowOnboardingType, op
 
           if (researchQueueArr.length === 1) {
             // last research was finished
-            localStorage.removeItem('researchQueue');
-            localStorage.removeItem('prevTech');
+            resetResearchStorage()
             return;
           }
 
@@ -174,6 +175,7 @@ const EndTurnButton: React.FC<EndTurnButtonProps> = ({ setShowOnboardingType, op
   };
 
   const confirmCloseGame = async () => {
+    resetResearchStorage();
     handleCloseDialog();
     setIsClosingGame(true);
     setIsProcessing(true);

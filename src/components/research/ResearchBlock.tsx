@@ -1,4 +1,3 @@
-import Button from "@mui/material/Button";
 import LinearProgress from "@mui/material/LinearProgress";
 import Tippy from "@tippyjs/react";
 
@@ -16,8 +15,7 @@ interface IResearch {
   researchedTechnologies: any[];
   index: number;
   prevResearched: boolean;
-  onResearchClick: (name: string) => void;
-  onResearchQueueClick: (index: number, treeType: string) => void;
+  onResearchQueueClick: (index: number, treeType: string, name: string) => void;
   researchQueue?: Array<any>;
 }
 
@@ -29,7 +27,6 @@ const ResearchBlock = ({
   currentResearch,
   researchAccumulatedPoints,
   researchedTechnologies,
-  onResearchClick,
   onResearchQueueClick,
   index,
   prevResearched,
@@ -45,7 +42,10 @@ const ResearchBlock = ({
   return (
     <div
       className={`research-block ${isUnlocked ? "unlocked" : ""} ${isLocked ? "locked" : ""}`}
-      onClick={() => onResearchQueueClick(index, treeType)}
+      onClick={() => {
+        if (isUnlocked) return
+        onResearchQueueClick(index, treeType, name);
+      }}
     >
       <div className="top-section">
         {/* <img src="/research.png" width="100" alt="" className="research-icon" /> */}
@@ -100,18 +100,6 @@ const ResearchBlock = ({
               )}
               
             </div>
-            {!isLocked && (
-              <Button
-                className="research-button"
-                variant="outlined"
-                //disabled={currentResearch}
-                onClick={() => {
-                  onResearchClick(name);
-                }}
-              >
-                Research
-              </Button>
-            )}
           </div>
         )}
       </div>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import * as anchor from "@coral-xyz/anchor";
 import { toast } from "react-toastify";
 
@@ -7,8 +7,10 @@ import { useWorkspace } from "../../context/AnchorContext";
 import ResearchBlock from "./ResearchBlock";
 import { toCamelCase } from "../../utils";
 import config from "../../config.json";
-import { useEffect } from "react";
 import "./ResearchTree.scss";
+
+import resetResearchStorage from "../../utils/storage";
+
 const researchData = config.science;
 
 const ResearchTree = () => {
@@ -32,17 +34,17 @@ const ResearchTree = () => {
     setResearchQueue(JSON.parse(researchQueue))
   }
 
-  const handleResearchQueue = (selectedResearchIndex: number, treeType: string) => {
-    const allTreeResearches: any = researchData;
-    const selectedResearchTree: Array<any> = allTreeResearches[treeType];
-    const selectedResearchTreeKeys = selectedResearchTree.map((tech) => toCamelCase(String(Object.values(tech)[0])));
+  const handleResearchQueue = (selectedResearchIndex: number, treeType: string, name: string) => {
+    const allTreeTechs: any = researchData;
+    const selectedTechTree: Array<any> = allTreeTechs[treeType];
+    const selectedTechTreeKeys = selectedTechTree.map((tech) => toCamelCase(String(Object.values(tech)[0])));
 
     let formatedResearches = [];
     if (technologies.currentResearch) {
       const currentResearchKey = Object.keys(technologies.currentResearch)[0];
 
-      // click on same techology, that already in current research
-      if (currentResearchKey === selectedResearchTreeKeys[selectedResearchIndex]) {
+      // select same techology, that already in current research
+      if (currentResearchKey === selectedTechTreeKeys[selectedResearchIndex]) {
         if (localStorage.getItem('researchQueue')) {
           toast.warning("Research queue removed");
         }
@@ -51,17 +53,19 @@ const ResearchTree = () => {
       }
 
       // add current research only if user select different tree
-      if (!selectedResearchTreeKeys.includes(currentResearchKey)) {
+      if (!selectedTechTreeKeys.includes(currentResearchKey)) {
         formatedResearches.push(currentResearchKey);
       }
     }
     
-    const leftResearchesInTree = selectedResearchTreeKeys.filter((tech) => !researchedKeys.includes(String(tech)));
-    const additionalResearch = leftResearchesInTree.length === selectedResearchTree.length ? 1 : 0;
+    const leftTechsInTree = selectedTechTreeKeys.filter((tech) => !researchedKeys.includes(String(tech)));
 
-    formatedResearches = [...formatedResearches, ...leftResearchesInTree.slice(0, selectedResearchIndex + additionalResearch)]
-    
-    if (formatedResearches.length === 1) return;
+    formatedResearches = [...formatedResearches, ...leftTechsInTree.slice(0, leftTechsInTree.indexOf(toCamelCase(name)) + 1)]
+  
+    if (formatedResearches.length === 1) {
+      handleResearch(formatedResearches[0]);
+      return
+    };
     
     localStorage.setItem('researchQueue', JSON.stringify(formatedResearches));
     getResearchQueue();
@@ -69,7 +73,7 @@ const ResearchTree = () => {
     toast.success("Research queue created");
   }
 
-  // user click on research button
+  // select only 1 research
   const handleResearch = async (name: string) => {
     resetResearchQueue()
     
@@ -111,8 +115,7 @@ const ResearchTree = () => {
   };
 
   const resetResearchQueue = () => {
-    localStorage.removeItem('researchQueue');
-    localStorage.removeItem('prevTech');
+    resetResearchStorage();
     setResearchQueue([]);
   }
 
@@ -125,7 +128,6 @@ const ResearchTree = () => {
             {...technologies}
             researchQueue={researchQueue}
             treeType="Science and Economy Tree"
-            onResearchClick={handleResearch}
             onResearchQueueClick={handleResearchQueue}
             key={`${data.name}-${index}`}
             index={index}
@@ -140,7 +142,6 @@ const ResearchTree = () => {
             {...technologies}
             researchQueue={researchQueue}
             treeType="Production and Agriculture Tree"
-            onResearchClick={handleResearch}
             onResearchQueueClick={handleResearchQueue}
             key={`${data.name}-${index}`}
             index={index}
@@ -155,7 +156,6 @@ const ResearchTree = () => {
             {...technologies}
             researchQueue={researchQueue}
             treeType="Military Tree"
-            onResearchClick={handleResearch}
             onResearchQueueClick={handleResearchQueue}
             key={`${data.name}-${index}`}
             index={index}
