@@ -353,6 +353,7 @@ img.upgraded-tile {
 }
 
 .city-header {
+  z-index: 1; // to fix overflow of building
   color: white;
   text-align: center;
   padding: 0.25rem 0.5rem;
@@ -361,7 +362,6 @@ img.upgraded-tile {
   top: -3rem;
   left: -1rem;
   position: absolute;
-
 }
 
 .city-header .city-wall-bar {

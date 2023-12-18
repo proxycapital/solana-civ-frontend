@@ -28,6 +28,12 @@
   z-index: -1;
 }
 
+.research-block.unlocked {
+  &:hover {
+    cursor: auto;
+  }
+}
+
 .research-block {
   display: block;
   border-radius: 8px;
