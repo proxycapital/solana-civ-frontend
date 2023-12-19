@@ -29,8 +29,7 @@ export const AllUnits: UnitType[] = [
     stats: {
       builds: 1,
       movement: 2,
-      resourceCost: "Cost: 60",
-      resourceType: "food",
+      resourceCost: "-1 population",
     }
   },
   {
@@ -68,6 +67,21 @@ export const AllUnits: UnitType[] = [
       attack: 10,
       movement: 2,
       maintenanceCost: 1,
+    }
+  },
+  {
+    type: "horseman",
+    label: "Horseman",
+    productionCost: 30,
+    goldCost: 280,
+    requirement: "horsebackRiding",
+    tech: "Horseback Riding",
+    stats: {
+      attack: 14,
+      movement: 3,
+      resourceCost: "Cost: 10",
+      resourceType: "horses",
+      maintenanceCost: 2,
     }
   },
   {

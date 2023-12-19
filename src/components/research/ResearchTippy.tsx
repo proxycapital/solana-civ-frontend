@@ -9,7 +9,7 @@ interface TippyUnitStasProps {
 
 interface TippyBuildingStatsProps {
   value: number,
-  resourceName: "science" | "gold" | "food" | "production",
+  resourceName: "science" | "gold" | "food" | "production" | "housing",
 }
 
 const TippyUnitStats = ({ attack, movement, maintenance, name}: TippyUnitStasProps) => {
@@ -44,7 +44,7 @@ const ResearchTippy = (researchName: string): ReactNode => {
     case "School":
       return <TippyBuildingStats value={3} resourceName="science" />
     case "University":
-      return <TippyBuildingStats value={4} resourceName="science" />
+      return <span><span className="bold-text">+4 science</span> | <span className="bold-text">+1 housing</span></span>
     case "Observatory":
       return <TippyBuildingStats value={5} resourceName="science" />
     case "Market":
@@ -54,7 +54,7 @@ const ResearchTippy = (researchName: string): ReactNode => {
     case "StockExchange":
       return <TippyBuildingStats value={4} resourceName="gold" />
     case "Granary":
-      return <TippyBuildingStats value={2} resourceName="food" />
+      return <span><span className="bold-text">+2 food</span> | <span className="bold-text">+2 housing</span></span>
     case "Mill":
       return <TippyBuildingStats value={2} resourceName="food" />
     case "Bakery":
@@ -67,9 +67,13 @@ const ResearchTippy = (researchName: string): ReactNode => {
       return <TippyBuildingStats value={3} resourceName="production" />
     case "EnergyPlant":
       return <TippyBuildingStats value={4} resourceName="production" />
+    case "ResidentialComplex":
+      return <TippyBuildingStats value={5} resourceName="housing" />
 
     case "Archer": 
       return <TippyUnitStats name={researchName} attack={10} movement={2} maintenance={1} />
+    case "Horseman":
+      return <TippyUnitStats name={researchName} attack={14} movement={3} maintenance={2} />
     case "Swordsman":
       return <TippyUnitStats name={researchName} attack={14} movement={2} maintenance={1} />
     case "Crossbowman":
@@ -82,11 +86,11 @@ const ResearchTippy = (researchName: string): ReactNode => {
       return <TippyUnitStats name={researchName} attack={50} movement={2} maintenance={7} />
       
     case "WallMedieval":
-      return <span>New Wall, that have <span className="bold-text">100 HP</span> and <span className="bold-text">10 attack</span></span>
+      return <span>Wall with <span className="bold-text">100 HP</span> and <span className="bold-text">10 attack</span></span>
     case "WallRenaissance":
-      return <span>New Wall, that have <span className="bold-text">150 HP</span> and <span className="bold-text">20 attack</span></span>
+      return <span>Wall with <span className="bold-text">150 HP</span> and <span className="bold-text">20 attack</span></span>
     case "WallIndustrial":
-      return <span>New Wall, that have <span className="bold-text">200 HP</span> and <span className="bold-text">30 attack</span></span>
+      return <span>Wall with <span className="bold-text">200 HP</span> and <span className="bold-text">30 attack</span></span>
     default: 
       return null
   }

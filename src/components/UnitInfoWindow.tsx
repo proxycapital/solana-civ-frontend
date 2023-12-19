@@ -137,7 +137,7 @@ const UnitInfoWindow: React.FC<UnitInfoProps> = ({ unit }) => {
           <img src="/icons/build.png" alt="" className="unit-icon" /> Build
         </Button>
       )}
-      {unit.health < 100 && (
+      {unit.health < 100 && false && (
         <Button
           className="unit-action-button"
           variant="outlined"
