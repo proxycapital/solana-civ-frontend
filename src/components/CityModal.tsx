@@ -109,6 +109,9 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
       if (error.message.includes("InsufficientGoldForMaintenance")) {
         toast.error("You don't have enough of gold for unit maintenance.");
       }
+      if (error.message.includes("InsufficientPopulationForSettler")) {
+        toast.error("Insufficient population to recruit settler. Minimum is 2 citizens.");
+      }
     }
     await fetchPlayerState();
   };
