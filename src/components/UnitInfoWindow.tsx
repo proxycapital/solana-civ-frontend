@@ -18,6 +18,8 @@ interface UnitInfoProps {
     health: number;
     builds?: number;
     attack?: number;
+    experience?: number;
+    level?: number;
   };
 }
 
@@ -25,8 +27,9 @@ const UnitInfoWindow: React.FC<UnitInfoProps> = ({ unit }) => {
   const { program, provider } = useWorkspace();
   const { cities, fetchPlayerState } = useGameState();
   const { playSound } = useSound();
-  const { type, movementRange, attack } = unit;
+  const { type, movementRange, attack, experience, level } = unit;
   const displayType = type.charAt(0).toUpperCase() + type.slice(1);
+
   const getUnusedCityName = () => {
     const usedNames = cities.map((city) => city.name);
     const availableNames = config.cityNames.filter((name) => !usedNames.includes(name));
@@ -119,6 +122,15 @@ const UnitInfoWindow: React.FC<UnitInfoProps> = ({ unit }) => {
           Strength:&nbsp;<b>{attack}</b>
         </div>
       )}
+      {/* @todo: only for debug */}
+      <div className="unit-stats">
+        <img src="/icons/attack.png" alt="" className="unit-icon" />
+        Exp:&nbsp;<b>{experience}</b>
+      </div>
+      <div className="unit-stats">
+        <img src="/icons/attack.png" alt="" className="unit-icon" />
+        Level:&nbsp;<b>{level}</b>
+      </div>
       {type === "settler" && (
         <Button
           className="unit-action-button"
