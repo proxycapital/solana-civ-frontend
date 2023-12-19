@@ -30,7 +30,7 @@ export const TileType = {
   4: "Plains",
   5: "Rocks",
   6: "Field",
-  7: "Plains",
+  7: "Pasture",
   8: "Plains",
   9: "Plains",
   10: "Village",
@@ -39,6 +39,7 @@ export const TileType = {
   13: "Iron Mine",
   14: "Lumber Mill",
   15: "NPC Village",
+  16: "Pasture",
   20: "Empty",
 };
 
@@ -47,6 +48,7 @@ const yieldTypes: { [key: string]: string } = {
   "Stone Quarry": "stone",
   "Farm": "food",
   "Iron Mine": "iron",
+  "Pasture": "horses",
 };
 
 const Terrain: React.FC<TerrainProps> = ({ x, y, discovered, imageIndex, overlayImageIndex, cityName, health, turn, wallHealth }) => {

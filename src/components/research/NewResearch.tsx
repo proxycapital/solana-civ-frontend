@@ -10,16 +10,17 @@ const NewResearch = () => {
   const technologiesKeys = technologies.researchedTechnologies.map((tech) => Object.keys(tech)[0]);
   const lastResearch = technologiesKeys ? capitalizeWords(technologiesKeys[technologiesKeys.length - 1]) : '';
 
-  const newBuildingAllowed = AllBuildings.find((building) => building.tech === lastResearch);
-  const newUnitAllowed = AllUnits.find((unit) => unit.tech === lastResearch);
+  /* @todo: some technologies unlock more than 1 building, e.g. "Agriculture" */
+  const newBuildingUnlocked = AllBuildings.find((building) => building.tech === lastResearch);
+  const newUnitUnlocked = AllUnits.find((unit) => unit.tech === lastResearch);
 
   return (
     <div className="new-research-block">
-      <h3>Congrats! You just researched <span className="bold-text">{lastResearch}</span>!
+      <h3>You have researched <span className="bold-text">{lastResearch}</span>!
         <br />
         {/* @todo: add Tippy here */}
-        {newBuildingAllowed?.label && `Now you can build ${newBuildingAllowed?.label}!`}
-        {newUnitAllowed?.label && `Now you can train new unit - ${newUnitAllowed?.label}!`}
+        {newBuildingUnlocked?.label && `Now you can build ${newBuildingUnlocked?.label}.`}
+        {newUnitUnlocked?.label && `Now you can train new unit - ${newUnitUnlocked?.label}.`}
       </h3>
     </div>
   )
