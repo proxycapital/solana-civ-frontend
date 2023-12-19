@@ -99,11 +99,6 @@
         "name": "Modern Farming",
         "cost": 20,
         "unlocks": ["Supermarket"]
-      },
-      {
-        "name": "Urbanization",
-        "cost": 30,
-        "unlocks": ["ResidentialComplex"]
       }
     ]
   },
