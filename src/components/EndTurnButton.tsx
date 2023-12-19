@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as anchor from "@coral-xyz/anchor";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -11,8 +11,10 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { toast } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHourglassEnd, faSkullCrossbones } from "@fortawesome/free-solid-svg-icons";
+
 import { useWorkspace } from "../context/AnchorContext";
 import { useGameState } from "../context/GameStateContext";
+import resetResearchStorage from "../utils/storage";
 
 const darkTheme = createTheme({
   palette: {
@@ -22,9 +24,10 @@ const darkTheme = createTheme({
 
 interface EndTurnButtonProps {
   setShowOnboardingType: (onboardingType: "production" | "research" | null) => void;
+  openNewResearchModal: () => void;
 }
 
-const EndTurnButton: React.FC<EndTurnButtonProps> = ({ setShowOnboardingType }) => {
+const EndTurnButton: React.FC<EndTurnButtonProps> = ({ setShowOnboardingType, openNewResearchModal }) => {
   const { program, provider } = useWorkspace();
   const { game, technologies, cities, allUnits, fetchPlayerState, fetchGameState, fetchNpcs } = useGameState();
   const [isProcessing, setIsProcessing] = useState(false);
@@ -39,12 +42,77 @@ const EndTurnButton: React.FC<EndTurnButtonProps> = ({ setShowOnboardingType }) 
     setOpenDialog(false);
   };
 
-  const endTurn = async () => {
-    if (!technologies.currentResearch && technologies.researchedTechnologies.length < 17) {
-      toast.warning("You need to select a technology to research");
-      setShowOnboardingType("research");
-      return;
+  useEffect(() => {
+    async function handleResearchComplete() {
+      const numberOfResearchedTech = technologies.researchedTechnologies.length;
+      let prevResearchedTech: any = localStorage.getItem('prevTech');
+      prevResearchedTech = prevResearchedTech ? JSON.parse(prevResearchedTech) : [];
+
+      const numberOfPrevResearchedTech = prevResearchedTech.length;
+
+      if ((numberOfResearchedTech - numberOfPrevResearchedTech) === 1) {
+        const researchedKeys = technologies.researchedTechnologies.map((tech) => Object.keys(tech)[0]);
+        const prevResearchedKeys = prevResearchedTech.map((tech: any) => Object.keys(tech)[0]);
+        
+        const newTechnology = researchedKeys.filter((tech) => !prevResearchedKeys.includes(tech));
+        
+        if (newTechnology.length === 1) {
+          localStorage.setItem('prevTech', JSON.stringify(technologies.researchedTechnologies));
+          
+          // show modal
+          openNewResearchModal();
+
+          const researchQueue: any = localStorage.getItem('researchQueue');
+          const researchQueueArr: Array<any> = JSON.parse(researchQueue);
+          if (!researchQueueArr) return
+
+          if (researchQueueArr.length === 1) {
+            // last research was finished
+            resetResearchStorage()
+            return;
+          }
+
+          const newResearchQueue = researchQueueArr.filter((tech) => tech !== newTechnology[0]);
+
+          if (newResearchQueue.length !== researchQueueArr.length) {
+            localStorage.setItem('researchQueue', JSON.stringify(newResearchQueue));
+          }
+        }
+      }
     }
+    handleResearchComplete();
+
+  }, [technologies.researchedTechnologies])
+
+  const startResearchAuto = async (technologyName: any) => {   
+    const technology = { [technologyName]: {} } as any;
+
+    const [gameKey] = anchor.web3.PublicKey.findProgramAddressSync(
+      [Buffer.from("GAME"), provider!.publicKey.toBuffer()],
+      program!.programId
+    );
+    const [playerKey] = anchor.web3.PublicKey.findProgramAddressSync(
+      [Buffer.from("PLAYER"), gameKey.toBuffer(), provider!.publicKey.toBuffer()],
+      program!.programId
+    );
+    const accounts = {
+      playerAccount: playerKey,
+    };
+    try {
+      const tx = program!.methods.startResearch(technology).accounts(accounts).rpc();
+      // @todo: maybe move it in the center of the screen and show during loading process
+      await toast.promise(tx, {
+        pending: "Starting new research...",
+        success: "Research started!",
+        error: "Failed to start research",
+      });
+    } catch (error: any) {
+      console.log(error);
+      console.log("Cannot start auto-research")
+    }
+  }
+
+  const endTurn = async () => {
     for (let city of cities) {
       if (city.productionQueue.length === 0) {
         toast.warning(`${city.name}: production queue is empty`);
@@ -52,8 +120,27 @@ const EndTurnButton: React.FC<EndTurnButtonProps> = ({ setShowOnboardingType }) 
       }
     }
 
+    const researchQueue = localStorage.getItem('researchQueue');
+
+    if (!researchQueue) {
+      if (!technologies.currentResearch && technologies.researchedTechnologies.length < 17) {
+        toast.warning("You need to select a technology to research");
+        setShowOnboardingType("research");
+        return;
+      }
+    } else {
+      const researchQueueArr = JSON.parse(researchQueue);
+
+      // if no currentResearch - we need to make tx ourselves 
+      if (!technologies.currentResearch) {
+        await startResearchAuto(researchQueueArr[0]);
+      }
+    }
+
     setIsProcessing(true);
     console.time("End turn");
+    localStorage.setItem('prevTech', JSON.stringify(technologies.researchedTechnologies));
+
     try {
       const [gameKey] = anchor.web3.PublicKey.findProgramAddressSync(
         [Buffer.from("GAME"), provider!.publicKey.toBuffer()],
@@ -87,6 +174,7 @@ const EndTurnButton: React.FC<EndTurnButtonProps> = ({ setShowOnboardingType }) 
   };
 
   const confirmCloseGame = async () => {
+    resetResearchStorage();
     handleCloseDialog();
     setIsClosingGame(true);
     setIsProcessing(true);

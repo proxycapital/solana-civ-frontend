@@ -1,7 +1,7 @@
-import Button from "@mui/material/Button";
 import LinearProgress from "@mui/material/LinearProgress";
 import Tippy from "@tippyjs/react";
 
+import { toCamelCase } from "../../utils";
 import ResearchTippy from "./ResearchTippy";
 import "./ResearchTree.scss";
 
@@ -9,37 +9,28 @@ interface IResearch {
   name: string;
   cost: number;
   unlocks: string[];
+  treeType: string;
   currentResearch: any;
   researchAccumulatedPoints: number;
   researchedTechnologies: any[];
   index: number;
   prevResearched: boolean;
-  onResearchClick: (name: string) => void;
-}
-
-function toCamelCase(str: string) {
-  return str
-    .replace(/[^a-zA-Z\s]/g, "")
-    .split(" ")
-    .map((word, index) => {
-      if (index === 0) {
-        return word.toLowerCase();
-      }
-      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-    })
-    .join("");
+  onResearchQueueClick: (index: number, treeType: string, name: string) => void;
+  researchQueue?: Array<any>;
 }
 
 const ResearchBlock = ({
   name,
   cost,
   unlocks,
+  treeType,
   currentResearch,
   researchAccumulatedPoints,
   researchedTechnologies,
-  onResearchClick,
+  onResearchQueueClick,
   index,
   prevResearched,
+  researchQueue = [],
 }: IResearch) => {
   const researchedKeys = researchedTechnologies.map((tech) => Object.keys(tech)[0]);
   const currentResearchKey = currentResearch ? Object.keys(currentResearch)[0] : null;
@@ -49,9 +40,16 @@ const ResearchBlock = ({
   const isLocked = index !== 0 && !prevResearched;
 
   return (
-    <div className={`research-block ${isUnlocked ? "unlocked" : ""} ${isLocked ? "locked" : ""}`}>
+    <div
+      className={`research-block ${isUnlocked ? "unlocked" : ""} ${isLocked ? "locked" : ""}`}
+      onClick={() => {
+        if (isUnlocked) return
+        onResearchQueueClick(index, treeType, name);
+      }}
+    >
       <div className="top-section">
         {/* <img src="/research.png" width="100" alt="" className="research-icon" /> */}
+        {researchQueue.includes(toCamelCase(name)) ? <div className="research-queue-number">{researchQueue.indexOf(toCamelCase(name)) + 1}</div> : null}
         <div className="research-content">
           <h3>{name}</h3>
           <p>Unlocks:
@@ -102,18 +100,6 @@ const ResearchBlock = ({
               )}
               
             </div>
-            {!isLocked && (
-              <Button
-                className="research-button"
-                variant="outlined"
-                //disabled={currentResearch}
-                onClick={() => {
-                  onResearchClick(name);
-                }}
-              >
-                Research
-              </Button>
-            )}
           </div>
         )}
       </div>

@@ -25,6 +25,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 
 import ResearchTree from "./research/ResearchTree";
+import NewResearch from "./research/NewResearch";
 import Quests from "./quests/Quests";
 import Leaderboard from "./leaderboard/Leaderboard";
 import Marketplace from "./marketplace/Marketplace";
@@ -76,6 +77,10 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
   const { toggleBackgroundMusic } = useSound();
   const [isModalOpen, setModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState("");
+  
+
+  // const [isModalOpen, setModalOpen] = useState(true);
+  // const [modalContent, setModalContent] = useState("New Research");
   const [openDialog, setOpenDialog] = useState(false);
   const [showOnboardingType, setShowOnboardingType] = useState<"production" | "research" | null>(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -345,7 +350,10 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
               <button onClick={handleToggleBackgroundMusic} className="music-toggle-button">
                 <FontAwesomeIcon icon={isMusicPlaying ? faVolumeHigh : faVolumeXmark} />
               </button>
-              <EndTurnButton setShowOnboardingType={setShowOnboardingType} />
+              <EndTurnButton
+                setShowOnboardingType={setShowOnboardingType}
+                openNewResearchModal={() => handleOpenModal("New Research")}
+              />
               <div className="wallet-button-tutorial desktop-only">
                 <WalletMultiButton className="wallet-button" />
               </div>
@@ -357,6 +365,7 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
         <CustomModal isOpen={isModalOpen} onClose={handleCloseModal} title={modalContent}>
           <div style={{ width: "100%", maxWidth: "1000px" }}>
             {modalContent === "Research" && <ResearchTree />}
+            {modalContent === "New Research" && <NewResearch />}
             {modalContent === "Quests" && <Quests />}
             {modalContent === "Leaderboard" && <Leaderboard />}
             {modalContent === "Achievements" && <Achievements />}
