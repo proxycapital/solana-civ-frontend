@@ -77,8 +77,7 @@ const ResearchTree = () => {
   const handleResearch = async (name: string) => {
     resetResearchQueue()
     
-    const key = toCamelCase(name);
-    const technology = { [key]: {} } as any;
+    const technology = { [name]: {} } as any;
 
     const [gameKey] = anchor.web3.PublicKey.findProgramAddressSync(
       [Buffer.from("GAME"), provider!.publicKey.toBuffer()],
