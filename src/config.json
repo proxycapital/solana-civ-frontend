@@ -158,5 +158,9 @@
     "Auckland",
     "Lahore",
     "Dhaka"
-  ]
+  ],
+  "unitUpgradeResult": "Restore 30 HP and boost Strength by 2",
+  "expForLevel1": 10,
+  "expForLevel2": 30,
+  "expForLevel3": 45
 }

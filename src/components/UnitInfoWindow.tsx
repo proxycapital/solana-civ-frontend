@@ -1,9 +1,11 @@
 import React from "react";
 import { toast } from "react-toastify";
 import Button from "@mui/material/Button";
+import Tippy from "@tippyjs/react";
 
 import config from "../config.json";
-import { foundCity, upgradeLandPlot, healUnit } from "../utils/solanaUtils";
+import { foundCity, upgradeLandPlot, healUnit, upgradeUnit } from "../utils/solanaUtils";
+import { canUpgradeUnit } from "../utils";
 import { useWorkspace } from "../context/AnchorContext";
 import { useGameState } from "../context/GameStateContext";
 import { useSound } from "../context/SoundContext";
@@ -97,6 +99,25 @@ const UnitInfoWindow: React.FC<UnitInfoProps> = ({ unit }) => {
     await fetchPlayerState();
   };
 
+  const handleUpgrade = async (unitId: number) => {
+    const tx = upgradeUnit(provider!, program!, unitId);
+    try {
+      await toast.promise(tx, {
+        pending: "Upgrading unit",
+        success: "Unit upgraded",
+        error: "Error upgrading unit",
+      });
+    } catch (error) {
+      if (error instanceof Error) {
+        if (error.message.includes("NoMovementPoints")) {
+          toast.error("No movement points left this turn");
+        }
+      }
+      console.log("Error upgrading unit: ", error);
+    }
+    await fetchPlayerState();
+  };
+
   return (
     <div className="unit-info-window">
       <img src={`/${type}.png`} className="avatar" alt={type} />
@@ -122,15 +143,6 @@ const UnitInfoWindow: React.FC<UnitInfoProps> = ({ unit }) => {
           Strength:&nbsp;<b>{attack}</b>
         </div>
       )}
-      {/* @todo: only for debug */}
-      <div className="unit-stats">
-        <img src="/icons/attack.png" alt="" className="unit-icon" />
-        Exp:&nbsp;<b>{experience}</b>
-      </div>
-      <div className="unit-stats">
-        <img src="/icons/attack.png" alt="" className="unit-icon" />
-        Level:&nbsp;<b>{level}</b>
-      </div>
       {type === "settler" && (
         <Button
           className="unit-action-button"
@@ -161,6 +173,18 @@ const UnitInfoWindow: React.FC<UnitInfoProps> = ({ unit }) => {
           )
         </Button>
       )}
+      {canUpgradeUnit(level || 0, experience || 0) ? (
+        <Tippy content={config.unitUpgradeResult}>
+          <Button
+            className="unit-action-button"
+            variant="outlined"
+            onClick={() => handleUpgrade(unit.unitId)}
+          >
+            <img src="/icons/health.png" alt="Health" className="unit-icon" />
+            Upgrade 
+          </Button>
+        </Tippy>
+      ) : null}
     </div>
   );
 };

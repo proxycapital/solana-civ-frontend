@@ -4,11 +4,12 @@ interface UnitProps {
   type: string;
   npc?: boolean | undefined;
   health?: number;
+  level?: number;
   isSelected: boolean;
   onClick: (x: number, y: number) => void;
 }
 
-const Unit: React.FC<UnitProps> = ({ x, y, type, npc, health, isSelected, onClick }) => {
+const Unit: React.FC<UnitProps> = ({ x, y, type, npc, health, level, isSelected, onClick }) => {
   const handleClick = () => {
     onClick(x, y);
   };
@@ -17,11 +18,18 @@ const Unit: React.FC<UnitProps> = ({ x, y, type, npc, health, isSelected, onClic
 
   return (
     <div className={`unit unit-${type} ${isSelected ? "selected" : ""} ${npc ? "npc" : ""}`} onClick={handleClick}>
-      {health && health < 100 && (
-        <div className="health-bar">
-          <div className="health" style={{ width: `${health}%` }}></div>
-        </div>
-      )}
+      <div className="unit-header">
+        {level ? (
+          <div className="level">
+            <span>{level}</span>
+          </div>
+        ) : null}
+        {health && health < 100 && (
+          <div className="health-bar">
+            <div className="health" style={{ width: `${health}%` }}></div>
+          </div>
+        )}
+      </div>
       <img src={`/${img}.png`} alt={type} />
     </div>
   );

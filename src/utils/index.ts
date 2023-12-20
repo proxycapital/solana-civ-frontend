@@ -1,3 +1,5 @@
+import config from '../config.json'
+
 function toCamelCase(str: string) {
   if (!str) return '';
 
@@ -23,7 +25,16 @@ function capitalizeWords(str: string) {
 
 }
 
+function canUpgradeUnit(currentLevel: number, currentExp: number): boolean {
+  if (!currentExp) return false;
+  const maxExpLevels = [config.expForLevel1, config.expForLevel2, config.expForLevel3];
+
+  let maxExp = maxExpLevels[currentLevel];
+  return maxExp === currentExp;
+}
+
 export {
   toCamelCase,
   capitalizeWords,
+  canUpgradeUnit,
 }
