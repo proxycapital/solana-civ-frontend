@@ -202,6 +202,19 @@ div.unit {
   width: 90%;
   height: 90%;
   margin: 5px;
+
+  .level {
+    position: absolute;
+    bottom: 0;
+    right: 5%;
+    padding: 0 6px;
+    border-radius: 50%;
+    border: 1px solid #fff;
+    background: #c8aa6e;
+    font-size: 1rem;
+    color: white;
+  }
+  
 }
 
 div.unit img {

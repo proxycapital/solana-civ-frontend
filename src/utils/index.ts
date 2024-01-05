@@ -1,5 +1,7 @@
+import config from "../config.json";
+
 function toCamelCase(str: string) {
-  if (!str) return '';
+  if (!str) return "";
 
   return str
     .replace(/[^a-zA-Z\s]/g, "")
@@ -14,16 +16,22 @@ function toCamelCase(str: string) {
 }
 
 function capitalizeWords(str: string) {
-  if (!str) return '';
+  if (!str) return "";
 
   return str
     .split(/(?=[A-Z])/)
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ');
-
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
 }
 
-export {
-  toCamelCase,
-  capitalizeWords,
+function canUpgradeUnit(currentLevel: number, currentExp: number): boolean {
+  const { expThresholds } = config;
+
+  if (!currentExp || currentLevel < 0 || currentLevel >= expThresholds.length) {
+    return false;
+  }
+
+  return currentExp === expThresholds[currentLevel];
 }
+
+export { toCamelCase, capitalizeWords, canUpgradeUnit };

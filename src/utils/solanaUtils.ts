@@ -379,6 +379,24 @@ export const healUnit = async (provider: AnchorProvider, program: Program<Solciv
   return program.methods.healUnit(unitId).accounts(accounts).rpc();
 };
 
+export const upgradeUnit = async (provider: AnchorProvider, program: Program<Solciv>, unitId: number) => {
+  const [gameKey] = anchor.web3.PublicKey.findProgramAddressSync(
+    [Buffer.from("GAME"), provider.publicKey.toBuffer()],
+    program.programId
+  );
+
+  const [playerKey] = anchor.web3.PublicKey.findProgramAddressSync(
+    [Buffer.from("PLAYER"), gameKey.toBuffer(), provider.publicKey.toBuffer()],
+    program.programId
+  );
+
+  const accounts = {
+    player: provider.publicKey,
+    playerAccount: playerKey,
+  };
+  return program.methods.upgradeUnit(unitId).accounts(accounts).rpc();
+};
+
 export const withdrawGems = async (provider: AnchorProvider, program: Program<Solciv>, owner: PublicKey) => {
   const [gameKey] = anchor.web3.PublicKey.findProgramAddressSync(
     [Buffer.from("GAME"), provider.publicKey.toBuffer()],
