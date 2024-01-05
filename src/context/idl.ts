@@ -141,6 +141,27 @@ export type Solciv = {
       ]
     },
     {
+      "name": "upgradeUnit",
+      "accounts": [
+        {
+          "name": "playerAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "player",
+          "isMut": true,
+          "isSigner": true
+        }
+      ],
+      "args": [
+        {
+          "name": "unitId",
+          "type": "u32"
+        }
+      ]
+    },
+    {
       "name": "foundCity",
       "accounts": [
         {
@@ -879,6 +900,14 @@ export type Solciv = {
             "type": "u8"
           },
           {
+            "name": "level",
+            "type": "u8"
+          },
+          {
+            "name": "experience",
+            "type": "u8"
+          },
+          {
             "name": "movementRange",
             "type": "u8"
           },
@@ -984,6 +1013,9 @@ export type Solciv = {
           },
           {
             "name": "InsufficientGoldForMaintenance"
+          },
+          {
+            "name": "InsufficientPopulationForSettler"
           }
         ]
       }
@@ -1307,6 +1339,16 @@ export type Solciv = {
       "code": 6011,
       "name": "NotEnoughResources",
       "msg": "Not enough of food to heal the unit"
+    },
+    {
+      "code": 6012,
+      "name": "MaxLevelReached",
+      "msg": "Max level reached, cannot upgrade unit level"
+    },
+    {
+      "code": 6013,
+      "name": "NotEnoughExp",
+      "msg": "Not enought experience to upgrade the unit level"
     }
   ],
   "metadata": {
@@ -1457,6 +1499,27 @@ export const IDL: Solciv = {
       ]
     },
     {
+      "name": "upgradeUnit",
+      "accounts": [
+        {
+          "name": "playerAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "player",
+          "isMut": true,
+          "isSigner": true
+        }
+      ],
+      "args": [
+        {
+          "name": "unitId",
+          "type": "u32"
+        }
+      ]
+    },
+    {
       "name": "foundCity",
       "accounts": [
         {
@@ -2195,6 +2258,14 @@ export const IDL: Solciv = {
             "type": "u8"
           },
           {
+            "name": "level",
+            "type": "u8"
+          },
+          {
+            "name": "experience",
+            "type": "u8"
+          },
+          {
             "name": "movementRange",
             "type": "u8"
           },
@@ -2300,6 +2371,9 @@ export const IDL: Solciv = {
           },
           {
             "name": "InsufficientGoldForMaintenance"
+          },
+          {
+            "name": "InsufficientPopulationForSettler"
           }
         ]
       }
@@ -2623,6 +2697,16 @@ export const IDL: Solciv = {
       "code": 6011,
       "name": "NotEnoughResources",
       "msg": "Not enough of food to heal the unit"
+    },
+    {
+      "code": 6012,
+      "name": "MaxLevelReached",
+      "msg": "Max level reached, cannot upgrade unit level"
+    },
+    {
+      "code": 6013,
+      "name": "NotEnoughExp",
+      "msg": "Not enought experience to upgrade the unit level"
     }
   ],
   "metadata": {

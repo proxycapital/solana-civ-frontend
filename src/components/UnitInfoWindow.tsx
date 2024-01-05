@@ -133,9 +133,7 @@ const UnitInfoWindow: React.FC<UnitInfoProps> = ({ unit }) => {
       <div className="unit-stats">
         <img src="/icons/movement.png" alt="" className="unit-icon" />
         Movements:&nbsp;
-        <b>
-          {movementRange}
-        </b>
+        <b>{movementRange}</b>
       </div>
       {attack !== 0 && (
         <div className="unit-stats">
@@ -143,6 +141,15 @@ const UnitInfoWindow: React.FC<UnitInfoProps> = ({ unit }) => {
           Strength:&nbsp;<b>{attack}</b>
         </div>
       )}
+      {experience !== 0 && level !== null && level !== undefined && level < config.expThresholds.length && (
+        <div className="unit-stats">
+          XP:&nbsp;
+          <b>
+            {experience}/{config.expThresholds[level]}
+          </b>
+        </div>
+      )}
+
       {type === "settler" && (
         <Button
           className="unit-action-button"
@@ -162,26 +169,17 @@ const UnitInfoWindow: React.FC<UnitInfoProps> = ({ unit }) => {
         </Button>
       )}
       {unit.health < 100 && false && (
-        <Button
-          className="unit-action-button"
-          variant="outlined"
-          onClick={() => handleHealing(unit.unitId)}
-        >
+        <Button className="unit-action-button" variant="outlined" onClick={() => handleHealing(unit.unitId)}>
           <img src="/icons/health.png" alt="Health" className="unit-icon" />
           Heal ({100 - unit.health}
-          <img src="icons/food.png" alt="Food" className="unit-icon" />
-          )
+          <img src="icons/food.png" alt="Food" className="unit-icon" />)
         </Button>
       )}
       {canUpgradeUnit(level || 0, experience || 0) ? (
         <Tippy content={config.unitUpgradeResult}>
-          <Button
-            className="unit-action-button"
-            variant="outlined"
-            onClick={() => handleUpgrade(unit.unitId)}
-          >
+          <Button className="unit-action-button" variant="outlined" onClick={() => handleUpgrade(unit.unitId)}>
             <img src="/icons/health.png" alt="Health" className="unit-icon" />
-            Upgrade 
+            Level Up
           </Button>
         </Tippy>
       ) : null}
