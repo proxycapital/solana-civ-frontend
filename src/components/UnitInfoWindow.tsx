@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Button from "@mui/material/Button";
 import Tippy from "@tippyjs/react";
@@ -9,6 +9,8 @@ import { canUpgradeUnit } from "../utils";
 import { useWorkspace } from "../context/AnchorContext";
 import { useGameState } from "../context/GameStateContext";
 import { useSound } from "../context/SoundContext";
+
+type WindowAlignment = 'left' | 'right' | null;
 
 interface UnitInfoProps {
   unit: {
@@ -26,11 +28,27 @@ interface UnitInfoProps {
 }
 
 const UnitInfoWindow: React.FC<UnitInfoProps> = ({ unit }) => {
+  const [alignment, setAlignment] = useState<WindowAlignment>(null)
   const { program, provider } = useWorkspace();
   const { cities, fetchPlayerState } = useGameState();
   const { playSound } = useSound();
   const { type, movementRange, attack, experience, level } = unit;
   const displayType = type.charAt(0).toUpperCase() + type.slice(1);
+
+  useEffect(() => {
+    const element = document.getElementById(`unit-${unit?.unitId}`);
+    if(element) {
+      const rect = element.getBoundingClientRect();
+      const distanceFromRight = window.innerWidth - rect.right;
+
+      // the unit window is 240px wide defined in the css
+      if(distanceFromRight < 300) {
+        setAlignment('left');
+      } else {
+        setAlignment('right');
+      }
+    }
+  }, []);
 
   const getUnusedCityName = () => {
     const usedNames = cities.map((city) => city.name);
@@ -119,7 +137,7 @@ const UnitInfoWindow: React.FC<UnitInfoProps> = ({ unit }) => {
   };
 
   return (
-    <div className="unit-info-window">
+    <div className={`unit-info-window align-${alignment}`}>
       <img src={`/${type}.png`} className="avatar" alt={type} />
       <div className="desktop-only">
         <strong>{displayType}</strong>
