@@ -120,27 +120,6 @@ export type Solciv = {
       ]
     },
     {
-      "name": "healUnit",
-      "accounts": [
-        {
-          "name": "playerAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "player",
-          "isMut": true,
-          "isSigner": true
-        }
-      ],
-      "args": [
-        {
-          "name": "unitId",
-          "type": "u32"
-        }
-      ]
-    },
-    {
       "name": "upgradeUnit",
       "accounts": [
         {
@@ -786,6 +765,30 @@ export type Solciv = {
           {
             "name": "housing",
             "type": "u32"
+          },
+          {
+            "name": "controlledTiles",
+            "type": {
+              "vec": {
+                "defined": "TileCoordinate"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "TileCoordinate",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "x",
+            "type": "u8"
+          },
+          {
+            "name": "y",
+            "type": "u8"
           }
         ]
       }
@@ -1478,27 +1481,6 @@ export const IDL: Solciv = {
       ]
     },
     {
-      "name": "healUnit",
-      "accounts": [
-        {
-          "name": "playerAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "player",
-          "isMut": true,
-          "isSigner": true
-        }
-      ],
-      "args": [
-        {
-          "name": "unitId",
-          "type": "u32"
-        }
-      ]
-    },
-    {
       "name": "upgradeUnit",
       "accounts": [
         {
@@ -2144,6 +2126,30 @@ export const IDL: Solciv = {
           {
             "name": "housing",
             "type": "u32"
+          },
+          {
+            "name": "controlledTiles",
+            "type": {
+              "vec": {
+                "defined": "TileCoordinate"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "TileCoordinate",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "x",
+            "type": "u8"
+          },
+          {
+            "name": "y",
+            "type": "u8"
           }
         ]
       }

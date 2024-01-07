@@ -39,6 +39,12 @@ type City = {
   scienceYield: number;
   accumulatedFood: number;
   housing: number;
+  controlledTiles: TileCoordinate[];
+}
+
+interface TileCoordinate {
+  x: number;
+  y: number;
 }
 
 interface GameStateContextType {
@@ -52,6 +58,7 @@ interface GameStateContextType {
     researchedTechnologies: any[];
   };
   cities: City[];
+  controlledTiles: TileCoordinate[];
   upgradedTiles: any[];
   npcUnits: any[];
   npcCities: any[];
@@ -83,12 +90,21 @@ export const GameStateProvider: React.FC<BaseLayoutProps> = ({ children }) => {
     researchedTechnologies: [],
   });
   const [cities, setCities] = useState([] as any[]);
+  const [controlledTiles, setControlledTiles] = useState<TileCoordinate[]>([]);
   const [upgradedTiles, setUpgradedTiles] = useState([] as any[]);
   const [allUnits, setUnits] = useState([] as any[]);
   const [npcUnits, setNpcUnits] = useState([] as any[]);
   const [npcCities, setNpcCities] = useState([] as any[]);
 
-  // const updateUnits = (updatedUnits: any[]) => setUnits(updatedUnits);
+  const updateControlledTiles = (cities: City[]) => {
+    const newControlledTiles: TileCoordinate[] = [];
+    cities.forEach(city => {
+      city.controlledTiles.forEach(tile => {
+        newControlledTiles.push({ x: tile.x, y: tile.y });
+      });
+    });
+    setControlledTiles(newControlledTiles);
+  };
 
   const fetchGameState = async () => {
     try {
@@ -119,7 +135,10 @@ export const GameStateProvider: React.FC<BaseLayoutProps> = ({ children }) => {
       if (player) {
         if (player.balances) setResources(player.balances);
         if (player.units) setUnits(player.units);
-        if (player.cities) setCities(player.cities);
+        if (player.cities) {
+          setCities(player.cities);
+          updateControlledTiles(player.cities);
+        }
         if (player.tiles) setUpgradedTiles(player.tiles);
         if (player.technologies) setTechnologies(player.technologies);
       }
@@ -144,6 +163,7 @@ export const GameStateProvider: React.FC<BaseLayoutProps> = ({ children }) => {
         game,
         technologies,
         cities,
+        controlledTiles,
         upgradedTiles,
         resources,
         npcUnits,

@@ -2,15 +2,21 @@ import React, { useState, useEffect } from "react";
 import Tippy from "@tippyjs/react";
 
 interface TerrainProps {
+  isControlled: boolean;
   discovered: boolean;
-  x: number;
-  y: number;
+  // x: number;
+  // y: number;
   imageIndex: number;
   overlayImageIndex?: number;
-  cityName?: string | undefined;
-  health?: number;
-  wallHealth?: number;
+  // cityName?: string | undefined;
+  // health?: number;
+  // wallHealth?: number;
   turn: number;
+}
+
+interface TileCoordinate {
+  x: number;
+  y: number;
 }
 
 // Weighted random index selection for terrain tile images
@@ -51,7 +57,8 @@ const yieldTypes: { [key: string]: string } = {
   "Pasture": "horses",
 };
 
-const Terrain: React.FC<TerrainProps> = ({ x, y, discovered, imageIndex, overlayImageIndex, cityName, health, turn, wallHealth }) => {
+const Terrain: React.FC<TerrainProps> = ({ isControlled, discovered, imageIndex, overlayImageIndex, turn }) => {
+// const Terrain: React.FC<TerrainProps> = ({ x, y, discovered, imageIndex, overlayImageIndex, cityName, health, turn, wallHealth }) => {
   const [nextTurn, setNextTurn] = useState(false);
   const [fadeIn, setFadeIn] = useState(false);
   
@@ -101,7 +108,7 @@ const Terrain: React.FC<TerrainProps> = ({ x, y, discovered, imageIndex, overlay
         </>
       )}
       {discovered && imageIndex !== null && (
-        <div className={`terrain-container ${fadeIn ? 'fade-in' : ''}`}>
+        <div className={`terrain-container ${isControlled ? 'controlled' : ''} ${fadeIn ? 'fade-in' : ''}`}>
           <img src={imageUrl} className={`terrain ${tileType.toLowerCase()}`} alt={tileType} draggable="false" />
         </div>
       )}

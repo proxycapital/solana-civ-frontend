@@ -4,7 +4,7 @@ import Button from "@mui/material/Button";
 import Tippy from "@tippyjs/react";
 
 import config from "../config.json";
-import { foundCity, upgradeLandPlot, healUnit, upgradeUnit } from "../utils/solanaUtils";
+import { foundCity, upgradeLandPlot, upgradeUnit } from "../utils/solanaUtils";
 import { canUpgradeUnit } from "../utils";
 import { useWorkspace } from "../context/AnchorContext";
 import { useGameState } from "../context/GameStateContext";
@@ -98,25 +98,6 @@ const UnitInfoWindow: React.FC<UnitInfoProps> = ({ unit }) => {
     await fetchPlayerState();
   };
 
-  const handleHealing = async (unitId: number) => {
-    const tx = healUnit(provider!, program!, unitId);
-    try {
-      await toast.promise(tx, {
-        pending: "Healing unit",
-        success: "Unit healed",
-        error: "Error healing unit",
-      });
-    } catch (error) {
-      if (error instanceof Error) {
-        if (error.message.includes("NotEnoughResources")) {
-          toast.error("Not enough of food to heal unit");
-        }
-      }
-      console.log("Error healing unit: ", error);
-    }
-    await fetchPlayerState();
-  };
-
   const handleUpgrade = async (unitId: number) => {
     const tx = upgradeUnit(provider!, program!, unitId);
     try {
@@ -184,13 +165,6 @@ const UnitInfoWindow: React.FC<UnitInfoProps> = ({ unit }) => {
           onClick={() => handleBuild(unit.x, unit.y, unit.unitId)}
         >
           <img src="/icons/build.png" alt="" className="unit-icon" /> Build
-        </Button>
-      )}
-      {unit.health < 100 && false && (
-        <Button className="unit-action-button" variant="outlined" onClick={() => handleHealing(unit.unitId)}>
-          <img src="/icons/health.png" alt="Health" className="unit-icon" />
-          Heal ({100 - unit.health}
-          <img src="icons/food.png" alt="Food" className="unit-icon" />)
         </Button>
       )}
       {canUpgradeUnit(level || 0, experience || 0) ? (
