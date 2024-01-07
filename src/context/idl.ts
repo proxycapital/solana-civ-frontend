@@ -1343,12 +1343,12 @@ export type Solciv = {
     {
       "code": 6012,
       "name": "MaxLevelReached",
-      "msg": "Max level reached, cannot upgrade unit level"
+      "msg": "Max level reached"
     },
     {
       "code": 6013,
       "name": "NotEnoughExp",
-      "msg": "Not enought experience to upgrade the unit level"
+      "msg": "Not enought experience to level up unit"
     }
   ],
   "metadata": {
@@ -2701,12 +2701,12 @@ export const IDL: Solciv = {
     {
       "code": 6012,
       "name": "MaxLevelReached",
-      "msg": "Max level reached, cannot upgrade unit level"
+      "msg": "Max level reached"
     },
     {
       "code": 6013,
       "name": "NotEnoughExp",
-      "msg": "Not enought experience to upgrade the unit level"
+      "msg": "Not enought experience to level up unit"
     }
   ],
   "metadata": {

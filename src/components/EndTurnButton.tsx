@@ -11,6 +11,7 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { toast } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHourglassEnd, faSkullCrossbones } from "@fortawesome/free-solid-svg-icons";
+import Tippy from "@tippyjs/react";
 
 import { useWorkspace } from "../context/AnchorContext";
 import { useGameState } from "../context/GameStateContext";
@@ -41,6 +42,20 @@ const EndTurnButton: React.FC<EndTurnButtonProps> = ({ setShowOnboardingType, op
   const handleCloseDialog = () => {
     setOpenDialog(false);
   };
+
+  useEffect(() => {
+    const handleKeyPress = (event: KeyboardEvent) => {
+      if (event.code === "Space" && !isProcessing) {
+        event.preventDefault();
+        endTurn();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyPress);
+    return () => {
+      window.removeEventListener("keydown", handleKeyPress);
+    };
+  }, [isProcessing]);
 
   useEffect(() => {
     async function handleResearchComplete() {
@@ -210,10 +225,12 @@ const EndTurnButton: React.FC<EndTurnButtonProps> = ({ setShowOnboardingType, op
 
   return (
     <>
-      <Button onClick={endTurn} disabled={isProcessing} variant="outlined" className="end-turn-button">
-        <FontAwesomeIcon icon={faHourglassEnd} />
-        &nbsp; End Turn {game.turn}
-      </Button>
+      <Tippy key="gems" content="Hotkey: 'Spacebar'">
+        <Button onClick={endTurn} disabled={isProcessing} variant="outlined" className="end-turn-button">
+          <FontAwesomeIcon icon={faHourglassEnd} />
+          &nbsp; End Turn {game.turn}
+        </Button>
+      </Tippy>
       <Button onClick={handleOpenDialog} variant="outlined" className="end-game-button">
         <FontAwesomeIcon icon={faSkullCrossbones} />
       </Button>
