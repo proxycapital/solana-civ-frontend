@@ -17,6 +17,8 @@ import { useWorkspace } from "../context/AnchorContext";
 import { useGameState } from "../context/GameStateContext";
 import resetResearchStorage from "../utils/storage";
 
+import config from "../config.json";
+
 const darkTheme = createTheme({
   palette: {
     mode: "dark",
@@ -60,46 +62,45 @@ const EndTurnButton: React.FC<EndTurnButtonProps> = ({ setShowOnboardingType, op
   useEffect(() => {
     async function handleResearchComplete() {
       const numberOfResearchedTech = technologies.researchedTechnologies.length;
-      let prevResearchedTech: any = localStorage.getItem('prevTech');
+      let prevResearchedTech: any = localStorage.getItem("prevTech");
       prevResearchedTech = prevResearchedTech ? JSON.parse(prevResearchedTech) : [];
 
       const numberOfPrevResearchedTech = prevResearchedTech.length;
 
-      if ((numberOfResearchedTech - numberOfPrevResearchedTech) === 1) {
+      if (numberOfResearchedTech - numberOfPrevResearchedTech === 1) {
         const researchedKeys = technologies.researchedTechnologies.map((tech) => Object.keys(tech)[0]);
         const prevResearchedKeys = prevResearchedTech.map((tech: any) => Object.keys(tech)[0]);
-        
+
         const newTechnology = researchedKeys.filter((tech) => !prevResearchedKeys.includes(tech));
-        
+
         if (newTechnology.length === 1) {
-          localStorage.setItem('prevTech', JSON.stringify(technologies.researchedTechnologies));
-          
+          localStorage.setItem("prevTech", JSON.stringify(technologies.researchedTechnologies));
+
           // show modal
           openNewResearchModal();
 
-          const researchQueue: any = localStorage.getItem('researchQueue');
+          const researchQueue: any = localStorage.getItem("researchQueue");
           const researchQueueArr: Array<any> = JSON.parse(researchQueue);
-          if (!researchQueueArr) return
+          if (!researchQueueArr) return;
 
           if (researchQueueArr.length === 1) {
             // last research was finished
-            resetResearchStorage()
+            resetResearchStorage();
             return;
           }
 
           const newResearchQueue = researchQueueArr.filter((tech) => tech !== newTechnology[0]);
 
           if (newResearchQueue.length !== researchQueueArr.length) {
-            localStorage.setItem('researchQueue', JSON.stringify(newResearchQueue));
+            localStorage.setItem("researchQueue", JSON.stringify(newResearchQueue));
           }
         }
       }
     }
     handleResearchComplete();
+  }, [technologies.researchedTechnologies]);
 
-  }, [technologies.researchedTechnologies])
-
-  const startResearchAuto = async (technologyName: any) => {   
+  const startResearchAuto = async (technologyName: any) => {
     const technology = { [technologyName]: {} } as any;
 
     const [gameKey] = anchor.web3.PublicKey.findProgramAddressSync(
@@ -123,9 +124,9 @@ const EndTurnButton: React.FC<EndTurnButtonProps> = ({ setShowOnboardingType, op
       });
     } catch (error: any) {
       console.log(error);
-      console.log("Cannot start auto-research")
+      console.log("Cannot start auto-research");
     }
-  }
+  };
 
   const endTurn = async () => {
     for (let city of cities) {
@@ -135,10 +136,14 @@ const EndTurnButton: React.FC<EndTurnButtonProps> = ({ setShowOnboardingType, op
       }
     }
 
-    const researchQueue = localStorage.getItem('researchQueue');
+    const researchQueue = localStorage.getItem("researchQueue");
 
     if (!researchQueue) {
-      if (!technologies.currentResearch && technologies.researchedTechnologies.length < 17) {
+      const totalTechnologies =
+        config.science["Science and Economy Tree"].length +
+        config.science["Production and Agriculture Tree"].length +
+        config.science["Military Tree"].length;
+      if (!technologies.currentResearch && technologies.researchedTechnologies.length < totalTechnologies) {
         toast.warning("You need to select a technology to research");
         setShowOnboardingType("research");
         return;
@@ -146,7 +151,7 @@ const EndTurnButton: React.FC<EndTurnButtonProps> = ({ setShowOnboardingType, op
     } else {
       const researchQueueArr = JSON.parse(researchQueue);
 
-      // if no currentResearch - we need to make tx ourselves 
+      // if no currentResearch - we need to make tx ourselves
       if (!technologies.currentResearch) {
         await startResearchAuto(researchQueueArr[0]);
       }
@@ -154,7 +159,7 @@ const EndTurnButton: React.FC<EndTurnButtonProps> = ({ setShowOnboardingType, op
 
     setIsProcessing(true);
     console.time("End turn");
-    localStorage.setItem('prevTech', JSON.stringify(technologies.researchedTechnologies));
+    localStorage.setItem("prevTech", JSON.stringify(technologies.researchedTechnologies));
 
     try {
       const [gameKey] = anchor.web3.PublicKey.findProgramAddressSync(
