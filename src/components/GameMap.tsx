@@ -32,6 +32,11 @@ interface Tile {
   type: string;
 }
 
+interface TileCoordinate {
+  x: number;
+  y: number;
+}
+
 const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
   const rows = 20;
   const cols = 20;
@@ -39,7 +44,7 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
   const [showVillageModal, setShowVillageModal] = useState(false);
   const [showUpgradedTileModal, setShowUpgradedTileModal] = useState(true);
   const {
-    fetchPlayerState, fetchGameState, fetchNpcs, game, cities, upgradedTiles, npcUnits, npcCities, allUnits,
+    fetchPlayerState, fetchGameState, fetchNpcs, game, cities, controlledTiles, upgradedTiles, npcUnits, npcCities, allUnits,
   } = useGameState();
   const { program, provider } = useWorkspace();
   const { playSound } = useSound();
@@ -412,6 +417,10 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
     }
   };
 
+  const isTileControlled = (tile: TileCoordinate): boolean => {
+    return controlledTiles.some(controlledTile => controlledTile.x === tile.x && controlledTile.y === tile.y);
+  };
+
   const selectedUnit = units.find((unit) => unit.isSelected);
 
   return (
@@ -467,7 +476,7 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
           } else if (currentTile.type === "Pasture") {
             resourceAvailable = "horses";
           }
-
+          const isControlled = isTileControlled({x: col, y: row});
 
           return (
             <div
@@ -492,18 +501,19 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
                 />
               )}
               <Terrain
+                isControlled={isControlled}
                 discovered={currentTile.discovered}
-                x={col}
-                y={row}
+                //x={col}
+                //y={row}
                 imageIndex={currentTile.imageIndex}
                 overlayImageIndex={currentTile.overlayImageIndex}
-                cityName={currentTile.cityName}
-                wallHealth={currentTile.wallHealth}
-                health={currentTile.health}
+                //cityName={currentTile.cityName}
+                //wallHealth={currentTile.wallHealth}
+                //health={currentTile.health}
                 turn={game.turn}
               />
               {currentTile.discovered && selectedUnit && selectedUnit.type === "builder" && resourceAvailable && (
-                <div className="land-plot-resource">
+                <div className={`land-plot-resource ${isControlled ? 'upgradable' : ''}`}>
                   <img src={`/icons/${resourceAvailable}.png`} alt="" />
                 </div>
               )}
