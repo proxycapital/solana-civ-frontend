@@ -52,16 +52,16 @@ export const TileType = {
 const yieldTypes: { [key: string]: string } = {
   "Lumber Mill": "wood",
   "Stone Quarry": "stone",
-  "Farm": "food",
+  Farm: "food",
   "Iron Mine": "iron",
-  "Pasture": "horses",
+  Pasture: "horses",
 };
 
 const Terrain: React.FC<TerrainProps> = ({ isControlled, discovered, imageIndex, overlayImageIndex, turn }) => {
-// const Terrain: React.FC<TerrainProps> = ({ x, y, discovered, imageIndex, overlayImageIndex, cityName, health, turn, wallHealth }) => {
+  // const Terrain: React.FC<TerrainProps> = ({ x, y, discovered, imageIndex, overlayImageIndex, cityName, health, turn, wallHealth }) => {
   const [nextTurn, setNextTurn] = useState(false);
   const [fadeIn, setFadeIn] = useState(false);
-  
+
   useEffect(() => {
     setNextTurn(true);
     setTimeout(() => {
@@ -108,13 +108,21 @@ const Terrain: React.FC<TerrainProps> = ({ isControlled, discovered, imageIndex,
         </>
       )}
       {discovered && imageIndex !== null && (
-        <div className={`terrain-container ${isControlled ? 'controlled' : ''} ${fadeIn ? 'fade-in' : ''}`}>
+        <div className={`terrain-container ${isControlled ? "controlled" : ""} ${fadeIn ? "fade-in" : ""}`}>
           <img src={imageUrl} className={`terrain ${tileType.toLowerCase()}`} alt={tileType} draggable="false" />
         </div>
       )}
       {!discovered && (
-        // <img src="/terrain/Layer 20.png" className="terrain undiscovered" alt="undiscovered" draggable="false" />
-        <img src={imageUrl} className={`terrain undiscovered`} alt={tileType} draggable="false" />
+        <div>
+          <img
+            src="/terrain/clouds.png"
+            style={{ position: "absolute", width: "200px", height: "140px", pointerEvents: "none", top: 0, zIndex: 10 }}
+            className="terrain undiscovered"
+            alt="undiscovered"
+            draggable="false"
+          />
+          <img src={imageUrl} className={`terrain undiscovered`} alt={tileType} draggable="false" />
+        </div>
       )}
     </div>
   );
