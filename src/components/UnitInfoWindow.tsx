@@ -94,6 +94,11 @@ const UnitInfoWindow: React.FC<UnitInfoProps> = ({ unit }) => {
       }
     } catch (error) {
       console.log("Error upgrading land tile: ", error);
+      if (error instanceof Error) {
+        if (error.message.includes("TileNotControlled")) {
+          toast.error("Tile is not controlled");
+        }
+      }
     }
     await fetchPlayerState();
   };

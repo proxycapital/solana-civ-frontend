@@ -476,7 +476,7 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
           } else if (currentTile.type === "Pasture") {
             resourceAvailable = "horses";
           }
-
+          const isControlled = isTileControlled({x: col, y: row});
 
           return (
             <div
@@ -501,7 +501,7 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
                 />
               )}
               <Terrain
-                isControlled={isTileControlled({x: col, y: row})}
+                isControlled={isControlled}
                 discovered={currentTile.discovered}
                 //x={col}
                 //y={row}
@@ -513,7 +513,7 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
                 turn={game.turn}
               />
               {currentTile.discovered && selectedUnit && selectedUnit.type === "builder" && resourceAvailable && (
-                <div className="land-plot-resource">
+                <div className={`land-plot-resource ${isControlled ? 'upgradable' : ''}`}>
                   <img src={`/icons/${resourceAvailable}.png`} alt="" />
                 </div>
               )}

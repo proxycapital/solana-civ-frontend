@@ -260,11 +260,15 @@ div.unit img {
   height: 40px;
   margin: 0 auto;
   transform: translate(-50%, -50%);
-  border: 1px solid #ffffff;
+  border: 1px solid #c70000;
   border-radius: 45px;
   padding: 4px;
   backdrop-filter: blur(2px);
   /* filter: grayscale(1); */
+}
+
+.land-plot-resource.upgradable {
+  border: 1px solid #11FF05;
 }
 
 img.upgraded-tile {
@@ -354,9 +358,11 @@ img.upgraded-tile {
   font-size: 1.5rem;
 }
 
-.in-range {
-  /* filter: brightness(1.5); */
-  filter: grayscale(1);
+.in-range::after {
+    content: '';
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+    background-color: rgba(209, 247, 15, 0.3);
 }
 
 .game-tile:hover {
