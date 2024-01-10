@@ -30,6 +30,8 @@ interface Tile {
   health?: number;
   wallHealth?: number;
   type: string;
+  cityId?: number;
+  npc?: boolean;
 }
 
 interface TileCoordinate {
@@ -131,6 +133,7 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
               wallHealth: cityData?.wallHealth,
               health: cityData?.health,
               cityId: cityData?.cityId,
+              npc: false
             });
             continue;
           }
@@ -146,6 +149,7 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
               cityName: npcCityData.name,
               health: npcCityData.health,
               cityId: npcCityData.cityId,
+              npc: true
             });
             continue;
           }
@@ -436,11 +440,6 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
       {selectedUnit && (
         <UnitInfoWindow
           unit={selectedUnit}
-          // type={selectedUnit.type}
-          // remainingMoves={selectedUnit.movementRange}
-          // movementRange={selectedUnit.movementRange}
-          // builds={selectedUnit.type === 'worker' ? 1 : undefined}
-          // strength={selectedUnit.type === 'warrior' ? 10 : undefined}
         />
       )}
       <div
@@ -491,25 +490,17 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
                 unitAction(col, row, currentUnit?.type || selectedUnit?.type || "unknown");
               }}
             >
-              {currentTile.discovered && currentTile.cityName && (
+              {currentTile.discovered && (typeof currentTile.cityId === 'number') && (
                 <CityTile
-                  imageIndex={currentTile.imageIndex}
-                  cityName={currentTile.cityName}
-                  wallHealth={currentTile.wallHealth}
-                  health={currentTile.health}
-                  population={currentTile.population}
+                  cityId={currentTile.cityId}
+                  npc={currentTile.npc}
                 />
               )}
               <Terrain
                 isControlled={isControlled}
                 discovered={currentTile.discovered}
-                //x={col}
-                //y={row}
                 imageIndex={currentTile.imageIndex}
                 overlayImageIndex={currentTile.overlayImageIndex}
-                //cityName={currentTile.cityName}
-                //wallHealth={currentTile.wallHealth}
-                //health={currentTile.health}
                 turn={game.turn}
               />
               {currentTile.discovered && selectedUnit && selectedUnit.type === "builder" && resourceAvailable && (

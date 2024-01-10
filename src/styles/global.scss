@@ -379,7 +379,7 @@ img.upgraded-tile {
 }
 
 .city-header {
-  z-index: 1; // to fix overflow of building
+  z-index: 9; // to fix overflow of building
   color: white;
   text-align: center;
   padding: 0.25rem 0.5rem;
@@ -391,14 +391,48 @@ img.upgraded-tile {
 }
 
 .city-name-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 4px;
 }
 
-.city-name-wrapper .population {
-  padding: 0 6px;
-  border-radius: 32px;
+.city-header .city-name-wrapper .city-production img {
+  width: 100%;
+}
+
+.city-header .city-name-wrapper .city-name {
+  text-align: center;
+  flex-grow: 1;
+}
+
+.city-name-wrapper .city-population, 
+.city-name-wrapper .city-production {
+  position: relative;
+  cursor: pointer;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
   border: 1px solid #fff;
   background: #c8aa6e;
+}
+
+.city-name-wrapper .city-population .population-number {
+  font-size: 24px;
+  text-align: center;
+}
+
+.city-name-wrapper .city-population .population-growth, 
+.city-name-wrapper .city-production .production-turns {
+  position: absolute;
+  top: 3px;
+  right: 0;
+  transform: translate(50%, -50%);
+  border-radius: 50%;
+  font-size: 14px;
 }
 
 .city-header .city-wall-bar {

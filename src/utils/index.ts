@@ -34,4 +34,8 @@ function canUpgradeUnit(currentLevel: number, currentExp: number): boolean {
   return currentExp === expThresholds[currentLevel];
 }
 
-export { toCamelCase, capitalizeWords, canUpgradeUnit };
+const getFoodNeededForGrowth = (population: number) => {
+  return Math.floor(0.1082 * Math.pow(population, 2) + 10.171 * population + 1.929);
+};
+
+export { toCamelCase, capitalizeWords, canUpgradeUnit, getFoodNeededForGrowth };
