@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { useWorkspace } from "../context/AnchorContext";
 import { getPlayer, getGame, getNpcs } from "../utils/solanaUtils";
+import { useModalError } from "./ModalErrorContext";
 
 type Game = {
   turn: number;
@@ -82,6 +83,7 @@ export const useGameState = () => {
 
 export const GameStateProvider: React.FC<BaseLayoutProps> = ({ children }) => {
   const { program, provider } = useWorkspace();
+  const { setShowError } = useModalError();
   const [resources, setResources] = useState({} as Resources);
   const [game, setGame] = useState({ turn: 1, map: [], defeat: false, victory: false } as Game);
   const [technologies, setTechnologies] = useState({
@@ -132,6 +134,12 @@ export const GameStateProvider: React.FC<BaseLayoutProps> = ({ children }) => {
   const fetchPlayerState = async () => {
     try {
       const player = await getPlayer(provider, program);
+      if (!player) {
+        console.log("---SHOW ERROR!")
+        setShowError(true);
+        return;
+      }
+
       if (player) {
         if (player.balances) setResources(player.balances);
         if (player.units) setUnits(player.units);

@@ -6,9 +6,11 @@ import {
   setProvider,
 } from "@coral-xyz/anchor"
 import NodeWallet from "@coral-xyz/anchor/dist/cjs/nodewallet";
-import { Solciv, IDL } from "./idl"
 import { Connection, PublicKey, Keypair, clusterApiUrl } from "@solana/web3.js"
 import bs58 from "bs58";
+
+import { Solciv, IDL } from "./idl"
+
 const WorkspaceContext = createContext({})
 
 const { REACT_APP_RPC: RPC } = process.env;
