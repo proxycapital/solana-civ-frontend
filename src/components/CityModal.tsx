@@ -15,6 +15,7 @@ import { addToProductionQueue, removeFromProductionQueue, purchaseWithGold, repa
 import { AllUnits, UnitType } from "../Units";
 import { AllBuildings, BuildingType } from "../Buildings";
 import CustomTooltip from "./CustomTooltip";
+import { getFoodNeededForGrowth } from "../utils";
 
 interface CityModalProps {
   show: boolean;
@@ -78,10 +79,6 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
   useEffect(() => {
     if (!show) setSelectedTab(0);
   }, [show]);
-
-  const getFoodNeededForGrowth = (population: number) => {
-    return Math.floor(0.1082 * Math.pow(population, 2) + 10.171 * population + 1.929);
-  }
 
   const handleAddToProductionQueue = async (item: BuildingType, type: "building" | "unit") => {
     try {
