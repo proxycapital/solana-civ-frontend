@@ -1,6 +1,5 @@
 import React, { useMemo } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-
 import { ConnectionProvider, WalletProvider } from "@solana/wallet-adapter-react";
 import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 import { UnsafeBurnerWalletAdapter } from "@solana/wallet-adapter-wallets";
@@ -15,6 +14,7 @@ import GamePage from "./pages/GamePage";
 import { GameStateProvider } from "./context/GameStateContext";
 import { WorkspaceProvider } from "./context/AnchorContext";
 import { SoundProvider } from "./context/SoundContext";
+import { ModalErrorProvider } from "./context/ModalErrorContext";
 
 require("@solana/wallet-adapter-react-ui/styles.css");
 
@@ -49,16 +49,18 @@ const App: React.FC = () => {
       <WalletProvider wallets={wallets} autoConnect>
         <WalletModalProvider>
           <WorkspaceProvider>
-            <GameStateProvider>
-              <SoundProvider>
-                <Router>
-                  <Routes>
-                    <Route path="/" element={<HomePage />} />
-                    <Route path="/game" element={<GamePage />} />
-                  </Routes>
-                </Router>
-              </SoundProvider>
-            </GameStateProvider>
+            <ModalErrorProvider>
+              <GameStateProvider>
+                <SoundProvider>
+                  <Router>
+                    <Routes>
+                      <Route path="/" element={<HomePage />} />
+                      <Route path="/game" element={<GamePage />} />
+                    </Routes>
+                  </Router>
+                </SoundProvider>
+              </GameStateProvider>
+            </ModalErrorProvider>
           </WorkspaceProvider>
         </WalletModalProvider>
       </WalletProvider>

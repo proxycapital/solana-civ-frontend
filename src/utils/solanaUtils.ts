@@ -1,9 +1,10 @@
 import { Connection, clusterApiUrl, PublicKey } from "@solana/web3.js";
 import { Buffer } from "buffer";
-import { weightedRandomTile } from "../components/Terrain";
 import * as anchor from "@coral-xyz/anchor";
 import { AnchorProvider, Program } from "@coral-xyz/anchor";
+
 import { Solciv } from "../context/idl";
+import { weightedRandomTile } from "../components/Terrain";
 
 const { REACT_APP_RPC: RPC } = process.env;
 
@@ -67,6 +68,9 @@ export const getPlayer = async (provider: AnchorProvider | undefined, program: P
     playerAccount = await program.account.player.fetch(playerKey);
   } catch (error) {
     console.log("Error while fetching player account: ", error);
+    if (String(error).includes("Account does not exist or has no data")) {
+      return null
+    }
   }
   const balances = playerAccount?.resources ?? {};
   const units = playerAccount?.units ?? [];

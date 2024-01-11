@@ -47,7 +47,7 @@ interface GameOverModalProps {
     };
 
     return (
-        <Modal
+      <Modal
         open={isOpen} 
         onClose={onClose}
         aria-labelledby="modal-modal-title"

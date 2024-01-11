@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import Joyride, { STATUS } from "react-joyride";
+import { Modal, Typography, Box, Grid } from "@mui/material";
 
 import TopMenu from "../components/TopMenu";
 import GameMap from "../components/GameMap";
 import Console from "../components/Console";
+import { useModalError } from "../context/ModalErrorContext";
+import { useWorkspace } from "../context/AnchorContext";
+import InitiateGameButton from '../components/InitiateGameButton'
 
 interface Message {
   time: string;
@@ -14,6 +18,15 @@ interface Message {
 const GamePage: React.FC = () => {
   const [debug, setDebug] = useState(false);
   const [messages, setMessages] = useState<Array<Message>>([]);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [showButtons, setShowButtons] = useState(true);
+  const workspace = useWorkspace();
+
+  const { showError, setShowError } = useModalError();
+  const [initializationSteps, setInitializationSteps] = useState([
+    { name: "Requesting airdrop", status: "pending" },
+    { name: "Initializing game", status: "pending" },
+  ]);
 
   const [run, setRun] = useState(true);
   const [steps, setSteps] = useState([
@@ -114,11 +127,64 @@ const GamePage: React.FC = () => {
       return newMessages;
     });
   };
+
+  const updateStepStatus = (stepName: string, status: string) => {
+    setInitializationSteps((steps) => steps.map((step) => (step.name === stepName ? { ...step, status } : step)));
+  };
+
   return (
     <div className="full-screen">
       <TopMenu debug={debug} setDebug={setDebug} />
       {debug && <Console messages={messages} />}
       <GameMap debug={debug} logMessage={logMessage} />
+      {/* Modal to initiate accounts */}
+      <Modal
+        open={showError} 
+        onClose={() => setShowError(false)}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box className="modal-end-game">
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Something went wrong
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            Looks like, you need to initiate all accounts first:
+          </Typography>
+          {showButtons ? (
+            <InitiateGameButton
+              setShowButtons={setShowButtons}
+              updateStepStatus={updateStepStatus}
+              setErrorMsg={setErrorMsg}
+              label="Initiate"
+            />
+          ) : (
+            initializationSteps.map((step, index) => (
+              <Grid item xs={12} key={index} style={{ textAlign: "center", color: "#fff" }}>
+                <pre>
+                  {step.status === "completed" && "✅ "}
+                  {step.status === "failed" && "❌ "}
+                  {step.status === "pending" && "⏳ "}
+                  {step.name}
+                </pre>
+              </Grid>
+            ))
+          )}
+          {errorMsg && (
+            <div className="error-container">
+              <span className="error-message">{errorMsg}</span>
+              <p style={{ color: "#fff", textAlign: "center" }}>
+                Address: <b>{workspace.provider?.publicKey.toBase58()}</b>
+                <br />
+                Devnet faucet:{" "}
+                <a href="https://faucet.solana.com/" style={{ color: "#fff" }} rel="noreferrer" target="_blank">
+                  https://faucet.solana.com/
+                </a>
+              </p>
+            </div>
+          )}
+        </Box>
+      </Modal>
       <Joyride
         steps={steps}
         run={true}
