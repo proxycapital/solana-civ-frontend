@@ -83,7 +83,7 @@ export const useGameState = () => {
 
 export const GameStateProvider: React.FC<BaseLayoutProps> = ({ children }) => {
   const { program, provider } = useWorkspace();
-  const { setShowError } = useModalError();
+  const { setShowModalError } = useModalError();
   const [resources, setResources] = useState({} as Resources);
   const [game, setGame] = useState({ turn: 1, map: [], defeat: false, victory: false } as Game);
   const [technologies, setTechnologies] = useState({
@@ -135,8 +135,7 @@ export const GameStateProvider: React.FC<BaseLayoutProps> = ({ children }) => {
     try {
       const player = await getPlayer(provider, program);
       if (!player) {
-        console.log("---SHOW ERROR!")
-        setShowError(true);
+        setShowModalError(true);
         return;
       }
 

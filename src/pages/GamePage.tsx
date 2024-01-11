@@ -22,7 +22,7 @@ const GamePage: React.FC = () => {
   const [showButtons, setShowButtons] = useState(true);
   const workspace = useWorkspace();
 
-  const { showError, setShowError } = useModalError();
+  const { showModalError, setShowModalError } = useModalError();
   const [initializationSteps, setInitializationSteps] = useState([
     { name: "Requesting airdrop", status: "pending" },
     { name: "Initializing game", status: "pending" },
@@ -139,8 +139,8 @@ const GamePage: React.FC = () => {
       <GameMap debug={debug} logMessage={logMessage} />
       {/* Modal to initiate accounts */}
       <Modal
-        open={showError} 
-        onClose={() => setShowError(false)}
+        open={showModalError} 
+        onClose={() => setShowModalError(false)}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >

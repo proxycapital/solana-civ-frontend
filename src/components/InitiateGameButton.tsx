@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useWorkspace } from '../context/AnchorContext';
 import { requestBackendAirdrop, requestSolanaAirdrop, registerPlayerAddress } from '../utils/initiateGame'
 import { initializeGame } from '../utils/solanaUtils';
+import { useModalError } from '../context/ModalErrorContext';
 
 const { REACT_APP_HELIUS_RPC } = process.env;
 
@@ -19,6 +20,7 @@ interface InitiateGameButtonProps {
 const InitiateGameButton = ({ setShowButtons, updateStepStatus, setErrorMsg, label = "Play with bots" }: InitiateGameButtonProps) => {
   const navigate = useNavigate();
   const workspace = useWorkspace();
+  const { setShowModalError } = useModalError();
 
   const createWalletAndStartGame = async () => {
     setShowButtons(false);
@@ -67,6 +69,7 @@ const InitiateGameButton = ({ setShowButtons, updateStepStatus, setErrorMsg, lab
       await initializeGame(provider, program);
       await registerPlayerAddress(wallet.publicKey.toBase58());
       updateStepStatus("Initializing game", "completed");
+      setShowModalError(false);
     } catch (error) {
       console.log("Error while initializing the game: ", error);
       updateStepStatus("Initializing game", "failed");
