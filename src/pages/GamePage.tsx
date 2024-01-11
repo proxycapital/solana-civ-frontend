@@ -149,14 +149,14 @@ const GamePage: React.FC = () => {
             Something went wrong
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Looks like, you need to initiate all accounts first:
+            Looks like you need to initialize all accounts first.
           </Typography>
           {showButtons ? (
             <InitiateGameButton
               setShowButtons={setShowButtons}
               updateStepStatus={updateStepStatus}
               setErrorMsg={setErrorMsg}
-              label="Initiate"
+              label="Initialize"
             />
           ) : (
             initializationSteps.map((step, index) => (
