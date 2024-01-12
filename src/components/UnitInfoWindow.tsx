@@ -122,6 +122,8 @@ const UnitInfoWindow: React.FC<UnitInfoProps> = ({ unit }) => {
     await fetchPlayerState();
   };
 
+  if(!alignment) return <></>;
+
   return (
     <div className={`unit-info-window align-${alignment}`}>
       <img src={`/${type}.png`} className="avatar" alt={type} />
