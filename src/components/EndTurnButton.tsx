@@ -180,7 +180,21 @@ const EndTurnButton: React.FC<EndTurnButtonProps> = ({ setShowOnboardingType, op
         npcAccount: npcKey,
         player: provider!.publicKey,
       };
-      const tx = await program!.methods.endTurn().accounts(accounts).rpc();
+      // const tx = await program!.methods.endTurn().accounts(accounts).rpc({skipPreflight: true});
+
+      const instruction = await program!.methods.endTurn().accounts(accounts).instruction();
+      const computeBudgetInstruction = anchor.web3.ComputeBudgetProgram.setComputeUnitLimit({
+          units: 1000000,
+      });
+      const addPriorityFee = anchor.web3.ComputeBudgetProgram.setComputeUnitPrice({ 
+        microLamports: 1 
+      });
+      const transaction = new anchor.web3.Transaction();
+      transaction.add(computeBudgetInstruction);
+      transaction.add(addPriorityFee);
+      transaction.add(instruction);
+      const tx = await provider!.sendAndConfirm(transaction);
+
       console.log(`End turn TX: https://explorer.solana.com/tx/${tx}?cluster=devnet`);
       await fetchPlayerState();
       await fetchGameState();

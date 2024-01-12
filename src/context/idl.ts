@@ -773,6 +773,14 @@ export type Solciv = {
                 "defined": "TileCoordinate"
               }
             }
+          },
+          {
+            "name": "level",
+            "type": "u32"
+          },
+          {
+            "name": "growthPoints",
+            "type": "u32"
           }
         ]
       }
@@ -966,6 +974,9 @@ export type Solciv = {
           },
           {
             "name": "TileOccupied"
+          },
+          {
+            "name": "TileNotControlled"
           }
         ]
       }
@@ -2134,6 +2145,14 @@ export const IDL: Solciv = {
                 "defined": "TileCoordinate"
               }
             }
+          },
+          {
+            "name": "level",
+            "type": "u32"
+          },
+          {
+            "name": "growthPoints",
+            "type": "u32"
           }
         ]
       }
@@ -2327,6 +2346,9 @@ export const IDL: Solciv = {
           },
           {
             "name": "TileOccupied"
+          },
+          {
+            "name": "TileNotControlled"
           }
         ]
       }
