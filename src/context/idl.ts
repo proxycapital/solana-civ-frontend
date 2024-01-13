@@ -42,7 +42,7 @@ export type Solciv = {
       "accounts": [
         {
           "name": "game",
-          "isMut": false,
+          "isMut": true,
           "isSigner": false
         },
         {
@@ -61,7 +61,14 @@ export type Solciv = {
           "isSigner": false
         }
       ],
-      "args": []
+      "args": [
+        {
+          "name": "position",
+          "type": {
+            "defined": "TileCoordinate"
+          }
+        }
+      ]
     },
     {
       "name": "initializeNpc",
@@ -87,7 +94,20 @@ export type Solciv = {
           "isSigner": false
         }
       ],
-      "args": []
+      "args": [
+        {
+          "name": "npcPosition1",
+          "type": {
+            "defined": "TileCoordinate"
+          }
+        },
+        {
+          "name": "npcPosition2",
+          "type": {
+            "defined": "TileCoordinate"
+          }
+        }
+      ]
     },
     {
       "name": "moveUnit",
@@ -1422,7 +1442,7 @@ export const IDL: Solciv = {
       "accounts": [
         {
           "name": "game",
-          "isMut": false,
+          "isMut": true,
           "isSigner": false
         },
         {
@@ -1441,7 +1461,14 @@ export const IDL: Solciv = {
           "isSigner": false
         }
       ],
-      "args": []
+      "args": [
+        {
+          "name": "position",
+          "type": {
+            "defined": "TileCoordinate"
+          }
+        }
+      ]
     },
     {
       "name": "initializeNpc",
@@ -1467,7 +1494,20 @@ export const IDL: Solciv = {
           "isSigner": false
         }
       ],
-      "args": []
+      "args": [
+        {
+          "name": "npcPosition1",
+          "type": {
+            "defined": "TileCoordinate"
+          }
+        },
+        {
+          "name": "npcPosition2",
+          "type": {
+            "defined": "TileCoordinate"
+          }
+        }
+      ]
     },
     {
       "name": "moveUnit",
