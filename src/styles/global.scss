@@ -1,5 +1,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC:wght@400;700&display=swap");
 
+* {
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
 body {
   background: rgb(46, 63, 75);
   background: linear-gradient(180deg, rgba(46, 63, 75, 1) 0%, rgba(30, 39, 52, 1) 100%);
