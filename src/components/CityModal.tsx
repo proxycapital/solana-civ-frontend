@@ -81,7 +81,7 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
 
   const getFoodNeededForGrowth = (population: number) => {
     return Math.floor(0.1082 * Math.pow(population, 2) + 10.171 * population + 1.929);
-  }
+  };
 
   const handleAddToProductionQueue = async (item: BuildingType, type: "building" | "unit") => {
     try {
@@ -137,23 +137,23 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
     try {
       const tx = repairWall(provider!, program!, Number(cityId));
       const signature = await toast.promise(tx, {
-        pending: 'Repairing city',
-        success: 'City repaired',
-        error: 'Error during city repair',
+        pending: "Repairing city",
+        success: "City repaired",
+        error: "Error during city repair",
       });
       if (typeof signature === "string") {
         console.log(`Repair City, TX: https://explorer.solana.com/tx/${signature}?cluster=devnet`);
       }
     } catch (error: any) {
-      console.log(error.message)
+      console.log(error.message);
       if (error.message.includes("NotDamagedCity")) {
         await toast.error("Cannt repair full HP city");
       }
       if (error.message.includes("InsufficientStone")) {
-        await toast.error("Not enough stone");  
+        await toast.error("Not enough stone");
       }
       if (error.message.includes("InsufficientWood")) {
-        await toast.error("Not enough wood");  
+        await toast.error("Not enough wood");
       }
       console.log(`Error repairing city ${cityId}: `, error);
     }
@@ -181,18 +181,18 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
   };
 
   const cityBuildings = city?.buildings.map((building) => {
-    return Object.keys(building)[0]
-  })
+    return Object.keys(building)[0];
+  });
 
-  let wallMaxHealth = null
-  if (cityBuildings?.includes('wallIndustrial')) {
-    wallMaxHealth = 200
-  } else if (cityBuildings?.includes('wallRenaissance')) {
-    wallMaxHealth = 150
-  } else if (cityBuildings?.includes('wallMedieval')) {
-    wallMaxHealth = 100
-  } else if (cityBuildings?.includes('wall')) {
-    wallMaxHealth = 50
+  let wallMaxHealth = null;
+  if (cityBuildings?.includes("wallIndustrial")) {
+    wallMaxHealth = 200;
+  } else if (cityBuildings?.includes("wallRenaissance")) {
+    wallMaxHealth = 150;
+  } else if (cityBuildings?.includes("wallMedieval")) {
+    wallMaxHealth = 100;
+  } else if (cityBuildings?.includes("wall")) {
+    wallMaxHealth = 50;
   }
 
   return (
@@ -232,15 +232,21 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
                   </Box>
                   {index === 0 && (
                     <p className="ready-in-text">
-                      Ready in&nbsp;
-                      <b>
-                        {itemData?.productionCost
-                          ? Math.round(
-                              (itemData?.productionCost - city.accumulatedProduction) / city.productionYield
-                            )
-                          : ""}
-                      </b>{" "}
-                      turns
+                      {itemData?.productionCost &&
+                        (Math.round((itemData.productionCost - city.accumulatedProduction) / city.productionYield) <=
+                        0 ? (
+                          <span>Ready next turn</span>
+                        ) : (
+                          <span>
+                            Ready in&nbsp;
+                            <b>
+                              {Math.round(
+                                (itemData.productionCost - city.accumulatedProduction) / city.productionYield
+                              )}
+                            </b>{" "}
+                            turns
+                          </span>
+                        ))}
                     </p>
                   )}
                 </div>
@@ -259,8 +265,8 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
               <div>
                 <img width="32" src="./icons/food.png" alt="apple" />
                 <span>
-                  {city.foodYield - (city.population * 2) >= 0 ? '+' : ''}
-                  {city.foodYield - (city.population * 2)}
+                  {city.foodYield - city.population * 2 >= 0 ? "+" : ""}
+                  {city.foodYield - city.population * 2}
                 </span>
               </div>
               <div>
@@ -280,35 +286,45 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
               <img src="/icons/diamond.png" alt="" width="32" className="center-image" />
             </div>
             <div className="city-stats">
-              <img src="/icons/population.png" alt="population" /> Population:&nbsp;<b>{city.population} of {city.housing}</b>
-              
+              <img src="/icons/population.png" alt="population" /> Population:&nbsp;
+              <b>
+                {city.population} of {city.housing}
+              </b>
             </div>
-            {city.population < city.housing && (<div className="city-stats">
-              <span>({city.accumulatedFood}/{getFoodNeededForGrowth(city.population)} food for growth)</span>
-            </div>)}
+            {city.population < city.housing && (
+              <div className="city-stats">
+                <span>
+                  ({city.accumulatedFood}/{getFoodNeededForGrowth(city.population)} food for growth)
+                </span>
+              </div>
+            )}
             <div className="city-stats">
               <img src="/icons/health.png" alt="health" /> Health:&nbsp;<b>{city.health}/100</b>
             </div>
             {/* only show if user has any level of wall */}
             {wallMaxHealth && (
               <div className="city-stats">
-                <img src="/icons/wall.png" alt="health" /> Wall:&nbsp;<b>{city.wallHealth}/ {wallMaxHealth}</b>
+                <img src="/icons/wall.png" alt="health" /> Wall:&nbsp;
+                <b>
+                  {city.wallHealth}/ {wallMaxHealth}
+                </b>
               </div>
             )}
             <div className="city-stats">
               <img src="/icons/attack.png" alt="strength" />
               Strength:&nbsp;<b>{city.attack}</b>
             </div>
-            {wallMaxHealth && (wallMaxHealth !== city.wallHealth) && (
+            {wallMaxHealth && wallMaxHealth !== city.wallHealth && (
               <Button
-                className={`unit-action-button ${city.wallHealth === wallMaxHealth && 'disabled'}`}
+                className={`unit-action-button ${city.wallHealth === wallMaxHealth && "disabled"}`}
                 variant="outlined"
                 onClick={handleRepairWall}
               >
                 <img src="/icons/build.png" alt="" className="unit-icon" />
                 Repair Wall ({(wallMaxHealth - city.wallHealth) * 2}
-                  <img className="unit-icon" src="/icons/wood.png" alt="stone" /> + {(wallMaxHealth - city.wallHealth) * 2}
-                  <img className="unit-icon stone-icon" src="/icons/stone.png" alt="stone" />)
+                <img className="unit-icon" src="/icons/wood.png" alt="stone" /> +{" "}
+                {(wallMaxHealth - city.wallHealth) * 2}
+                <img className="unit-icon stone-icon" src="/icons/stone.png" alt="stone" />)
               </Button>
             )}
           </div>
@@ -411,9 +427,7 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
                         <div className="number-of-turns">
                           {selectedTab === 0 ? (
                             <>
-                              <span>
-                                {city ? Math.round(building.productionCost / city.productionYield) : ""}
-                              </span>
+                              <span>{city ? Math.round(building.productionCost / city.productionYield) : ""}</span>
                               <img src="./icons/hourglass.png" width="20" alt="hourglass" />
                             </>
                           ) : (
