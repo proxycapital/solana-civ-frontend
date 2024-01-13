@@ -171,7 +171,7 @@ export const AllBuildings: BuildingType[] = [
   },
   {
     type: "stockExchange",
-    label: "Stock Excahnge",
+    label: "Stock Exchange",
     goldCost: 300,
     productionCost: 30,
     stats: {

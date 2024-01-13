@@ -162,7 +162,7 @@ const UnitInfoWindow: React.FC<UnitInfoProps> = ({ unit }) => {
           variant="outlined"
           onClick={() => handleFoundCity(unit.x, unit.y, unit.unitId)}
         >
-          <img src="/icons/build.png" alt="" className="unit-icon" /> Found a City
+          <img src="/icons/build.png" alt="" className="unit-icon" /> Build a City
         </Button>
       )}
       {type === "builder" && (
