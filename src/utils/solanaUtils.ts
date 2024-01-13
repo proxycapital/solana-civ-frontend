@@ -5,6 +5,7 @@ import { AnchorProvider, Program } from "@coral-xyz/anchor";
 
 import { Solciv } from "../context/idl";
 import { weightedRandomTile } from "../components/Terrain";
+import { getRandomCoordinates, calculateDistance } from "./index";
 
 const { REACT_APP_RPC: RPC } = process.env;
 
@@ -69,7 +70,7 @@ export const getPlayer = async (provider: AnchorProvider | undefined, program: P
   } catch (error) {
     console.log("Error while fetching player account: ", error);
     if (String(error).includes("Account does not exist or has no data")) {
-      return null
+      return null;
     }
   }
   const balances = playerAccount?.resources ?? {};
@@ -168,6 +169,9 @@ export const initializeGame = async (provider: AnchorProvider, program: Program<
     const account = await program.account.game.fetch(gameKey);
     console.log("Created game account", account);
   }
+
+  // Generate random player location
+  const position = getRandomCoordinates();
   let playerAccount;
   try {
     // @ts-ignore
@@ -184,7 +188,7 @@ export const initializeGame = async (provider: AnchorProvider, program: Program<
       player: provider.publicKey,
       systemProgram: anchor.web3.SystemProgram.programId,
     };
-    const tx = await program.methods.initializePlayer().accounts(accounts).rpc();
+    const tx = await program.methods.initializePlayer(position).accounts(accounts).rpc();
     console.log("Transaction signature", tx);
 
     // wait for transaction to be confirmed
@@ -204,13 +208,25 @@ export const initializeGame = async (provider: AnchorProvider, program: Program<
   if (npcAccount) {
     console.log("Existing npc account", npcAccount);
   } else {
+    // Generate random NPC locations with distance check
+    let npcPosition1, npcPosition2;
+    do {
+      npcPosition1 = getRandomCoordinates();
+    } while (calculateDistance(position, npcPosition1) < 10);
+
+    do {
+      npcPosition2 = getRandomCoordinates();
+    } while (
+      calculateDistance(position, npcPosition2) < 10 ||
+      calculateDistance(npcPosition1, npcPosition2) < 10
+    );
     const accounts = {
       game: gameKey,
       npcAccount: npcKey,
       player: provider.publicKey,
       systemProgram: anchor.web3.SystemProgram.programId,
     };
-    const tx = await program.methods.initializeNpc().accounts(accounts).rpc();
+    const tx = await program.methods.initializeNpc(npcPosition1, npcPosition2).accounts(accounts).rpc();
     console.log("Transaction signature", tx);
 
     // wait for transaction to be confirmed
@@ -274,11 +290,7 @@ export const removeFromProductionQueue = async (
   return program.methods.removeFromProductionQueue(cityId, itemIndex).accounts(accounts).rpc();
 };
 
-export const repairWall = async (
-  provider: AnchorProvider,
-  program: Program<Solciv>,
-  cityId: number,
-) => {
+export const repairWall = async (provider: AnchorProvider, program: Program<Solciv>, cityId: number) => {
   const [gameKey] = anchor.web3.PublicKey.findProgramAddressSync(
     [Buffer.from("GAME"), provider.publicKey.toBuffer()],
     program.programId
@@ -297,7 +309,7 @@ export const repairWall = async (
   };
 
   return program.methods.repairWall(cityId).accounts(accounts).rpc();
-}
+};
 
 export const purchaseWithGold = async (
   provider: AnchorProvider,
@@ -343,7 +355,7 @@ export const foundCity = async (provider: AnchorProvider, program: Program<Solci
     systemProgram: anchor.web3.SystemProgram.programId,
   };
 
-  return program.methods.foundCity(data.x, data.y, data.unitId, data.name).accounts(accounts).rpc();
+  return program.methods.foundCity(data.x, data.y, data.unitId, data.name).accounts(accounts).rpc({skipPreflight: true});
 };
 
 export const upgradeLandPlot = async (provider: AnchorProvider, program: Program<Solciv>, unit: any) => {
