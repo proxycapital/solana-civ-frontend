@@ -260,15 +260,16 @@ div.unit img {
   height: 40px;
   margin: 0 auto;
   transform: translate(-50%, -50%);
-  border: 1px solid #c70000;
-  border-radius: 45px;
   padding: 4px;
-  backdrop-filter: blur(2px);
-  /* filter: grayscale(1); */
+  border-radius: 100px;
+  border: 2px solid var(--light-gradient, #927F61);
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(8px);
+  filter: grayscale(1);
 }
 
 .land-plot-resource.upgradable {
-  border: 1px solid #11FF05;
+  filter: grayscale(0);
 }
 
 img.upgraded-tile {
