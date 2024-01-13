@@ -42,7 +42,7 @@ const UnitInfoWindow: React.FC<UnitInfoProps> = ({ unit }) => {
       const distanceFromRight = window.innerWidth - rect.right;
 
       // the unit window is 240px wide defined in the css
-      if(distanceFromRight < 300) {
+      if(distanceFromRight < 400) {
         setAlignment('left');
       } else {
         setAlignment('right');

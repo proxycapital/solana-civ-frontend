@@ -41,6 +41,8 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
   const rows = 20;
   const cols = 20;
   const isDragging = useRef(false);
+  const initialScrollDone = useRef(false);
+  const [dataLoaded, setDataLoaded] = useState(false);
   const [showVillageModal, setShowVillageModal] = useState(false);
   const [showUpgradedTileModal, setShowUpgradedTileModal] = useState(true);
   const {
@@ -88,6 +90,7 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
     (async () => {
       await fetchPlayerState();
       await fetchNpcs();
+      setDataLoaded(true);
     })();
   }, []);
 
@@ -185,6 +188,19 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
       setTiles(newTiles);
     })();
   }, [cities, upgradedTiles, npcCities, game.map]);
+
+  useEffect(() => {
+    if (dataLoaded && !initialScrollDone.current) {
+      let element = document.getElementById('unit-0');
+      if (!element) {
+        element = document.querySelector('.village');
+      }
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        initialScrollDone.current = true;
+      }
+    }
+  }, [dataLoaded]);
 
   const startDrag = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     event.preventDefault();
@@ -491,6 +507,7 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
                 unitAction(col, row, currentUnit?.type || selectedUnit?.type || "unknown");
               }}
             >
+              {/* <p style={{color: 'red', textAlign: 'center', zIndex: 100000}}>({col}, {row})</p> */}
               {currentTile.discovered && currentTile.cityName && (
                 <CityTile
                   imageIndex={currentTile.imageIndex}
