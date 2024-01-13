@@ -1,7 +1,8 @@
-import React from 'react'
-import { Button, Grid } from '@mui/material'
+import React, { useState } from 'react'
+import { Button, Grid, Modal, Box, Typography } from '@mui/material'
 import { Connection, PublicKey, LAMPORTS_PER_SOL } from "@solana/web3.js";
 import { useNavigate } from "react-router-dom";
+import Tippy from '@tippyjs/react';
 
 import { useWorkspace } from '../context/AnchorContext';
 import { requestBackendAirdrop, requestSolanaAirdrop, registerPlayerAddress } from '../utils/initiateGame'
@@ -21,8 +22,9 @@ const InitiateGameButton = ({ setShowButtons, updateStepStatus, setErrorMsg, lab
   const navigate = useNavigate();
   const workspace = useWorkspace();
   const { setShowModalError } = useModalError();
+  const [selectLevelVisible, setSelectLevelVisible] = useState(false);
 
-  const createWalletAndStartGame = async () => {
+  const createWalletAndStartGame = async (level: number) => {
     setShowButtons(false);
     const connection = workspace.connection as Connection;
     const wallet = {
@@ -66,7 +68,7 @@ const InitiateGameButton = ({ setShowButtons, updateStepStatus, setErrorMsg, lab
     try {
       const provider = workspace.provider!;
       const program = workspace.program!;
-      await initializeGame(provider, program);
+      await initializeGame(provider, program, level);
       await registerPlayerAddress(wallet.publicKey.toBase58());
       updateStepStatus("Initializing game", "completed");
       setShowModalError(false);
@@ -82,16 +84,79 @@ const InitiateGameButton = ({ setShowButtons, updateStepStatus, setErrorMsg, lab
   }
   
   return (
-    <Grid item xs={12}>
-      <Button
-        variant="contained"
-        color="primary"
-        className="fixed-width-button"
-        onClick={createWalletAndStartGame}
+    <>
+      <Grid item xs={12}>
+        <Button
+          variant="contained"
+          color="primary"
+          className="fixed-width-button"
+          onClick={() => setSelectLevelVisible(true)}
+        >
+          {label}
+        </Button>
+      </Grid>
+      <Modal
+        open={selectLevelVisible} 
+        onClose={() => setSelectLevelVisible(false)}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
       >
-        {label}
-      </Button>
-    </Grid>
+        <Box className="modal-end-game modal-select-levels" style={{background: "rgb(49 44 38)"}}>
+          <div className="modal-header">
+            <div onClick={() => setSelectLevelVisible(false)} role="button" className="close-icon">
+              <img width="32" src="./icons/close.png" alt="Close" />
+            </div>
+          </div>
+          <Typography id="modal-modal-description" fontSize="1.2rem">
+             Select difficulty: 
+          </Typography>   
+          <Box className="modal-levels-buttons">
+            <Tippy
+              key="level 1"
+              placement="right"
+              content={<span><span className="bold-text">x0.5</span> gems multiplier. <br />Barbarians spawn every 20 turns</span>}
+            >
+              <Button
+                variant="contained"
+                color="primary"
+                className="fixed-width-button"
+                onClick={() => createWalletAndStartGame(0)}
+              >
+                Easy
+              </Button>
+            </Tippy>
+            <Tippy
+              key="level 2"
+              placement="right"
+              content={<span><span className="bold-text">x1</span> gems multiplier. <br />Barbarians spawn every 15 turns</span>}
+            >
+              <Button
+                variant="contained"
+                color="primary"
+                className="fixed-width-button"
+                onClick={() => createWalletAndStartGame(1)}
+              >
+                Medium
+              </Button>
+            </Tippy>
+            <Tippy
+              key="level 3"
+              placement="right"
+              content={<span><span className="bold-text">x2</span> gems multiplier. <br />Barbarians spawn every 10 turns</span>}
+            >
+              <Button
+                variant="contained"
+                color="primary"
+                className="fixed-width-button"
+                onClick={() => createWalletAndStartGame(2)}
+              >
+                Hard
+              </Button>
+            </Tippy>
+          </Box>
+        </Box>
+      </Modal>
+    </>
   )
 }
 
