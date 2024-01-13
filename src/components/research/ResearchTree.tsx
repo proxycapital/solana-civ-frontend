@@ -99,7 +99,10 @@ const ResearchTree = () => {
         error: "Failed to start research",
       });
     } catch (error: any) {
-      console.log(error);
+      if (!error.message) {
+        toast.warning("Research: Something went wrong");
+        console.log(error);
+      }
       if (error.message.includes("CannotResearch")) {
         toast.error("You need to research the previous technology first!", {});
       }
