@@ -30,6 +30,10 @@ export type Solciv = {
               400
             ]
           }
+        },
+        {
+          "name": "difficultyLevel",
+          "type": "u8"
         }
       ]
     },
@@ -573,6 +577,10 @@ export type Solciv = {
                 400
               ]
             }
+          },
+          {
+            "name": "difficultyLevel",
+            "type": "u8"
           }
         ]
       }
@@ -1422,6 +1430,10 @@ export const IDL: Solciv = {
               400
             ]
           }
+        },
+        {
+          "name": "difficultyLevel",
+          "type": "u8"
         }
       ]
     },
@@ -1965,6 +1977,10 @@ export const IDL: Solciv = {
                 400
               ]
             }
+          },
+          {
+            "name": "difficultyLevel",
+            "type": "u8"
           }
         ]
       }
