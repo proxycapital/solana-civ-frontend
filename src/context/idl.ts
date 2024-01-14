@@ -30,6 +30,10 @@ export type Solciv = {
               400
             ]
           }
+        },
+        {
+          "name": "difficultyLevel",
+          "type": "u8"
         }
       ]
     },
@@ -553,6 +557,10 @@ export type Solciv = {
                 400
               ]
             }
+          },
+          {
+            "name": "difficultyLevel",
+            "type": "u8"
           }
         ]
       }
@@ -1366,9 +1374,9 @@ export type Solciv = {
     }
   ],
   "metadata": {
-    "address": "3qoyRXbpBJDPfQYL5GUFJ2nf2YzpA8kZmXPYr4DZBmPU"
+    "address": "Ao9kXUtMfEZP9jEjxTewquUmta7nf5sWLJFwuD2RmUNm"
   }
-};
+}
 
 export const IDL: Solciv = {
   "version": "0.1.0",
@@ -1402,6 +1410,10 @@ export const IDL: Solciv = {
               400
             ]
           }
+        },
+        {
+          "name": "difficultyLevel",
+          "type": "u8"
         }
       ]
     },
@@ -1925,6 +1937,10 @@ export const IDL: Solciv = {
                 400
               ]
             }
+          },
+          {
+            "name": "difficultyLevel",
+            "type": "u8"
           }
         ]
       }
@@ -2738,6 +2754,6 @@ export const IDL: Solciv = {
     }
   ],
   "metadata": {
-    "address": "3qoyRXbpBJDPfQYL5GUFJ2nf2YzpA8kZmXPYr4DZBmPU"
+    "address": "Ao9kXUtMfEZP9jEjxTewquUmta7nf5sWLJFwuD2RmUNm"
   }
-};
+}

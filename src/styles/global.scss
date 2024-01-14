@@ -572,6 +572,25 @@ img.terrain.undiscovered {
   border-radius: 10px;
   text-align: center;
   color: #fff;
+
+  .modal-levels-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.modal-select-levels {
+  .modal-header {
+    top: 0.5rem;
+    right: 0.5rem;
+    position: fixed;
+    z-index: 2;
+    
+    &:hover {
+      cursor: pointer;
+    }
+  }
 }
 
 .custom-modal {

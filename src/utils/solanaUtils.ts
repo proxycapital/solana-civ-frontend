@@ -124,7 +124,7 @@ export const getNpcs = async (provider: AnchorProvider | undefined, program: Pro
   return { units, cities };
 };
 
-export const initializeGame = async (provider: AnchorProvider, program: Program<Solciv>) => {
+export const initializeGame = async (provider: AnchorProvider, program: Program<Solciv>, level: number) => {
   const [gameKey] = anchor.web3.PublicKey.findProgramAddressSync(
     [Buffer.from("GAME"), provider.publicKey.toBuffer()],
     program.programId
@@ -160,7 +160,7 @@ export const initializeGame = async (provider: AnchorProvider, program: Program<
       player: provider.publicKey,
       systemProgram: anchor.web3.SystemProgram.programId,
     };
-    const tx = await program.methods.initializeGame(randomMap).accounts(accounts).rpc();
+    const tx = await program.methods.initializeGame(randomMap, level).accounts(accounts).rpc();
     console.log("Transaction signature", tx);
     // wait for transaction to be confirmed
     await connection.confirmTransaction(tx);
