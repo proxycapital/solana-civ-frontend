@@ -1394,9 +1394,9 @@ export type Solciv = {
     }
   ],
   "metadata": {
-    "address": "Ao9kXUtMfEZP9jEjxTewquUmta7nf5sWLJFwuD2RmUNm"
+    "address": "3qoyRXbpBJDPfQYL5GUFJ2nf2YzpA8kZmXPYr4DZBmPU"
   }
-}
+};
 
 export const IDL: Solciv = {
   "version": "0.1.0",
@@ -2794,6 +2794,6 @@ export const IDL: Solciv = {
     }
   ],
   "metadata": {
-    "address": "Ao9kXUtMfEZP9jEjxTewquUmta7nf5sWLJFwuD2RmUNm"
+    "address": "3qoyRXbpBJDPfQYL5GUFJ2nf2YzpA8kZmXPYr4DZBmPU"
   }
-}
+};
