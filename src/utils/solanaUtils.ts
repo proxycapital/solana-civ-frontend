@@ -6,6 +6,7 @@ import { AnchorProvider, Program } from "@coral-xyz/anchor";
 import { Solciv } from "../context/idl";
 import { weightedRandomTile } from "../components/Terrain";
 import { getRandomCoordinates, calculateDistance } from "./index";
+import resetResearchStorage from "./storage";
 
 const { REACT_APP_RPC: RPC } = process.env;
 
@@ -154,6 +155,8 @@ export const initializeGame = async (provider: AnchorProvider, program: Program<
   if (gameAccount && gameAccount.player.toBase58() === provider.publicKey.toBase58()) {
     console.log("Existing game account", gameAccount);
   } else {
+    resetResearchStorage();
+
     const randomMap = Array.from({ length: 400 }, () => weightedRandomTile());
 
     const accounts = {
