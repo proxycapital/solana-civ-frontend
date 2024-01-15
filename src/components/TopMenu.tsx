@@ -232,7 +232,7 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
             </Button>
           </Tippy>
 
-          {/* <Tippy key="quests" content="Quests" placement="left">
+          <Tippy key="quests" content="Quests" placement="left">
             <Button
               className="quests-button"
               variant="text"
@@ -245,7 +245,7 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
             </Button>
           </Tippy>
 
-          <Tippy key="leaderboard" content="Leaderboard" placement="left">
+          {/* <Tippy key="leaderboard" content="Leaderboard" placement="left">
             <Button
               variant="text"
               color="inherit"
