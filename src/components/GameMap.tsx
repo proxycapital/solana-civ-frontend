@@ -544,11 +544,14 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
                 //health={currentTile.health}
                 turn={game.turn}
               />
-              {currentTile.discovered && selectedUnit && selectedUnit.type === "builder" && resourceAvailable && (
-                <div className={`land-plot-resource ${isControlled ? "upgradable" : ""}`}>
-                  <img src={`/icons/${resourceAvailable}.png`} alt="" />
-                </div>
-              )}
+              {currentTile.discovered &&
+                selectedUnit &&
+                (selectedUnit.type === "builder" || selectedUnit.type === "settler") &&
+                resourceAvailable && (
+                  <div className={`land-plot-resource ${isControlled ? "upgradable" : ""}`}>
+                    <img src={`/icons/${resourceAvailable}.png`} alt="" />
+                  </div>
+                )}
               {currentTile.discovered && currentUnit && <Unit {...currentUnit} onClick={() => ""} />}
             </div>
           );
