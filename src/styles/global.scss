@@ -213,17 +213,36 @@ div.unit {
     position: absolute;
     bottom: 0;
     right: 5%;
-    padding: 0 6px;
+    width: 20px;
+    height: 20px;
+    text-align: center;
     border-radius: 50%;
     border: 1px solid #fff;
     background: #c8aa6e;
     font-size: 1rem;
     color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    span {
+      padding-bottom: 2px;
+    }
+
+    .upgrade-image-container {
+      display: flex;
+      justify-content: center;
+      
+      img {
+        width: 75%;
+        height: 75%;
+      }
+    }
   }
 
 }
 
-div.unit img {
+div.unit .unit-image {
   border-radius: 45px;
   box-shadow: 0px 2px 5px 0px #0000009a;
 }
@@ -392,20 +411,31 @@ img.upgraded-tile {
   padding: 0.25rem 0.5rem;
   /* height: 20px; */
   width: 125px;
-  top: -3rem;
+  top: -3.25rem;
   left: -1rem;
   position: absolute;
 }
 
 .city-name-wrapper {
-  margin-bottom: 4px;
+  margin-bottom: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.city-name-wrapper .population {
-  padding: 0 6px;
-  border-radius: 32px;
+.city-name-wrapper .population-container {
+  border-radius: 10px;
+  height: 18px;
+  width: 18px;
   border: 1px solid #fff;
   background: #c8aa6e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  span {
+    padding-bottom: 2px;
+  }
 }
 
 .city-header .city-wall-bar {

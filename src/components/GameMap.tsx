@@ -4,7 +4,7 @@ import { ToastContainer, toast } from "react-toastify";
 
 import Terrain, { TileType } from "./Terrain";
 import CityTile from './CityTile';
-import Unit from "./Unit";
+import UnitTile from "./UnitTile";
 import UnitInfoWindow from "./UnitInfoWindow";
 import CityModal from "./CityModal";
 import UpgradedTileModal, { UpgradedTileType } from "./UpgradedTileModal";
@@ -66,6 +66,7 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
     type: string;
     isSelected: boolean;
     movementRange: number;
+    experience: number;
   }
 
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -534,7 +535,7 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
                   <img src={`/icons/${resourceAvailable}.png`} alt="" />
                 </div>
               )}
-              {currentTile.discovered && currentUnit && <Unit {...currentUnit} onClick={() => ""} />}
+              {currentTile.discovered && currentUnit && <UnitTile {...currentUnit} onClick={() => ""} />}
             </div>
           );
         })}

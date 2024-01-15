@@ -140,7 +140,6 @@ export const GameStateProvider: React.FC<BaseLayoutProps> = ({ children }) => {
       }
 
       if (player) {
-        console.log(player.units);
         if (player.balances) setResources(player.balances);
         if (player.units) setUnits(player.units);
         if (player.cities) {
