@@ -1,8 +1,11 @@
+import Tippy from "@tippyjs/react";
 
 import { useGameState } from "../../context/GameStateContext";
 import { capitalizeWords } from "../../utils";
 import { AllBuildings } from "../../Buildings";
 import { AllUnits } from "../../Units";
+import ResearchTippy from "./ResearchTippy";
+import "./ResearchTree.scss";
 
 const NewResearch = () => {
   const { technologies} = useGameState()
@@ -18,9 +21,21 @@ const NewResearch = () => {
     <div className="new-research-block">
       <h3>You have researched <span className="bold-text">{lastResearch}</span>!
         <br />
-        {/* @todo: add Tippy here */}
-        {newBuildingUnlocked?.label && `Now you can build ${newBuildingUnlocked?.label}.`}
-        {newUnitUnlocked?.label && `Now you can train new unit - ${newUnitUnlocked?.label}.`}
+        {newBuildingUnlocked?.label && (
+          <span>Now you can build&nbsp;
+            <Tippy placement="bottom" content={ResearchTippy(newBuildingUnlocked?.label)}>
+              <span className="underline-text">{newBuildingUnlocked?.label}</span>
+            </Tippy>.
+          </span>
+        )}
+
+        {newUnitUnlocked?.label && (
+          <span>Now you can train new unit - &nbsp;
+            <Tippy placement="bottom" content={ResearchTippy(newUnitUnlocked?.label)}>
+              <span className="underline-text">{newUnitUnlocked?.label}</span>
+            </Tippy>.
+          </span>
+        )}
       </h3>
     </div>
   )

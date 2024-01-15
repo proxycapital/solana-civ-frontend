@@ -184,36 +184,6 @@ button.research-button {
   font-weight: bold;
 }
 
-.research-tippy {
-  .unit-stats-container {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-
-    img {
-      width: 60px;
-      height: 60px;
-    }
-
-    .unit-stats {
-      display: flex;
-      flex-direction: column;
-      margin-left: 0.5rem;
-      
-      p {
-        margin: 0;
-        padding: 0;
-
-        span {
-          font-weight: bold;
-          font-size: 1.25rem;
-          line-height: 0;
-        }
-      }
-    }
-  }
-}
-
 .new-research-block {
   padding: 0 16px;
   text-align: center;
@@ -221,6 +191,34 @@ button.research-button {
   h3 {
     font-size: 1.5rem;
     font-weight: normal;
+  }
+}
+
+.unit-stats-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  img {
+    width: 60px;
+    height: 60px;
+  }
+
+  .unit-stats-tippy {
+    display: flex;
+    flex-direction: column;
+    margin-left: 0.5rem;
+    
+    p {
+      margin: 0;
+      padding: 0;
+
+      span {
+        font-weight: bold;
+        font-size: 1.25rem;
+        line-height: 0;
+      }
+    }
   }
 }
 

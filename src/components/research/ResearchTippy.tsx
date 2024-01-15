@@ -16,7 +16,7 @@ const TippyUnitStats = ({ attack, movement, maintenance, name}: TippyUnitStasPro
   return (
     <div className="unit-stats-container">
       <img width="50" src={`./${name.toLowerCase()}.png`} alt="Archer" />
-      <div className="unit-stats">
+      <div className="unit-stats-tippy">
         <p>Attack: <span>{attack}</span></p>
         <p>Movement: <span>{movement}</span></p>
         <p>Maintenance: <span>{maintenance}</span></p>
@@ -27,7 +27,7 @@ const TippyUnitStats = ({ attack, movement, maintenance, name}: TippyUnitStasPro
 
 const TippyBuildingStats = ({ value, resourceName }: TippyBuildingStatsProps) => {
   return (
-    <div className="building-stats-container">
+    <div>
       {/* @todo: need to add image of each building */}
       <span>+{value} {resourceName}</span>
     </div>
@@ -51,7 +51,7 @@ const ResearchTippy = (researchName: string): ReactNode => {
       return <TippyBuildingStats value={2} resourceName="gold" />
     case "Bank":
       return <TippyBuildingStats value={3} resourceName="gold" />
-    case "StockExchange":
+    case "Stock Exchange":
       return <TippyBuildingStats value={4} resourceName="gold" />
     case "Granary":
       return <span><span className="bold-text">+2 food</span> | <span className="bold-text">+2 housing</span></span>
@@ -65,9 +65,9 @@ const ResearchTippy = (researchName: string): ReactNode => {
       return <TippyBuildingStats value={2} resourceName="production" />
       case "Factory":
       return <TippyBuildingStats value={3} resourceName="production" />
-    case "EnergyPlant":
+    case "Energy Plant":
       return <TippyBuildingStats value={4} resourceName="production" />
-    case "ResidentialComplex":
+    case "Residential Complex":
       return <TippyBuildingStats value={5} resourceName="housing" />
 
     case "Archer": 
@@ -85,11 +85,11 @@ const ResearchTippy = (researchName: string): ReactNode => {
     case "Tank":
       return <TippyUnitStats name={researchName} attack={50} movement={2} maintenance={7} />
       
-    case "WallMedieval":
+    case "Medieval Wall":
       return <span>Wall with <span className="bold-text">100 HP</span> and <span className="bold-text">10 attack</span></span>
-    case "WallRenaissance":
+    case "Renaissance Wall":
       return <span>Wall with <span className="bold-text">150 HP</span> and <span className="bold-text">20 attack</span></span>
-    case "WallIndustrial":
+    case "Industrial Wall":
       return <span>Wall with <span className="bold-text">200 HP</span> and <span className="bold-text">30 attack</span></span>
     default: 
       return null
