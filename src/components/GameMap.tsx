@@ -8,11 +8,12 @@ import Unit from "./Unit";
 import UnitInfoWindow from "./UnitInfoWindow";
 import CityModal from "./CityModal";
 import UpgradedTileModal, { UpgradedTileType } from "./UpgradedTileModal";
-import { useGameState } from "../context/GameStateContext";
+import {City, useGameState} from "../context/GameStateContext";
 import { useWorkspace } from "../context/AnchorContext";
 import { useSound } from "../context/SoundContext";
 import { getMap } from "../utils/solanaUtils";
 import GameOverModal from "./GameOverModal";
+import TileMenu from "./TileMenu";
 
 interface GameMapProps {
   debug: boolean;
@@ -65,6 +66,8 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
   const [units, setUnits] = useState<Unit[]>(allUnits);
   const [selectedCityId, setSelectedCity] = useState<number | null>(null);
   const [selectedTileType, setSelectedTileType] = useState<UpgradedTileType | null>(null);
+  const [selectedTile, setSelectedTile] = useState<{ x: number, y: number } | null>(null)
+  const [unitsTile, setUnitsTile] = useState<Array<Unit | City | any>>([])
 
   interface Unit {
     unitId: number;
@@ -417,23 +420,47 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
     return selectUnit(x, y, type);
   };
 
-  const handleTileClick = (col: number, row: number) => {
-    // check if any unit is on this tile
-    const unit: any = units.find((u) => u.x === col && u.y === row && u.movementRange > 0);
-    if (unit) {
+  const handleTileClick = (col: number, row: number, unitsInTile:  Unit[]) => {
+    // get all units, cities and upgraded tiles in the tile
+    const upgradedUnitsInTile = upgradedTiles.filter((t) => t.x === col && t.y === row);
+
+    const citiesInTile = cities.filter((c) => c.x === col && c.y === row);
+
+    const tileUnits: Array<Unit | City | any> = [...unitsInTile, ...upgradedUnitsInTile, ...citiesInTile];
+
+    // if there is more than one unit in the tile, show menu
+    if(tileUnits.length > 1 && (!selectedUnit || !unitsInTile.find(unit => selectedUnit.unitId === unit.unitId)) ) {
+      if(selectedTile?.x  === col && selectedTile?.y === row) {
+        setSelectedTile(null)
+        return;
+      } else {
+        setUnits(prevState => {
+          return prevState.map((unit) => ({...unit, isSelected: false}))
+        })
+        setSelectedTile({x: col, y: row})
+      }
+
+      setUnitsTile(tileUnits);
       return;
     }
-    const tile: any = tiles.find((t) => t.x === col && t.y === row);
-    if (tile && tile.type === "Village") {
-      setShowVillageModal(true);
-      setSelectedCity(tile.cityId);
-      return;
+
+    if(selectedUnit) {
+      unitAction(col, row, selectedUnit?.type || "unknown");
     }
 
     // don't show modal if unit will move to upgraded tile
     if (selectedUnit) {
       return;
     }
+
+    const tile: any = tiles.find((t) => t.x === col && t.y === row);
+
+    if (tile && tile.type === "Village") {
+      setShowVillageModal(true);
+      setSelectedCity(tile.cityId);
+      return;
+    }
+
 
     const upgradedTile: { tileType: { [key: string]: {} }; x: number; y: number } = upgradedTiles.find(
       (ut) => ut.x === col && ut.y === row
@@ -445,6 +472,34 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
       setShowUpgradedTileModal(true);
     }
   };
+
+  const handleMenuSelected = (unitTile: Unit | City | any) => {
+    // check if is a unit
+    if(unitTile.unitId !== undefined) {
+      setUnits(prevState => {
+        return prevState.map((unit) => {
+          if(unit.unitId === unitTile.unitId) {
+            return {...unit, isSelected: true}
+          }
+          return {...unit, isSelected: false}
+        })
+      })
+    }
+
+    // check if is a city
+    if (unitTile.cityId !== undefined) {
+      setShowVillageModal(true);
+      setSelectedCity(unitTile.cityId);
+      return;
+    }
+
+    // check if is an upgraded tile
+    if(unitTile.tileType) {
+      const upgradedTileName = Object.keys(unitTile.tileType)[0] as UpgradedTileType;
+      setSelectedTileType(upgradedTileName);
+      setShowUpgradedTileModal(true);
+    }
+  }
 
   const isTileControlled = (tile: TileCoordinate): boolean => {
     return controlledTiles.some((controlledTile) => controlledTile.x === tile.x && controlledTile.y === tile.y);
@@ -492,7 +547,7 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
             x: col,
             y: row,
           };
-          const currentUnit = units.find((u) => u.x === col && u.y === row);
+          const currentUnits = units.filter((u) => u.x === col && u.y === row);
           const isInRangeForAnyUnit = units.some((u) => isInRange(u, col, row));
           // @todo: refactor this to be more generic
           let resourceAvailable;
@@ -513,15 +568,9 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
             <div
               key={index}
               className={`game-tile ${isInRangeForAnyUnit ? "in-range" : ""}`}
-              onClick={() => {
-                handleTileClick(col, row);
-
-                const selectedUnit = units.find((unit) => unit.isSelected);
-                if (!currentUnit && !selectedUnit) return;
-
-                unitAction(col, row, currentUnit?.type || selectedUnit?.type || "unknown");
-              }}
+              onClick={() => handleTileClick(col, row, currentUnits)}
             >
+              {col === selectedTile?.x && row === selectedTile?.y && <TileMenu units={unitsTile} onClick={handleMenuSelected} /> }
               {/* <p style={{color: 'red', textAlign: 'center', zIndex: 100000}}>({col}, {row})</p> */}
               {currentTile.discovered && currentTile.cityName && (
                 <CityTile
@@ -552,7 +601,7 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
                     <img src={`/icons/${resourceAvailable}.png`} alt="" />
                   </div>
                 )}
-              {currentTile.discovered && currentUnit && <Unit {...currentUnit} onClick={() => ""} />}
+              {currentTile.discovered && currentUnits.map((currentUnit) => <Unit {...currentUnit} onClick={() => ""} />)}
             </div>
           );
         })}
