@@ -8,7 +8,7 @@ import Unit from "./Unit";
 import UnitInfoWindow from "./UnitInfoWindow";
 import CityModal from "./CityModal";
 import UpgradedTileModal, { UpgradedTileType } from "./UpgradedTileModal";
-import {City, useGameState} from "../context/GameStateContext";
+import { City, useGameState } from "../context/GameStateContext";
 import { useWorkspace } from "../context/AnchorContext";
 import { useSound } from "../context/SoundContext";
 import { getMap } from "../utils/solanaUtils";
@@ -428,17 +428,23 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
 
     const tileUnits: Array<Unit | City | any> = [...unitsInTile, ...upgradedUnitsInTile, ...citiesInTile];
 
-    // if there is more than one unit in the tile, show menu
-    if(tileUnits.length > 1 && (!selectedUnit || !unitsInTile.find(unit => selectedUnit.unitId === unit.unitId)) ) {
+    if(tileUnits.length === 0) {
+      setUnitsTile([]);
+      setSelectedTile(null);
+    }
+
+    // if there is more than one unit in the tile and the selected unit is not in the tile, show menu
+    if(tileUnits.length > 1 && (!selectedUnit || !unitsInTile.find(unit => selectedUnit.unitId === unit.unitId && !unit.isSelected)) ) {
       if(selectedTile?.x  === col && selectedTile?.y === row) {
         setSelectedTile(null)
         return;
-      } else {
-        setUnits(prevState => {
-          return prevState.map((unit) => ({...unit, isSelected: false}))
-        })
-        setSelectedTile({x: col, y: row})
       }
+
+      setUnits(prevState => {
+        return prevState.map((unit) => ({...unit, isSelected: false}))
+      })
+
+      setSelectedTile({x: col, y: row})
 
       setUnitsTile(tileUnits);
       return;
@@ -601,7 +607,7 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
                     <img src={`/icons/${resourceAvailable}.png`} alt="" />
                   </div>
                 )}
-              {currentTile.discovered && currentUnits.map((currentUnit) => <Unit {...currentUnit} onClick={() => ""} />)}
+              {currentTile.discovered && currentUnits.map((currentUnit) => <Unit key={currentUnit.unitId} {...currentUnit} onClick={() => ""} />)}
             </div>
           );
         })}
