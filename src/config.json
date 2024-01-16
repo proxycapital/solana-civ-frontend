@@ -3,12 +3,12 @@
     "Military Tree": [
       {
         "name": "Animal Husbandry",
-        "cost": 5,
+        "cost": 7,
         "unlocks": ["Archery"]
       },
       {
         "name": "Archery",
-        "cost": 15,
+        "cost": 10,
         "unlocks": ["Archer"]
       },
       {
