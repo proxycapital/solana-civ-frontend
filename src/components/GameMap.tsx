@@ -433,6 +433,11 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
       setSelectedTile(null);
     }
 
+    if(unitsInTile.length === 1 && tileUnits.length === 1) {
+      unitAction(col, row, unitsInTile[0].type || "unknown");
+      return;
+    }
+
     // if there is more than one unit in the tile and the selected unit is not in the tile, show menu
     if(tileUnits.length > 1 && (!selectedUnit || !unitsInTile.find(unit => selectedUnit.unitId === unit.unitId && !unit.isSelected)) ) {
       if(selectedTile?.x  === col && selectedTile?.y === row) {
