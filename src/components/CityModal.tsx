@@ -283,7 +283,7 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
               </div>
             </div>
             <div className="line-container">
-              <img src="/icons/diamond.png" alt="" width="32" className="center-image" />
+              <img src="/icons/diamond.png" alt="" width="24" className="center-image" />
             </div>
             <div className="city-stats">
               <img src="/icons/population.png" alt="population" /> Population:&nbsp;
@@ -359,7 +359,7 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
                   return (
                     <Tippy
                       key={unit.type}
-                      placement="left"
+                      placement="right"
                       content={<CustomTooltip {...unit} isUnlocked={isUnlocked} selectedTab={selectedTab} />}
                     >
                       <Box

@@ -14,60 +14,68 @@ const CustomTooltip: React.FC<BuildingType & { selectedTab: number }> = ({
 }) => {
   return (
     <div className="custom-tooltip">
-      {/* <p className="header">{label}</p> */}
       {requirement && !isUnlocked ? (
-        <p>
+        <p className="research-required-text">
           Research required: <b>{tech}</b>
         </p>
       ) : (
         <>
           <p>{description}</p>
-
-          {stats?.builds && (
-            <span>
-              <b>Builds:&nbsp;</b> {stats.builds}
-            </span>
-          )}
-          {stats?.attack && (
-            <span>
-              <b>Attack:&nbsp;</b> {stats.attack}
-            </span>
-          )}
-          {stats?.movement && (
-            <span>
-              <b>Movement:&nbsp;</b> {stats.movement}
-            </span>
-          )}
-          {stats?.yield && (
-            <span>
-              <b>Yield:&nbsp; {stats.yield}</b>
-            </span>
-          )}
-          {stats?.resourceCost && (
-            <span>
-              <b>{stats.resourceCost}</b>
-              {stats?.resourceType && <img width="24" src={`./icons/${stats?.resourceType}.png`} alt={stats?.resourceType} />}
-            </span>
-          )}
-          {stats?.maintenanceCost && (
-            <span>
-              Maintenance:&nbsp;<b>{stats.maintenanceCost} </b>
-              <img width="24" src={`./icons/gold.png`} alt='gold' />
-            </span>
-          )}
-          <span>
+          <div className="unit-stats-container">
+            {stats?.builds && (
+              <span>
+                Builds:&nbsp; <b>{stats.builds}</b>
+              </span>
+            )}
+            {stats?.movement && (
+              <span style={stats?.builds ? { marginLeft: '2.2rem'} : undefined}>
+                Movement:&nbsp; <b>{stats.movement}</b>
+                <img width="24" src="./icons/movement.png" alt="foot" />
+              </span>
+            )}
+            {stats?.attack && (
+              <span style={{ marginLeft: '1.3rem'}}>
+                Attack:&nbsp; <b>{stats.attack}</b>
+                <img width="24" src="./icons/attack.png" alt="axe" />
+              </span>
+            )}
+          </div>
+          <div className="yield-container">
+            {stats?.yield && (
+              <span>
+                Yield:&nbsp; <b>{stats.yield}</b>
+              </span>
+            )}
+          </div>
+          <div className="line-container">
+            <img src="/icons/diamond.png" alt="" width="18" className="center-image" />
+          </div>
+          <div className="resource-maintenance-container">
+            {stats?.resourceCost && (
+              <span>
+                {stats.resourceCost.includes("population") && <span>Cost:&nbsp;</span>}
+                {stats.resourceCost.includes("Cost") ? <span>Cost:&nbsp; <b>{stats.resourceCost.split(":")[1]}</b></span> : <b>{stats.resourceCost}</b>}
+                {stats?.resourceType && <img width="24" src={`./icons/${stats?.resourceType}.png`} alt={stats?.resourceType} />}
+              </span>
+            )}
+            {stats?.maintenanceCost && (
+              <span>
+                Maintenance:&nbsp;<b>{stats.maintenanceCost} </b>
+                <img width="24" src={`./icons/gold.png`} alt="gold" />
+              </span>
+            )}
             {selectedTab === 0 ? (
               <span>
-                Production cost: {productionCost}
-                <img src="./icons/hammer.png" alt="gear" width="24" />
+                Production cost:&nbsp;<b>{productionCost}</b>
+                <img width="24" src="./icons/hammer.png" alt="gear" />
               </span>
             ) : (
-              <>
-                Cost: {goldCost}
-                <img src="./icons/gold.png" alt="gold" width="24" />
-              </>
+              <span>
+                Cost:&nbsp;<b>{goldCost}</b>
+                <img width="24" src="./icons/gold.png" alt="gold" />
+              </span>
             )}
-          </span>
+          </div>
         </>
       )}
     </div>

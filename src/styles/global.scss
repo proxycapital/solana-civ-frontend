@@ -342,12 +342,6 @@ img.upgraded-tile {
     max-width: 160px;
   }
 
-  .center-image {
-    width: 24px;
-    z-index: 1;
-    margin: 0 10px;
-  }
-
   .line-container::before,
   .line-container::after {
     content: "";
@@ -356,6 +350,11 @@ img.upgraded-tile {
     background: linear-gradient(180deg, #927f61 0%, #ffd48e 48.96%, #927f61 100%);
     position: relative;
   }
+}
+
+.center-image {
+  z-index: 1;
+  margin: 0 10px;
 }
 
 .unit-info-window button.unit-action-button {
