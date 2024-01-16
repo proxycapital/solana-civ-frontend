@@ -46,11 +46,20 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
   const [showVillageModal, setShowVillageModal] = useState(false);
   const [showUpgradedTileModal, setShowUpgradedTileModal] = useState(true);
   const {
-    fetchPlayerState, fetchGameState, fetchNpcs, game, cities, controlledTiles, upgradedTiles, npcUnits, npcCities, allUnits,
+    fetchPlayerState,
+    fetchGameState,
+    fetchNpcs,
+    game,
+    cities,
+    controlledTiles,
+    upgradedTiles,
+    npcUnits,
+    npcCities,
+    allUnits,
   } = useGameState();
   const { program, provider } = useWorkspace();
   const { playSound } = useSound();
-  
+
   const [showGameoverModal, setShowGameoverModal] = useState(false);
   const [tiles, setTiles] = useState([] as Tile[]);
   const [units, setUnits] = useState<Unit[]>(allUnits);
@@ -192,12 +201,12 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
 
   useEffect(() => {
     if (dataLoaded && !initialScrollDone.current) {
-      let element = document.getElementById('unit-0');
+      let element = document.getElementById("unit-0");
       if (!element) {
-        element = document.querySelector('.village');
+        element = document.querySelector(".village");
       }
       if (element) {
-        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        element.scrollIntoView({ behavior: "smooth", block: "center" });
         initialScrollDone.current = true;
       }
     }
@@ -236,7 +245,7 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
     // const withinDistance = Math.abs(x1 - x2) <= distance && Math.abs(y1 - y2) <= distance;
     const withinDistance = Math.abs(x1 - x2) + Math.abs(y1 - y2) <= distance;
     const targetTile = tiles.find((t) => t.x === x2 && t.y === y2);
-    const blockedTileTypes = ["Village", "NPC Village"];
+    const blockedTileTypes = ["NPC Village"];
     if (targetTile && blockedTileTypes.includes(targetTile.type)) {
       return false;
     }
@@ -325,7 +334,7 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
     await fetchNpcs();
   };
 
-  const attackCity = async (attackingUnit: Unit, defendingCity: {cityId: number}) => {
+  const attackCity = async (attackingUnit: Unit, defendingCity: { cityId: number }) => {
     const [gameKey] = anchor.web3.PublicKey.findProgramAddressSync(
       [Buffer.from("GAME"), provider!.publicKey.toBuffer()],
       program!.programId
@@ -419,13 +428,17 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
     if (tile && tile.type === "Village") {
       setShowVillageModal(true);
       setSelectedCity(tile.cityId);
-      return
+      return;
     }
 
-    // dont show modal if unit will move to upgraded tile
-    if (selectedUnit) return
+    // don't show modal if unit will move to upgraded tile
+    if (selectedUnit) {
+      return;
+    }
 
-    const upgradedTile: { tileType: {[key: string]: {}}, x: number, y: number } = upgradedTiles.find((ut) => ut.x === col && ut.y === row);
+    const upgradedTile: { tileType: { [key: string]: {} }; x: number; y: number } = upgradedTiles.find(
+      (ut) => ut.x === col && ut.y === row
+    );
 
     if (upgradedTile) {
       const upgradedTileName: UpgradedTileType = Object.keys(upgradedTile.tileType)[0] as UpgradedTileType;
@@ -435,14 +448,16 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
   };
 
   const isTileControlled = (tile: TileCoordinate): boolean => {
-    return controlledTiles.some(controlledTile => controlledTile.x === tile.x && controlledTile.y === tile.y);
+    return controlledTiles.some((controlledTile) => controlledTile.x === tile.x && controlledTile.y === tile.y);
   };
 
   const selectedUnit = units.find((unit) => unit.isSelected);
 
   return (
     <div className="game-container" ref={containerRef}>
-      {showVillageModal && <CityModal show={showVillageModal} onClose={() => setShowVillageModal(false)} cityId={selectedCityId} />}
+      {showVillageModal && (
+        <CityModal show={showVillageModal} onClose={() => setShowVillageModal(false)} cityId={selectedCityId} />
+      )}
       {showUpgradedTileModal && (
         <UpgradedTileModal
           show={showUpgradedTileModal}
@@ -493,7 +508,7 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
           } else if (currentTile.type === "Pasture") {
             resourceAvailable = "horses";
           }
-          const isControlled = isTileControlled({x: col, y: row});
+          const isControlled = isTileControlled({ x: col, y: row });
 
           return (
             <div
@@ -530,11 +545,14 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
                 //health={currentTile.health}
                 turn={game.turn}
               />
-              {currentTile.discovered && selectedUnit && selectedUnit.type === "builder" && resourceAvailable && (
-                <div className={`land-plot-resource ${isControlled ? 'upgradable' : ''}`}>
-                  <img src={`/icons/${resourceAvailable}.png`} alt="" />
-                </div>
-              )}
+              {currentTile.discovered &&
+                selectedUnit &&
+                (selectedUnit.type === "builder" || selectedUnit.type === "settler") &&
+                resourceAvailable && (
+                  <div className={`land-plot-resource ${isControlled ? "upgradable" : ""}`}>
+                    <img src={`/icons/${resourceAvailable}.png`} alt="" />
+                  </div>
+                )}
               {currentTile.discovered && currentUnit && <UnitTile {...currentUnit} onClick={() => ""} />}
             </div>
           );
@@ -554,7 +572,12 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
         theme="dark"
       />
       {showGameoverModal && (
-        <GameOverModal isOpen={showGameoverModal} onClose={() => { setShowGameoverModal(false); }} />
+        <GameOverModal
+          isOpen={showGameoverModal}
+          onClose={() => {
+            setShowGameoverModal(false);
+          }}
+        />
       )}
     </div>
   );
