@@ -257,7 +257,7 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
             </Button>
           </Tippy>
 
-          <Tippy key="achievements" content="Achievements" placement="left">
+          {/* <Tippy key="achievements" content="Achievements" placement="left">
             <Button
               variant="text"
               color="inherit"
@@ -267,7 +267,7 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
             >
               <img src="/icons/achievements.png" width="42" alt="Achievements" />
             </Button>
-          </Tippy>
+          </Tippy> */}
 
           {/* <Tippy key="marketplace" content="Marketplace" placement="left">
             <Button
