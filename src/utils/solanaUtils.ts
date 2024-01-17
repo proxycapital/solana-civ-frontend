@@ -446,3 +446,34 @@ export const withdrawGems = async (provider: AnchorProvider, program: Program<So
 
   return await program.methods.mintGems().accounts(accounts).rpc();
 };
+
+export const handleEndGame = async (provider: AnchorProvider, program: Program<Solciv>, redirectUrl?: string) => {
+  try {
+    const [gameKey] = anchor.web3.PublicKey.findProgramAddressSync(
+      [Buffer.from("GAME"), provider!.publicKey.toBuffer()],
+      program!.programId
+    );
+    const [playerKey] = anchor.web3.PublicKey.findProgramAddressSync(
+      [Buffer.from("PLAYER"), gameKey.toBuffer(), provider!.publicKey.toBuffer()],
+      program!.programId
+    );
+    const [npcKey] = anchor.web3.PublicKey.findProgramAddressSync(
+      [Buffer.from("NPC"), gameKey.toBuffer()],
+      program!.programId
+    );
+    const accounts = {
+      game: gameKey,
+      playerAccount: playerKey,
+      npcAccount: npcKey,
+      player: provider!.publicKey,
+    };
+    await program!.methods.closeGame().accounts(accounts).rpc();
+  } catch (error) {
+    console.error("Failed to close game", error);
+    alert(error);
+    return;
+  }
+  // redirect to reset the context & local state
+  if (!redirectUrl) return;
+  window.location.href = redirectUrl;
+};

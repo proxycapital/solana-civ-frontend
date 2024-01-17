@@ -6,7 +6,7 @@ import Tippy from '@tippyjs/react';
 
 import { useWorkspace } from '../context/AnchorContext';
 import { requestBackendAirdrop, requestSolanaAirdrop, registerPlayerAddress } from '../utils/initiateGame'
-import { initializeGame } from '../utils/solanaUtils';
+import { handleEndGame, initializeGame } from '../utils/solanaUtils';
 import { useModalError } from '../context/ModalErrorContext';
 
 const { REACT_APP_HELIUS_RPC } = process.env;
@@ -18,10 +18,10 @@ interface InitiateGameButtonProps {
   label?: string
 }
 
-const InitiateGameButton = ({ setShowButtons, updateStepStatus, setErrorMsg, label = "Play with bots" }: InitiateGameButtonProps) => {
+const InitiateGameButton = ({ setShowButtons, updateStepStatus, setErrorMsg, label = "New Game" }: InitiateGameButtonProps) => {
   const navigate = useNavigate();
   const workspace = useWorkspace();
-  const { setShowModalError } = useModalError();
+  const { showModalError, setShowModalError } = useModalError();
   const [selectLevelVisible, setSelectLevelVisible] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
@@ -38,6 +38,12 @@ const InitiateGameButton = ({ setShowButtons, updateStepStatus, setErrorMsg, lab
 
   const createWalletAndStartGame = async (level: number) => {
     setShowButtons(false);
+
+    // user already have some game session
+    if (!showModalError) {
+      await handleEndGame(workspace.provider!, workspace.program!);
+    }
+
     const connection = workspace.connection as Connection;
     const wallet = {
       publicKey: workspace.provider?.publicKey as PublicKey,
@@ -102,7 +108,13 @@ const InitiateGameButton = ({ setShowButtons, updateStepStatus, setErrorMsg, lab
           variant="contained"
           color="primary"
           className="fixed-width-button"
-          onClick={() => setSelectLevelVisible(true)}
+          onClick={() => {
+            if (label === "Continue") {
+              navigate("/game");
+            } else {
+              setSelectLevelVisible(true);
+            }
+          }}
         >
           {label}
         </Button>

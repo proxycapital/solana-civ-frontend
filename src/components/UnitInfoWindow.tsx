@@ -106,11 +106,15 @@ const UnitInfoWindow: React.FC<UnitInfoProps> = ({ unit }) => {
   const handleUpgrade = async (unitId: number) => {
     const tx = upgradeUnit(provider!, program!, unitId);
     try {
-      await toast.promise(tx, {
+      const signature = await toast.promise(tx, {
         pending: "Upgrading unit",
         success: "Unit upgraded",
         error: "Error upgrading unit",
       });
+      if (typeof signature === "string") {
+        playSound("upgrade");
+        console.log(`Upgrade land plot TX: https://explorer.solana.com/tx/${signature}?cluster=devnet`);
+      }
     } catch (error) {
       if (error instanceof Error) {
         if (error.message.includes("NoMovementPoints")) {
@@ -119,6 +123,7 @@ const UnitInfoWindow: React.FC<UnitInfoProps> = ({ unit }) => {
       }
       console.log("Error upgrading unit: ", error);
     }
+    
     await fetchPlayerState();
   };
 

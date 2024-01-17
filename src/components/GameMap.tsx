@@ -38,6 +38,18 @@ interface TileCoordinate {
 }
 
 const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
+  interface Unit {
+    unitId: number;
+    npc?: boolean;
+    health: number;
+    x: number;
+    y: number;
+    type: string;
+    isSelected: boolean;
+    movementRange: number;
+    experience: number;
+  }
+
   const rows = 20;
   const cols = 20;
   const isDragging = useRef(false);
@@ -65,18 +77,19 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
   const [units, setUnits] = useState<Unit[]>(allUnits);
   const [selectedCityId, setSelectedCity] = useState<number | null>(null);
   const [selectedTileType, setSelectedTileType] = useState<UpgradedTileType | null>(null);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
-  interface Unit {
-    unitId: number;
-    npc?: boolean;
-    health: number;
-    x: number;
-    y: number;
-    type: string;
-    isSelected: boolean;
-    movementRange: number;
-    experience: number;
-  }
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
 
   const containerRef = useRef<HTMLDivElement | null>(null);
   let dragStart = { x: 0, y: 0 };
@@ -559,7 +572,7 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
         })}
       </div>
       <ToastContainer
-        style={{ top: "70px", zIndex: 100000 }}
+        style={{ top: isMobile ? "5px" : "70px", zIndex: 100000 }}
         position="top-right"
         autoClose={1000}
         hideProgressBar={false}
