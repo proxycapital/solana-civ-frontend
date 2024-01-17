@@ -566,7 +566,7 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
                     <img src={`/icons/${resourceAvailable}.png`} alt="" />
                   </div>
                 )}
-              {currentTile.discovered && currentUnit && <UnitTile {...currentUnit} onClick={() => ""} />}
+              {currentTile.discovered && currentUnit && <UnitTile {...currentUnit} onClick={() => ""} turn={game.turn} />}
             </div>
           );
         })}

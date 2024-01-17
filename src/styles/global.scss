@@ -762,12 +762,18 @@ div.confirmation-modal {
   animation: flyUp 2s forwards;
   font-size: 16px;
   line-height: 1.5;
-}
-
-img.yield-icon {
-  display: inline-block;
-  vertical-align: middle;
-  width: 32px;
+  
+  img.health-icon {
+    display: inline-block;
+    vertical-align: middle;
+    width: 24px;
+  }
+  
+  img.yield-icon {
+    display: inline-block;
+    vertical-align: middle;
+    width: 32px;
+  }
 }
 
 @keyframes flyUp {
