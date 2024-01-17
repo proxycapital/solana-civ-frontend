@@ -133,9 +133,11 @@ const UnitInfoWindow: React.FC<UnitInfoProps> = ({ unit }) => {
       <div className="line-container desktop-only">
         <img src="/icons/diamond.png" alt="" width="24" className="center-image" />
       </div>
-      <div className="unit-stats">
-        <img src="/icons/health.png" alt="" className="unit-icon" /> Health:&nbsp;<b>{unit.health}/100</b>
-      </div>
+      {(type !== "settler" && type !== "builder") && (
+        <div className="unit-stats">
+          <img src="/icons/health.png" alt="" className="unit-icon" /> Health:&nbsp;<b>{unit.health}/100</b>
+        </div>
+      )}
       <div className="unit-stats">
         <img src="/icons/movement.png" alt="" className="unit-icon" />
         Movements:&nbsp;

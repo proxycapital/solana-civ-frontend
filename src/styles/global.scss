@@ -613,6 +613,10 @@ img.terrain.undiscovered {
     flex-direction: column;
     align-items: center;
   }
+
+  @media (max-width: 768px) {
+    width: 75%;
+  }
 }
 
 .modal-select-levels {
@@ -631,6 +635,12 @@ img.terrain.undiscovered {
 .custom-modal {
   background: rgba(55, 47, 38, 0.9);
   backdrop-filter: blur(16px);
+
+  @media (max-width: 768px) {
+    .close-button {
+      top: 27px;
+    }
+  }
 
   .title {
     background-image: url("../../public/icons/title-bg.png");
@@ -660,6 +670,10 @@ img.terrain.undiscovered {
     height: 32px;
     width: 80%;
     margin: 30px 0;
+
+    @media (max-width: 768px) {
+      width: 70%;
+    }
   }
 
   .line-container::before,

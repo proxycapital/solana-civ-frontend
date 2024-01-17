@@ -52,7 +52,7 @@ const ResearchBlock = ({
         {researchQueue.includes(toCamelCase(name)) ? <div className="research-queue-number">{researchQueue.indexOf(toCamelCase(name)) + 1}</div> : null}
         <div className="research-content">
           <h3>{name}</h3>
-          <p>Unlocks:
+          <p>Unlocks:&nbsp;
             {unlocks.map((unlock, index) => (
               <span key={unlock}>
                 <Tippy className="research-tippy" content={ResearchTippy(unlock)} placement="top" key="test">

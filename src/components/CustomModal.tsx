@@ -36,6 +36,7 @@ const CustomModal: React.FC<CustomModalProps> = ({ isOpen, onClose, title, child
       >
         <IconButton
           onClick={onClose}
+          className="close-button"
           sx={{
             position: "absolute",
             top: 0,

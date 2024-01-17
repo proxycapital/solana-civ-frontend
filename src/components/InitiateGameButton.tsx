@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Button, Grid, Modal, Box, Typography } from '@mui/material'
 import { Connection, PublicKey, LAMPORTS_PER_SOL } from "@solana/web3.js";
 import { useNavigate } from "react-router-dom";
@@ -23,6 +23,18 @@ const InitiateGameButton = ({ setShowButtons, updateStepStatus, setErrorMsg, lab
   const workspace = useWorkspace();
   const { setShowModalError } = useModalError();
   const [selectLevelVisible, setSelectLevelVisible] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   const createWalletAndStartGame = async (level: number) => {
     setShowButtons(false);
@@ -114,6 +126,7 @@ const InitiateGameButton = ({ setShowButtons, updateStepStatus, setErrorMsg, lab
             <Tippy
               key="level 1"
               placement="right"
+              disabled={!!isMobile}
               content={<span><span className="bold-text">x0.5</span> gems multiplier. <br />Barbarians spawn every 20 turns</span>}
             >
               <Button
@@ -128,6 +141,7 @@ const InitiateGameButton = ({ setShowButtons, updateStepStatus, setErrorMsg, lab
             <Tippy
               key="level 2"
               placement="right"
+              disabled={!!isMobile}
               content={<span><span className="bold-text">x1</span> gems multiplier. <br />Barbarians spawn every 15 turns</span>}
             >
               <Button
@@ -142,6 +156,7 @@ const InitiateGameButton = ({ setShowButtons, updateStepStatus, setErrorMsg, lab
             <Tippy
               key="level 3"
               placement="right"
+              disabled={!!isMobile}
               content={<span><span className="bold-text">x2</span> gems multiplier. <br />Barbarians spawn every 10 turns</span>}
             >
               <Button
