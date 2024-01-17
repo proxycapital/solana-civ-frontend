@@ -46,7 +46,7 @@ export const SoundProvider: React.FC<BaseLayoutProps> = ({ children }) => {
   const playSound = async (name: SoundType) => {
     if (name === "background" && backgroundSound.current) {
       backgroundSound.current.play();
-    } else if (name !== "background") {
+    } else if (name !== "background" && isMusicPlaying) {
       sounds[name]?.play();
     }
   };
