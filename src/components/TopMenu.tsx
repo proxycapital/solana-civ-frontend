@@ -160,7 +160,7 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
 
   const handleOpenDialog = () => {
     if (!wallet?.adapter.publicKey) {
-      toast.error("You need to connect your wallet");
+      toast.error("You need to connect your wallet", { autoClose: 3000 });
       return;
     }
     setOpenDialog(true);
@@ -172,7 +172,7 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
 
   const handleWithdrawal = async () => {
     if (!wallet?.adapter.publicKey) {
-      toast.error("You need to connect your wallet");
+      toast.error("You need to connect your wallet", { autoClose: 3000 });
       return;
     }
     setOpenDialog(false);
@@ -186,7 +186,7 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
     } catch (err) {
       if (err instanceof Error) {
         if (err.message.includes("NotEnoughGems")) {
-          toast.error("Your balance is 0 gems");
+          toast.error("Your balance is 0 gems", { autoClose: 3000 });
         }
       }
       console.error(err);

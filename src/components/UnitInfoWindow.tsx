@@ -96,7 +96,7 @@ const UnitInfoWindow: React.FC<UnitInfoProps> = ({ unit }) => {
       console.log("Error upgrading land tile: ", error);
       if (error instanceof Error) {
         if (error.message.includes("TileNotControlled")) {
-          toast.error("Tile is not controlled");
+          toast.error("Tile is not controlled", { autoClose: 3000 });
         }
       }
     }
@@ -118,7 +118,7 @@ const UnitInfoWindow: React.FC<UnitInfoProps> = ({ unit }) => {
     } catch (error) {
       if (error instanceof Error) {
         if (error.message.includes("NoMovementPoints")) {
-          toast.error("No movement points left this turn");
+          toast.error("No movement points left this turn", { autoClose: 3000 });
         }
       }
       console.log("Error upgrading unit: ", error);

@@ -338,7 +338,7 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
     } catch (error) {
       if (error instanceof Error) {
         if (error.message.includes("OutOfAttackRange")) {
-          toast.error("Target is too far away");
+          toast.error("Target is too far away", { autoClose: 3000 });
         }
       }
       console.error("Failed to attack unit", error);
@@ -379,7 +379,7 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
     } catch (error) {
       if (error instanceof Error) {
         if (error.message.includes("OutOfAttackRange")) {
-          toast.error("Target is too far away");
+          toast.error("Target is too far away", { autoClose: 3000 });
         }
       }
       console.error("Failed to attack village", error);
@@ -414,7 +414,7 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
     // and the selected unit can attack, attack the unit.
     if (selectedUnit && targetUnit && targetUnit.npc && canAttack(selectedUnit)) {
       if (selectedUnit.movementRange === 0) {
-        toast.error("Unit has no moves left");
+        toast.error("Unit has no moves left", { autoClose: 3000 });
       } else {
         return attackUnit(selectedUnit, targetUnit);
       }
@@ -422,7 +422,7 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
 
     if (selectedUnit && targetNpcCity && canAttack(selectedUnit)) {
       if (selectedUnit.movementRange === 0) {
-        toast.error("Unit has no moves left");
+        toast.error("Unit has no moves left", { autoClose: 3000 });
       } else {
         return attackCity(selectedUnit, targetNpcCity);
       }

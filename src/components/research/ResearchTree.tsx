@@ -104,13 +104,13 @@ const ResearchTree = () => {
         console.log(error);
       }
       if (error.message.includes("CannotResearch")) {
-        toast.error("You need to research the previous technology first!", {});
+        toast.error("You need to research the previous technology first!", { autoClose: 3000 });
       }
       if (error.message.includes("ResearchAlreadyCompleted")) {
-        toast.error("You already researched this technology!");
+        toast.error("You already researched this technology!", { autoClose: 3000 });
       }
       if (error.message.includes("AlreadyResearching")) {
-        toast.error("Other research already in progress");
+        toast.error("Other research already in progress", { autoClose: 3000 });
       }
     }
     await fetchPlayerState();
