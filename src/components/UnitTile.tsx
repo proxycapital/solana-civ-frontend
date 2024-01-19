@@ -43,7 +43,7 @@ const UnitTile: React.FC<UnitTileProps> = ({
       id={`unit-${unitId}`} className={`unit unit-${type} ${isSelected ? "selected" : ""} ${npc ? "npc" : ""}`}
       onClick={() => onClick(x, y)}
     > 
-      {false && nextTurn && !npc && (
+      {/* {false && nextTurn && !npc && (
         <div className="yield-effect">
           +5&nbsp;
           <img
@@ -62,7 +62,7 @@ const UnitTile: React.FC<UnitTileProps> = ({
             className="health-icon"
           />
         </div>
-      )}
+      )} */}
       <div className="unit-header">
         {!npc && canUpgradeUnit(level || 0, experience || 0) ? (
           <div className="level">

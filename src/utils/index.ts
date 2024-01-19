@@ -49,4 +49,28 @@ function calculateDistance(point1: { x: number; y: number }, point2: { x: number
   return Math.sqrt(Math.pow(point2.x - point1.x, 2) + Math.pow(point2.y - point1.y, 2));
 }
 
-export { toCamelCase, capitalizeWords, canUpgradeUnit, getRandomCoordinates, calculateDistance };
+function formatLargeNumber(number: number): string {
+  const absNumber = Math.abs(number);
+
+  if (absNumber >= 1e6) {
+    return (number / 1e6).toFixed(1).replace(/\.0$/, '') + 'M';
+  } else if (absNumber >= 1e3) {
+    return (number / 1e3).toFixed(1).replace(/\.0$/, '') + 'k';
+  }
+
+  return number.toString();
+}
+
+function formatAddress(address: string, symbols: number = 4): string {
+  if (!address) return ''
+  return `${address.substring(0, symbols)}...${address.slice(-symbols)}`
+}
+export {
+  toCamelCase,
+  capitalizeWords,
+  canUpgradeUnit,
+  getRandomCoordinates,
+  calculateDistance,
+  formatLargeNumber,
+  formatAddress,
+};
