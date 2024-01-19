@@ -36,6 +36,7 @@ import { useGameState } from "../context/GameStateContext";
 import { useWorkspace } from "../context/AnchorContext";
 import { useSound } from "../context/SoundContext";
 import { withdrawGems } from "../utils/solanaUtils";
+import { updateLeaderboard } from "../utils/initiateGame";
 
 const darkTheme = createTheme({
   palette: {
@@ -183,6 +184,7 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
         success: "Withdrawal successful",
         error: "Failed to withdraw gems",
       });
+      await updateLeaderboard(wallet.adapter.publicKey.toBase58());
     } catch (err) {
       if (err instanceof Error) {
         if (err.message.includes("NotEnoughGems")) {
