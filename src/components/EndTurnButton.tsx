@@ -26,7 +26,7 @@ const darkTheme = createTheme({
 });
 
 interface EndTurnButtonProps {
-  setShowOnboardingType: (onboardingType: "production" | "research" | null) => void;
+  setShowOnboardingType: (onboardingType: { type: "production" | "research", col?: number, row?: number } | null) => void;
   openNewResearchModal: () => void;
 }
 
@@ -129,10 +129,11 @@ const EndTurnButton: React.FC<EndTurnButtonProps> = ({ setShowOnboardingType, op
   };
 
   const endTurn = async () => {
+
     for (let city of cities) {
       if (city.productionQueue.length === 0) {
         toast.warning(`${city.name}: production queue is empty`);
-        setShowOnboardingType("production");
+        setShowOnboardingType({ type: "production", col: city.x, row: city.y });
       }
     }
 
@@ -145,7 +146,7 @@ const EndTurnButton: React.FC<EndTurnButtonProps> = ({ setShowOnboardingType, op
         config.science["Military Tree"].length;
       if (!technologies.currentResearch && technologies.researchedTechnologies.length < totalTechnologies) {
         toast.warning("You need to select a technology to research");
-        setShowOnboardingType("research");
+        setShowOnboardingType({ type: "research" });
         return;
       }
     } else {
@@ -186,8 +187,8 @@ const EndTurnButton: React.FC<EndTurnButtonProps> = ({ setShowOnboardingType, op
       const computeBudgetInstruction = anchor.web3.ComputeBudgetProgram.setComputeUnitLimit({
           units: 1000000,
       });
-      const addPriorityFee = anchor.web3.ComputeBudgetProgram.setComputeUnitPrice({ 
-        microLamports: 1 
+      const addPriorityFee = anchor.web3.ComputeBudgetProgram.setComputeUnitPrice({
+        microLamports: 1
       });
       const transaction = new anchor.web3.Transaction();
       transaction.add(computeBudgetInstruction);

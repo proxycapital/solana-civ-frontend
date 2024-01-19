@@ -591,6 +591,7 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
           return (
             <div
               key={index}
+              id={`tile-${col}-${row}`}
               className={`game-tile ${isInRangeForAnyUnit ? "in-range" : ""}`}
               onClick={() => handleTileClick(col, row, currentUnits)}
             >

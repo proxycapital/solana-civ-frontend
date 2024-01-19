@@ -55,7 +55,7 @@ const researchSteps = [
 
 const productionSteps = [
   {
-    target: ".terrain.village",
+    target: "#tile-{col}-{row}",
     content: <div>Click on the city and add unit or building to the production queue.</div>,
   },
 ];
@@ -78,13 +78,17 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
   const { toggleBackgroundMusic } = useSound();
   const [isModalOpen, setModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState("");
-  
+
 
   // const [isModalOpen, setModalOpen] = useState(true);
   // const [modalContent, setModalContent] = useState("New Research");
   const [openDialog, setOpenDialog] = useState(false);
-  const [showOnboardingType, setShowOnboardingType] = useState<"production" | "research" | null>(null);
+  const [showOnboardingType, setShowOnboardingType] = useState<{ type: "production" | "research", col?: number, row?: number } | null>(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
+
+  console.log({
+    showOnboardingType
+  })
 
   let totalFoodYield = 0;
   let totalScienceYield = 0;
@@ -406,7 +410,15 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
       </div>
       <Joyride
         run={showOnboardingType}
-        steps={showOnboardingType === "production" ? productionSteps : researchSteps}
+        steps={showOnboardingType?.type === "production" ? productionSteps.map((step) => {
+          let target = step.target.replace('{col}', String(showOnboardingType?.col));
+          target = target.replace('{row}', String(showOnboardingType?.row));
+
+          return {
+            ...step,
+            target
+          }
+        }) : researchSteps}
         styles={{
           options: {
             backgroundColor: "rgb(34, 47, 59)",
