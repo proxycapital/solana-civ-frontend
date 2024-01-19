@@ -21,7 +21,7 @@ type Resources = {
   [key: string]: number | 0;
 };
 
-type City = {
+export type City = {
   cityId: number;
   x: number;
   y: number;
