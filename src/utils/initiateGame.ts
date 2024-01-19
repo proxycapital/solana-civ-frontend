@@ -9,7 +9,7 @@ async function requestSolanaAirdrop(connection: Connection, address: PublicKey) 
     lastValidBlockHeight: latestBlockHash.lastValidBlockHeight,
     signature: airdropSignature,
   });
-};
+}
 
 async function registerPlayerAddress(address: string): Promise<boolean> {
   try {
@@ -25,6 +25,27 @@ async function registerPlayerAddress(address: string): Promise<boolean> {
       return data.success;
     } else {
       throw new Error("Failed to register player address.");
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    return false;
+  }
+}
+
+async function updateLeaderboard(address: string): Promise<boolean> {
+  try {
+    const response = await fetch(`${REACT_APP_API_URL}/gems-claimed`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ address }),
+    });
+    if (response.ok) {
+      const data = await response.json();
+      return data.success;
+    } else {
+      throw new Error("Failed to update leaderboard.");
     }
   } catch (error) {
     console.error("Error:", error);
@@ -55,8 +76,8 @@ async function requestBackendAirdrop(address: string): Promise<boolean> {
 
 // @todo: move to api later
 export interface LeaderboardRow {
-  address: string,
-  balance: string,
+  address: string;
+  balance: string;
 }
 
 async function getLeaderboard(): Promise<LeaderboardRow[]> {
@@ -80,9 +101,4 @@ async function getLeaderboard(): Promise<LeaderboardRow[]> {
   }
 }
 
-export {
-  registerPlayerAddress,
-  requestSolanaAirdrop,
-  requestBackendAirdrop,
-  getLeaderboard,
-}
+export { registerPlayerAddress, requestSolanaAirdrop, requestBackendAirdrop, getLeaderboard, updateLeaderboard };
