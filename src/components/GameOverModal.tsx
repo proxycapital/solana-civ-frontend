@@ -3,9 +3,10 @@ import Modal from "@mui/material/Modal";
 import { Box } from "@mui/system";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import * as anchor from "@coral-xyz/anchor";
+
 import { useGameState } from "../context/GameStateContext";
 import { useWorkspace } from "../context/AnchorContext";
+import { handleEndGame } from "../utils/solanaUtils";
 
 interface GameOverModalProps {
   isOpen: boolean;
@@ -15,36 +16,6 @@ interface GameOverModalProps {
 const GameOverModal: React.FC<GameOverModalProps> = ({ isOpen, onClose }) => {
   const { program, provider } = useWorkspace();
   const { game } = useGameState();
-
-  const handleEndGame = async () => {
-    try {
-      const [gameKey] = anchor.web3.PublicKey.findProgramAddressSync(
-        [Buffer.from("GAME"), provider!.publicKey.toBuffer()],
-        program!.programId
-      );
-      const [playerKey] = anchor.web3.PublicKey.findProgramAddressSync(
-        [Buffer.from("PLAYER"), gameKey.toBuffer(), provider!.publicKey.toBuffer()],
-        program!.programId
-      );
-      const [npcKey] = anchor.web3.PublicKey.findProgramAddressSync(
-        [Buffer.from("NPC"), gameKey.toBuffer()],
-        program!.programId
-      );
-      const accounts = {
-        game: gameKey,
-        playerAccount: playerKey,
-        npcAccount: npcKey,
-        player: provider!.publicKey,
-      };
-      await program!.methods.closeGame().accounts(accounts).rpc();
-    } catch (error) {
-      console.error("Failed to close game", error);
-      alert(error);
-      return;
-    }
-    // redirect to reset the context & local state
-    window.location.href = "/";
-  };
 
   return (
     <Modal
@@ -68,7 +39,7 @@ const GameOverModal: React.FC<GameOverModalProps> = ({ isOpen, onClose }) => {
             : "Do not forget to withdraw your gems! After a successful withdrawal, you can conclude this match by clicking the Skull button."}
         </Typography>
         {game.defeat && (
-          <Button onClick={handleEndGame} variant="contained" color="error" sx={{ mt: 2 }}>
+          <Button onClick={() => handleEndGame(provider!, program!, "/")} variant="contained" color="error" sx={{ mt: 2 }}>
             End Game
           </Button>
         )}

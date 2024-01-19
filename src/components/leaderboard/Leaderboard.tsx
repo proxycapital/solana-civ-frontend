@@ -1,6 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { RandomAvatar } from "react-random-avatars";
+import Tippy from "@tippyjs/react";
+
+import { getLeaderboard, LeaderboardRow } from "../../utils/initiateGame";
+import { formatLargeNumber, formatAddress } from "../../utils";
+import { useWallet } from "@solana/wallet-adapter-react";
+import "./Leaderboard.scss";
 
 // Create a dark theme instance
 const darkTheme = createTheme({
@@ -10,50 +17,83 @@ const darkTheme = createTheme({
 });
 
 const Leaderboard = () => {
-  const leaderboardData = [
-    {
-      player: "JohnDoe",
-      gems: 500,
-      barbariansKilled: 23,
-      victories: 10,
-      losses: 2,
-    },
-    {
-      player: "JaneSmith",
-      gems: 450,
-      barbariansKilled: 20,
-      victories: 9,
-      losses: 3,
-    },
-  ];
+  const [leaderboardData, setLeaderboardData] = useState<LeaderboardRow[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  const { wallet } = useWallet();
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+
+  useEffect(() => {
+    async function init() {
+      setIsLoading(true)
+      const data = await getLeaderboard();
+      setIsLoading(false)
+      setLeaderboardData(data);
+    }
+    init()
+  }, [])
+
+  const userAddress = wallet?.adapter.publicKey?.toBase58();
+ 
   return (
-    <ThemeProvider theme={darkTheme}>
-      <h2 style={{textAlign: 'center'}}>Coming soon</h2>
-      <Table style={{display: 'none'}}>
-        <TableHead>
-          <TableRow>
-            <TableCell>Player</TableCell>
-            <TableCell align="right">Gems earned</TableCell>
-            <TableCell align="right">Barbarians killed</TableCell>
-            <TableCell align="right">Victories</TableCell>
-            <TableCell align="right">Losses</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {leaderboardData.map((row) => (
-            <TableRow key={row.player}>
-              <TableCell component="th" scope="row">
-                {row.player}
-              </TableCell>
-              <TableCell align="right">{row.gems}</TableCell>
-              <TableCell align="right">{row.barbariansKilled}</TableCell>
-              <TableCell align="right">{row.victories}</TableCell>
-              <TableCell align="right">{row.losses}</TableCell>
+    <div className="leaderboard-container">
+      <ThemeProvider theme={darkTheme}>
+        {/* <h2 style={{textAlign: 'center'}}>Coming soon</h2> */}
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell align="center">Rank</TableCell>
+              <TableCell align="left">User</TableCell>
+              <TableCell align="center">Gems</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </ThemeProvider>
+          </TableHead>
+          <TableBody>
+            {isLoading && (
+              <TableRow>
+                <TableCell colSpan={3}>
+                  <h2 className="loading-text">Loading...</h2>
+                </TableCell>
+              </TableRow>
+            )}
+            {leaderboardData.map((row, index) => (
+              <TableRow key={row.address} className={userAddress === row.address ? "active" : ""}>
+                <TableCell align="center">
+                  <div className="rank-container">
+                    {index + 1}
+                    {(index === 0 || index === 1 || index === 2) && (
+                      <img className="rank-image" src={`./icons/rank-${index + 1}.png`} alt="Rank" />
+                    )}
+                  </div>
+                </TableCell>
+                <TableCell>
+                  <div className="user-container">
+                    <RandomAvatar name={row.address + index + row.balance} size={32} />
+                    <span>{isMobile ? formatAddress(row.address) : row.address} {userAddress === row.address && "(You)"}</span>
+                  </div>
+                </TableCell>
+                <TableCell align="center">
+                  <Tippy placement="bottom" content={<span style={{ fontSize: "1rem" }}>{row.balance}</span>}>
+                    <span>{formatLargeNumber(Number(row.balance))}</span>
+                  </Tippy>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </ThemeProvider>
+    </div>
   );
 };
 

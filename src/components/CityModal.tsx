@@ -98,19 +98,19 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
     } catch (error: any) {
       console.log("Error adding to production queue: ", error);
       if (error.message.includes("QueueFull")) {
-        toast.error("Production queue is currently at full capacity.");
+        toast.error("Production queue is currently at full capacity.", { autoClose: 3000 });
       }
       if (error.message.includes("TechnologyNotResearched")) {
-        toast.error("You need to unlock this technology via Research.");
+        toast.error("You need to unlock this technology via Research.", { autoClose: 3000 });
       }
       if (error.message.includes("InsufficientResources")) {
-        toast.error("Not enough resources. See unit tooltip for more info.");
+        toast.error("Not enough resources. See unit tooltip for more info.", { autoClose: 3000 });
       }
       if (error.message.includes("InsufficientGoldForMaintenance")) {
-        toast.error("You don't have enough of gold for unit maintenance.");
+        toast.error("You don't have enough of gold for unit maintenance.", { autoClose: 3000 });
       }
       if (error.message.includes("InsufficientPopulationForSettler")) {
-        toast.error("Insufficient population to recruit settler. Minimum is 2 citizens.");
+        toast.error("Insufficient population to recruit settler. Minimum is 2 citizens.", { autoClose: 3000 });
       }
     }
     await fetchPlayerState();
@@ -147,13 +147,13 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
     } catch (error: any) {
       console.log(error.message);
       if (error.message.includes("NotDamagedCity")) {
-        await toast.error("Cannt repair full HP city");
+        await toast.error("Cannt repair full HP city", { autoClose: 3000 });
       }
       if (error.message.includes("InsufficientStone")) {
-        await toast.error("Not enough stone");
+        await toast.error("Not enough stone", { autoClose: 3000 });
       }
       if (error.message.includes("InsufficientWood")) {
-        await toast.error("Not enough wood");
+        await toast.error("Not enough wood", { autoClose: 3000 });
       }
       console.log(`Error repairing city ${cityId}: `, error);
     }
@@ -173,7 +173,7 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
       }
     } catch (error: any) {
       if (error.message.includes("InsufficientGold")) {
-        await toast.error("Insufficient Gold Balance");
+        await toast.error("Insufficient Gold Balance", { autoClose: 3000 });
       }
       console.log(`Error buying ${item.label}: `, error);
     }
@@ -283,7 +283,7 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
               </div>
             </div>
             <div className="line-container">
-              <img src="/icons/diamond.png" alt="" width="32" className="center-image" />
+              <img src="/icons/diamond.png" alt="" width="24" className="center-image" />
             </div>
             <div className="city-stats">
               <img src="/icons/population.png" alt="population" /> Population:&nbsp;
@@ -359,13 +359,13 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
                   return (
                     <Tippy
                       key={unit.type}
-                      placement="left"
+                      placement="right"
                       content={<CustomTooltip {...unit} isUnlocked={isUnlocked} selectedTab={selectedTab} />}
                     >
                       <Box
                         onClick={() => {
                           if (!isUnlocked) {
-                            toast.error(`You need to research "${unit.tech}"`);
+                            toast.error(`You need to research "${unit.tech}"`, { autoClose: 3000 });
                             return;
                           }
                           if (selectedTab === 0) {
@@ -412,7 +412,7 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
                       <Box
                         onClick={() => {
                           if (!isUnlocked) {
-                            toast.error(`You need to research "${building.tech}"`);
+                            toast.error(`You need to research "${building.tech}"`, { autoClose: 3000 });
                             return;
                           }
                           if (selectedTab === 0) {

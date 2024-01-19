@@ -3,12 +3,12 @@
     "Military Tree": [
       {
         "name": "Animal Husbandry",
-        "cost": 5,
+        "cost": 7,
         "unlocks": ["Archery"]
       },
       {
         "name": "Archery",
-        "cost": 15,
+        "cost": 10,
         "unlocks": ["Archer"]
       },
       {
@@ -24,12 +24,12 @@
       {
         "name": "Medieval Warfare",
         "cost": 30,
-        "unlocks": ["Crossbowman", "WallMedieval"]
+        "unlocks": ["Crossbowman", "Medieval Wall"]
       },
       {
         "name": "Gunpowder",
         "cost": 42,
-        "unlocks": ["Musketman", "WallRenaissance"]
+        "unlocks": ["Musketman", "Renaissance Wall"]
       },
       {
         "name": "Ballistics",
@@ -39,7 +39,7 @@
       {
         "name": "Tanks and Armor",
         "cost": 80,
-        "unlocks": ["Tank", "WallIndustrial"]
+        "unlocks": ["Tank", "Industrial Wall"]
       }
     ],
     "Science and Economy Tree": [
@@ -71,7 +71,7 @@
       {
         "name": "Capitalism",
         "cost": 22,
-        "unlocks": ["StockExchange"]
+        "unlocks": ["Stock Exchange"]
       }
     ],
     "Production and Agriculture Tree": [
@@ -93,7 +93,7 @@
       {
         "name": "Electrical Power",
         "cost": 16,
-        "unlocks": ["EnergyPlant"]
+        "unlocks": ["Energy Plant"]
       },
       {
         "name": "Modern Farming",
@@ -103,7 +103,7 @@
       {
         "name": "Urbanization",
         "cost": 30,
-        "unlocks": ["ResidentialComplex"]
+        "unlocks": ["Residential Complex"]
       }
     ]
   },

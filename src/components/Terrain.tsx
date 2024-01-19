@@ -14,11 +14,6 @@ interface TerrainProps {
   turn: number;
 }
 
-interface TileCoordinate {
-  x: number;
-  y: number;
-}
-
 // Weighted random index selection for terrain tile images
 // Used to initialize the map that will be stored in PDA
 export function weightedRandomTile() {
@@ -58,7 +53,6 @@ const yieldTypes: { [key: string]: string } = {
 };
 
 const Terrain: React.FC<TerrainProps> = ({ isControlled, discovered, imageIndex, overlayImageIndex, turn }) => {
-  // const Terrain: React.FC<TerrainProps> = ({ x, y, discovered, imageIndex, overlayImageIndex, cityName, health, turn, wallHealth }) => {
   const [nextTurn, setNextTurn] = useState(false);
   const [fadeIn, setFadeIn] = useState(false);
 
@@ -89,7 +83,7 @@ const Terrain: React.FC<TerrainProps> = ({ isControlled, discovered, imageIndex,
         <>
           {yieldTypes[overlayTileType] && nextTurn && (
             <div className="yield-effect">
-              +2{" "}
+              +2&nbsp;
               <img
                 src={`/icons/${yieldTypes[overlayTileType]}.png`}
                 alt={yieldTypes[overlayTileType]}

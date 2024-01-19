@@ -49,7 +49,7 @@ const UpgradedTileModal: React.FC<UpgradedTileModalProps> = ({ show, onClose, se
           <strong>{UpgradedTilesNames[selectedTileType]}</strong>
         </div>
         <div className="line-container desktop-only">
-          <img src="/icons/diamond.png" alt="" width="32" className="center-image" />
+          <img src="/icons/diamond.png" alt="" width="24" className="center-image" />
         </div>
         <div className="unit-stats">
           Income:&nbsp;

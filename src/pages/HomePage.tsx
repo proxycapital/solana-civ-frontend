@@ -7,10 +7,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import InitiateGameButton from '../components/InitiateGameButton'
 import { useWorkspace } from "../context/AnchorContext";
+import { useModalError } from "../context/ModalErrorContext";
 
 const HomePage: React.FC = () => {
   const workspace = useWorkspace();
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const { showModalError } = useModalError();
+
   const [initializationSteps, setInitializationSteps] = useState([
     { name: "Requesting airdrop", status: "pending" },
     { name: "Initializing game", status: "pending" },
@@ -29,11 +32,32 @@ const HomePage: React.FC = () => {
         </Grid>
         {showButtons ? (
           <>
-            <InitiateGameButton
-              setShowButtons={setShowButtons}
-              updateStepStatus={updateStepStatus}
-              setErrorMsg={setErrorMsg}
-            />
+            {/* @todo: get loading state to fix initial showing of 2 buttons */}
+            {/* user has old session */}
+            {!showModalError ? (
+              <>
+                <InitiateGameButton
+                  setShowButtons={setShowButtons}
+                  updateStepStatus={updateStepStatus}
+                  setErrorMsg={setErrorMsg}
+                  label="New Game"
+                />
+                <InitiateGameButton
+                  setShowButtons={setShowButtons}
+                  updateStepStatus={updateStepStatus}
+                  setErrorMsg={setErrorMsg}
+                  label="Continue"
+                />
+              </>
+            ) : (
+              // no user session
+              <InitiateGameButton
+                setShowButtons={setShowButtons}
+                updateStepStatus={updateStepStatus}
+                setErrorMsg={setErrorMsg}
+              />
+            )}
+            
             <Grid item xs={12}>
               <Button disabled variant="contained" color="primary" className="fixed-width-button">
                 <FontAwesomeIcon icon={faLock} />

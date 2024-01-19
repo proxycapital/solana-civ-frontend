@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Button, Grid, Modal, Box, Typography } from '@mui/material'
 import { Connection, PublicKey, LAMPORTS_PER_SOL } from "@solana/web3.js";
 import { useNavigate } from "react-router-dom";
@@ -6,7 +6,7 @@ import Tippy from '@tippyjs/react';
 
 import { useWorkspace } from '../context/AnchorContext';
 import { requestBackendAirdrop, requestSolanaAirdrop, registerPlayerAddress } from '../utils/initiateGame'
-import { initializeGame } from '../utils/solanaUtils';
+import { handleEndGame, initializeGame } from '../utils/solanaUtils';
 import { useModalError } from '../context/ModalErrorContext';
 
 const { REACT_APP_HELIUS_RPC } = process.env;
@@ -18,14 +18,32 @@ interface InitiateGameButtonProps {
   label?: string
 }
 
-const InitiateGameButton = ({ setShowButtons, updateStepStatus, setErrorMsg, label = "Play with bots" }: InitiateGameButtonProps) => {
+const InitiateGameButton = ({ setShowButtons, updateStepStatus, setErrorMsg, label = "New Game" }: InitiateGameButtonProps) => {
   const navigate = useNavigate();
   const workspace = useWorkspace();
-  const { setShowModalError } = useModalError();
+  const { showModalError, setShowModalError } = useModalError();
   const [selectLevelVisible, setSelectLevelVisible] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   const createWalletAndStartGame = async (level: number) => {
     setShowButtons(false);
+
+    // user already have some game session
+    if (!showModalError) {
+      await handleEndGame(workspace.provider!, workspace.program!);
+    }
+
     const connection = workspace.connection as Connection;
     const wallet = {
       publicKey: workspace.provider?.publicKey as PublicKey,
@@ -90,7 +108,13 @@ const InitiateGameButton = ({ setShowButtons, updateStepStatus, setErrorMsg, lab
           variant="contained"
           color="primary"
           className="fixed-width-button"
-          onClick={() => setSelectLevelVisible(true)}
+          onClick={() => {
+            if (label === "Continue") {
+              navigate("/game");
+            } else {
+              setSelectLevelVisible(true);
+            }
+          }}
         >
           {label}
         </Button>
@@ -114,6 +138,7 @@ const InitiateGameButton = ({ setShowButtons, updateStepStatus, setErrorMsg, lab
             <Tippy
               key="level 1"
               placement="right"
+              disabled={!!isMobile}
               content={<span><span className="bold-text">x0.5</span> gems multiplier. <br />Barbarians spawn every 20 turns</span>}
             >
               <Button
@@ -128,6 +153,7 @@ const InitiateGameButton = ({ setShowButtons, updateStepStatus, setErrorMsg, lab
             <Tippy
               key="level 2"
               placement="right"
+              disabled={!!isMobile}
               content={<span><span className="bold-text">x1</span> gems multiplier. <br />Barbarians spawn every 15 turns</span>}
             >
               <Button
@@ -142,6 +168,7 @@ const InitiateGameButton = ({ setShowButtons, updateStepStatus, setErrorMsg, lab
             <Tippy
               key="level 3"
               placement="right"
+              disabled={!!isMobile}
               content={<span><span className="bold-text">x2</span> gems multiplier. <br />Barbarians spawn every 10 turns</span>}
             >
               <Button

@@ -3,8 +3,8 @@ import * as anchor from "@coral-xyz/anchor";
 import { ToastContainer, toast } from "react-toastify";
 
 import Terrain, { TileType } from "./Terrain";
-import CityTile from "./CityTile";
-import Unit from "./Unit";
+import CityTile from './CityTile';
+import UnitTile from "./UnitTile";
 import UnitInfoWindow from "./UnitInfoWindow";
 import CityModal from "./CityModal";
 import UpgradedTileModal, { UpgradedTileType } from "./UpgradedTileModal";
@@ -39,6 +39,18 @@ interface TileCoordinate {
 }
 
 const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
+  interface Unit {
+    unitId: number;
+    npc?: boolean;
+    health: number;
+    x: number;
+    y: number;
+    type: string;
+    isSelected: boolean;
+    movementRange: number;
+    experience: number;
+  }
+
   const rows = 20;
   const cols = 20;
   const isDragging = useRef(false);
@@ -66,19 +78,20 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
   const [units, setUnits] = useState<Unit[]>(allUnits);
   const [selectedCityId, setSelectedCity] = useState<number | null>(null);
   const [selectedTileType, setSelectedTileType] = useState<UpgradedTileType | null>(null);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [selectedTile, setSelectedTile] = useState<{ x: number, y: number } | null>(null)
   const [unitsTile, setUnitsTile] = useState<Array<Unit | City | any>>([])
 
-  interface Unit {
-    unitId: number;
-    npc?: boolean;
-    health: number;
-    x: number;
-    y: number;
-    type: string;
-    isSelected: boolean;
-    movementRange: number;
-  }
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   const containerRef = useRef<HTMLDivElement | null>(null);
   let dragStart = { x: 0, y: 0 };
@@ -327,7 +340,7 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
     } catch (error) {
       if (error instanceof Error) {
         if (error.message.includes("OutOfAttackRange")) {
-          toast.error("Target is too far away");
+          toast.error("Target is too far away", { autoClose: 3000 });
         }
       }
       console.error("Failed to attack unit", error);
@@ -368,7 +381,7 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
     } catch (error) {
       if (error instanceof Error) {
         if (error.message.includes("OutOfAttackRange")) {
-          toast.error("Target is too far away");
+          toast.error("Target is too far away", { autoClose: 3000 });
         }
       }
       console.error("Failed to attack village", error);
@@ -403,7 +416,7 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
     // and the selected unit can attack, attack the unit.
     if (selectedUnit && targetUnit && targetUnit.npc && canAttack(selectedUnit)) {
       if (selectedUnit.movementRange === 0) {
-        toast.error("Unit has no moves left");
+        toast.error("Unit has no moves left", { autoClose: 3000 });
       } else {
         return attackUnit(selectedUnit, targetUnit);
       }
@@ -411,7 +424,7 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
 
     if (selectedUnit && targetNpcCity && canAttack(selectedUnit)) {
       if (selectedUnit.movementRange === 0) {
-        toast.error("Unit has no moves left");
+        toast.error("Unit has no moves left", { autoClose: 3000 });
       } else {
         return attackCity(selectedUnit, targetNpcCity);
       }
@@ -612,13 +625,13 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
                     <img src={`/icons/${resourceAvailable}.png`} alt="" />
                   </div>
                 )}
-              {currentTile.discovered && currentUnits.map((currentUnit) => <Unit key={currentUnit.unitId} {...currentUnit} onClick={() => ""} />)}
+              {currentTile.discovered && currentUnits.map((currentUnit) => <UnitTile key={currentUnit.unitId} turn={game.turn} {...currentUnit} onClick={() => ""} />)}
             </div>
           );
         })}
       </div>
       <ToastContainer
-        style={{ top: "70px", zIndex: 100000 }}
+        style={{ top: isMobile ? "5px" : "70px", zIndex: 100000 }}
         position="top-right"
         autoClose={1000}
         hideProgressBar={false}

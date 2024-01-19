@@ -35,7 +35,7 @@ export const AllUnits: UnitType[] = [
   {
     type: "builder",
     label: "Builder",
-    description: "Builders can upgrade tiles to produce more resources",
+    description: "Builders can upgrade tiles",
     productionCost: 20,
     goldCost: 100,
     requirement: "",

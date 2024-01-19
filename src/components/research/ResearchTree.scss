@@ -5,7 +5,6 @@
   padding-top: 11px; // to show queue number 
   height: calc(100vh - 100px);
   overflow: scroll;
-
   -ms-overflow-style: none;
 	scrollbar-width: none;
 	&::-webkit-scrollbar {
@@ -184,36 +183,6 @@ button.research-button {
   font-weight: bold;
 }
 
-.research-tippy {
-  .unit-stats-container {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-
-    img {
-      width: 60px;
-      height: 60px;
-    }
-
-    .unit-stats {
-      display: flex;
-      flex-direction: column;
-      margin-left: 0.5rem;
-      
-      p {
-        margin: 0;
-        padding: 0;
-
-        span {
-          font-weight: bold;
-          font-size: 1.25rem;
-          line-height: 0;
-        }
-      }
-    }
-  }
-}
-
 .new-research-block {
   padding: 0 16px;
   text-align: center;
@@ -224,10 +193,38 @@ button.research-button {
   }
 }
 
+.unit-stats-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  img {
+    width: 60px;
+    height: 60px;
+  }
+
+  .unit-stats-tippy {
+    display: flex;
+    flex-direction: column;
+    margin-left: 0.5rem;
+    
+    p {
+      margin: 0;
+      padding: 0;
+
+      span {
+        font-weight: bold;
+        font-size: 1.25rem;
+        line-height: 0;
+      }
+    }
+  }
+}
+
 @media (max-width: 768px) { 
   .research-tree {
     flex-direction: column; 
-    align-items: center; 
+    align-items: center;
   }
   
   .research-column {

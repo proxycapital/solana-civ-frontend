@@ -96,7 +96,7 @@ const UnitInfoWindow: React.FC<UnitInfoProps> = ({ unit }) => {
       console.log("Error upgrading land tile: ", error);
       if (error instanceof Error) {
         if (error.message.includes("TileNotControlled")) {
-          toast.error("Tile is not controlled");
+          toast.error("Tile is not controlled", { autoClose: 3000 });
         }
       }
     }
@@ -106,19 +106,24 @@ const UnitInfoWindow: React.FC<UnitInfoProps> = ({ unit }) => {
   const handleUpgrade = async (unitId: number) => {
     const tx = upgradeUnit(provider!, program!, unitId);
     try {
-      await toast.promise(tx, {
+      const signature = await toast.promise(tx, {
         pending: "Upgrading unit",
         success: "Unit upgraded",
         error: "Error upgrading unit",
       });
+      if (typeof signature === "string") {
+        playSound("upgrade");
+        console.log(`Upgrade land plot TX: https://explorer.solana.com/tx/${signature}?cluster=devnet`);
+      }
     } catch (error) {
       if (error instanceof Error) {
         if (error.message.includes("NoMovementPoints")) {
-          toast.error("No movement points left this turn");
+          toast.error("No movement points left this turn", { autoClose: 3000 });
         }
       }
       console.log("Error upgrading unit: ", error);
     }
+    
     await fetchPlayerState();
   };
 
@@ -131,11 +136,13 @@ const UnitInfoWindow: React.FC<UnitInfoProps> = ({ unit }) => {
         <strong>{displayType}</strong>
       </div>
       <div className="line-container desktop-only">
-        <img src="/icons/diamond.png" alt="" width="32" className="center-image" />
+        <img src="/icons/diamond.png" alt="" width="24" className="center-image" />
       </div>
-      <div className="unit-stats">
-        <img src="/icons/health.png" alt="" className="unit-icon" /> Health:&nbsp;<b>{unit.health}/100</b>
-      </div>
+      {(type !== "settler" && type !== "builder") && (
+        <div className="unit-stats">
+          <img src="/icons/health.png" alt="" className="unit-icon" /> Health:&nbsp;<b>{unit.health}/100</b>
+        </div>
+      )}
       <div className="unit-stats">
         <img src="/icons/movement.png" alt="" className="unit-icon" />
         Movements:&nbsp;

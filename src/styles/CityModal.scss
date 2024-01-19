@@ -174,7 +174,7 @@
 }
 
 .custom-tooltip {
-  padding: 0 0.5rem;
+  padding: 0 0.75rem;
   margin-bottom: 1rem;
 
   p.header {
@@ -182,14 +182,62 @@
     font-size: 1rem;
   }
 
+  .research-required-text {
+    b {
+      font-size: 1.1rem;
+    }
+  }
+
+  b {
+    font-size: 1.3rem;
+  }
+
   span {
-    font-size: 0.8rem;
+    font-size: 1rem;
     display: flex;
     align-items: center;
 
     img {
-      margin-left: 0.5rem;
+      margin-left: 0.2rem;
     }
+  }
+
+  .line-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+    height: 32px;
+  }
+
+  .line-container::before,
+  .line-container::after {
+    content: "";
+    flex-grow: 1;
+    height: 2px;
+    background: linear-gradient(180deg, #927f61 0%, #ffd48e 48.96%, #927f61 100%);
+    position: relative;
+  }
+
+  .unit-stats-container {
+    display: flex;
+    justify-content: space-between;
+
+    img {
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  .yield-container {
+    display: flex;
+    justify-content: center;
+  }
+
+  .resource-maintenance-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
   }
 }
 
@@ -281,12 +329,6 @@
     height: 2px;
     background: linear-gradient(180deg, #927f61 0%, #ffd48e 48.96%, #927f61 100%);
     position: relative;
-  }
-
-  .center-image {
-    width: 24px;
-    z-index: 1;
-    margin: 0 10px;
   }
 
   .city-stats {

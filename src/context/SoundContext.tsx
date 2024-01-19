@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, useRef } from "react";
 import { Howl } from "howler";
 
-type SoundType = "attack" | "construction" | "background";
+type SoundType = "attack" | "construction" | "background" | "upgrade";
 
 interface BaseLayoutProps {
   children?: React.ReactNode;
@@ -22,6 +22,7 @@ export const SoundProvider: React.FC<BaseLayoutProps> = ({ children }) => {
   const sounds = {
     attack: new Audio("/sounds/attack.mp3"),
     construction: new Audio("/sounds/construction.mp3"),
+    upgrade: new Audio("/sounds/upgrade.mp3"),
   };
 
   const backgroundSound = useRef<Howl | null>(null);
@@ -46,7 +47,7 @@ export const SoundProvider: React.FC<BaseLayoutProps> = ({ children }) => {
   const playSound = async (name: SoundType) => {
     if (name === "background" && backgroundSound.current) {
       backgroundSound.current.play();
-    } else if (name !== "background") {
+    } else if (name !== "background" && isMusicPlaying) {
       sounds[name]?.play();
     }
   };
