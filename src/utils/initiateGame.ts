@@ -1,6 +1,6 @@
 import { Connection, PublicKey, LAMPORTS_PER_SOL } from "@solana/web3.js";
 
-const SOLCIV_API_URL = "https://api.solciv.com"
+const SOLCIV_API_URL = "https://api.solciv.com";
 
 async function requestSolanaAirdrop(connection: Connection, address: PublicKey) {
   const airdropSignature = await connection.requestAirdrop(address, 1 * LAMPORTS_PER_SOL);
@@ -10,7 +10,7 @@ async function requestSolanaAirdrop(connection: Connection, address: PublicKey) 
     lastValidBlockHeight: latestBlockHash.lastValidBlockHeight,
     signature: airdropSignature,
   });
-};
+}
 
 async function registerPlayerAddress(address: string): Promise<boolean> {
   try {
@@ -26,6 +26,27 @@ async function registerPlayerAddress(address: string): Promise<boolean> {
       return data.success;
     } else {
       throw new Error("Failed to register player address.");
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    return false;
+  }
+}
+
+async function updateLeaderboard(address: string): Promise<boolean> {
+  try {
+    const response = await fetch(`${SOLCIV_API_URL}/gems-claimed`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ address }),
+    });
+    if (response.ok) {
+      const data = await response.json();
+      return data.success;
+    } else {
+      throw new Error("Failed to update leaderboard.");
     }
   } catch (error) {
     console.error("Error:", error);
@@ -54,8 +75,4 @@ async function requestBackendAirdrop(address: string): Promise<boolean> {
   }
 }
 
-export {
-  registerPlayerAddress,
-  requestSolanaAirdrop,
-  requestBackendAirdrop,
-}
+export { registerPlayerAddress, requestSolanaAirdrop, requestBackendAirdrop, updateLeaderboard };
