@@ -831,22 +831,41 @@ img.yield-icon {
 }
 
 .circle-menu .circle-menu-wrapper {
+  color: #fff;
+  border: 1px solid #c8ab6e;
   position: absolute;
   list-style: none;
   left: 0;
   transform-origin: 100px;
   transform: rotate(calc(360deg / var(--count) * var(--index)));
-  transition: 0.5s;
-  background: #31c315;
-  width: 40px;
-  height: 40px;
+  transition: 1.5s;
+  background: #312d29;
+  width: 64px;
+  height: 64px;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 50%;
   box-shadow: 0 3px 4px rgba(0, 0, 0, 0.15);
+  animation: radialAppear 0.5s ease-out forwards;
 }
 
 .circle-menu .circle-menu-wrapper .circle-menu-content {
   transform: rotate(calc(360deg / calc(var(--count) * -1) * var(--index)));
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  text-align: center;
+  width: 100%;
+}
+
+@keyframes radialAppear {
+  from {
+    opacity: 0;
+    transform: scale(0) rotate(calc(360deg / var(--count) * var(--index)));
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(calc(360deg / var(--count) * var(--index)));
+  }
 }
