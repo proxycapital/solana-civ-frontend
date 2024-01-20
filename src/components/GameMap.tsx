@@ -38,19 +38,19 @@ interface TileCoordinate {
   y: number;
 }
 
-const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
-  interface Unit {
-    unitId: number;
-    npc?: boolean;
-    health: number;
-    x: number;
-    y: number;
-    type: string;
-    isSelected: boolean;
-    movementRange: number;
-    experience: number;
-  }
+export interface Unit {
+  unitId: number;
+  npc?: boolean;
+  health: number;
+  x: number;
+  y: number;
+  type: string;
+  isSelected: boolean;
+  movementRange: number;
+  experience: number;
+}
 
+const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
   const rows = 20;
   const cols = 20;
   const isDragging = useRef(false);
