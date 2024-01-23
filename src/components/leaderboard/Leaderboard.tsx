@@ -36,6 +36,10 @@ const Leaderboard = () => {
 
 
   useEffect(() => {
+    console.log("REdner")
+  }, [])
+
+  useEffect(() => {
     async function init() {
       setIsLoading(true)
       const data = await getLeaderboard();

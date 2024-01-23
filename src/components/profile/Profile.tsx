@@ -6,25 +6,28 @@ import { Slider } from "@mui/material";
 import { useSound } from "../../context/SoundContext";
 import "./Profile.scss";
 
-// disable full music
-// disable only background
-// disable only in-game effects music (with example)
-// divide toggleBack - to toggleOnlyBack and toogleGameEffects
-// change background sound 
+
 const Profile = () => {
-  const { toggleBackgroundMusic } = useSound();
-  const [isMusicPlaying, setMusicPlaying] = useState(() => {
-    return localStorage.getItem("isMusicPlaying") === "true";
+  const { musicVolume, toggleBackgroundMusic, toggleInGameEffects, changeBackgroundVolume } = useSound();
+  const [isBackgroundMusicPlaying, setBackgroundMusicPlaying] = useState(() => {
+    return localStorage.getItem("isBackgroundMusicPlaying") === "true";
   });
-
-
+  const [isInGameMusicPlaying, setInGameMusicPlaying] = useState(() => {
+    return localStorage.getItem("isInGameMusicPlaying") === "true";
+  });
+ 
   const handleToggleBackgroundMusic = () => {
     toggleBackgroundMusic();
-    setMusicPlaying((prevState) => !prevState);
+    setBackgroundMusicPlaying((prevState) => !prevState);
   };
 
   const handleToggleInGameMusic = () => {
+    toggleInGameEffects();
+    setInGameMusicPlaying((prevState) => !prevState);
+  }
 
+  const handleBackgroundVolume = (volume: number) => {
+    changeBackgroundVolume(volume);
   }
 
   const userStats = {
@@ -39,21 +42,27 @@ const Profile = () => {
     <div className="profile">
       <h2>Settings:</h2>
       <div className="option-container">
+        <button onClick={handleToggleInGameMusic} className="music-toggle-button">
+          <FontAwesomeIcon icon={isInGameMusicPlaying ? faVolumeHigh : faVolumeXmark} />
+        </button>
+        <span>Enable/Disable In-Game Effects</span>
+      </div>
+      <div className="option-container">
         <button onClick={handleToggleBackgroundMusic} className="music-toggle-button">
-          <FontAwesomeIcon icon={isMusicPlaying ? faVolumeHigh : faVolumeXmark} />
+          <FontAwesomeIcon icon={isBackgroundMusicPlaying ? faVolumeHigh : faVolumeXmark} />
         </button>
         <span>Enable/Disable Background Music </span>
       </div>
       <div className="option-container">
-        <button onClick={handleToggleInGameMusic} className="music-toggle-button">
-          <FontAwesomeIcon icon={isMusicPlaying ? faVolumeHigh : faVolumeXmark} />
-        </button>
-        <span>Enable/Disable In-Game effects</span>
-      </div>
-      <div className="option-container">
-        {/* should be a slider */}
-        <span>Change sound</span>
-        <Slider disabled defaultValue={30} aria-label="Disabled slider" />
+        <span>Background Volume:</span>
+        <Slider
+          min={10}
+          max={100}
+          step={10}
+          value={Number(musicVolume) * 100}
+          onChange={(_, newValue) => handleBackgroundVolume(newValue as number)}
+          defaultValue={50}
+        />
       </div>
       
       <div className="line-container">

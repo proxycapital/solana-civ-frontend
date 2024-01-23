@@ -28,4 +28,28 @@
       }
     }
   }
+
+  .MuiSlider-root {
+    margin-top: 1rem;
+
+    .MuiSlider-rail {
+      background-color: #ccc;
+      height: 4px;
+    }
+
+    .MuiSlider-track {
+      height: 3px;
+      background-color: #cab37d;
+      border: 1px solid #cab37d;
+    }
+    
+    .MuiSlider-thumb {
+      background-color: rgba(168, 110, 50, 1);
+    }
+
+    .MuiSlider-thumb:focus, .MuiSlider-thumb:hover, .MuiSlider-thumb.Mui-active {
+      // @todo: fix this
+      box-shadow: none;
+    }
+  }
 }

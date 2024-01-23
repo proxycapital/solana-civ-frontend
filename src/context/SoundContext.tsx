@@ -8,17 +8,29 @@ interface BaseLayoutProps {
 }
 
 interface SoundContextType {
+  musicVolume: number | string;
   playSound: (name: SoundType) => Promise<void>;
   pauseSound: (name: SoundType) => Promise<void>;
   toggleBackgroundMusic: () => void;
+  toggleInGameEffects: () => void;
+  changeBackgroundVolume: (volume: number) => void;
 }
 
 const SoundContext = createContext<SoundContextType | undefined>(undefined);
 
 export const SoundProvider: React.FC<BaseLayoutProps> = ({ children }) => {
-  const [isMusicPlaying, setMusicPlaying] = useState(() => {
-    return localStorage.getItem("isMusicPlaying") === "true";
+  const [isBackgroundMusicPlaying, setBackgroundMusicPlaying] = useState(() => {
+    return localStorage.getItem("isBackgroundMusicPlaying") === "true";
   });
+  const [isInGameMusicPlaying, setInGameMusicPlaying] = useState(() => {
+    return localStorage.getItem("isInGameMusicPlaying") === "true";
+  });
+  const [musicVolume, setMusicVolume] = useState(() => {
+    return localStorage.getItem("backgroundMusicVolume") || 0.3;
+  });
+
+  console.log("Music vol: ", musicVolume);
+
   const sounds = {
     attack: new Audio("/sounds/attack.mp3"),
     construction: new Audio("/sounds/construction.mp3"),
@@ -32,9 +44,9 @@ export const SoundProvider: React.FC<BaseLayoutProps> = ({ children }) => {
       src: ["/sounds/background.mp3"],
       loop: true,
       autoplay: false,
-      volume: 0.3,
+      volume: musicVolume as number,
       onload: () => {
-        if (isMusicPlaying) {
+        if (isBackgroundMusicPlaying) {
           backgroundSound.current!.play();
         }
       },
@@ -47,10 +59,17 @@ export const SoundProvider: React.FC<BaseLayoutProps> = ({ children }) => {
   const playSound = async (name: SoundType) => {
     if (name === "background" && backgroundSound.current) {
       backgroundSound.current.play();
-    } else if (name !== "background" && isMusicPlaying) {
+    } else if (name !== "background" && isInGameMusicPlaying) {
       sounds[name]?.play();
     }
   };
+
+  const changeBackgroundVolume = (volume: number) => {
+    const vol = (volume / 100).toFixed(1);
+    setMusicVolume(vol);
+    localStorage.setItem("backgroundMusicVolume", String(vol));
+    Howler.volume(Number(vol));
+  }
 
   const pauseSound = async (name: SoundType) => {
     if (name === "background" && backgroundSound.current) {
@@ -61,16 +80,34 @@ export const SoundProvider: React.FC<BaseLayoutProps> = ({ children }) => {
   };
 
   const toggleBackgroundMusic = () => {
-    setMusicPlaying((prev) => {
+    setBackgroundMusicPlaying((prev) => {
       const newState = !prev;
-      localStorage.setItem("isMusicPlaying", String(newState));
+      localStorage.setItem("isBackgroundMusicPlaying", String(newState));
       newState ? playSound("background") : pauseSound("background");
       return newState;
     });
   };
 
+  const toggleInGameEffects = () => {
+    setInGameMusicPlaying((prev) => {
+      const newState = !prev;
+      localStorage.setItem("isInGameMusicPlaying", String(newState));
+      return newState;
+    });
+  }
+
   return (
-    <SoundContext.Provider value={{ playSound, pauseSound, toggleBackgroundMusic }}>{children}</SoundContext.Provider>
+    <SoundContext.Provider
+      value={{
+        musicVolume,
+        playSound,
+        pauseSound,
+        toggleBackgroundMusic,
+        toggleInGameEffects,
+        changeBackgroundVolume,
+      }}>
+        {children}
+    </SoundContext.Provider>
   );
 };
 
