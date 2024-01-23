@@ -70,7 +70,8 @@ const Profile = () => {
       </div>
       
       <div>
-        <h2>Game Stats:</h2>
+        <h2>Games Stats:</h2>
+        <p className="coming-soon">Coming soon</p>
         <div className="profile-stats">
           <span>Total Played games - <b>{userStats.games}</b></span>
           <span>Wins: <b>{userStats.wins}</b> ({((userStats.wins / userStats.games) * 100).toFixed(2)}%)</span>
