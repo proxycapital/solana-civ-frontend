@@ -29,8 +29,6 @@ export const SoundProvider: React.FC<BaseLayoutProps> = ({ children }) => {
     return localStorage.getItem("backgroundMusicVolume") || 0.3;
   });
 
-  console.log("Music vol: ", musicVolume);
-
   const sounds = {
     attack: new Audio("/sounds/attack.mp3"),
     construction: new Audio("/sounds/construction.mp3"),

@@ -205,7 +205,7 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
   };
 
   const [isMusicPlaying, setMusicPlaying] = useState(() => {
-    return localStorage.getItem("isMusicPlaying") === "true";
+    return localStorage.getItem("isBackgroundMusicPlaying") === "true";
   });
 
   const handleToggleBackgroundMusic = () => {
