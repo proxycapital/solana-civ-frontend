@@ -65,6 +65,66 @@ function formatAddress(address: string, symbols: number = 4): string {
   if (!address) return ''
   return `${address.substring(0, symbols)}...${address.slice(-symbols)}`
 }
+
+type BuildingType = {
+  type: "building";
+  resourceName: "science" | "gold" | "food" | "production" | "housing";
+  income: number;
+  extra?: "housing";
+  extraValue?: number;
+};
+
+type UnitType = {
+  type: "unit";
+  attack: number;
+  movement: number;
+  maintenance: number;
+};
+
+type WallType = {
+  type: "wall";
+  health: number;
+  attack: number;
+};
+
+function getUnitOrBuildingStats(unitOrBuildingName: string): BuildingType | UnitType | WallType {
+  const BuildingsAndUnits: Record<string, BuildingType | UnitType | WallType> = {
+    // @todo: fix Archery as it unlock Unlocks Archery
+    "Library":            { type: "building", resourceName: "science", income: 2 },
+    "School":             { type: "building", resourceName: "science", income: 3 },
+    "University":         { type: "building", resourceName: "science", income: 4, extra: "housing", extraValue: 1},
+    "Observatory":        { type: "building", resourceName: "science", income: 5 },
+
+    "Market":             { type: "building", resourceName: "gold", income: 2},
+    "Bank":               { type: "building", resourceName: "gold", income: 3},
+    "Stock Exchange":     { type: "building", resourceName: "gold", income: 4},
+
+    "Granary":            { type: "building", resourceName: "food", income: 2, extra: "housing", extraValue: 2},
+    "Mill":               { type: "building", resourceName: "food", income: 2 },
+    "Bakery":             { type: "building", resourceName: "food", income: 3 },
+    "Supermarket":        { type: "building", resourceName: "food", income: 4 },
+
+    "Forge":              { type: "building", resourceName: "production", income: 2 },
+    "Factory":            { type: "building", resourceName: "production", income: 3 },
+    "Energy Plant":       { type: "building", resourceName: "production", income: 4 },
+    "Residential Complex":{ type: "building", resourceName: "housing", income: 5 },
+
+    "Archer":             { type: "unit", attack: 10, movement: 2, maintenance: 1 },
+    "Horseman":           { type: "unit", attack: 14, movement: 3, maintenance: 2 },
+    "Swordsman":          { type: "unit", attack: 14, movement: 2, maintenance: 1 },
+    "Crossbowman":        { type: "unit", attack: 24, movement: 2, maintenance: 2 },
+    "Musketman":          { type: "unit", attack: 32, movement: 2, maintenance: 2 },
+    "Rifleman":           { type: "unit", attack: 40, movement: 2, maintenance: 4 },
+    "Tank":               { type: "unit", attack: 50, movement: 2, maintenance: 7 },
+    
+    "Medieval Wall":      { type: "wall", health: 100, attack: 10  },
+    "Renaissance Wall":   { type: "wall", health: 150, attack: 20  },
+    "Industrial Wall":    { type: "wall", health: 200, attack: 30  },
+  }
+
+  return BuildingsAndUnits[unitOrBuildingName];
+}
+
 export {
   toCamelCase,
   capitalizeWords,
@@ -73,4 +133,5 @@ export {
   calculateDistance,
   formatLargeNumber,
   formatAddress,
+  getUnitOrBuildingStats,
 };

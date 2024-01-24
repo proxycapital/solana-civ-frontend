@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import LinearProgress from "@mui/material/LinearProgress";
 import Tippy from "@tippyjs/react";
 
@@ -17,6 +18,7 @@ interface IResearch {
   prevResearched: boolean;
   onResearchQueueClick: (index: number, treeType: string, name: string) => void;
   researchQueue?: Array<any>;
+  isMobile: boolean;
 }
 
 const ResearchBlock = ({
@@ -31,6 +33,7 @@ const ResearchBlock = ({
   index,
   prevResearched,
   researchQueue = [],
+  isMobile,
 }: IResearch) => {
   const researchedKeys = researchedTechnologies.map((tech) => Object.keys(tech)[0]);
   const currentResearchKey = currentResearch ? Object.keys(currentResearch)[0] : null;
@@ -55,9 +58,13 @@ const ResearchBlock = ({
           <p>Unlocks:&nbsp;
             {unlocks.map((unlock, index) => (
               <span key={unlock}>
+                {!isMobile ? (
                 <Tippy className="research-tippy" content={ResearchTippy(unlock)} placement="top" key="test">
                   <span className="underline-text">{unlock}</span>
                 </Tippy>
+                ) : (
+                  <span className="underline-text">{unlock}</span>
+                )}
                 {index !== unlocks.length - 1 ? ', ' : null}
               </span>
             ))}
