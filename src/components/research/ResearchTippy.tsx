@@ -48,9 +48,7 @@ const ResearchTippy = (researchName: string): ReactNode => {
   } else if (stats.type === "unit") {
     return <TippyUnitStats name={researchName} attack={stats.attack} movement={stats.movement} maintenance={stats.movement} />
   } else if (stats.type === "wall") {
-    return (
-      <span>Wall with <span className="bold-text">{stats.health} HP</span> and <span className="bold-text">{stats.attack} attack</span></span>
-    )
+    return <span>Wall with <span className="bold-text">{stats.health} HP</span> and <span className="bold-text">{stats.attack} attack</span></span>
   }
 }
 

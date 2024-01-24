@@ -132,8 +132,17 @@
   .research-block:last-child::after {
     display: none;
   }
-}
 
+  .mobile-research-unlock {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    .unit-stats-container {
+      margin-left: 0.5rem;
+    }
+  }
+}
 
 .researched-wrapper {
   display: flex;

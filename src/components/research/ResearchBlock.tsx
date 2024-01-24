@@ -1,8 +1,7 @@
-import { useState, useEffect } from "react";
 import LinearProgress from "@mui/material/LinearProgress";
 import Tippy from "@tippyjs/react";
 
-import { toCamelCase } from "../../utils";
+import { toCamelCase, getUnitOrBuildingStats } from "../../utils";
 import ResearchTippy from "./ResearchTippy";
 import "./ResearchTree.scss";
 
@@ -19,6 +18,38 @@ interface IResearch {
   onResearchQueueClick: (index: number, treeType: string, name: string) => void;
   researchQueue?: Array<any>;
   isMobile: boolean;
+}
+
+const MobileResearchInfo = (researchName: string) => {
+  const stats = getUnitOrBuildingStats(researchName)
+
+  if (!stats) return <span>Unlocks Archery</span>
+
+  if (stats.type === "building" && stats.extra) {
+    return <span>(+{stats.income} {stats.resourceName} and +{stats.extraValue} {stats.extra})</span>
+  } else if (stats.type === "building") {
+    return <span>(+{stats.income} {stats.resourceName})</span>
+  } else if (stats.type === "unit") {
+    return (
+      <div className="unit-stats-container">
+        <img width="50" src={`./${researchName.toLowerCase()}.png`} alt="Archer" />
+        <div className="unit-stats-tippy">
+          <p>Attack: <span>{stats.attack}</span></p>
+          <p>Movement: <span>{stats.movement}</span></p>
+          <p>Maintenance: <span>{stats.maintenance}</span></p>
+        </div>
+      </div>
+    )
+  }
+  // if (stats.type === "building" && stats.extra) {
+  //   return <span><span className="bold-text">+{stats.income} {stats.resourceName}</span> | <span className="bold-text">+{stats.extraValue} {stats.extra}</span></span>
+  // } else if (stats.type === "building") {
+  //   return <TippyBuildingStats value={stats.income} resourceName={stats.resourceName} />
+  // } else if (stats.type === "unit") {
+  //   return <TippyUnitStats name={researchName} attack={stats.attack} movement={stats.movement} maintenance={stats.movement} />
+  // } else if (stats.type === "wall") {
+  //   return <span>Wall with <span className="bold-text">{stats.health} HP</span> and <span className="bold-text">{stats.attack} attack</span></span>
+  // }
 }
 
 const ResearchBlock = ({
@@ -55,20 +86,36 @@ const ResearchBlock = ({
         {researchQueue.includes(toCamelCase(name)) ? <div className="research-queue-number">{researchQueue.indexOf(toCamelCase(name)) + 1}</div> : null}
         <div className="research-content">
           <h3>{name}</h3>
-          <p>Unlocks:&nbsp;
-            {unlocks.map((unlock, index) => (
-              <span key={unlock}>
-                {!isMobile ? (
-                <Tippy className="research-tippy" content={ResearchTippy(unlock)} placement="top" key="test">
-                  <span className="underline-text">{unlock}</span>
-                </Tippy>
-                ) : (
-                  <span className="underline-text">{unlock}</span>
-                )}
-                {index !== unlocks.length - 1 ? ', ' : null}
-              </span>
-            ))}
-          </p>
+          {isMobile ? (
+            <div style={{
+              display: unlocks.length > 1 ? 'block' : 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              marginBottom: unlocks.length > 1 ? '1rem' : 0,
+            }}>
+              <p>Unlocks:&nbsp;</p>
+              {unlocks.map((unlock, index) => (
+                <span key={unlock}>
+                  <span className="mobile-research-unlock">
+                    <span className="underline-text">{unlock}</span>&nbsp;
+                    {MobileResearchInfo(unlock)}
+                  </span>
+                </span>
+              ))}
+            </div>
+          ) : (
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <p>Unlocks:&nbsp;</p>
+              {unlocks.map((unlock, index) => (
+                <span key={unlock}>
+                  <Tippy className="research-tippy" content={ResearchTippy(unlock)} placement="top" key="test">
+                    <span className="underline-text">{unlock}</span>
+                  </Tippy>
+                  {index !== unlocks.length - 1 ? ', ' : null}&nbsp;
+                </span>
+              ))}
+            </div>
+          )}
         </div>
       </div>
 
