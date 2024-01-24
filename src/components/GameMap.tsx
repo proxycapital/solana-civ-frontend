@@ -439,20 +439,22 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
 
     const citiesInTile = cities.filter((c) => c.x === col && c.y === row);
 
-    const tileUnits: Array<Unit | City | any> = [...unitsInTile, ...upgradedUnitsInTile, ...citiesInTile];
+    const playerUnits = unitsInTile.filter((unit) => !unit.npc);
+
+    const tileUnits: Array<Unit | City | any> = [...playerUnits, ...upgradedUnitsInTile, ...citiesInTile];
 
     if(tileUnits.length === 0) {
       setUnitsTile([]);
       setSelectedTile(null);
     }
 
-    if(unitsInTile.length === 1 && tileUnits.length === 1) {
-      unitAction(col, row, unitsInTile[0].type || "unknown");
+    if(playerUnits.length === 1 && tileUnits.length === 1) {
+      unitAction(col, row, playerUnits[0].type || "unknown");
       return;
     }
 
     // if there is more than one unit in the tile and the selected unit is not in the tile, show menu
-    if(tileUnits.length > 1 && (!selectedUnit || !unitsInTile.find(unit => selectedUnit.unitId === unit.unitId && !unit.isSelected)) ) {
+    if(tileUnits.length > 1 && (!selectedUnit || !playerUnits.find(unit => selectedUnit.unitId === unit.unitId && !unit.isSelected)) ) {
       if(selectedTile?.x  === col && selectedTile?.y === row) {
         setSelectedTile(null)
         return;
