@@ -45,16 +45,15 @@ const UpgradedTileModal: React.FC<UpgradedTileModalProps> = ({ show, onClose, se
     >
       <div className="modal upgraded-tile-modal">
         <img className="avatar" src={`./terrain/Layer ${UpgradedTiles[selectedTileType]}.png`} alt="upgraded-tile" />
-        <div className="desktop-only">
+        <div>
           <strong>{UpgradedTilesNames[selectedTileType]}</strong>
         </div>
         <div className="line-container desktop-only">
           <img src="/icons/diamond.png" alt="" width="24" className="center-image" />
         </div>
         <div className="unit-stats">
-          Income:&nbsp;
           <b>+2</b>
-          <img width="32" src={`./icons/${UpgradedTilesResources[selectedTileType]}.png`} alt="resource type"/>
+          <img width="32" src={`./icons/${UpgradedTilesResources[selectedTileType]}.png`} alt="resource type"/><b>/ turn</b>
         </div>
       </div>
     </Modal>
