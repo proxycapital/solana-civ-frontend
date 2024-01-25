@@ -861,6 +861,44 @@ div.confirmation-modal {
   }
 }
 
+.mobile-map-controls {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 2.5rem;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+
+  .top-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .bottom-controls {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .control {
+    width: 3rem;
+    height: 3rem;
+    margin: 0.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.4rem;
+    color: #dfd6b9;
+    text-transform: none;
+    border: 1px solid var(--light-gradient, #927f61);
+    background: linear-gradient(180deg, #a38e5e 0%, #6b5b38 100%);
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
 .underline-text {
   text-decoration: underline;
 }
