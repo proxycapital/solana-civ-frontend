@@ -133,6 +133,10 @@ function getUnitOrBuildingStats(unitOrBuildingName: string): BuildingType | Unit
   return BuildingsAndUnits[unitOrBuildingName];
 }
 
+function sleep(ms: number): Promise<any> {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 export {
   toCamelCase,
   capitalizeWords,
@@ -142,4 +146,5 @@ export {
   formatLargeNumber,
   formatAddress,
   getUnitOrBuildingStats,
+  sleep,
 };

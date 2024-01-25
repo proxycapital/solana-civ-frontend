@@ -2,17 +2,52 @@ import React, { useState } from "react";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
-import { faLock } from "@fortawesome/free-solid-svg-icons";
+import Box from "@mui/material/Box";
+import Typography from '@mui/material/Typography';
+import CircularProgress, {
+  CircularProgressProps,
+} from '@mui/material/CircularProgress';import { faLock } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import InitiateGameButton from '../components/InitiateGameButton'
 import { useWorkspace } from "../context/AnchorContext";
 import { useModalError } from "../context/ModalErrorContext";
 
+function CircularProgressWithLabel(
+  props: CircularProgressProps & { value: number },
+) {
+  return (
+    <Box sx={{ position: 'relative', display: 'inline-flex' }} style={{ marginRight: '0.5rem'}}>
+      <CircularProgress sx={{ color: "#cab37d" }} thickness={4} size={33} variant="determinate" {...props} />
+      <Box
+        sx={{
+          top: 0,
+          left: 0,
+          bottom: 0,
+          right: 0,
+          position: 'absolute',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <Typography
+          variant="caption"
+          component="div"
+          color="text.secondary"
+          style={{ color: 'white', fontSize: '0.7rem' }}
+        >{`${Math.round(props.value)}%`}</Typography>
+      </Box>
+    </Box>
+  );
+};
+
 const HomePage: React.FC = () => {
   const workspace = useWorkspace();
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const { showModalError } = useModalError();
+  const [progressAirdrop, setProgressAirdrop] = useState<number>(75);
+  const [progressInitialize, setPreogressInitialize] = useState<number>(0);
 
   const [initializationSteps, setInitializationSteps] = useState([
     { name: "Requesting airdrop", status: "pending" },
@@ -40,6 +75,8 @@ const HomePage: React.FC = () => {
                   setShowButtons={setShowButtons}
                   updateStepStatus={updateStepStatus}
                   setErrorMsg={setErrorMsg}
+                  setProgressAirdrop={setProgressAirdrop}
+                  setPreogressInitialize={setPreogressInitialize}
                   label="New Game"
                 />
                 <InitiateGameButton
@@ -54,6 +91,8 @@ const HomePage: React.FC = () => {
               <InitiateGameButton
                 setShowButtons={setShowButtons}
                 updateStepStatus={updateStepStatus}
+                setProgressAirdrop={setProgressAirdrop}
+                setPreogressInitialize={setPreogressInitialize}
                 setErrorMsg={setErrorMsg}
               />
             )}
@@ -80,16 +119,20 @@ const HomePage: React.FC = () => {
             </Grid>
           </>
         ) : (
-          initializationSteps.map((step, index) => (
-            <Grid item xs={12} key={index} style={{ textAlign: "left", width: "200px", color: "#fff" }}>
-              <pre>
-                {step.status === "completed" && "✅ "}
-                {step.status === "failed" && "❌ "}
-                {step.status === "pending" && "⏳ "}
-                {step.name}
-              </pre>
+          <>
+            <Grid item xs={12} style={{ textAlign: "left", width: "200px", color: "#fff", marginTop: '0.75rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                {initializationSteps[0].status === "pending" && <CircularProgressWithLabel value={progressAirdrop} />}
+                {initializationSteps[0].status === "failed" && "❌ "}
+                <span>Requesting airdrop</span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', marginTop: '1rem' }}>
+                {initializationSteps[1].status === "pending" && <CircularProgressWithLabel value={progressInitialize} />}
+                {initializationSteps[1].status === "failed" && "❌ "}
+                <span>Initializing game</span>
+              </div>
             </Grid>
-          ))
+          </>
         )}
         {errorMsg && (
           <div className="error-container">
