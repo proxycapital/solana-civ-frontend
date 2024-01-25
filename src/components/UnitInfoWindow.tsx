@@ -143,7 +143,7 @@ const UnitInfoWindow: React.FC<UnitInfoProps> = ({ unit }) => {
           <img src="/icons/health.png" alt="" className="unit-icon" /> Health:&nbsp;<b>{unit.health}/100</b>
         </div>
       )}
-      <div className="unit-stats">
+      <div className="unit-stats desktop-only">
         <img src="/icons/movement.png" alt="" className="unit-icon" />
         Movements:&nbsp;
         <b>{movementRange}</b>
@@ -155,7 +155,7 @@ const UnitInfoWindow: React.FC<UnitInfoProps> = ({ unit }) => {
         </div>
       )}
       {experience !== 0 && level !== null && level !== undefined && level < config.expThresholds.length && (
-        <div className="unit-stats">
+        <div className={`unit-stats ${canUpgradeUnit(level || 0, experience || 0) && "desktop-only"}`}>
           XP:&nbsp;
           <b>
             {experience}/{config.expThresholds[level]}
