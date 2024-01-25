@@ -11,7 +11,7 @@ interface TippyUnitStasProps {
 
 interface TippyBuildingStatsProps {
   value: number,
-  resourceName: "science" | "gold" | "food" | "production" | "housing",
+  resourceName: "science" | "gold" | "food" | "production" | "housing" | "defence",
 }
 
 const TippyUnitStats = ({ attack, movement, maintenance, name}: TippyUnitStasProps) => {

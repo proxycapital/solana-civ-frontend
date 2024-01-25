@@ -145,7 +145,37 @@
       justify-content: space-between;
       margin-bottom: 0.5rem;
       padding: 5px;
-    
+
+      @media (max-width: 768px) {
+        flex-direction: column;
+        
+
+        .name-and-turns {
+          display: flex;
+          width: 100%;
+          justify-content: space-between;
+        }
+
+        .unit-stats-mobile {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-top: 0.15rem;
+
+          div {
+            display: flex; 
+            align-items: center;
+            font-size: 1rem;
+            font-weight: bold;
+          }
+
+          img {
+            margin-left: 0.25rem;
+            margin-right: 0.25rem;
+          }
+        }
+      }
+
       .number-of-turns {
         display: flex;
         flex-direction: row;

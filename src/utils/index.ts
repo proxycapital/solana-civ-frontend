@@ -68,7 +68,7 @@ function formatAddress(address: string, symbols: number = 4): string {
 
 type BuildingType = {
   type: "building";
-  resourceName: "science" | "gold" | "food" | "production" | "housing";
+  resourceName: "science" | "gold" | "food" | "production" | "housing" | "defence";
   income: number;
   extra?: "housing";
   extraValue?: number;
@@ -90,6 +90,14 @@ type WallType = {
 function getUnitOrBuildingStats(unitOrBuildingName: string): BuildingType | UnitType | WallType {
   const BuildingsAndUnits: Record<string, BuildingType | UnitType | WallType> = {
     // @todo: fix Archery as it unlock Unlocks Archery
+    // initially avaiable 
+    "Barracks":           { type: "building", resourceName: "defence", income: 2, extra: "housing", extraValue: 2 },
+    "Settler":            { type: "unit", attack: 0, movement: 2, maintenance: 0},
+    "Builder":            { type: "unit", attack: 0, movement: 2, maintenance: 0},
+    "Warrior":            { type: "unit", attack: 8, movement: 2, maintenance: 0 },
+    "Wall":               { type: "wall", health: 50, attack: 5},
+
+    // available from research
     "Library":            { type: "building", resourceName: "science", income: 2 },
     "School":             { type: "building", resourceName: "science", income: 3 },
     "University":         { type: "building", resourceName: "science", income: 4, extra: "housing", extraValue: 1},
