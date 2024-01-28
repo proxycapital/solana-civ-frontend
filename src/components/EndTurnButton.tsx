@@ -57,7 +57,7 @@ const EndTurnButton: React.FC<EndTurnButtonProps> = ({ setShowOnboardingType, op
     return () => {
       window.removeEventListener("keydown", handleKeyPress);
     };
-  }, [isProcessing]);
+  }, [isProcessing, technologies.currentResearch]);
 
   useEffect(() => {
     async function handleResearchComplete() {
@@ -138,11 +138,13 @@ const EndTurnButton: React.FC<EndTurnButtonProps> = ({ setShowOnboardingType, op
 
     const researchQueue = localStorage.getItem("researchQueue");
 
+
     if (!researchQueue) {
       const totalTechnologies =
         config.science["Science and Economy Tree"].length +
         config.science["Production and Agriculture Tree"].length +
         config.science["Military Tree"].length;
+
       if (!technologies.currentResearch && technologies.researchedTechnologies.length < totalTechnologies) {
         toast.warning("You need to select a technology to research");
         setShowOnboardingType("research");
