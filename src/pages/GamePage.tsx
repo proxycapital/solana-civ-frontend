@@ -5,7 +5,6 @@ import { Modal, Typography, Box, Grid } from "@mui/material";
 import TopMenu from "../components/TopMenu";
 import GameMap from "../components/GameMap";
 import Console from "../components/Console";
-import MobileMapControls from "../components/MobileMapControls";
 import { useModalError } from "../context/ModalErrorContext";
 import { useWorkspace } from "../context/AnchorContext";
 import InitiateGameButton from '../components/InitiateGameButton'
@@ -135,7 +134,6 @@ const GamePage: React.FC = () => {
 
   return (
     <div className="full-screen">
-      <MobileMapControls />
       <TopMenu debug={debug} setDebug={setDebug} />
       {debug && <Console messages={messages} />}
       <GameMap debug={debug} logMessage={logMessage} />

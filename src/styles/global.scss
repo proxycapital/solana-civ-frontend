@@ -864,8 +864,8 @@ div.confirmation-modal {
 
 .mobile-map-controls {
   position: absolute;
-  bottom: 4rem;
-  left: 1.5rem;
+  bottom: 1rem;
+  left: 1rem;
   z-index: 100;
   display: none;
   flex-direction: column;
@@ -883,11 +883,23 @@ div.confirmation-modal {
   .bottom-controls {
     display: flex;
     flex-direction: row;
+
+    .left {
+      transform: rotate(-90deg);
+    }
+
+    .bottom {
+      transform: rotate(-180deg);
+    }
+
+    .right {
+      transform: rotate(90deg);
+    }
   }
 
   .control {
-    width: 3.25rem;
-    height: 3.25rem;
+    width: 3rem;
+    height: 3rem;
     margin: 0.25rem;
     display: flex;
     align-items: center;
