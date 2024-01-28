@@ -257,18 +257,6 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
             </Button>
           </Tippy>
 
-          <Tippy key="profile" content="Profile" placement="left">
-            <Button
-              variant="text"
-              color="inherit"
-              onClick={() => {
-                handleOpenModal("Profile");
-              }}
-            >
-              <img src="/icons/profile.png" width="42" alt="Profile" />
-            </Button>
-          </Tippy>
-
           {/* <Tippy key="achievements" content="Achievements" placement="left">
             <Button
               variant="text"
@@ -359,9 +347,20 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
               </div>
             </div>
             <div style={{ marginLeft: "auto", display: "flex" }}>
-              <button onClick={handleToggleBackgroundMusic} className="music-toggle-button">
+            <Tippy key="profile" content="Profile" placement="bottom">
+            <Button
+              variant="text"
+              color="inherit"
+              onClick={() => {
+                handleOpenModal("Profile");
+              }}
+            >
+              <img src="/icons/gear.png" width="24" alt="Profile" />
+            </Button>
+          </Tippy>
+              {/* <button onClick={handleToggleBackgroundMusic} className="music-toggle-button">
                 <FontAwesomeIcon icon={isMusicPlaying ? faVolumeHigh : faVolumeXmark} />
-              </button>
+              </button> */}
               <EndTurnButton
                 setShowOnboardingType={setShowOnboardingType}
                 openNewResearchModal={() => handleOpenModal("New Research")}

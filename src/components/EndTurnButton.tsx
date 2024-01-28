@@ -184,10 +184,10 @@ const EndTurnButton: React.FC<EndTurnButtonProps> = ({ setShowOnboardingType, op
 
       const instruction = await program!.methods.endTurn().accounts(accounts).instruction();
       const computeBudgetInstruction = anchor.web3.ComputeBudgetProgram.setComputeUnitLimit({
-          units: 1000000,
+        units: 1000000,
       });
-      const addPriorityFee = anchor.web3.ComputeBudgetProgram.setComputeUnitPrice({ 
-        microLamports: 1 
+      const addPriorityFee = anchor.web3.ComputeBudgetProgram.setComputeUnitPrice({
+        microLamports: 1,
       });
       const transaction = new anchor.web3.Transaction();
       transaction.add(computeBudgetInstruction);
@@ -250,9 +250,11 @@ const EndTurnButton: React.FC<EndTurnButtonProps> = ({ setShowOnboardingType, op
           &nbsp; End Turn {game.turn}
         </Button>
       </Tippy>
-      <Button onClick={handleOpenDialog} variant="outlined" className="end-game-button">
-        <FontAwesomeIcon icon={faSkullCrossbones} />
-      </Button>
+      <Tippy content="End Game">
+        <Button onClick={handleOpenDialog} variant="outlined" className="end-game-button">
+          <FontAwesomeIcon icon={faSkullCrossbones} />
+        </Button>
+      </Tippy>
       {isProcessing && (
         <div
           style={{
