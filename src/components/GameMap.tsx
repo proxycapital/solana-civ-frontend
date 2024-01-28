@@ -633,7 +633,7 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
           );
         })}
       </div>
-      <MobileMapControls isSelectedUnit={!!selectedUnit} />
+      {/* <MobileMapControls isSelectedUnit={!!selectedUnit} /> */}
 
       <ToastContainer
         style={{ top: isMobile ? "5px" : "70px", zIndex: 100000 }}
