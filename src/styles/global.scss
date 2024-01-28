@@ -916,6 +916,16 @@ div.confirmation-modal {
   }
 }
 
+.mobile-map-controls.unit-selected {
+  transform: translateY(-44px);
+  transition: all 1s;
+}
+
+.mobile-map-controls.unit-not-selected {
+  transform: translateY(0);
+  transition: all 1s;
+}
+
 .underline-text {
   text-decoration: underline;
 }

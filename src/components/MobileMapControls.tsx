@@ -42,10 +42,8 @@ const MobileMapControls = ({ isSelectedUnit }: MobileMapControlsProps) => {
     }
   }
 
-  console.log("Rerendred: ", isSelectedUnit);
-
   return (
-    <div className="mobile-map-controls">
+    <div className={`mobile-map-controls ${isSelectedUnit ? 'unit-selected' : 'unit-not-selected'}`}>
       <div className="top-controls">
         <div onClick={() => handleMapControl("top")} className="control">
           <img width={28} src="./icons/triangle.png" alt="Triangle Top" />
@@ -66,4 +64,4 @@ const MobileMapControls = ({ isSelectedUnit }: MobileMapControlsProps) => {
   )
 }
 
-export default MobileMapControls
+export default React.memo(MobileMapControls)
