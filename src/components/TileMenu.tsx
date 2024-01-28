@@ -1,28 +1,18 @@
 import React, { CSSProperties } from 'react';
-import {City} from "../context/GameStateContext";
+import { City } from "../context/GameStateContext";
+import { Unit } from './GameMap';
 
 interface CustomStyle extends CSSProperties {
   '--index'?: number;
   '--count'?: number;
 }
 
-interface Unit {
-  unitId: number;
-  npc?: boolean;
-  health: number;
-  x: number;
-  y: number;
-  type: string;
-  isSelected: boolean;
-  movementRange: number;
-}
-
-interface CircleMenuProps {
+interface TileMenuProps {
   units: Array<Unit | City | any>,
   onClick: (unitTile: Unit | City | any) => void
 }
 
-const TileMenu = ({ units, onClick }: CircleMenuProps) => {
+const TileMenu = ({ units, onClick }: TileMenuProps) => {
   return (
     <div className="circle-menu">
       {Array.from({ length: units.length }).map((_, index) => (

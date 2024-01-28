@@ -14,6 +14,7 @@ import { useSound } from "../context/SoundContext";
 import { getMap } from "../utils/solanaUtils";
 import GameOverModal from "./GameOverModal";
 import TileMenu from "./TileMenu";
+import MobileMapControls from "./MobileMapControls";
 
 interface GameMapProps {
   debug: boolean;
@@ -38,19 +39,19 @@ interface TileCoordinate {
   y: number;
 }
 
-const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
-  interface Unit {
-    unitId: number;
-    npc?: boolean;
-    health: number;
-    x: number;
-    y: number;
-    type: string;
-    isSelected: boolean;
-    movementRange: number;
-    experience: number;
-  }
+export interface Unit {
+  unitId: number;
+  npc?: boolean;
+  health: number;
+  x: number;
+  y: number;
+  type: string;
+  isSelected: boolean;
+  movementRange: number;
+  experience: number;
+}
 
+const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
   const rows = 20;
   const cols = 20;
   const isDragging = useRef(false);
@@ -632,6 +633,8 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
           );
         })}
       </div>
+      {/* <MobileMapControls isSelectedUnit={!!selectedUnit} /> */}
+
       <ToastContainer
         style={{ top: isMobile ? "5px" : "70px", zIndex: 100000 }}
         position="top-right"

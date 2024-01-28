@@ -57,7 +57,7 @@ const EndTurnButton: React.FC<EndTurnButtonProps> = ({ setShowOnboardingType, op
     return () => {
       window.removeEventListener("keydown", handleKeyPress);
     };
-  }, [isProcessing]);
+  }, [isProcessing, technologies.currentResearch]);
 
   useEffect(() => {
     async function handleResearchComplete() {
@@ -138,11 +138,13 @@ const EndTurnButton: React.FC<EndTurnButtonProps> = ({ setShowOnboardingType, op
 
     const researchQueue = localStorage.getItem("researchQueue");
 
+
     if (!researchQueue) {
       const totalTechnologies =
         config.science["Science and Economy Tree"].length +
         config.science["Production and Agriculture Tree"].length +
         config.science["Military Tree"].length;
+
       if (!technologies.currentResearch && technologies.researchedTechnologies.length < totalTechnologies) {
         toast.warning("You need to select a technology to research");
         setShowOnboardingType("research");
@@ -184,10 +186,10 @@ const EndTurnButton: React.FC<EndTurnButtonProps> = ({ setShowOnboardingType, op
 
       const instruction = await program!.methods.endTurn().accounts(accounts).instruction();
       const computeBudgetInstruction = anchor.web3.ComputeBudgetProgram.setComputeUnitLimit({
-          units: 1000000,
+        units: 1000000,
       });
-      const addPriorityFee = anchor.web3.ComputeBudgetProgram.setComputeUnitPrice({ 
-        microLamports: 1 
+      const addPriorityFee = anchor.web3.ComputeBudgetProgram.setComputeUnitPrice({
+        microLamports: 1,
       });
       const transaction = new anchor.web3.Transaction();
       transaction.add(computeBudgetInstruction);
@@ -250,9 +252,11 @@ const EndTurnButton: React.FC<EndTurnButtonProps> = ({ setShowOnboardingType, op
           &nbsp; End Turn {game.turn}
         </Button>
       </Tippy>
-      <Button onClick={handleOpenDialog} variant="outlined" className="end-game-button">
-        <FontAwesomeIcon icon={faSkullCrossbones} />
-      </Button>
+      <Tippy content="End Game">
+        <Button onClick={handleOpenDialog} variant="outlined" className="end-game-button">
+          <FontAwesomeIcon icon={faSkullCrossbones} />
+        </Button>
+      </Tippy>
       {isProcessing && (
         <div
           style={{

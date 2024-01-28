@@ -37,7 +37,6 @@ p.coming-soon {
 }
 
 @media (max-width: 768px) {
-  
   .achievements-item {
     width: 100%;
     margin: 15px 0;
@@ -46,6 +45,5 @@ p.coming-soon {
   .achievements-items-row {
     justify-content: center;
   }
-
 }
   

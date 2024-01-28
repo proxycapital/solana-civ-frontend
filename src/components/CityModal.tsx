@@ -15,6 +15,7 @@ import { addToProductionQueue, removeFromProductionQueue, purchaseWithGold, repa
 import { AllUnits, UnitType } from "../Units";
 import { AllBuildings, BuildingType } from "../Buildings";
 import CustomTooltip from "./CustomTooltip";
+import { getUnitOrBuildingStats } from "../utils";
 
 interface CityModalProps {
   show: boolean;
@@ -356,7 +357,12 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
               <div className="modal-body">
                 {AllUnits.map((unit) => {
                   const isUnlocked = unit.requirement ? researchedTechnologies.has(unit.requirement) : true;
-                  return (
+                  const stats = getUnitOrBuildingStats(String(unit.label));
+                  
+                  if (!stats) return <></>;
+                
+                  // no Tippy for mobile
+                  return !isMobile ? (
                     <Tippy
                       key={unit.type}
                       placement="right"
@@ -396,14 +402,86 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
                         </div>
                       </Box>
                     </Tippy>
-                  );
+                  ) : (
+                    // mobile view
+                    <Box
+                      onClick={() => {
+                        if (!isUnlocked) {
+                          toast.error(`You need to research "${unit.tech}"`, { autoClose: 3000 });
+                          return;
+                        }
+                        if (selectedTab === 0) {
+                          handleAddToProductionQueue(unit, "unit");
+                          return;
+                        }
+                        handlePurchaseWithGold(unit, "unit");
+                      }}
+                      className={`body-item ${!isUnlocked ? "locked" : ""} primary-border-with-box-shadow`}
+                      key={unit.type}
+                    >
+                      <div className="name-and-turns">
+                        <img src={`/${unit.type}.png`} alt={unit.label} width="50" />
+                        <div style={{ textAlign: 'center' }}>
+                          <Typography style={{ fontSize: '1.2rem', marginBottom: '0.3rem' }} variant="body1">{unit.label}</Typography>
+                          {isUnlocked ? (
+                            <>
+                              {stats.type === "unit" && (
+                                <div className="unit-stats-mobile">
+                                  {unit.label === "Builder" && <span style={{ fontSize: '0.9rem'}}>{unit.description}</span>}
+                                  {unit.label === "Settler" && <span style={{ fontSize: '0.9rem'}}>{unit.description}</span>}
+                                  {unit.label !== "Builder" && unit.label !== "Settler" && (
+                                    <>
+                                      <div>
+                                        {stats.attack}
+                                        <img width="19" src="./icons/attack.png" alt="axe" />
+                                      </div>
+                                      <div>
+                                        {stats.movement}
+                                        <img width="19" src="./icons/movement.png" alt="foot" />
+                                      </div>
+                                      <div>
+                                        {stats.maintenance}
+                                        <img width="19" src="./icons/gold.png" alt="gold" />
+                                      </div>
+                                    </>
+                                  )}
+                                </div>
+                              )}
+                            </>
+                          ) : (
+                            <span>Unlocks: {unit.tech}</span>
+                          )}
+                        </div>
+                        <div className="number-of-turns">
+                          {selectedTab === 0 ? (
+                            <>
+                              <span>
+                                {city ? `${Math.round(unit.productionCost / city.productionYield)} Turns` : ""}
+                              </span>
+                            </>
+                          ) : (
+                            <>
+                              <span>{unit.goldCost}</span>
+                              <img src="./icons/gold.png" width="20" alt="gold" />
+                            </>
+                          )}
+                        </div>
+                      </div>
+                    </Box>
+                  )
                 })}
               </div>
               <h3 className="">Buildings</h3>
               <div className="modal-body">
                 {buildingsToBuild.map((building) => {
                   const isUnlocked = building.requirement ? researchedTechnologies.has(building.requirement) : true;
-                  return (
+
+                  const stats = getUnitOrBuildingStats(String(building.label));
+                  if (!stats) console.log(building.label);
+
+                  // if (!stats) return <></>;
+                  // no Tippy for mobile
+                  return !isMobile ? (
                     <Tippy
                       key={building.type}
                       placement="left"
@@ -439,7 +517,54 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
                         </div>
                       </Box>
                     </Tippy>
-                  );
+                  ) : (
+                    // mobile view
+                    <Box
+                      onClick={() => {
+                        if (!isUnlocked) {
+                          toast.error(`You need to research "${building.tech}"`, { autoClose: 3000 });
+                          return;
+                        }
+                        if (selectedTab === 0) {
+                          handleAddToProductionQueue(building, "building");
+                          return;
+                        }
+                        handlePurchaseWithGold(building, "building");
+                      }}
+                      className={`body-item ${!isUnlocked ? "locked" : ""} primary-border-with-box-shadow`}
+                    >
+                      <div className="name-and-turns">
+                        <Typography variant="body1">{building.label}</Typography>
+                        <div className="number-of-turns">
+                          {selectedTab === 0 ? (
+                            <>
+                              <span>{city ? Math.round(building.productionCost / city.productionYield) : ""}</span>
+                              <img src="./icons/hourglass.png" width="20" alt="hourglass" />
+                            </>
+                          ) : (
+                            <>
+                              <span>{building.goldCost}</span>
+                              <img src="./icons/gold.png" width="20" alt="gold" />
+                            </>
+                          )}
+                        </div>
+                      </div>
+                      {isUnlocked ? (
+                        <>
+                          {stats.type === "building" && (
+                            <div>
+                              +{stats.income} {stats.resourceName} {stats.extra && `| +${stats.extraValue} ${stats.extra}`}
+                            </div>
+                          )}
+                          {stats.type === "wall" && (
+                            <span>{stats.health} HP and {stats.attack} attack</span>
+                          )}
+                        </>
+                      ) : (
+                        <span style={{ margin: '0.5rem' }}>Unlocks: {building.tech}</span>
+                      )}
+                    </Box>
+                  )
                 })}
               </div>
             </div>

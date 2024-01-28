@@ -4,6 +4,7 @@ import { Connection, PublicKey, LAMPORTS_PER_SOL } from "@solana/web3.js";
 import { useNavigate } from "react-router-dom";
 import Tippy from '@tippyjs/react';
 
+import { sleep } from '../utils';
 import { useWorkspace } from '../context/AnchorContext';
 import { requestBackendAirdrop, requestSolanaAirdrop, registerPlayerAddress } from '../utils/initiateGame'
 import { handleEndGame, initializeGame } from '../utils/solanaUtils';
@@ -15,10 +16,19 @@ interface InitiateGameButtonProps {
   setShowButtons: (showButtons: boolean) => void;
   updateStepStatus: (step: string, status: string) => void;
   setErrorMsg: (errorMsg: string) => void;
+  setProgressAirdrop?: (progress: number) => void;
+  setPreogressInitialize?: (progress: number) => void;
   label?: string
 }
 
-const InitiateGameButton = ({ setShowButtons, updateStepStatus, setErrorMsg, label = "New Game" }: InitiateGameButtonProps) => {
+const InitiateGameButton = ({
+  setShowButtons,
+  updateStepStatus,
+  setErrorMsg,
+  setProgressAirdrop,
+  setPreogressInitialize,
+  label = "New Game",
+}: InitiateGameButtonProps) => {
   const navigate = useNavigate();
   const workspace = useWorkspace();
   const { showModalError, setShowModalError } = useModalError();
@@ -38,7 +48,7 @@ const InitiateGameButton = ({ setShowButtons, updateStepStatus, setErrorMsg, lab
 
   const createWalletAndStartGame = async (level: number) => {
     setShowButtons(false);
-
+    setProgressAirdrop && setProgressAirdrop(25);
     // user already have some game session
     if (!showModalError) {
       await handleEndGame(workspace.provider!, workspace.program!);
@@ -49,12 +59,14 @@ const InitiateGameButton = ({ setShowButtons, updateStepStatus, setErrorMsg, lab
       publicKey: workspace.provider?.publicKey as PublicKey,
     };
     const minAmount = 0.25;
+    setProgressAirdrop && setProgressAirdrop(45);
     try {
       const balance = await connection.getBalance(wallet.publicKey);
       if (balance < minAmount * LAMPORTS_PER_SOL) {
         try {
           // First airdrop attempt
           await requestSolanaAirdrop(connection, wallet.publicKey);
+          setProgressAirdrop && setProgressAirdrop(60);
         } catch (error1) {
           console.log("First airdrop attempt failed:", error1);
           try {
@@ -64,16 +76,21 @@ const InitiateGameButton = ({ setShowButtons, updateStepStatus, setErrorMsg, lab
               "confirmed"
             );
             await requestSolanaAirdrop(heliusConnection, wallet.publicKey);
+            setProgressAirdrop && setProgressAirdrop(70);
           } catch (error2) {
             console.log("Second airdrop attempt failed:", error2);
             // Third airdrop attempt using backend
             const backendSuccess = await requestBackendAirdrop(wallet.publicKey.toBase58());
+            setProgressAirdrop && setProgressAirdrop(80);
             if (!backendSuccess) {
               throw new Error("All airdrop attempts failed. Please fund your wallet using web faucet:");
             }
           }
         }
+        setProgressAirdrop && setProgressAirdrop(100);
         updateStepStatus("Requesting airdrop", "completed");
+      } else {
+        setProgressAirdrop && setProgressAirdrop(100);
       }
     } catch (error) {
       console.log("Error while requesting airdrop: ", error);
@@ -82,12 +99,17 @@ const InitiateGameButton = ({ setShowButtons, updateStepStatus, setErrorMsg, lab
       setShowButtons(true);
       return;
     }
-
+    setPreogressInitialize && setPreogressInitialize(35);
     try {
       const provider = workspace.provider!;
       const program = workspace.program!;
+      setPreogressInitialize && setPreogressInitialize(50);
       await initializeGame(provider, program, level);
+      setPreogressInitialize && setPreogressInitialize(75);
       await registerPlayerAddress(wallet.publicKey.toBase58());
+      setPreogressInitialize && setPreogressInitialize(100);
+      // block for 200 ms to show 100%
+      await sleep(200);
       updateStepStatus("Initializing game", "completed");
       setShowModalError(false);
     } catch (error) {

@@ -34,7 +34,6 @@ const Leaderboard = () => {
     };
   }, []);
 
-
   useEffect(() => {
     async function init() {
       setIsLoading(true)
@@ -46,7 +45,9 @@ const Leaderboard = () => {
   }, [])
 
   const userAddress = wallet?.adapter.publicKey?.toBase58();
- 
+  const userPositionInBoard = leaderboardData.find((row) => row.address === userAddress);
+  const userRank = leaderboardData.findIndex((row) => row.address === userAddress);
+
   return (
     <div className="leaderboard-container">
       <ThemeProvider theme={darkTheme}>
@@ -67,6 +68,18 @@ const Leaderboard = () => {
                 </TableCell>
               </TableRow>
             )}
+            {userPositionInBoard && userRank && userAddress ? (
+              <TableRow>
+                <TableCell style={{ borderColor: '#927f61' }} align="center">{userRank}</TableCell>
+                <TableCell style={{ borderColor: '#927f61' }}>
+                  <div className="user-container">
+                    <RandomAvatar name={userAddress + userRank + userPositionInBoard.balance} size={32} />
+                    <span>{isMobile ? formatAddress(userAddress) : userAddress} (You)</span>
+                  </div>
+                </TableCell>
+                <TableCell style={{ borderColor: '#927f61' }} align="center">{userPositionInBoard.balance}</TableCell>
+              </TableRow>
+            ) : null}
             {leaderboardData.map((row, index) => (
               <TableRow key={row.address} className={userAddress === row.address ? "active" : ""}>
                 <TableCell align="center">

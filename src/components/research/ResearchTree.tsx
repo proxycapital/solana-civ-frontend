@@ -14,7 +14,8 @@ import resetResearchStorage from "../../utils/storage";
 const researchData = config.science;
 
 const ResearchTree = () => {
-  const [researchQueue, setResearchQueue] = useState([])
+  const [researchQueue, setResearchQueue] = useState([]);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const { program, provider } = useWorkspace();
   const { technologies, fetchPlayerState } = useGameState();
   const column1 = researchData["Science and Economy Tree"];
@@ -22,6 +23,17 @@ const ResearchTree = () => {
   const column3 = researchData["Military Tree"];
 
   const researchedKeys = technologies.researchedTechnologies.map((tech) => Object.keys(tech)[0]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   useEffect(() => {
     getResearchQueue()
@@ -128,6 +140,7 @@ const ResearchTree = () => {
           <ResearchBlock
             {...data}
             {...technologies}
+            isMobile={isMobile}
             researchQueue={researchQueue}
             treeType="Science and Economy Tree"
             onResearchQueueClick={handleResearchQueue}
@@ -142,6 +155,7 @@ const ResearchTree = () => {
           <ResearchBlock
             {...data}
             {...technologies}
+            isMobile={isMobile}
             researchQueue={researchQueue}
             treeType="Production and Agriculture Tree"
             onResearchQueueClick={handleResearchQueue}
@@ -156,6 +170,7 @@ const ResearchTree = () => {
           <ResearchBlock
             {...data}
             {...technologies}
+            isMobile={isMobile}
             researchQueue={researchQueue}
             treeType="Military Tree"
             onResearchQueueClick={handleResearchQueue}

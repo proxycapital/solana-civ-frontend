@@ -27,6 +27,7 @@ import ListItemText from "@mui/material/ListItemText";
 import ResearchTree from "./research/ResearchTree";
 import NewResearch from "./research/NewResearch";
 import Quests from "./quests/Quests";
+import Profile from "./profile/Profile";
 import Leaderboard from "./leaderboard/Leaderboard";
 import Marketplace from "./marketplace/Marketplace";
 import Achievements from "./achievements/Achievements";
@@ -79,9 +80,6 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState("");
   
-
-  // const [isModalOpen, setModalOpen] = useState(true);
-  // const [modalContent, setModalContent] = useState("New Research");
   const [openDialog, setOpenDialog] = useState(false);
   const [showOnboardingType, setShowOnboardingType] = useState<"production" | "research" | null>(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -207,7 +205,7 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
   };
 
   const [isMusicPlaying, setMusicPlaying] = useState(() => {
-    return localStorage.getItem("isMusicPlaying") === "true";
+    return localStorage.getItem("isBackgroundMusicPlaying") === "true";
   });
 
   const handleToggleBackgroundMusic = () => {
@@ -345,13 +343,24 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
                 </div>
               </Tippy>
               <div className="star-icon">
-                <img src="/icons/star.png" width="12" alt="" />
+                <img src="/icons/star.png" width="12" alt="Star" />
               </div>
             </div>
             <div style={{ marginLeft: "auto", display: "flex" }}>
-              <button onClick={handleToggleBackgroundMusic} className="music-toggle-button">
+            <Tippy key="profile" content="Profile" placement="bottom">
+            <Button
+              variant="text"
+              color="inherit"
+              onClick={() => {
+                handleOpenModal("Profile");
+              }}
+            >
+              <img src="/icons/gear.png" width="24" alt="Profile" />
+            </Button>
+          </Tippy>
+              {/* <button onClick={handleToggleBackgroundMusic} className="music-toggle-button">
                 <FontAwesomeIcon icon={isMusicPlaying ? faVolumeHigh : faVolumeXmark} />
-              </button>
+              </button> */}
               <EndTurnButton
                 setShowOnboardingType={setShowOnboardingType}
                 openNewResearchModal={() => handleOpenModal("New Research")}
@@ -372,6 +381,7 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
             {modalContent === "Leaderboard" && <Leaderboard />}
             {modalContent === "Achievements" && <Achievements />}
             {modalContent === "Marketplace" && <Marketplace />}
+            {modalContent === "Profile" && <Profile />}
           </div>
         </CustomModal>
 
