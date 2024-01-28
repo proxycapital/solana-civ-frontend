@@ -69,7 +69,7 @@ const Profile = () => {
         <img src="/icons/diamond.png" alt="" width="24" className="center-image" />
       </div>
       
-      <div>
+      {/* <div>
         <h2>Games Stats:</h2>
         <p className="coming-soon">Coming soon</p>
         <div className="profile-stats">
@@ -78,7 +78,7 @@ const Profile = () => {
           <span>Defeats: <b>{userStats.defeat}</b> ({((userStats.defeat / userStats.games) * 100).toFixed(2)}%)</span>
           <span>Abandoned: <b>{userStats.abandoned}</b> ({((userStats.abandoned / userStats.games) * 100).toFixed(2)}%)</span>
         </div>
-      </div>
+      </div> */}
     </div>
   )
 }
