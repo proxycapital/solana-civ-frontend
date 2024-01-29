@@ -23,7 +23,7 @@ export const SoundProvider: React.FC<BaseLayoutProps> = ({ children }) => {
     return localStorage.getItem("isBackgroundMusicPlaying") === "true";
   });
   const [isInGameMusicPlaying, setInGameMusicPlaying] = useState(() => {
-    return localStorage.getItem("isInGameMusicPlaying") === "true";
+    return localStorage.getItem("isInGameMusicPlaying") !== "false";
   });
   const [musicVolume, setMusicVolume] = useState(() => {
     return localStorage.getItem("backgroundMusicVolume") || 0.3;
