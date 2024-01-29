@@ -664,8 +664,10 @@ img.terrain.undiscovered {
   backdrop-filter: blur(16px);
 
   @media (max-width: 768px) {
+    padding-top: 25px !important;
+
     .close-button {
-      top: 27px;
+      top: 50px;
     }
   }
 

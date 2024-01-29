@@ -13,7 +13,7 @@ const Profile = () => {
     return localStorage.getItem("isBackgroundMusicPlaying") === "true";
   });
   const [isInGameMusicPlaying, setInGameMusicPlaying] = useState(() => {
-    return localStorage.getItem("isInGameMusicPlaying") !== "true";
+    return localStorage.getItem("isInGameMusicPlaying") !== "false";
   });
  
   const handleToggleBackgroundMusic = () => {
