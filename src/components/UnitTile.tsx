@@ -30,22 +30,33 @@ const UnitTile: React.FC<UnitTileProps> = ({
   // }, [level])
 
   // const isHealing = health !== 100;
-  console.log("attack: ", attack)
 
   if (npc) {
     return  (
-      <Tippy content={<span>Health: {health}, Attack: {attack}</span>}>
+      <Tippy placement="top" content={
+        <div className="npc-tippy">
+          <div className="npc-tippy-stats">
+            <span>{health}</span>
+            <img width={18} src="/icons/health.png" alt="Health" />
+          </div>
+          <div className="npc-tippy-stats">
+            <span>{attack}</span>
+            <img width={18} src="/icons/attack.png" alt="Attack" />
+          </div>
+        </div>
+      }>
         <div
           id={`unit-${unitId}`} className={`unit unit-${type} ${isSelected ? "selected" : ""} ${npc ? "npc" : ""}`}
           onClick={() => onClick(x, y)}
         > 
-          <div className="unit-header">
+          <div>
             {level ? (
               <div className="level">
                 <span>{level}</span>
               </div>
               ) : null
             }
+          
             {health && health < 100 && (
               <div className="health-bar">
                 <div className="health" style={{ width: `${health}%` }}></div>
@@ -83,7 +94,7 @@ const UnitTile: React.FC<UnitTileProps> = ({
           />
         </div>
       )} */}
-      <div className="unit-header">
+      <div>
         {!npc && canUpgradeUnit(level || 0, experience || 0) ? (
           <div className="level">
             <Tippy placement="right" content={<span>Level Up available</span>}>
