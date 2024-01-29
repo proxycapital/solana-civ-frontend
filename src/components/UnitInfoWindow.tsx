@@ -184,7 +184,7 @@ const UnitInfoWindow: React.FC<UnitInfoProps> = ({ unit }) => {
       {canUpgradeUnit(level || 0, experience || 0) ? (
         <Tippy content={config.unitUpgradeResult}>
           <Button className="unit-action-button" variant="outlined" onClick={() => handleUpgrade(unit.unitId)}>
-            <img src="/icons/health.png" alt="Health" className="unit-icon" />
+            <img src="/icons/health.png" alt="Health" className="unit-icon desktop-only" />
             Level Up
           </Button>
         </Tippy>
