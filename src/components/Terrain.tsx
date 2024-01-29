@@ -91,7 +91,7 @@ const Terrain: React.FC<TerrainProps> = ({ isControlled, discovered, imageIndex,
               />
             </div>
           )}
-          <Tippy content={`${overlayTileType}`}>
+          <Tippy touch={false} content={`${overlayTileType}`}>
             <img
               src={overlayImageUrl}
               className={`terrain-overlay ${tileType.toLowerCase()}`}

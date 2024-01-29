@@ -108,7 +108,7 @@ const ResearchBlock = ({
               <p>Unlocks:&nbsp;</p>
               {unlocks.map((unlock, index) => (
                 <span key={unlock}>
-                  <Tippy className="research-tippy" content={ResearchTippy(unlock)} placement="top" key="test">
+                  <Tippy touch={false} className="research-tippy" content={ResearchTippy(unlock)} placement="top" key="test">
                     <span className="underline-text">{unlock}</span>
                   </Tippy>
                   {index !== unlocks.length - 1 ? ', ' : null}&nbsp;

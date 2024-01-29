@@ -246,13 +246,13 @@ const EndTurnButton: React.FC<EndTurnButtonProps> = ({ setShowOnboardingType, op
 
   return (
     <>
-      <Tippy key="gems" content="Hotkey: 'Spacebar'">
+      <Tippy touch={false} key="gems" content="Hotkey: 'Spacebar'">
         <Button onClick={endTurn} disabled={isProcessing} variant="outlined" className="end-turn-button">
           <FontAwesomeIcon icon={faHourglassEnd} />
           &nbsp; End Turn {game.turn}
         </Button>
       </Tippy>
-      <Tippy content="End Game">
+      <Tippy touch={false} content="End Game">
         <Button onClick={handleOpenDialog} variant="outlined" className="end-game-button">
           <FontAwesomeIcon icon={faSkullCrossbones} />
         </Button>

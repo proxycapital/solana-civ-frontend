@@ -23,7 +23,7 @@ const NewResearch = () => {
         <br />
         {newBuildingUnlocked?.label && (
           <span>Now you can build&nbsp;
-            <Tippy placement="bottom" content={ResearchTippy(newBuildingUnlocked?.label)}>
+            <Tippy touch={false} placement="bottom" content={ResearchTippy(newBuildingUnlocked?.label)}>
               <span className="underline-text">{newBuildingUnlocked?.label}</span>
             </Tippy>.
           </span>
@@ -31,7 +31,7 @@ const NewResearch = () => {
 
         {newUnitUnlocked?.label && (
           <span>Now you can train new unit - &nbsp;
-            <Tippy placement="bottom" content={ResearchTippy(newUnitUnlocked?.label)}>
+            <Tippy touch={false} placement="bottom" content={ResearchTippy(newUnitUnlocked?.label)}>
               <span className="underline-text">{newUnitUnlocked?.label}</span>
             </Tippy>.
           </span>

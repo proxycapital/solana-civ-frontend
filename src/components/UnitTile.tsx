@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Tippy from "@tippyjs/react";
 
 import { canUpgradeUnit } from "../utils";
@@ -15,6 +15,19 @@ const UnitTile: React.FC<UnitTileProps> = ({
   const img = npc ? `npc-${type}` : type;
   const [nextTurn, setNextTurn] = useState(false);
   const [prevLevel, setPrevLevel] = useState(0);
+
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   // useEffect(() => {
   //   setNextTurn(true);
@@ -33,7 +46,7 @@ const UnitTile: React.FC<UnitTileProps> = ({
 
   if (npc) {
     return  (
-      <Tippy placement="top" content={
+      <Tippy touch={false} placement="top" content={
         <div className="npc-tippy">
           <div className="npc-tippy-stats">
             <span>{health}</span>
@@ -97,7 +110,7 @@ const UnitTile: React.FC<UnitTileProps> = ({
       <div>
         {!npc && canUpgradeUnit(level || 0, experience || 0) ? (
           <div className="level">
-            <Tippy placement="right" content={<span>Level Up available</span>}>
+            <Tippy touch={false} placement="right" content={<span>Level Up available</span>}>
               <div className="upgrade-image-container">
                 <img src="./icons/upgrade.png" alt="Upgrade" />
               </div>

@@ -35,7 +35,6 @@ import CustomModal from "./CustomModal";
 import EndTurnButton from "./EndTurnButton";
 import { useGameState } from "../context/GameStateContext";
 import { useWorkspace } from "../context/AnchorContext";
-import { useSound } from "../context/SoundContext";
 import { withdrawGems } from "../utils/solanaUtils";
 import { updateLeaderboard } from "../utils/initiateGame";
 
@@ -76,7 +75,6 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
   const { provider, program } = useWorkspace();
   const { wallet } = useWallet();
   const { resources, fetchPlayerState, cities, upgradedTiles } = useGameState();
-  const { toggleBackgroundMusic } = useSound();
   const [isModalOpen, setModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState("");
   
@@ -204,15 +202,6 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
     setModalContent("");
   };
 
-  const [isMusicPlaying, setMusicPlaying] = useState(() => {
-    return localStorage.getItem("isBackgroundMusicPlaying") === "true";
-  });
-
-  const handleToggleBackgroundMusic = () => {
-    toggleBackgroundMusic();
-    setMusicPlaying((prevState) => !prevState);
-  };
-
   return (
     <>
       {/* Second row of navigation */}
@@ -232,7 +221,7 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
             </Button>
           </Tippy>
 
-          <Tippy key="quests" content="Quests" placement="left">
+          <Tippy touch={false} key="quests" content="Quests" placement="left">
             <Button
               className="quests-button"
               variant="text"
@@ -245,7 +234,7 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
             </Button>
           </Tippy>
 
-          <Tippy key="leaderboard" content="Leaderboard" placement="left">
+          <Tippy touch={false} key="leaderboard" content="Leaderboard" placement="left">
             <Button
               variant="text"
               color="inherit"
@@ -334,7 +323,7 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
                 );
               })}
               <div className="vertical-divider" />
-              <Tippy key="gems" content="Click to withdraw">
+              <Tippy touch={false} key="gems" content="Click to withdraw">
                 <div className="balance-box gems-resource">
                   <Button style={{ padding: 0, margin: 0, color: "#fff" }} onClick={handleOpenDialog}>
                     <img src="/icons/gems.png" width="32" alt="Gems" />
@@ -347,17 +336,17 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
               </div>
             </div>
             <div style={{ marginLeft: "auto", display: "flex" }}>
-            <Tippy key="profile" content="Profile" placement="bottom">
-            <Button
-              variant="text"
-              color="inherit"
-              onClick={() => {
-                handleOpenModal("Profile");
-              }}
-            >
-              <img src="/icons/gear.png" width="24" alt="Profile" />
-            </Button>
-          </Tippy>
+            <Tippy touch={false} key="profile" content="Profile" placement="bottom">
+              <Button
+                variant="text"
+                color="inherit"
+                onClick={() => {
+                  handleOpenModal("Profile");
+                }}
+              >
+                <img src="/icons/gear.png" width="24" alt="Profile" />
+              </Button>
+            </Tippy>
               {/* <button onClick={handleToggleBackgroundMusic} className="music-toggle-button">
                 <FontAwesomeIcon icon={isMusicPlaying ? faVolumeHigh : faVolumeXmark} />
               </button> */}
