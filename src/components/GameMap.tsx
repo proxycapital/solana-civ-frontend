@@ -49,6 +49,8 @@ export interface Unit {
   isSelected: boolean;
   movementRange: number;
   experience: number;
+  attack: number;
+  level: number;
 }
 
 const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
