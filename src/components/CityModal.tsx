@@ -90,7 +90,7 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
       const signature = await toast.promise(tx, {
         pending: "Adding to production queue",
         success: "Added to production queue",
-        error: "Error adding to production queue",
+        error: undefined,
       });
       if (typeof signature === "string") {
         playSound("construction");
@@ -98,20 +98,21 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
       }
     } catch (error: any) {
       console.log("Error adding to production queue: ", error);
-      if (error.message.includes("QueueFull")) {
-        toast.error("Production queue is currently at full capacity.", { autoClose: 3000 });
-      }
-      if (error.message.includes("TechnologyNotResearched")) {
-        toast.error("You need to unlock this technology via Research.", { autoClose: 3000 });
-      }
-      if (error.message.includes("InsufficientResources")) {
-        toast.error("Not enough resources. See unit tooltip for more info.", { autoClose: 3000 });
-      }
-      if (error.message.includes("InsufficientGoldForMaintenance")) {
-        toast.error("You don't have enough of gold for unit maintenance.", { autoClose: 3000 });
-      }
-      if (error.message.includes("InsufficientPopulationForSettler")) {
-        toast.error("Insufficient population to recruit settler. Minimum is 2 citizens.", { autoClose: 3000 });
+      const errorMessages = {
+        QueueFull: "Production queue is at full capacity.",
+        TechnologyNotResearched: "You need to unlock this technology via Research.",
+        InsufficientResources: "Not enough resources. See unit tooltip for more info.",
+        InsufficientGoldForMaintenance: "You don't have enough of gold for unit maintenance.",
+        InsufficientPopulationForSettler: "Insufficient population to recruit settler. Minimum is 2 citizens."
+      };
+  
+      const defaultErrorMessage = "Error adding to production queue";
+  
+      if (error instanceof Error) {
+        const errorMessage = Object.entries(errorMessages).find(([errorKey]) => error.message.includes(errorKey))?.[1];
+        toast.error(errorMessage || defaultErrorMessage, { autoClose: 3000 });
+      } else {
+        toast.error(defaultErrorMessage, { autoClose: 3000 });
       }
     }
     await fetchPlayerState();
@@ -362,9 +363,9 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
                 {AllUnits.map((unit) => {
                   const isUnlocked = unit.requirement ? researchedTechnologies.has(unit.requirement) : true;
                   const stats = getUnitOrBuildingStats(String(unit.label));
-                  
+
                   if (!stats) return <></>;
-                
+
                   // no Tippy for mobile
                   return !isMobile ? (
                     <Tippy
@@ -425,14 +426,20 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
                     >
                       <div className="name-and-turns">
                         <img src={`/${unit.type}.png`} alt={unit.label} width="50" />
-                        <div style={{ textAlign: 'center' }}>
-                          <Typography style={{ fontSize: '1.2rem', marginBottom: '0.3rem' }} variant="body1">{unit.label}</Typography>
+                        <div style={{ textAlign: "center" }}>
+                          <Typography style={{ fontSize: "1.2rem", marginBottom: "0.3rem" }} variant="body1">
+                            {unit.label}
+                          </Typography>
                           {isUnlocked ? (
                             <>
                               {stats.type === "unit" && (
                                 <div className="unit-stats-mobile">
-                                  {unit.label === "Builder" && <span style={{ fontSize: '0.9rem'}}>{unit.description}</span>}
-                                  {unit.label === "Settler" && <span style={{ fontSize: '0.9rem'}}>{unit.description}</span>}
+                                  {unit.label === "Builder" && (
+                                    <span style={{ fontSize: "0.9rem" }}>{unit.description}</span>
+                                  )}
+                                  {unit.label === "Settler" && (
+                                    <span style={{ fontSize: "0.9rem" }}>{unit.description}</span>
+                                  )}
                                   {unit.label !== "Builder" && unit.label !== "Settler" && (
                                     <>
                                       <div>
@@ -472,7 +479,7 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
                         </div>
                       </div>
                     </Box>
-                  )
+                  );
                 })}
               </div>
               <h3 className="">Buildings</h3>
@@ -557,18 +564,21 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
                         <>
                           {stats.type === "building" && (
                             <div>
-                              +{stats.income} {stats.resourceName} {stats.extra && `| +${stats.extraValue} ${stats.extra}`}
+                              +{stats.income} {stats.resourceName}{" "}
+                              {stats.extra && `| +${stats.extraValue} ${stats.extra}`}
                             </div>
                           )}
                           {stats.type === "wall" && (
-                            <span>{stats.health} HP and {stats.attack} attack</span>
+                            <span>
+                              {stats.health} HP and {stats.attack} attack
+                            </span>
                           )}
                         </>
                       ) : (
-                        <span style={{ margin: '0.5rem' }}>Unlocks: {building.tech}</span>
+                        <span style={{ margin: "0.5rem" }}>Unlocks: {building.tech}</span>
                       )}
                     </Box>
-                  )
+                  );
                 })}
               </div>
             </div>
