@@ -64,7 +64,8 @@ const CustomBalanceTooltip = ({ resource, displayName, totalValues }: any) => {
   if (totalValues[resource]) {
     return (
       <span>
-        {displayName} (+{totalValues[resource]})
+        {displayName} ({totalValues[resource] > 0 ? `+` : ""}
+        {totalValues[resource]})
       </span>
     );
   }
@@ -74,10 +75,10 @@ const CustomBalanceTooltip = ({ resource, displayName, totalValues }: any) => {
 const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
   const { provider, program } = useWorkspace();
   const { wallet } = useWallet();
-  const { resources, fetchPlayerState, cities, upgradedTiles } = useGameState();
+  const { resources, fetchPlayerState, cities, upgradedTiles, allUnits } = useGameState();
   const [isModalOpen, setModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState("");
-  
+
   const [openDialog, setOpenDialog] = useState(false);
   const [showOnboardingType, setShowOnboardingType] = useState<"production" | "research" | null>(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -110,6 +111,10 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
     totalFoodYield += city.foodYield;
     totalScienceYield += city.scienceYield;
     totalGoldYield += city.goldYield;
+  });
+
+  allUnits.forEach((unit) => {
+    totalGoldYield -= unit.maintenanceCost;
   });
 
   const BalancesDrawer = () => (
@@ -283,7 +288,7 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
               onClick={toggleDrawer(true)}
               className="mobile-only"
             >
-              <MenuIcon style={{color: "#cab47d"}} />
+              <MenuIcon style={{ color: "#cab47d" }} />
             </IconButton>
             <BalancesDrawer />
             <div className="balance-container desktop-only">
@@ -336,17 +341,17 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
               </div>
             </div>
             <div style={{ marginLeft: "auto", display: "flex" }}>
-            <Tippy touch={false} key="profile" content="Profile" placement="bottom">
-              <Button
-                variant="text"
-                color="inherit"
-                onClick={() => {
-                  handleOpenModal("Profile");
-                }}
-              >
-                <img src="/icons/gear.png" width="24" alt="Profile" />
-              </Button>
-            </Tippy>
+              <Tippy touch={false} key="profile" content="Profile" placement="bottom">
+                <Button
+                  variant="text"
+                  color="inherit"
+                  onClick={() => {
+                    handleOpenModal("Profile");
+                  }}
+                >
+                  <img src="/icons/gear.png" width="24" alt="Profile" />
+                </Button>
+              </Tippy>
               {/* <button onClick={handleToggleBackgroundMusic} className="music-toggle-button">
                 <FontAwesomeIcon icon={isMusicPlaying ? faVolumeHigh : faVolumeXmark} />
               </button> */}
