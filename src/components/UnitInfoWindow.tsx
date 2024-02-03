@@ -10,7 +10,7 @@ import { useWorkspace } from "../context/AnchorContext";
 import { useGameState } from "../context/GameStateContext";
 import { useSound } from "../context/SoundContext";
 
-type WindowAlignment = 'left' | 'right' | null;
+type WindowAlignment = "left" | "right" | null;
 
 interface UnitInfoProps {
   unit: {
@@ -28,7 +28,7 @@ interface UnitInfoProps {
 }
 
 const UnitInfoWindow: React.FC<UnitInfoProps> = ({ unit }) => {
-  const [alignment, setAlignment] = useState<WindowAlignment>(null)
+  const [alignment, setAlignment] = useState<WindowAlignment>(null);
   const { program, provider } = useWorkspace();
   const { cities, fetchPlayerState } = useGameState();
   const { playSound } = useSound();
@@ -37,15 +37,15 @@ const UnitInfoWindow: React.FC<UnitInfoProps> = ({ unit }) => {
 
   useEffect(() => {
     const element = document.getElementById(`unit-${unit?.unitId}`);
-    if(element) {
+    if (element) {
       const rect = element.getBoundingClientRect();
       const distanceFromRight = window.innerWidth - rect.right;
 
       // the unit window is 240px wide defined in the css
-      if(distanceFromRight < 400) {
-        setAlignment('left');
+      if (distanceFromRight < 400) {
+        setAlignment("left");
       } else {
-        setAlignment('right');
+        setAlignment("right");
       }
     }
   }, []);
@@ -76,6 +76,8 @@ const UnitInfoWindow: React.FC<UnitInfoProps> = ({ unit }) => {
     } catch (error) {
       if (error instanceof Error && error.message.includes("WithinControlledTerritory")) {
         toast.error("Settler can build new cities only in neutral tiles", { autoClose: 3000 });
+      } else if (error instanceof Error && error.message.includes("NoMovementPoints")) {
+        toast.error("No movement points left this turn");
       } else {
         // Display a generic error message
         toast.error("Failed to build a city");
@@ -92,7 +94,7 @@ const UnitInfoWindow: React.FC<UnitInfoProps> = ({ unit }) => {
       const signature = await toast.promise(tx, {
         pending: "Building construction",
         success: "Construction complete",
-        error: "Error building construction",
+        error: undefined,
       });
       if (typeof signature === "string") {
         playSound("construction");
@@ -100,10 +102,14 @@ const UnitInfoWindow: React.FC<UnitInfoProps> = ({ unit }) => {
       }
     } catch (error) {
       console.log("Error upgrading land tile: ", error);
-      if (error instanceof Error) {
-        if (error.message.includes("TileNotControlled")) {
-          toast.error("Tile is not controlled", { autoClose: 3000 });
-        }
+      if (error instanceof Error && error.message.includes("TileNotControlled")) {
+        toast.error("Tile is not controlled", { autoClose: 3000 });
+      } else if (error instanceof Error && error.message.includes("TileOccupied")) {
+        toast.error("Tile is occupied by another construction", { autoClose: 3000 });
+      } else if (error instanceof Error && error.message.includes("NoMovementPoints")) {
+        toast.error("No movement points left this turn", { autoClose: 3000 });
+      } else {
+        toast.error("Error building construction", { autoClose: 3000 });
       }
     }
     await fetchPlayerState();
@@ -129,11 +135,11 @@ const UnitInfoWindow: React.FC<UnitInfoProps> = ({ unit }) => {
       }
       console.log("Error upgrading unit: ", error);
     }
-    
+
     await fetchPlayerState();
   };
 
-  if(!alignment) return <></>;
+  if (!alignment) return <></>;
 
   return (
     <div className={`unit-info-window align-${alignment}`}>
@@ -144,7 +150,7 @@ const UnitInfoWindow: React.FC<UnitInfoProps> = ({ unit }) => {
       <div className="line-container desktop-only">
         <img src="/icons/diamond.png" alt="" width="24" className="center-image" />
       </div>
-      {(type !== "settler" && type !== "builder") && (
+      {type !== "settler" && type !== "builder" && (
         <div className="unit-stats">
           <img src="/icons/health.png" alt="" className="unit-icon" /> Health:&nbsp;<b>{unit.health}/100</b>
         </div>
