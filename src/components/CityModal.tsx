@@ -167,14 +167,18 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
       const signature = await toast.promise(tx, {
         pending: `Buying ${item.label}`,
         success: `Bought ${item.label}`,
-        error: `Error during buying ${item.label}`,
+        error: undefined,
       });
       if (typeof signature === "string") {
         console.log(`Buy ${item.label} TX: https://explorer.solana.com/tx/${signature}?cluster=devnet`);
       }
-    } catch (error: any) {
-      if (error.message.includes("InsufficientGold")) {
-        await toast.error("Insufficient Gold Balance", { autoClose: 3000 });
+    } catch (error) {
+      if (error instanceof Error && error.message.includes("InsufficientGold")) {
+        await toast.error("Insufficient Gold", { autoClose: 3000 });
+      } else if (error instanceof Error && error.message.includes("InsufficientPopulationForSettler")) {
+        await toast.error("Insufficient population to purchase a settler. Minimum is 2 citizens.", { autoClose: 3000 });
+      } else {
+        await toast.error(`Failed to purchase ${item.label}`, { autoClose: 3000 });
       }
       console.log(`Error buying ${item.label}: `, error);
     }
