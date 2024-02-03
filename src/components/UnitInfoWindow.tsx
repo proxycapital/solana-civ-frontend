@@ -67,14 +67,20 @@ const UnitInfoWindow: React.FC<UnitInfoProps> = ({ unit }) => {
       const signature = await toast.promise(tx, {
         pending: "Founding a city",
         success: "City founded",
-        error: "Error founding city",
+        error: undefined,
       });
       if (typeof signature === "string") {
         playSound("construction");
-        console.log(`Found a city TX: https://explorer.solana.com/tx/${signature}?cluster=devnet`);
+        console.log(`Built a city. TX: https://explorer.solana.com/tx/${signature}?cluster=devnet`);
       }
     } catch (error) {
-      console.log("Error founding city: ", error);
+      if (error instanceof Error && error.message.includes("WithinControlledTerritory")) {
+        toast.error("Settler can build new cities only in neutral tiles", { autoClose: 3000 });
+      } else {
+        // Display a generic error message
+        toast.error("Failed to build a city");
+      }
+      console.log("Failed to build a city: ", error);
     }
     await fetchPlayerState();
   };
