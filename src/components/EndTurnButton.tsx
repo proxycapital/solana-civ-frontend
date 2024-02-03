@@ -57,7 +57,7 @@ const EndTurnButton: React.FC<EndTurnButtonProps> = ({ setShowOnboardingType, op
     return () => {
       window.removeEventListener("keydown", handleKeyPress);
     };
-  }, [isProcessing, technologies.currentResearch]);
+  }, [isProcessing, technologies.currentResearch, cities]);
 
   useEffect(() => {
     async function handleResearchComplete() {
