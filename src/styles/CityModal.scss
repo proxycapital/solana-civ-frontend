@@ -58,10 +58,10 @@
   max-width: 500px;
   height: 100%;
   overflow-y: scroll;
-  -ms-overflow-style: none;  
+  -ms-overflow-style: none;
   scrollbar-width: none;
   z-index: 10001;
-  
+
   .city-modal-header {
     position: fixed;
     z-index: 2;
@@ -111,7 +111,7 @@
     width: fit-content;
     margin-bottom: 2rem;
     margin: 0.5rem auto;
-  
+
     button {
       color: white;
       font-size: 1rem;
@@ -140,7 +140,7 @@
     }
 
     .body-item {
-      display: flex; 
+      display: flex;
       align-items: center;
       justify-content: space-between;
       margin-bottom: 0.5rem;
@@ -148,7 +148,7 @@
 
       @media (max-width: 768px) {
         flex-direction: column;
-      
+
         .name-and-turns {
           display: flex;
           width: 100%;
@@ -162,7 +162,7 @@
           margin-top: 0.15rem;
 
           div {
-            display: flex; 
+            display: flex;
             align-items: center;
             font-size: 1rem;
             font-weight: bold;
@@ -270,7 +270,6 @@
   }
 }
 
-
 .modal-city-info {
   position: absolute;
   right: 0;
@@ -278,7 +277,7 @@
   color: white;
   text-align: center;
   padding: 1.5rem 1rem;
-  border: 1px solid var(--light-gradient, #927F61) !important;
+  border: 1px solid var(--light-gradient, #927f61) !important;
   border-radius: 0.5rem;
 
   .city-name {
@@ -286,7 +285,7 @@
     padding: 10px 50px;
     background-size: 100% 100%;
     background-repeat: no-repeat;
-    color: #2E3A5B;
+    color: #2e3a5b;
     margin-bottom: 1rem;
   }
 
@@ -329,7 +328,7 @@
     align-items: center;
     align-self: stretch;
     border-radius: 0.5rem;
-    background: var(--brown-n900, #4B4034);
+    background: var(--brown-n900, #4b4034);
 
     .city-resource-info {
       display: flex;
@@ -339,10 +338,10 @@
       flex: 1;
     }
 
-    .divider {  
+    .divider {
       width: 1px;
       height: 43px;
-      background-color: #695A49;
+      background-color: #695a49;
     }
   }
 
@@ -358,8 +357,8 @@
     content: "";
     flex-grow: 1;
     height: 1px;
-    border-bottom: 1px solid #927F61;
-    border-top: 1px solid #927F61;
+    border-bottom: 1px solid #927f61;
+    border-top: 1px solid #927f61;
     margin-top: 2px;
     position: relative;
   }
@@ -372,14 +371,13 @@
   }
 
   .city-stats {
+    position: relative;
     display: flex;
     align-items: center;
-    justify-content: space-between;    
+    justify-content: space-between;
     margin: 0.5rem 0;
     padding-bottom: 0.5rem;
-    // @todo: should be a gradient
-    border-bottom: 1px solid #CAB37D;
-  
+
     img {
       margin-right: 0.5rem;
     }
@@ -390,7 +388,7 @@
       align-items: start;
 
       .food-for-growth-text {
-        color: var(--simple-text, #CDBE91);
+        color: var(--simple-text, #cdbe91);
         font-family: "Alegreya SC";
         font-size: 12px;
         font-style: normal;
@@ -399,7 +397,16 @@
       }
     }
   }
-  
+
+  .city-stats::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(to right, rgba(202, 179, 125, 0), rgba(202, 179, 125, 1), rgba(202, 179, 125, 0));
+  }
 }
 
 @media (max-width: 768px) {
