@@ -16,6 +16,10 @@ button {
   font-family: "Alegreya Sans SC", sans-serif;
 }
 
+h2 {
+  margin: 0;
+}
+
 body.light-mode {
   background: #e0eafc;
   background: -webkit-linear-gradient(to right, #cfdef3, #e0eafc);
@@ -58,6 +62,20 @@ h6 {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.flex-align-center {
+  display: flex;
+  align-items: center;
+}
+
+.alegreya-regular-14 {
+  // font-family: "Alegreya SC";
+  font-family: "Alegreya Sans SC", sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
 
 .logo {

@@ -277,17 +277,17 @@
   bottom: 0;
   color: white;
   text-align: center;
-  padding: 0.5rem 1rem;
-  border: 4px solid var(--light-gradient, #927f61) !important;
+  padding: 1.5rem 1rem;
+  border: 1px solid var(--light-gradient, #927F61) !important;
+  border-radius: 0.5rem;
 
   .city-name {
-    padding: 0.5rem 0.25rem;
-    border: 2px solid var(--light-gradient, #927f61) !important;
-    border-radius: 0.5rem;
-    
-    h2 {
-      margin: 0;
-    }
+    background-image: url("../../public/icons/title-bg.png");
+    padding: 10px 50px;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    color: #2E3A5B;
+    margin-bottom: 1rem;
   }
 
   .unit-action-button {
@@ -322,25 +322,27 @@
   }
 
   .city-resources-income {
-    margin-top: 0.75rem;
-    margin-bottom: 0.5rem;
     display: flex;
+    padding: 12px 8px;
+    flex-direction: row;
+    justify-content: center;
     align-items: center;
-    justify-content: space-between;
-    width: 100%;
+    align-self: stretch;
+    border-radius: 0.5rem;
+    background: var(--brown-n900, #4B4034);
 
-    > div {
+    .city-resource-info {
       display: flex;
+      flex-direction: column;
       align-items: center;
-      margin-right: 0.25rem;
-      
-      img {
-        margin-right: 0.25rem;
-      }
+      color: white;
+      flex: 1;
+    }
 
-      span {
-        font-size: 1.15rem;
-      }
+    .divider {  
+      width: 1px;
+      height: 43px;
+      background-color: #695A49;
     }
   }
 
@@ -348,30 +350,56 @@
     display: flex;
     align-items: center;
     position: relative;
-    height: 32px;
+    margin: 1rem 0;
   }
 
   .line-container::before,
   .line-container::after {
     content: "";
     flex-grow: 1;
-    height: 2px;
-    background: linear-gradient(180deg, #927f61 0%, #ffd48e 48.96%, #927f61 100%);
+    height: 1px;
+    border-bottom: 1px solid #927F61;
+    border-top: 1px solid #927F61;
+    margin-top: 2px;
     position: relative;
+  }
+
+  ul.leaders {
+    max-width: 40em;
+    padding: 0;
+    overflow-x: hidden;
+    list-style: none;
   }
 
   .city-stats {
     display: flex;
     align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    padding: 5px;
-    
+    justify-content: space-between;    
+    margin: 0.5rem 0;
+    padding-bottom: 0.5rem;
+    // @todo: should be a gradient
+    border-bottom: 1px solid #CAB37D;
+  
     img {
-      width: 24px;
-      padding: 0 5px;
+      margin-right: 0.5rem;
+    }
+
+    .city-population {
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+
+      .food-for-growth-text {
+        color: var(--simple-text, #CDBE91);
+        font-family: "Alegreya SC";
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+      }
     }
   }
+  
 }
 
 @media (max-width: 768px) {

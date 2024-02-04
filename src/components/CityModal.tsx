@@ -258,57 +258,90 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
               <h2>{city.name}</h2>
             </div>
             <div className="city-resources-income">
-              <div>
-                <img width="32" src="./icons/food.png" alt="apple" />
-                <span>
+              <div className="city-resource-info">
+                <img width="24" src="./icons/food.png" alt="apple" />
+                <span className="alegreya-regular-14">
                   {city.foodYield - city.population * 2 >= 0 ? "+" : ""}
                   {city.foodYield - city.population * 2}
                 </span>
               </div>
-              <div>
-                <img width="32" src="./icons/science.png" alt="scienct" />
-                <span>+{city.scienceYield}</span>
+              <div className="divider" />
+              <div className="city-resource-info">
+                <img width="24" src="./icons/science.png" alt="scienct" />
+                <span className="alegreya-regular-14">
+                  +{city.scienceYield}
+                </span>
               </div>
-              <div>
-                <img width="32" src="./icons/gold.png" alt="gold" />
-                <span>+{city.goldYield}</span>
+              <div className="divider" />
+              <div className="city-resource-info">
+                <img width="24" src="./icons/gold.png" alt="gold" />
+                <span className="alegreya-regular-14">
+                  +{city.goldYield}
+                </span>
               </div>
-              <div>
-                <img width="32" src="./icons/hammer.png" alt="hummer" />
-                <span>+{city.productionYield}</span>
+              <div className="divider" />
+              <div className="city-resource-info">
+                <img width="24" src="./icons/hammer.png" alt="hummer" />
+                <span className="alegreya-regular-14">
+                  +{city.productionYield}
+                </span>
               </div>
             </div>
             <div className="line-container">
               <img src="/icons/diamond.png" alt="" width="24" className="center-image" />
             </div>
             <div className="city-stats">
-              <img src="/icons/population.png" alt="population" /> Population:&nbsp;
+              <div className="flex-align-center">
+                <img width="20" src="/icons/population.png" alt="population" />
+                <div className="city-population">
+                  <span className="alegreya-regular-14">
+                    Population:
+                  </span>
+                  {city.population < city.housing && (
+                    <div>
+                      <span className="food-for-growth-text">
+                        ({city.accumulatedFood}/{getFoodNeededForGrowth(city.population)} food for growth)
+                      </span>
+                    </div>
+                  )}
+                </div>
+              </div>
               <b>
                 {city.population} of {city.housing}
               </b>
             </div>
-            {city.population < city.housing && (
-              <div className="city-stats">
-                <span>
-                  ({city.accumulatedFood}/{getFoodNeededForGrowth(city.population)} food for growth)
+            <div className="city-stats">
+              <div className="flex-align-center">
+                <img width="20" src="/icons/health.png" alt="health" />
+                <span className="alegreya-regular-14">
+                  Health
                 </span>
               </div>
-            )}
-            <div className="city-stats">
-              <img src="/icons/health.png" alt="health" /> Health:&nbsp;<b>{city.health}/100</b>
+              {/* <span className="test"></span> */}
+              <b>{city.health}/100</b>
             </div>
             {/* only show if user has any level of wall */}
             {wallMaxHealth && (
               <div className="city-stats">
-                <img src="/icons/wall.png" alt="health" /> Wall:&nbsp;
+                <div className="flex-align-center">
+                  <img width="20" src="/icons/wall.png" alt="health" />
+                  <span className="alegreya-regular-14">
+                    Wall
+                  </span>
+                </div>
                 <b>
                   {city.wallHealth}/ {wallMaxHealth}
                 </b>
               </div>
             )}
             <div className="city-stats">
-              <img src="/icons/attack.png" alt="strength" />
-              Strength:&nbsp;<b>{city.attack}</b>
+              <div className="flex-align-center">
+                <img width="20" src="/icons/attack.png" alt="strength" />
+                <span className="alegreya-regular-14">
+                  Defence
+                </span>
+              </div>
+              <b>{city.attack}</b>
             </div>
             {wallMaxHealth && wallMaxHealth !== city.wallHealth && (
               <Button
