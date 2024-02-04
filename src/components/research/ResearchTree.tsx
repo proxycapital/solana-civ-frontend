@@ -10,6 +10,7 @@ import config from "../../config.json";
 import "./ResearchTree.scss";
 
 import resetResearchStorage from "../../utils/storage";
+import { handleError } from "../../utils/handleError";
 
 const researchData = config.science;
 
@@ -69,16 +70,16 @@ const ResearchTree = () => {
         formatedResearches.push(currentResearchKey);
       }
     }
-    
+
     const leftTechsInTree = selectedTechTreeKeys.filter((tech) => !researchedKeys.includes(String(tech)));
 
     formatedResearches = [...formatedResearches, ...leftTechsInTree.slice(0, leftTechsInTree.indexOf(toCamelCase(name)) + 1)]
-  
+
     if (formatedResearches.length === 1) {
       handleResearch(formatedResearches[0]);
       return
     };
-    
+
     localStorage.setItem('researchQueue', JSON.stringify(formatedResearches));
     getResearchQueue();
 
@@ -88,7 +89,7 @@ const ResearchTree = () => {
   // select only 1 research
   const handleResearch = async (name: string) => {
     resetResearchQueue()
-    
+
     const technology = { [name]: {} } as any;
 
     const [gameKey] = anchor.web3.PublicKey.findProgramAddressSync(
@@ -102,7 +103,7 @@ const ResearchTree = () => {
     const accounts = {
       playerAccount: playerKey,
     };
-    
+
     try {
       const tx = program!.methods.startResearch(technology).accounts(accounts).rpc();
       await toast.promise(tx, {
@@ -111,19 +112,11 @@ const ResearchTree = () => {
         error: "Failed to start research",
       });
     } catch (error: any) {
-      if (!error.message) {
-        toast.warning("Research: Something went wrong");
-        console.log(error);
-      }
-      if (error.message.includes("CannotResearch")) {
-        toast.error("You need to research the previous technology first!", { autoClose: 3000 });
-      }
-      if (error.message.includes("ResearchAlreadyCompleted")) {
-        toast.error("You already researched this technology!", { autoClose: 3000 });
-      }
-      if (error.message.includes("AlreadyResearching")) {
-        toast.error("Other research already in progress", { autoClose: 3000 });
-      }
+      handleError({
+        error,
+        logMessage: "Failed to start research",
+        defaultError: "Research: Something went wrong"
+      });
     }
     await fetchPlayerState();
   };

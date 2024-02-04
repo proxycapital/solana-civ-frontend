@@ -14,7 +14,7 @@ import { useSound } from "../context/SoundContext";
 import { getMap } from "../utils/solanaUtils";
 import GameOverModal from "./GameOverModal";
 import TileMenu from "./TileMenu";
-import MobileMapControls from "./MobileMapControls";
+import { handleError } from "../utils/handleError";
 
 interface GameMapProps {
   debug: boolean;
@@ -341,12 +341,10 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
       logMessage(`Unit #${attackingUnit.unitId} attacked barbarian`);
       playSound("attack");
     } catch (error) {
-      if (error instanceof Error) {
-        if (error.message.includes("OutOfAttackRange")) {
-          toast.error("Target is too far away", { autoClose: 3000 });
-        }
-      }
-      console.error("Failed to attack unit", error);
+      handleError({
+        error,
+        logMessage: "Failed to attack unit",
+      });
     }
     await fetchPlayerState();
     await fetchNpcs();
@@ -382,12 +380,10 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
       logMessage(`Unit #${attackingUnit.unitId} attacked barbarian village`);
       playSound("attack");
     } catch (error) {
-      if (error instanceof Error) {
-        if (error.message.includes("OutOfAttackRange")) {
-          toast.error("Target is too far away", { autoClose: 3000 });
-        }
-      }
-      console.error("Failed to attack village", error);
+      handleError({
+        error,
+        logMessage: "Failed to attack village",
+      });
     }
     await fetchPlayerState();
     await fetchNpcs();

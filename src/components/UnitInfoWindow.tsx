@@ -9,6 +9,7 @@ import { canUpgradeUnit } from "../utils";
 import { useWorkspace } from "../context/AnchorContext";
 import { useGameState } from "../context/GameStateContext";
 import { useSound } from "../context/SoundContext";
+import { handleError } from "../utils/handleError";
 
 type WindowAlignment = "left" | "right" | null;
 
@@ -74,15 +75,11 @@ const UnitInfoWindow: React.FC<UnitInfoProps> = ({ unit }) => {
         console.log(`Built a city. TX: https://explorer.solana.com/tx/${signature}?cluster=devnet`);
       }
     } catch (error) {
-      if (error instanceof Error && error.message.includes("WithinControlledTerritory")) {
-        toast.error("Settler can build new cities only in neutral tiles", { autoClose: 3000 });
-      } else if (error instanceof Error && error.message.includes("NoMovementPoints")) {
-        toast.error("No movement points left this turn");
-      } else {
-        // Display a generic error message
-        toast.error("Failed to build a city");
-      }
-      console.log("Failed to build a city: ", error);
+      handleError({
+        error,
+        logMessage: "Failed to build a city",
+        defaultError: "Failed to build a city"
+      });
     }
     await fetchPlayerState();
   };
@@ -101,16 +98,11 @@ const UnitInfoWindow: React.FC<UnitInfoProps> = ({ unit }) => {
         console.log(`Upgrade land plot TX: https://explorer.solana.com/tx/${signature}?cluster=devnet`);
       }
     } catch (error) {
-      console.log("Error upgrading land tile: ", error);
-      if (error instanceof Error && error.message.includes("TileNotControlled")) {
-        toast.error("Tile is not controlled", { autoClose: 3000 });
-      } else if (error instanceof Error && error.message.includes("TileOccupied")) {
-        toast.error("Tile is occupied by another construction", { autoClose: 3000 });
-      } else if (error instanceof Error && error.message.includes("NoMovementPoints")) {
-        toast.error("No movement points left this turn", { autoClose: 3000 });
-      } else {
-        toast.error("Error building construction", { autoClose: 3000 });
-      }
+      handleError({
+        error,
+        logMessage: "Error upgrading land tile",
+        defaultError: "Error building construction"
+      });
     }
     await fetchPlayerState();
   };
@@ -128,12 +120,10 @@ const UnitInfoWindow: React.FC<UnitInfoProps> = ({ unit }) => {
         console.log(`Upgrade land plot TX: https://explorer.solana.com/tx/${signature}?cluster=devnet`);
       }
     } catch (error) {
-      if (error instanceof Error) {
-        if (error.message.includes("NoMovementPoints")) {
-          toast.error("No movement points left this turn", { autoClose: 3000 });
-        }
-      }
-      console.log("Error upgrading unit: ", error);
+      handleError({
+        error,
+        logMessage: "Error upgrading unit"
+      });
     }
 
     await fetchPlayerState();

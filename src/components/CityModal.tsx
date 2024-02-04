@@ -16,6 +16,7 @@ import { AllUnits, UnitType } from "../Units";
 import { AllBuildings, BuildingType } from "../Buildings";
 import CustomTooltip from "./CustomTooltip";
 import { getUnitOrBuildingStats } from "../utils";
+import { handleError } from "../utils/handleError";
 
 interface CityModalProps {
   show: boolean;
@@ -97,23 +98,11 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
         console.log(`Add to production queue TX: https://explorer.solana.com/tx/${signature}?cluster=devnet`);
       }
     } catch (error: any) {
-      console.log("Error adding to production queue: ", error);
-      const errorMessages = {
-        QueueFull: "Production queue is at full capacity.",
-        TechnologyNotResearched: "You need to unlock this technology via Research.",
-        InsufficientResources: "Not enough resources. See unit tooltip for more info.",
-        InsufficientGoldForMaintenance: "You don't have enough of gold for unit maintenance.",
-        InsufficientPopulationForSettler: "Insufficient population to recruit settler. Minimum is 2 citizens."
-      };
-  
-      const defaultErrorMessage = "Error adding to production queue";
-  
-      if (error instanceof Error) {
-        const errorMessage = Object.entries(errorMessages).find(([errorKey]) => error.message.includes(errorKey))?.[1];
-        toast.error(errorMessage || defaultErrorMessage, { autoClose: 3000 });
-      } else {
-        toast.error(defaultErrorMessage, { autoClose: 3000 });
-      }
+      handleError({
+        error,
+        logMessage: "Error adding to production queue",
+        defaultError: `Error adding to production queue ${cityId}`
+      });
     }
     await fetchPlayerState();
   };
@@ -147,17 +136,11 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
         console.log(`Repair City, TX: https://explorer.solana.com/tx/${signature}?cluster=devnet`);
       }
     } catch (error: any) {
-      console.log(error.message);
-      if (error.message.includes("NotDamagedCity")) {
-        await toast.error("Cannt repair full HP city", { autoClose: 3000 });
-      }
-      if (error.message.includes("InsufficientStone")) {
-        await toast.error("Not enough stone", { autoClose: 3000 });
-      }
-      if (error.message.includes("InsufficientWood")) {
-        await toast.error("Not enough wood", { autoClose: 3000 });
-      }
-      console.log(`Error repairing city ${cityId}: `, error);
+      handleError({
+        error,
+        logMessage: "Error repairing city",
+        defaultError: `Error repairing city ${cityId}`
+      });
     }
     await fetchPlayerState();
   };
@@ -174,14 +157,11 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
         console.log(`Buy ${item.label} TX: https://explorer.solana.com/tx/${signature}?cluster=devnet`);
       }
     } catch (error) {
-      if (error instanceof Error && error.message.includes("InsufficientGold")) {
-        await toast.error("Insufficient Gold", { autoClose: 3000 });
-      } else if (error instanceof Error && error.message.includes("InsufficientPopulationForSettler")) {
-        await toast.error("Insufficient population to purchase a settler. Minimum is 2 citizens.", { autoClose: 3000 });
-      } else {
-        await toast.error(`Failed to purchase ${item.label}`, { autoClose: 3000 });
-      }
-      console.log(`Error buying ${item.label}: `, error);
+      handleError({
+        error,
+        logMessage: `Error buying ${item.label}`,
+        defaultError: `Failed to purchase ${item.label}`
+      });
     }
     await fetchPlayerState();
   };
