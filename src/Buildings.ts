@@ -25,7 +25,7 @@ export const AllBuildings: BuildingType[] = [
     goldCost: 100,
     productionCost: 6,
     stats: {
-      yield: "+2 city defense | +1 housing"
+      yield: "+2 city defense | +1 housing | +10 storage"
     }
   },
   {

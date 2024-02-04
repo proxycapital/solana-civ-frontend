@@ -12,6 +12,25 @@ const CustomTooltip: React.FC<BuildingType & { selectedTab: number }> = ({
   goldCost,
   isUnlocked,
 }) => {
+  const iconMapping: { [key: string]: string } = {
+    'gold': 'gold.png',
+    'production': 'hammer.png',
+    'food': 'food.png',
+    'city defense': 'attack.png',
+  };
+
+  function parseYield(yieldString: string) {
+    const words = yieldString.split(' | ');
+    return words.map(word => {
+      const keywordFound = Object.keys(iconMapping).find(keyword => word.includes(keyword));
+      if (keywordFound) {
+        const iconPath = `./icons/${iconMapping[keywordFound]}`;
+        return <span>{word.replace(keywordFound, '')}<img src={iconPath} alt={keywordFound} width={24} /></span>;
+      }
+      return <span>{word}</span>;
+    });
+  }
+
   return (
     <div className="custom-tooltip">
       {requirement && !isUnlocked ? (
@@ -43,7 +62,8 @@ const CustomTooltip: React.FC<BuildingType & { selectedTab: number }> = ({
           <div className="yield-container">
             {stats?.yield && (
               <span>
-                Yield:&nbsp; <b>{stats.yield}</b>
+                {/* Yield:&nbsp; <b>{parseYield(stats.yield)}</b> */}
+                {stats.yield}
               </span>
             )}
           </div>
