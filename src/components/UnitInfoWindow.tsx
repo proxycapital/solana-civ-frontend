@@ -114,7 +114,7 @@ const UnitInfoWindow: React.FC<UnitInfoProps> = ({ unit }) => {
       const signature = await toast.promise(tx, {
         pending: "Upgrading unit",
         success: "Unit upgraded",
-        error: "Error upgrading unit",
+        error: undefined,
       });
       if (typeof signature === "string") {
         playSound("upgrade");

@@ -336,7 +336,7 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
       const signature = await toast.promise(tx, {
         pending: "Attacking enemy...",
         success: "Enemy attacked",
-        error: "Failed to attack enemy",
+        error: undefined,
       });
       console.log(`Attack TX: https://explorer.solana.com/tx/${signature}?cluster=devnet`);
       logMessage(`Unit #${attackingUnit.unitId} attacked barbarian`);
