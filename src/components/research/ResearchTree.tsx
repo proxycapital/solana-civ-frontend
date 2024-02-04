@@ -10,7 +10,7 @@ import config from "../../config.json";
 import "./ResearchTree.scss";
 
 import resetResearchStorage from "../../utils/storage";
-import { handleError } from "../../utils/handleError";
+import { ErrorCodes, useError } from "../../hooks/error.hook";
 
 const researchData = config.science;
 
@@ -19,6 +19,7 @@ const ResearchTree = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const { program, provider } = useWorkspace();
   const { technologies, fetchPlayerState } = useGameState();
+  const { handleError } = useError();
   const column1 = researchData["Science and Economy Tree"];
   const column2 = researchData["Production and Agriculture Tree"];
   const column3 = researchData["Military Tree"];
@@ -115,7 +116,7 @@ const ResearchTree = () => {
       handleError({
         error,
         logMessage: "Failed to start research",
-        defaultError: "Research: Something went wrong"
+        defaultError: ErrorCodes.ErrorResearchTechnology
       });
     }
     await fetchPlayerState();

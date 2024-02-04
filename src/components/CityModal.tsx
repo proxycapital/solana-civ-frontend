@@ -16,7 +16,7 @@ import { AllUnits, UnitType } from "../Units";
 import { AllBuildings, BuildingType } from "../Buildings";
 import CustomTooltip from "./CustomTooltip";
 import { getUnitOrBuildingStats } from "../utils";
-import { handleError } from "../utils/handleError";
+import { ErrorCodes, useError } from "../hooks/error.hook";
 
 interface CityModalProps {
   show: boolean;
@@ -28,6 +28,7 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
   const { program, provider } = useWorkspace();
   const { playSound } = useSound();
   const { fetchPlayerState, cities, technologies } = useGameState();
+  const { handleError } = useError();
 
   const [researchedTechnologies, setResearchTechnologies] = useState(new Set<string>());
   const [selectedTab, setSelectedTab] = useState(0);
@@ -101,7 +102,10 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
       handleError({
         error,
         logMessage: "Error adding to production queue",
-        defaultError: `Error adding to production queue ${cityId}`
+        defaultError: ErrorCodes.ErrorProductionQueue,
+        defaultErrorsParams: {
+          cityId
+        }
       });
     }
     await fetchPlayerState();
@@ -139,7 +143,10 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
       handleError({
         error,
         logMessage: "Error repairing city",
-        defaultError: `Error repairing city ${cityId}`
+        defaultError: ErrorCodes.RepairFailed,
+        defaultErrorsParams: {
+          cityId
+        }
       });
     }
     await fetchPlayerState();
@@ -160,7 +167,10 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
       handleError({
         error,
         logMessage: `Error buying ${item.label}`,
-        defaultError: `Failed to purchase ${item.label}`
+        defaultError: ErrorCodes.PurchaseFailed,
+        defaultErrorsParams: {
+          label: item.label
+        }
       });
     }
     await fetchPlayerState();

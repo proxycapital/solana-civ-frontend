@@ -14,7 +14,7 @@ import { useSound } from "../context/SoundContext";
 import { getMap } from "../utils/solanaUtils";
 import GameOverModal from "./GameOverModal";
 import TileMenu from "./TileMenu";
-import { handleError } from "../utils/handleError";
+import { useError } from "../hooks/error.hook";
 
 interface GameMapProps {
   debug: boolean;
@@ -84,6 +84,7 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [selectedTile, setSelectedTile] = useState<{ x: number, y: number } | null>(null)
   const [unitsTile, setUnitsTile] = useState<Array<Unit | City | any>>([])
+  const { handleError } = useError()
 
   useEffect(() => {
     const handleResize = () => {

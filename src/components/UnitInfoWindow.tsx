@@ -9,7 +9,7 @@ import { canUpgradeUnit } from "../utils";
 import { useWorkspace } from "../context/AnchorContext";
 import { useGameState } from "../context/GameStateContext";
 import { useSound } from "../context/SoundContext";
-import { handleError } from "../utils/handleError";
+import { ErrorCodes, useError} from "../hooks/error.hook";
 
 type WindowAlignment = "left" | "right" | null;
 
@@ -35,6 +35,7 @@ const UnitInfoWindow: React.FC<UnitInfoProps> = ({ unit }) => {
   const { playSound } = useSound();
   const { type, movementRange, attack, experience, level } = unit;
   const displayType = type.charAt(0).toUpperCase() + type.slice(1);
+  const { handleError } = useError();
 
   useEffect(() => {
     const element = document.getElementById(`unit-${unit?.unitId}`);
@@ -78,7 +79,7 @@ const UnitInfoWindow: React.FC<UnitInfoProps> = ({ unit }) => {
       handleError({
         error,
         logMessage: "Failed to build a city",
-        defaultError: "Failed to build a city"
+        defaultError: ErrorCodes.CityBuildFailed
       });
     }
     await fetchPlayerState();
@@ -101,7 +102,7 @@ const UnitInfoWindow: React.FC<UnitInfoProps> = ({ unit }) => {
       handleError({
         error,
         logMessage: "Error upgrading land tile",
-        defaultError: "Error building construction"
+        defaultError: ErrorCodes.ErrorBuildingConstruction
       });
     }
     await fetchPlayerState();
