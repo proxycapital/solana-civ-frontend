@@ -23,7 +23,13 @@ export function useError() {
     console.log(`${logMessage}: `, error);
     if (error instanceof Error) {
       const keyError = extractErrorCode(error.message);
-      if(!keyError) return;
+      if(!keyError) {
+        if(defaultError) {
+          toast.error(t(`errors.${defaultError}`, defaultErrorsParams), { autoClose: closeTimer || 3000 });
+        }
+
+        return;
+      }
 
       toast.error(t(`messages.${keyError}`), { autoClose: closeTimer || 3000 });
     } else if (defaultError) {
