@@ -135,31 +135,40 @@ const UnitInfoWindow: React.FC<UnitInfoProps> = ({ unit }) => {
   return (
     <div className={`unit-info-window align-${alignment}`}>
       <img src={`/${type}.png`} className="avatar" alt={type} />
-      <div className="desktop-only">
+      <div className="unit-name desktop-only">
         <strong>{displayType}</strong>
-      </div>
-      <div className="line-container desktop-only">
-        <img src="/icons/diamond.png" alt="" width="24" className="center-image" />
       </div>
       {type !== "settler" && type !== "builder" && (
         <div className="unit-stats">
-          <img src="/icons/health.png" alt="" className="unit-icon" /> Health:&nbsp;<b>{unit.health}/100</b>
+          <div className="flex-align-center">
+            <img src="/icons/health.png" alt="" className="unit-icon" />
+            Health
+          </div>
+          <b>{unit.health}/100</b>
         </div>
       )}
       <div className="unit-stats desktop-only">
-        <img src="/icons/movement.png" alt="" className="unit-icon" />
-        Movements:&nbsp;
+        <div className="flex-align-center">
+          <img src="/icons/movement.png" alt="" className="unit-icon" />
+          Movements
+        </div>
         <b>{movementRange}</b>
       </div>
       {attack !== 0 && (
         <div className="unit-stats">
-          <img src="/icons/attack.png" alt="" className="unit-icon" />
-          Strength:&nbsp;<b>{attack}</b>
+          <div className="flex-align-center">
+            <img src="/icons/attack.png" alt="" className="unit-icon" />
+            Strength
+          </div>
+          <b>{attack}</b>
         </div>
       )}
       {experience !== 0 && level !== null && level !== undefined && level < config.expThresholds.length && (
         <div className={`unit-stats ${canUpgradeUnit(level || 0, experience || 0) && "desktop-only"}`}>
-          XP:&nbsp;
+          <div className="flex-align-center">
+            <img src="/icons/health.png" alt="" className="unit-icon" />
+            XP
+          </div>
           <b>
             {experience}/{config.expThresholds[level]}
           </b>
@@ -167,29 +176,35 @@ const UnitInfoWindow: React.FC<UnitInfoProps> = ({ unit }) => {
       )}
 
       {type === "settler" && (
-        <Button
-          className="unit-action-button"
-          variant="outlined"
-          onClick={() => handleFoundCity(unit.x, unit.y, unit.unitId)}
-        >
-          <img src="/icons/build.png" alt="" className="unit-icon" /> Build a City
-        </Button>
+        <div className="gradient-wrapper">
+          <Button
+            className="unit-action-button"
+            variant="outlined"
+            onClick={() => handleFoundCity(unit.x, unit.y, unit.unitId)}
+          >
+            <img src="/icons/build.png" alt="" className="unit-icon" /> Build a City
+          </Button>
+        </div>
       )}
       {type === "builder" && (
-        <Button
-          className="unit-action-button"
-          variant="outlined"
-          onClick={() => handleBuild(unit.x, unit.y, unit.unitId)}
-        >
-          <img src="/icons/build.png" alt="" className="unit-icon" /> Build
-        </Button>
+        <div className="gradient-wrapper">
+          <Button
+            className="unit-action-button"
+            variant="outlined"
+            onClick={() => handleBuild(unit.x, unit.y, unit.unitId)}
+          >
+            <img src="/icons/build.png" alt="" className="unit-icon" /> Build
+          </Button>
+        </div>
       )}
       {canUpgradeUnit(level || 0, experience || 0) ? (
         <Tippy touch={false} content={config.unitUpgradeResult}>
-          <Button className="unit-action-button" variant="outlined" onClick={() => handleUpgrade(unit.unitId)}>
-            <img src="/icons/health.png" alt="Health" className="unit-icon desktop-only" />
-            Level Up
-          </Button>
+            <div className="gradient-wrapper">
+            <Button className="unit-action-button" variant="outlined" onClick={() => handleUpgrade(unit.unitId)}>
+              <img src="/icons/health.png" alt="Health" className="unit-icon desktop-only" />
+              Level Up
+            </Button>
+          </div>
         </Tippy>
       ) : null}
     </div>

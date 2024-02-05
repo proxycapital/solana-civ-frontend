@@ -1,5 +1,6 @@
-import i18n from 'i18next';
+import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
+
 import enUS from './locales/en-us'
 import ptBR from './locales/pt-br'
 
@@ -17,7 +18,7 @@ i18n
   .init({
     resources,
     lng: 'enUs',
-  });
+  })
 
-export default i18n;
+export default i18n
 
