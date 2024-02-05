@@ -1,2799 +1,2789 @@
 export type Solciv = {
-  "version": "0.1.0",
-  "name": "solciv",
-  "instructions": [
+  version: "0.1.0";
+  name: "solciv";
+  instructions: [
     {
-      "name": "initializeGame",
-      "accounts": [
+      name: "initializeGame";
+      accounts: [
         {
-          "name": "game",
-          "isMut": true,
-          "isSigner": false
+          name: "game";
+          isMut: true;
+          isSigner: false;
         },
         {
-          "name": "player",
-          "isMut": true,
-          "isSigner": true
+          name: "player";
+          isMut: true;
+          isSigner: true;
         },
         {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": [
+          name: "systemProgram";
+          isMut: false;
+          isSigner: false;
+        },
+      ];
+      args: [
         {
-          "name": "map",
-          "type": {
-            "array": [
-              "u8",
-              400
-            ]
-          }
+          name: "map";
+          type: {
+            array: ["u8", 400];
+          };
         },
         {
-          "name": "difficultyLevel",
-          "type": "u8"
-        }
-      ]
+          name: "difficultyLevel";
+          type: "u8";
+        },
+      ];
     },
     {
-      "name": "initializePlayer",
-      "accounts": [
+      name: "initializePlayer";
+      accounts: [
         {
-          "name": "game",
-          "isMut": true,
-          "isSigner": false
+          name: "game";
+          isMut: true;
+          isSigner: false;
         },
         {
-          "name": "playerAccount",
-          "isMut": true,
-          "isSigner": false
+          name: "playerAccount";
+          isMut: true;
+          isSigner: false;
         },
         {
-          "name": "player",
-          "isMut": true,
-          "isSigner": true
+          name: "player";
+          isMut: true;
+          isSigner: true;
         },
         {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": [
+          name: "systemProgram";
+          isMut: false;
+          isSigner: false;
+        },
+      ];
+      args: [
         {
-          "name": "position",
-          "type": {
-            "defined": "TileCoordinate"
-          }
-        }
-      ]
+          name: "position";
+          type: {
+            defined: "TileCoordinate";
+          };
+        },
+      ];
     },
     {
-      "name": "initializeNpc",
-      "accounts": [
+      name: "initializeNpc";
+      accounts: [
         {
-          "name": "game",
-          "isMut": false,
-          "isSigner": false
+          name: "game";
+          isMut: false;
+          isSigner: false;
         },
         {
-          "name": "npcAccount",
-          "isMut": true,
-          "isSigner": false
+          name: "npcAccount";
+          isMut: true;
+          isSigner: false;
         },
         {
-          "name": "player",
-          "isMut": true,
-          "isSigner": true
+          name: "player";
+          isMut: true;
+          isSigner: true;
         },
         {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": [
+          name: "systemProgram";
+          isMut: false;
+          isSigner: false;
+        },
+      ];
+      args: [
         {
-          "name": "npcPosition1",
-          "type": {
-            "defined": "TileCoordinate"
-          }
+          name: "npcPosition1";
+          type: {
+            defined: "TileCoordinate";
+          };
         },
         {
-          "name": "npcPosition2",
-          "type": {
-            "defined": "TileCoordinate"
-          }
-        }
-      ]
+          name: "npcPosition2";
+          type: {
+            defined: "TileCoordinate";
+          };
+        },
+      ];
     },
     {
-      "name": "moveUnit",
-      "accounts": [
+      name: "moveUnit";
+      accounts: [
         {
-          "name": "game",
-          "isMut": true,
-          "isSigner": false
+          name: "game";
+          isMut: true;
+          isSigner: false;
         },
         {
-          "name": "playerAccount",
-          "isMut": true,
-          "isSigner": false
+          name: "playerAccount";
+          isMut: true;
+          isSigner: false;
         },
         {
-          "name": "player",
-          "isMut": true,
-          "isSigner": true
-        }
-      ],
-      "args": [
+          name: "player";
+          isMut: true;
+          isSigner: true;
+        },
+      ];
+      args: [
         {
-          "name": "unitId",
-          "type": "u32"
+          name: "unitId";
+          type: "u32";
         },
         {
-          "name": "x",
-          "type": "u8"
+          name: "x";
+          type: "u8";
         },
         {
-          "name": "y",
-          "type": "u8"
-        }
-      ]
+          name: "y";
+          type: "u8";
+        },
+      ];
     },
     {
-      "name": "upgradeUnit",
-      "accounts": [
+      name: "upgradeUnit";
+      accounts: [
         {
-          "name": "playerAccount",
-          "isMut": true,
-          "isSigner": false
+          name: "playerAccount";
+          isMut: true;
+          isSigner: false;
         },
         {
-          "name": "player",
-          "isMut": true,
-          "isSigner": true
-        }
-      ],
-      "args": [
+          name: "player";
+          isMut: true;
+          isSigner: true;
+        },
+      ];
+      args: [
         {
-          "name": "unitId",
-          "type": "u32"
-        }
-      ]
+          name: "unitId";
+          type: "u32";
+        },
+      ];
     },
     {
-      "name": "foundCity",
-      "accounts": [
+      name: "foundCity";
+      accounts: [
         {
-          "name": "game",
-          "isMut": true,
-          "isSigner": false
+          name: "game";
+          isMut: true;
+          isSigner: false;
         },
         {
-          "name": "playerAccount",
-          "isMut": true,
-          "isSigner": false
+          name: "playerAccount";
+          isMut: true;
+          isSigner: false;
         },
         {
-          "name": "player",
-          "isMut": true,
-          "isSigner": true
+          name: "player";
+          isMut: true;
+          isSigner: true;
         },
         {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": [
+          name: "systemProgram";
+          isMut: false;
+          isSigner: false;
+        },
+      ];
+      args: [
         {
-          "name": "x",
-          "type": "u8"
+          name: "x";
+          type: "u8";
         },
         {
-          "name": "y",
-          "type": "u8"
+          name: "y";
+          type: "u8";
         },
         {
-          "name": "unitId",
-          "type": "u32"
+          name: "unitId";
+          type: "u32";
         },
         {
-          "name": "name",
-          "type": "string"
-        }
-      ]
+          name: "name";
+          type: "string";
+        },
+      ];
     },
     {
-      "name": "addToProductionQueue",
-      "accounts": [
+      name: "addToProductionQueue";
+      accounts: [
         {
-          "name": "playerAccount",
-          "isMut": true,
-          "isSigner": false
+          name: "playerAccount";
+          isMut: true;
+          isSigner: false;
         },
         {
-          "name": "player",
-          "isMut": true,
-          "isSigner": true
-        }
-      ],
-      "args": [
+          name: "player";
+          isMut: true;
+          isSigner: true;
+        },
+      ];
+      args: [
         {
-          "name": "cityId",
-          "type": "u32"
+          name: "cityId";
+          type: "u32";
         },
         {
-          "name": "item",
-          "type": {
-            "defined": "ProductionItem"
-          }
-        }
-      ]
+          name: "item";
+          type: {
+            defined: "ProductionItem";
+          };
+        },
+      ];
     },
     {
-      "name": "removeFromProductionQueue",
-      "accounts": [
+      name: "removeFromProductionQueue";
+      accounts: [
         {
-          "name": "playerAccount",
-          "isMut": true,
-          "isSigner": false
+          name: "playerAccount";
+          isMut: true;
+          isSigner: false;
         },
         {
-          "name": "player",
-          "isMut": true,
-          "isSigner": true
-        }
-      ],
-      "args": [
+          name: "player";
+          isMut: true;
+          isSigner: true;
+        },
+      ];
+      args: [
         {
-          "name": "cityId",
-          "type": "u32"
+          name: "cityId";
+          type: "u32";
         },
         {
-          "name": "index",
-          "type": "u8"
-        }
-      ]
+          name: "index";
+          type: "u8";
+        },
+      ];
     },
     {
-      "name": "purchaseWithGold",
-      "accounts": [
+      name: "purchaseWithGold";
+      accounts: [
         {
-          "name": "playerAccount",
-          "isMut": true,
-          "isSigner": false
+          name: "playerAccount";
+          isMut: true;
+          isSigner: false;
         },
         {
-          "name": "player",
-          "isMut": true,
-          "isSigner": true
-        }
-      ],
-      "args": [
+          name: "player";
+          isMut: true;
+          isSigner: true;
+        },
+      ];
+      args: [
         {
-          "name": "cityId",
-          "type": "u32"
+          name: "cityId";
+          type: "u32";
         },
         {
-          "name": "item",
-          "type": {
-            "defined": "ProductionItem"
-          }
-        }
-      ]
+          name: "item";
+          type: {
+            defined: "ProductionItem";
+          };
+        },
+      ];
     },
     {
-      "name": "startResearch",
-      "accounts": [
+      name: "startResearch";
+      accounts: [
         {
-          "name": "playerAccount",
-          "isMut": true,
-          "isSigner": false
+          name: "playerAccount";
+          isMut: true;
+          isSigner: false;
         },
         {
-          "name": "player",
-          "isMut": true,
-          "isSigner": true
-        }
-      ],
-      "args": [
+          name: "player";
+          isMut: true;
+          isSigner: true;
+        },
+      ];
+      args: [
         {
-          "name": "technologyType",
-          "type": {
-            "defined": "TechnologyType"
-          }
-        }
-      ]
+          name: "technologyType";
+          type: {
+            defined: "TechnologyType";
+          };
+        },
+      ];
     },
     {
-      "name": "upgradeTile",
-      "accounts": [
+      name: "upgradeTile";
+      accounts: [
         {
-          "name": "game",
-          "isMut": true,
-          "isSigner": false
+          name: "game";
+          isMut: true;
+          isSigner: false;
         },
         {
-          "name": "playerAccount",
-          "isMut": true,
-          "isSigner": false
+          name: "playerAccount";
+          isMut: true;
+          isSigner: false;
         },
         {
-          "name": "player",
-          "isMut": true,
-          "isSigner": true
-        }
-      ],
-      "args": [
+          name: "player";
+          isMut: true;
+          isSigner: true;
+        },
+      ];
+      args: [
         {
-          "name": "x",
-          "type": "u8"
+          name: "x";
+          type: "u8";
         },
         {
-          "name": "y",
-          "type": "u8"
+          name: "y";
+          type: "u8";
         },
         {
-          "name": "unitId",
-          "type": "u32"
-        }
-      ]
+          name: "unitId";
+          type: "u32";
+        },
+      ];
     },
     {
-      "name": "attackUnit",
-      "accounts": [
+      name: "attackUnit";
+      accounts: [
         {
-          "name": "game",
-          "isMut": true,
-          "isSigner": false
+          name: "game";
+          isMut: true;
+          isSigner: false;
         },
         {
-          "name": "playerAccount",
-          "isMut": true,
-          "isSigner": false
+          name: "playerAccount";
+          isMut: true;
+          isSigner: false;
         },
         {
-          "name": "npcAccount",
-          "isMut": true,
-          "isSigner": false
+          name: "npcAccount";
+          isMut: true;
+          isSigner: false;
         },
         {
-          "name": "player",
-          "isMut": true,
-          "isSigner": true
-        }
-      ],
-      "args": [
+          name: "player";
+          isMut: true;
+          isSigner: true;
+        },
+      ];
+      args: [
         {
-          "name": "attackerId",
-          "type": "u32"
+          name: "attackerId";
+          type: "u32";
         },
         {
-          "name": "defenderId",
-          "type": "u32"
-        }
-      ]
+          name: "defenderId";
+          type: "u32";
+        },
+      ];
     },
     {
-      "name": "attackCity",
-      "accounts": [
+      name: "attackCity";
+      accounts: [
         {
-          "name": "game",
-          "isMut": true,
-          "isSigner": false
+          name: "game";
+          isMut: true;
+          isSigner: false;
         },
         {
-          "name": "playerAccount",
-          "isMut": true,
-          "isSigner": false
+          name: "playerAccount";
+          isMut: true;
+          isSigner: false;
         },
         {
-          "name": "npcAccount",
-          "isMut": true,
-          "isSigner": false
+          name: "npcAccount";
+          isMut: true;
+          isSigner: false;
         },
         {
-          "name": "player",
-          "isMut": true,
-          "isSigner": true
-        }
-      ],
-      "args": [
+          name: "player";
+          isMut: true;
+          isSigner: true;
+        },
+      ];
+      args: [
         {
-          "name": "attackerId",
-          "type": "u32"
+          name: "attackerId";
+          type: "u32";
         },
         {
-          "name": "cityId",
-          "type": "u32"
-        }
-      ]
+          name: "cityId";
+          type: "u32";
+        },
+      ];
     },
     {
-      "name": "mintGems",
-      "accounts": [
+      name: "mintGems";
+      accounts: [
         {
-          "name": "mint",
-          "isMut": true,
-          "isSigner": false
+          name: "mint";
+          isMut: true;
+          isSigner: false;
         },
         {
-          "name": "destination",
-          "isMut": true,
-          "isSigner": false
+          name: "destination";
+          isMut: true;
+          isSigner: false;
         },
         {
-          "name": "owner",
-          "isMut": false,
-          "isSigner": false,
-          "docs": [
-            "it's important to check the signer, while recipient of gems can be any address"
-          ]
+          name: "owner";
+          isMut: false;
+          isSigner: false;
+          docs: ["it's important to check the signer, while recipient of gems can be any address"];
         },
         {
-          "name": "playerAccount",
-          "isMut": true,
-          "isSigner": false
+          name: "playerAccount";
+          isMut: true;
+          isSigner: false;
         },
         {
-          "name": "player",
-          "isMut": true,
-          "isSigner": true
+          name: "player";
+          isMut: true;
+          isSigner: true;
         },
         {
-          "name": "rent",
-          "isMut": false,
-          "isSigner": false
+          name: "rent";
+          isMut: false;
+          isSigner: false;
         },
         {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
+          name: "systemProgram";
+          isMut: false;
+          isSigner: false;
         },
         {
-          "name": "tokenProgram",
-          "isMut": false,
-          "isSigner": false
+          name: "tokenProgram";
+          isMut: false;
+          isSigner: false;
         },
         {
-          "name": "associatedTokenProgram",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": []
+          name: "associatedTokenProgram";
+          isMut: false;
+          isSigner: false;
+        },
+      ];
+      args: [];
     },
     {
-      "name": "endTurn",
-      "accounts": [
+      name: "endTurn";
+      accounts: [
         {
-          "name": "game",
-          "isMut": true,
-          "isSigner": false
+          name: "game";
+          isMut: true;
+          isSigner: false;
         },
         {
-          "name": "playerAccount",
-          "isMut": true,
-          "isSigner": false
+          name: "playerAccount";
+          isMut: true;
+          isSigner: false;
         },
         {
-          "name": "npcAccount",
-          "isMut": true,
-          "isSigner": false
+          name: "npcAccount";
+          isMut: true;
+          isSigner: false;
         },
         {
-          "name": "player",
-          "isMut": true,
-          "isSigner": true
-        }
-      ],
-      "args": []
+          name: "player";
+          isMut: true;
+          isSigner: true;
+        },
+      ];
+      args: [];
     },
     {
-      "name": "closeGame",
-      "accounts": [
+      name: "closeGame";
+      accounts: [
         {
-          "name": "game",
-          "isMut": true,
-          "isSigner": false
+          name: "game";
+          isMut: true;
+          isSigner: false;
         },
         {
-          "name": "playerAccount",
-          "isMut": true,
-          "isSigner": false
+          name: "playerAccount";
+          isMut: true;
+          isSigner: false;
         },
         {
-          "name": "npcAccount",
-          "isMut": true,
-          "isSigner": false
+          name: "npcAccount";
+          isMut: true;
+          isSigner: false;
         },
         {
-          "name": "player",
-          "isMut": true,
-          "isSigner": true
-        }
-      ],
-      "args": []
+          name: "player";
+          isMut: true;
+          isSigner: true;
+        },
+      ];
+      args: [];
     },
     {
-      "name": "repairWall",
-      "accounts": [
+      name: "repairWall";
+      accounts: [
         {
-          "name": "playerAccount",
-          "isMut": true,
-          "isSigner": false
+          name: "playerAccount";
+          isMut: true;
+          isSigner: false;
         },
         {
-          "name": "player",
-          "isMut": true,
-          "isSigner": true
-        }
-      ],
-      "args": [
+          name: "player";
+          isMut: true;
+          isSigner: true;
+        },
+      ];
+      args: [
         {
-          "name": "cityId",
-          "type": "u32"
-        }
-      ]
-    }
-  ],
-  "accounts": [
+          name: "cityId";
+          type: "u32";
+        },
+      ];
+    },
+  ];
+  accounts: [
     {
-      "name": "Game",
-      "type": {
-        "kind": "struct",
-        "fields": [
+      name: "Game";
+      type: {
+        kind: "struct";
+        fields: [
           {
-            "name": "player",
-            "type": "publicKey"
+            name: "player";
+            type: "publicKey";
           },
           {
-            "name": "npc",
-            "type": "publicKey"
+            name: "npc";
+            type: "publicKey";
           },
           {
-            "name": "turn",
-            "type": "u32"
+            name: "turn";
+            type: "u32";
           },
           {
-            "name": "defeat",
-            "type": "bool"
+            name: "defeat";
+            type: "bool";
           },
           {
-            "name": "victory",
-            "type": "bool"
+            name: "victory";
+            type: "bool";
           },
           {
-            "name": "map",
-            "type": {
-              "array": [
+            name: "map";
+            type: {
+              array: [
                 {
-                  "defined": "Terrain"
+                  defined: "Terrain";
                 },
-                400
-              ]
-            }
+                400,
+              ];
+            };
           },
           {
-            "name": "difficultyLevel",
-            "type": "u8"
-          }
-        ]
-      }
+            name: "difficultyLevel";
+            type: "u8";
+          },
+        ];
+      };
     },
     {
-      "name": "Player",
-      "type": {
-        "kind": "struct",
-        "fields": [
+      name: "Player";
+      type: {
+        kind: "struct";
+        fields: [
           {
-            "name": "game",
-            "type": "publicKey"
+            name: "game";
+            type: "publicKey";
           },
           {
-            "name": "player",
-            "type": "publicKey"
+            name: "player";
+            type: "publicKey";
           },
           {
-            "name": "points",
-            "type": "u32"
+            name: "points";
+            type: "u32";
           },
           {
-            "name": "cities",
-            "type": {
-              "vec": {
-                "defined": "City"
-              }
-            }
+            name: "cities";
+            type: {
+              vec: {
+                defined: "City";
+              };
+            };
           },
           {
-            "name": "tiles",
-            "type": {
-              "vec": {
-                "defined": "Tile"
-              }
-            }
+            name: "tiles";
+            type: {
+              vec: {
+                defined: "Tile";
+              };
+            };
           },
           {
-            "name": "units",
-            "type": {
-              "vec": {
-                "defined": "Unit"
-              }
-            }
+            name: "units";
+            type: {
+              vec: {
+                defined: "Unit";
+              };
+            };
           },
           {
-            "name": "resources",
-            "type": {
-              "defined": "Resources"
-            }
+            name: "resources";
+            type: {
+              defined: "Resources";
+            };
           },
           {
-            "name": "researchedTechnologies",
-            "type": {
-              "vec": {
-                "defined": "TechnologyType"
-              }
-            }
+            name: "researchedTechnologies";
+            type: {
+              vec: {
+                defined: "TechnologyType";
+              };
+            };
           },
           {
-            "name": "currentResearch",
-            "type": {
-              "option": {
-                "defined": "TechnologyType"
-              }
-            }
+            name: "currentResearch";
+            type: {
+              option: {
+                defined: "TechnologyType";
+              };
+            };
           },
           {
-            "name": "researchAccumulatedPoints",
-            "type": "u32"
+            name: "researchAccumulatedPoints";
+            type: "u32";
           },
           {
-            "name": "nextCityId",
-            "type": "u32"
+            name: "nextCityId";
+            type: "u32";
           },
           {
-            "name": "nextUnitId",
-            "type": "u32"
-          }
-        ]
-      }
+            name: "nextUnitId";
+            type: "u32";
+          },
+        ];
+      };
     },
     {
-      "name": "Npc",
-      "type": {
-        "kind": "struct",
-        "fields": [
+      name: "Npc";
+      type: {
+        kind: "struct";
+        fields: [
           {
-            "name": "game",
-            "type": "publicKey"
+            name: "game";
+            type: "publicKey";
           },
           {
-            "name": "player",
-            "type": "publicKey"
+            name: "player";
+            type: "publicKey";
           },
           {
-            "name": "cities",
-            "type": {
-              "vec": {
-                "defined": "City"
-              }
-            }
+            name: "cities";
+            type: {
+              vec: {
+                defined: "City";
+              };
+            };
           },
           {
-            "name": "units",
-            "type": {
-              "vec": {
-                "defined": "Unit"
-              }
-            }
+            name: "units";
+            type: {
+              vec: {
+                defined: "Unit";
+              };
+            };
           },
           {
-            "name": "nextCityId",
-            "type": "u32"
+            name: "nextCityId";
+            type: "u32";
           },
           {
-            "name": "nextUnitId",
-            "type": "u32"
-          }
-        ]
-      }
-    }
-  ],
-  "types": [
+            name: "nextUnitId";
+            type: "u32";
+          },
+        ];
+      };
+    },
+  ];
+  types: [
     {
-      "name": "City",
-      "type": {
-        "kind": "struct",
-        "fields": [
+      name: "City";
+      type: {
+        kind: "struct";
+        fields: [
           {
-            "name": "cityId",
-            "type": "u32"
+            name: "cityId";
+            type: "u32";
           },
           {
-            "name": "name",
-            "type": "string"
+            name: "name";
+            type: "string";
           },
           {
-            "name": "player",
-            "type": "publicKey"
+            name: "player";
+            type: "publicKey";
           },
           {
-            "name": "game",
-            "type": "publicKey"
+            name: "game";
+            type: "publicKey";
           },
           {
-            "name": "x",
-            "type": "u8"
+            name: "x";
+            type: "u8";
           },
           {
-            "name": "y",
-            "type": "u8"
+            name: "y";
+            type: "u8";
           },
           {
-            "name": "health",
-            "type": "u32"
+            name: "health";
+            type: "u32";
           },
           {
-            "name": "wallHealth",
-            "type": "u32"
+            name: "wallHealth";
+            type: "u32";
           },
           {
-            "name": "attack",
-            "type": "u32"
+            name: "attack";
+            type: "u32";
           },
           {
-            "name": "population",
-            "type": "u32"
+            name: "population";
+            type: "u32";
           },
           {
-            "name": "goldYield",
-            "type": "u32"
+            name: "goldYield";
+            type: "u32";
           },
           {
-            "name": "foodYield",
-            "type": "u32"
+            name: "foodYield";
+            type: "u32";
           },
           {
-            "name": "productionYield",
-            "type": "u32"
+            name: "productionYield";
+            type: "u32";
           },
           {
-            "name": "scienceYield",
-            "type": "u32"
+            name: "scienceYield";
+            type: "u32";
           },
           {
-            "name": "buildings",
-            "type": {
-              "vec": {
-                "defined": "BuildingType"
-              }
-            }
+            name: "buildings";
+            type: {
+              vec: {
+                defined: "BuildingType";
+              };
+            };
           },
           {
-            "name": "productionQueue",
-            "type": {
-              "vec": {
-                "defined": "ProductionItem"
-              }
-            }
+            name: "productionQueue";
+            type: {
+              vec: {
+                defined: "ProductionItem";
+              };
+            };
           },
           {
-            "name": "accumulatedProduction",
-            "type": "u32"
+            name: "accumulatedProduction";
+            type: "u32";
           },
           {
-            "name": "accumulatedFood",
-            "type": "i32"
+            name: "accumulatedFood";
+            type: "i32";
           },
           {
-            "name": "housing",
-            "type": "u32"
+            name: "housing";
+            type: "u32";
           },
           {
-            "name": "controlledTiles",
-            "type": {
-              "vec": {
-                "defined": "TileCoordinate"
-              }
-            }
+            name: "controlledTiles";
+            type: {
+              vec: {
+                defined: "TileCoordinate";
+              };
+            };
           },
           {
-            "name": "level",
-            "type": "u32"
+            name: "level";
+            type: "u32";
           },
           {
-            "name": "growthPoints",
-            "type": "u32"
-          }
-        ]
-      }
+            name: "growthPoints";
+            type: "u32";
+          },
+        ];
+      };
     },
     {
-      "name": "TileCoordinate",
-      "type": {
-        "kind": "struct",
-        "fields": [
+      name: "TileCoordinate";
+      type: {
+        kind: "struct";
+        fields: [
           {
-            "name": "x",
-            "type": "u8"
+            name: "x";
+            type: "u8";
           },
           {
-            "name": "y",
-            "type": "u8"
-          }
-        ]
-      }
+            name: "y";
+            type: "u8";
+          },
+        ];
+      };
     },
     {
-      "name": "Terrain",
-      "type": {
-        "kind": "struct",
-        "fields": [
+      name: "Terrain";
+      type: {
+        kind: "struct";
+        fields: [
           {
-            "name": "terrain",
-            "type": "u8"
+            name: "terrain";
+            type: "u8";
           },
           {
-            "name": "discovered",
-            "type": "bool"
-          }
-        ]
-      }
+            name: "discovered";
+            type: "bool";
+          },
+        ];
+      };
     },
     {
-      "name": "Resources",
-      "type": {
-        "kind": "struct",
-        "fields": [
+      name: "Resources";
+      type: {
+        kind: "struct";
+        fields: [
           {
-            "name": "gold",
-            "type": "i32"
+            name: "gold";
+            type: "i32";
           },
           {
-            "name": "wood",
-            "type": "u32"
+            name: "wood";
+            type: "u32";
           },
           {
-            "name": "stone",
-            "type": "u32"
+            name: "stone";
+            type: "u32";
           },
           {
-            "name": "iron",
-            "type": "u32"
+            name: "iron";
+            type: "u32";
           },
           {
-            "name": "gems",
-            "type": "u32"
+            name: "gems";
+            type: "u32";
           },
           {
-            "name": "horses",
-            "type": "u32"
-          }
-        ]
-      }
+            name: "horses";
+            type: "u32";
+          },
+        ];
+      };
     },
     {
-      "name": "Tile",
-      "type": {
-        "kind": "struct",
-        "fields": [
+      name: "Tile";
+      type: {
+        kind: "struct";
+        fields: [
           {
-            "name": "tileType",
-            "type": {
-              "defined": "TileType"
-            }
+            name: "tileType";
+            type: {
+              defined: "TileType";
+            };
           },
           {
-            "name": "x",
-            "type": "u8"
+            name: "x";
+            type: "u8";
           },
           {
-            "name": "y",
-            "type": "u8"
-          }
-        ]
-      }
+            name: "y";
+            type: "u8";
+          },
+        ];
+      };
     },
     {
-      "name": "Unit",
-      "type": {
-        "kind": "struct",
-        "fields": [
+      name: "Unit";
+      type: {
+        kind: "struct";
+        fields: [
           {
-            "name": "unitId",
-            "type": "u32"
+            name: "unitId";
+            type: "u32";
           },
           {
-            "name": "player",
-            "type": "publicKey"
+            name: "player";
+            type: "publicKey";
           },
           {
-            "name": "game",
-            "type": "publicKey"
+            name: "game";
+            type: "publicKey";
           },
           {
-            "name": "unitType",
-            "type": {
-              "defined": "UnitType"
-            }
+            name: "unitType";
+            type: {
+              defined: "UnitType";
+            };
           },
           {
-            "name": "x",
-            "type": "u8"
+            name: "x";
+            type: "u8";
           },
           {
-            "name": "y",
-            "type": "u8"
+            name: "y";
+            type: "u8";
           },
           {
-            "name": "attack",
-            "type": "u8"
+            name: "attack";
+            type: "u8";
           },
           {
-            "name": "health",
-            "type": "u8"
+            name: "health";
+            type: "u8";
           },
           {
-            "name": "level",
-            "type": "u8"
+            name: "level";
+            type: "u8";
           },
           {
-            "name": "experience",
-            "type": "u8"
+            name: "experience";
+            type: "u8";
           },
           {
-            "name": "movementRange",
-            "type": "u8"
+            name: "movementRange";
+            type: "u8";
           },
           {
-            "name": "remainingActions",
-            "type": "u8"
+            name: "remainingActions";
+            type: "u8";
           },
           {
-            "name": "baseProductionCost",
-            "type": "u32"
+            name: "baseProductionCost";
+            type: "u32";
           },
           {
-            "name": "baseGoldCost",
-            "type": "u32"
+            name: "baseGoldCost";
+            type: "u32";
           },
           {
-            "name": "baseResourceCost",
-            "type": "u32"
+            name: "baseResourceCost";
+            type: "u32";
           },
           {
-            "name": "maintenanceCost",
-            "type": "i32"
+            name: "maintenanceCost";
+            type: "i32";
           },
           {
-            "name": "isRanged",
-            "type": "bool"
+            name: "isRanged";
+            type: "bool";
           },
           {
-            "name": "isAlive",
-            "type": "bool"
-          }
-        ]
-      }
+            name: "isAlive";
+            type: "bool";
+          },
+        ];
+      };
     },
     {
-      "name": "BuildingError",
-      "type": {
-        "kind": "enum",
-        "variants": [
+      name: "BuildingError";
+      type: {
+        kind: "enum";
+        variants: [
           {
-            "name": "TileOccupied"
-          }
-        ]
-      }
+            name: "TileOccupied";
+          },
+        ];
+      };
     },
     {
-      "name": "TileError",
-      "type": {
-        "kind": "enum",
-        "variants": [
+      name: "TileError";
+      type: {
+        kind: "enum";
+        variants: [
           {
-            "name": "NotUpgradeable"
+            name: "NotUpgradeable";
           },
           {
-            "name": "TileOccupied"
+            name: "TileOccupied";
           },
           {
-            "name": "TileNotControlled"
-          }
-        ]
-      }
+            name: "TileNotControlled";
+          },
+        ];
+      };
     },
     {
-      "name": "CityError",
-      "type": {
-        "kind": "enum",
-        "variants": [
+      name: "CityError";
+      type: {
+        kind: "enum";
+        variants: [
           {
-            "name": "QueueFull"
+            name: "QueueFull";
           },
           {
-            "name": "BuildingAlreadyExists"
+            name: "BuildingAlreadyExists";
           },
           {
-            "name": "CityNotFound"
+            name: "CityNotFound";
           },
           {
-            "name": "AlreadyQueued"
+            name: "AlreadyQueued";
           },
           {
-            "name": "InsufficientResources"
+            name: "InsufficientResources";
           },
           {
-            "name": "InvalidItem"
+            name: "InvalidItem";
           },
           {
-            "name": "QueueItemNotFound"
+            name: "QueueItemNotFound";
           },
           {
-            "name": "InsufficientGold"
+            name: "InsufficientGold";
           },
           {
-            "name": "TechnologyNotResearched"
+            name: "TechnologyNotResearched";
           },
           {
-            "name": "InsufficientWood"
+            name: "InsufficientWood";
           },
           {
-            "name": "InsufficientStone"
+            name: "InsufficientStone";
           },
           {
-            "name": "NotDamagedWall"
+            name: "NotDamagedWall";
           },
           {
-            "name": "NoWall"
+            name: "NoWall";
           },
           {
-            "name": "InsufficientGoldForMaintenance"
+            name: "InsufficientGoldForMaintenance";
           },
           {
-            "name": "InsufficientPopulationForSettler"
-          }
-        ]
-      }
+            name: "InsufficientPopulationForSettler";
+          },
+        ];
+      };
     },
     {
-      "name": "ResearchError",
-      "type": {
-        "kind": "enum",
-        "variants": [
+      name: "ResearchError";
+      type: {
+        kind: "enum";
+        variants: [
           {
-            "name": "InvalidResearch"
+            name: "InvalidResearch";
           },
           {
-            "name": "AlreadyResearching"
+            name: "AlreadyResearching";
           },
           {
-            "name": "ResearchAlreadyCompleted"
+            name: "ResearchAlreadyCompleted";
           },
           {
-            "name": "CannotResearch"
+            name: "CannotResearch";
           },
           {
-            "name": "ResearchNotComplete"
+            name: "ResearchNotComplete";
           },
           {
-            "name": "NoActiveResearch"
-          }
-        ]
-      }
+            name: "NoActiveResearch";
+          },
+        ];
+      };
     },
     {
-      "name": "GameError",
-      "type": {
-        "kind": "enum",
-        "variants": [
+      name: "GameError";
+      type: {
+        kind: "enum";
+        variants: [
           {
-            "name": "NotEnoughGems"
-          }
-        ]
-      }
+            name: "NotEnoughGems";
+          },
+        ];
+      };
     },
     {
-      "name": "ProductionItem",
-      "type": {
-        "kind": "enum",
-        "variants": [
+      name: "ProductionItem";
+      type: {
+        kind: "enum";
+        variants: [
           {
-            "name": "Unit",
-            "fields": [
+            name: "Unit";
+            fields: [
               {
-                "defined": "UnitType"
-              }
-            ]
+                defined: "UnitType";
+              },
+            ];
           },
           {
-            "name": "Building",
-            "fields": [
+            name: "Building";
+            fields: [
               {
-                "defined": "BuildingType"
-              }
-            ]
-          }
-        ]
-      }
+                defined: "BuildingType";
+              },
+            ];
+          },
+        ];
+      };
     },
     {
-      "name": "BuildingType",
-      "type": {
-        "kind": "enum",
-        "variants": [
+      name: "BuildingType";
+      type: {
+        kind: "enum";
+        variants: [
           {
-            "name": "Barracks"
+            name: "Barracks";
           },
           {
-            "name": "Wall"
+            name: "Wall";
           },
           {
-            "name": "WallMedieval"
+            name: "WallMedieval";
           },
           {
-            "name": "WallRenaissance"
+            name: "WallRenaissance";
           },
           {
-            "name": "WallIndustrial"
+            name: "WallIndustrial";
           },
           {
-            "name": "Library"
+            name: "Library";
           },
           {
-            "name": "School"
+            name: "School";
           },
           {
-            "name": "University"
+            name: "University";
           },
           {
-            "name": "Observatory"
+            name: "Observatory";
           },
           {
-            "name": "Forge"
+            name: "Forge";
           },
           {
-            "name": "Factory"
+            name: "Factory";
           },
           {
-            "name": "EnergyPlant"
+            name: "EnergyPlant";
           },
           {
-            "name": "Market"
+            name: "Market";
           },
           {
-            "name": "Bank"
+            name: "Bank";
           },
           {
-            "name": "StockExchange"
+            name: "StockExchange";
           },
           {
-            "name": "Granary"
+            name: "Granary";
           },
           {
-            "name": "Mill"
+            name: "Mill";
           },
           {
-            "name": "Bakery"
+            name: "Bakery";
           },
           {
-            "name": "Supermarket"
+            name: "Supermarket";
           },
           {
-            "name": "ResidentialComplex"
-          }
-        ]
-      }
+            name: "ResidentialComplex";
+          },
+        ];
+      };
     },
     {
-      "name": "TileType",
-      "type": {
-        "kind": "enum",
-        "variants": [
+      name: "TileType";
+      type: {
+        kind: "enum";
+        variants: [
           {
-            "name": "LumberMill"
+            name: "LumberMill";
           },
           {
-            "name": "StoneQuarry"
+            name: "StoneQuarry";
           },
           {
-            "name": "Farm"
+            name: "Farm";
           },
           {
-            "name": "IronMine"
+            name: "IronMine";
           },
           {
-            "name": "Pasture"
-          }
-        ]
-      }
+            name: "Pasture";
+          },
+        ];
+      };
     },
     {
-      "name": "TechnologyType",
-      "type": {
-        "kind": "enum",
-        "variants": [
+      name: "TechnologyType";
+      type: {
+        kind: "enum";
+        variants: [
           {
-            "name": "AnimalHusbandry"
+            name: "AnimalHusbandry";
           },
           {
-            "name": "Archery"
+            name: "Archery";
           },
           {
-            "name": "HorsebackRiding"
+            name: "HorsebackRiding";
           },
           {
-            "name": "IronWorking"
+            name: "IronWorking";
           },
           {
-            "name": "MedievalWarfare"
+            name: "MedievalWarfare";
           },
           {
-            "name": "Gunpowder"
+            name: "Gunpowder";
           },
           {
-            "name": "Ballistics"
+            name: "Ballistics";
           },
           {
-            "name": "TanksAndArmor"
+            name: "TanksAndArmor";
           },
           {
-            "name": "Writing"
+            name: "Writing";
           },
           {
-            "name": "Education"
+            name: "Education";
           },
           {
-            "name": "Economics"
+            name: "Economics";
           },
           {
-            "name": "Academia"
+            name: "Academia";
           },
           {
-            "name": "Astronomy"
+            name: "Astronomy";
           },
           {
-            "name": "Capitalism"
+            name: "Capitalism";
           },
           {
-            "name": "Agriculture"
+            name: "Agriculture";
           },
           {
-            "name": "Construction"
+            name: "Construction";
           },
           {
-            "name": "Industrialization"
+            name: "Industrialization";
           },
           {
-            "name": "ElectricalPower"
+            name: "ElectricalPower";
           },
           {
-            "name": "ModernFarming"
+            name: "ModernFarming";
           },
           {
-            "name": "Urbanization"
-          }
-        ]
-      }
+            name: "Urbanization";
+          },
+        ];
+      };
     },
     {
-      "name": "UnitType",
-      "type": {
-        "kind": "enum",
-        "variants": [
+      name: "UnitType";
+      type: {
+        kind: "enum";
+        variants: [
           {
-            "name": "Settler"
+            name: "Settler";
           },
           {
-            "name": "Builder"
+            name: "Builder";
           },
           {
-            "name": "Warrior"
+            name: "Warrior";
           },
           {
-            "name": "Archer"
+            name: "Archer";
           },
           {
-            "name": "Swordsman"
+            name: "Swordsman";
           },
           {
-            "name": "Crossbowman"
+            name: "Crossbowman";
           },
           {
-            "name": "Musketman"
+            name: "Musketman";
           },
           {
-            "name": "Rifleman"
+            name: "Rifleman";
           },
           {
-            "name": "Tank"
+            name: "Tank";
           },
           {
-            "name": "Horseman"
-          }
-        ]
-      }
-    }
-  ],
-  "errors": [
+            name: "Horseman";
+          },
+        ];
+      };
+    },
+  ];
+  errors: [
     {
-      "code": 6000,
-      "name": "UnitNotFound",
-      "msg": "Unit with given ID not found"
+      code: 6000;
+      name: "UnitNotFound";
+      msg: "Unit with given ID not found";
     },
     {
-      "code": 6001,
-      "name": "CannotMove",
-      "msg": "Unit cannot move this turn"
+      code: 6001;
+      name: "CannotMove";
+      msg: "Unit cannot move this turn";
     },
     {
-      "code": 6002,
-      "name": "OutOfMovementRange",
-      "msg": "Out of movement range"
+      code: 6002;
+      name: "OutOfMovementRange";
+      msg: "Out of movement range";
     },
     {
-      "code": 6003,
-      "name": "OutOfMapBounds",
-      "msg": "Out of map bounds"
+      code: 6003;
+      name: "OutOfMapBounds";
+      msg: "Out of map bounds";
     },
     {
-      "code": 6004,
-      "name": "TileOccupied",
-      "msg": "Tile is occupied by another unit"
+      code: 6004;
+      name: "TileOccupied";
+      msg: "Tile is occupied by another unit";
     },
     {
-      "code": 6005,
-      "name": "InvalidUnitType",
-      "msg": "The provided unit cannot perform this action"
+      code: 6005;
+      name: "InvalidUnitType";
+      msg: "The provided unit cannot perform this action";
     },
     {
-      "code": 6006,
-      "name": "UnitWrongPosition",
-      "msg": "The provided unit is not at the required coordinates"
+      code: 6006;
+      name: "UnitWrongPosition";
+      msg: "The provided unit is not at the required coordinates";
     },
     {
-      "code": 6007,
-      "name": "InvalidAttack",
-      "msg": "The provided unit cannot attack"
+      code: 6007;
+      name: "InvalidAttack";
+      msg: "The provided unit cannot attack";
     },
     {
-      "code": 6008,
-      "name": "OutOfAttackRange",
-      "msg": "The provided unit is out of attack range"
+      code: 6008;
+      name: "OutOfAttackRange";
+      msg: "The provided unit is out of attack range";
     },
     {
-      "code": 6009,
-      "name": "NoMovementPoints",
-      "msg": "No movement points left this turn"
+      code: 6009;
+      name: "NoMovementPoints";
+      msg: "No movement points left this turn";
     },
     {
-      "code": 6010,
-      "name": "UnitNotDamaged",
-      "msg": "Unit is not damaged"
+      code: 6010;
+      name: "UnitNotDamaged";
+      msg: "Unit is not damaged";
     },
     {
-      "code": 6011,
-      "name": "NotEnoughResources",
-      "msg": "Not enough of food to heal the unit"
+      code: 6011;
+      name: "NotEnoughResources";
+      msg: "Not enough of food to heal the unit";
     },
     {
-      "code": 6012,
-      "name": "MaxLevelReached",
-      "msg": "Max level reached"
+      code: 6012;
+      name: "MaxLevelReached";
+      msg: "Max level reached";
     },
     {
-      "code": 6013,
-      "name": "NotEnoughExp",
-      "msg": "Not enought experience to level up unit"
-    }
-  ],
-  "metadata": {
-    "address": "3qoyRXbpBJDPfQYL5GUFJ2nf2YzpA8kZmXPYr4DZBmPU"
-  }
+      code: 6013;
+      name: "NotEnoughExp";
+      msg: "Not enought experience to level up unit";
+    },
+  ];
+  metadata: {
+    address: "3qoyRXbpBJDPfQYL5GUFJ2nf2YzpA8kZmXPYr4DZBmPU";
+  };
 };
 
 export const IDL: Solciv = {
-  "version": "0.1.0",
-  "name": "solciv",
-  "instructions": [
+  version: "0.1.0",
+  name: "solciv",
+  instructions: [
     {
-      "name": "initializeGame",
-      "accounts": [
+      name: "initializeGame",
+      accounts: [
         {
-          "name": "game",
-          "isMut": true,
-          "isSigner": false
+          name: "game",
+          isMut: true,
+          isSigner: false,
         },
         {
-          "name": "player",
-          "isMut": true,
-          "isSigner": true
+          name: "player",
+          isMut: true,
+          isSigner: true,
         },
         {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
-        }
+          name: "systemProgram",
+          isMut: false,
+          isSigner: false,
+        },
       ],
-      "args": [
+      args: [
         {
-          "name": "map",
-          "type": {
-            "array": [
-              "u8",
-              400
-            ]
-          }
+          name: "map",
+          type: {
+            array: ["u8", 400],
+          },
         },
         {
-          "name": "difficultyLevel",
-          "type": "u8"
-        }
-      ]
+          name: "difficultyLevel",
+          type: "u8",
+        },
+      ],
     },
     {
-      "name": "initializePlayer",
-      "accounts": [
+      name: "initializePlayer",
+      accounts: [
         {
-          "name": "game",
-          "isMut": true,
-          "isSigner": false
+          name: "game",
+          isMut: true,
+          isSigner: false,
         },
         {
-          "name": "playerAccount",
-          "isMut": true,
-          "isSigner": false
+          name: "playerAccount",
+          isMut: true,
+          isSigner: false,
         },
         {
-          "name": "player",
-          "isMut": true,
-          "isSigner": true
+          name: "player",
+          isMut: true,
+          isSigner: true,
         },
         {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
-        }
+          name: "systemProgram",
+          isMut: false,
+          isSigner: false,
+        },
       ],
-      "args": [
+      args: [
         {
-          "name": "position",
-          "type": {
-            "defined": "TileCoordinate"
-          }
-        }
-      ]
+          name: "position",
+          type: {
+            defined: "TileCoordinate",
+          },
+        },
+      ],
     },
     {
-      "name": "initializeNpc",
-      "accounts": [
+      name: "initializeNpc",
+      accounts: [
         {
-          "name": "game",
-          "isMut": false,
-          "isSigner": false
+          name: "game",
+          isMut: false,
+          isSigner: false,
         },
         {
-          "name": "npcAccount",
-          "isMut": true,
-          "isSigner": false
+          name: "npcAccount",
+          isMut: true,
+          isSigner: false,
         },
         {
-          "name": "player",
-          "isMut": true,
-          "isSigner": true
+          name: "player",
+          isMut: true,
+          isSigner: true,
         },
         {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
-        }
+          name: "systemProgram",
+          isMut: false,
+          isSigner: false,
+        },
       ],
-      "args": [
+      args: [
         {
-          "name": "npcPosition1",
-          "type": {
-            "defined": "TileCoordinate"
-          }
+          name: "npcPosition1",
+          type: {
+            defined: "TileCoordinate",
+          },
         },
         {
-          "name": "npcPosition2",
-          "type": {
-            "defined": "TileCoordinate"
-          }
-        }
-      ]
+          name: "npcPosition2",
+          type: {
+            defined: "TileCoordinate",
+          },
+        },
+      ],
     },
     {
-      "name": "moveUnit",
-      "accounts": [
+      name: "moveUnit",
+      accounts: [
         {
-          "name": "game",
-          "isMut": true,
-          "isSigner": false
+          name: "game",
+          isMut: true,
+          isSigner: false,
         },
         {
-          "name": "playerAccount",
-          "isMut": true,
-          "isSigner": false
+          name: "playerAccount",
+          isMut: true,
+          isSigner: false,
         },
         {
-          "name": "player",
-          "isMut": true,
-          "isSigner": true
-        }
+          name: "player",
+          isMut: true,
+          isSigner: true,
+        },
       ],
-      "args": [
+      args: [
         {
-          "name": "unitId",
-          "type": "u32"
+          name: "unitId",
+          type: "u32",
         },
         {
-          "name": "x",
-          "type": "u8"
+          name: "x",
+          type: "u8",
         },
         {
-          "name": "y",
-          "type": "u8"
-        }
-      ]
+          name: "y",
+          type: "u8",
+        },
+      ],
     },
     {
-      "name": "upgradeUnit",
-      "accounts": [
+      name: "upgradeUnit",
+      accounts: [
         {
-          "name": "playerAccount",
-          "isMut": true,
-          "isSigner": false
+          name: "playerAccount",
+          isMut: true,
+          isSigner: false,
         },
         {
-          "name": "player",
-          "isMut": true,
-          "isSigner": true
-        }
+          name: "player",
+          isMut: true,
+          isSigner: true,
+        },
       ],
-      "args": [
+      args: [
         {
-          "name": "unitId",
-          "type": "u32"
-        }
-      ]
+          name: "unitId",
+          type: "u32",
+        },
+      ],
     },
     {
-      "name": "foundCity",
-      "accounts": [
+      name: "foundCity",
+      accounts: [
         {
-          "name": "game",
-          "isMut": true,
-          "isSigner": false
+          name: "game",
+          isMut: true,
+          isSigner: false,
         },
         {
-          "name": "playerAccount",
-          "isMut": true,
-          "isSigner": false
+          name: "playerAccount",
+          isMut: true,
+          isSigner: false,
         },
         {
-          "name": "player",
-          "isMut": true,
-          "isSigner": true
+          name: "player",
+          isMut: true,
+          isSigner: true,
         },
         {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
-        }
+          name: "systemProgram",
+          isMut: false,
+          isSigner: false,
+        },
       ],
-      "args": [
+      args: [
         {
-          "name": "x",
-          "type": "u8"
+          name: "x",
+          type: "u8",
         },
         {
-          "name": "y",
-          "type": "u8"
+          name: "y",
+          type: "u8",
         },
         {
-          "name": "unitId",
-          "type": "u32"
+          name: "unitId",
+          type: "u32",
         },
         {
-          "name": "name",
-          "type": "string"
-        }
-      ]
+          name: "name",
+          type: "string",
+        },
+      ],
     },
     {
-      "name": "addToProductionQueue",
-      "accounts": [
+      name: "addToProductionQueue",
+      accounts: [
         {
-          "name": "playerAccount",
-          "isMut": true,
-          "isSigner": false
+          name: "playerAccount",
+          isMut: true,
+          isSigner: false,
         },
         {
-          "name": "player",
-          "isMut": true,
-          "isSigner": true
-        }
+          name: "player",
+          isMut: true,
+          isSigner: true,
+        },
       ],
-      "args": [
+      args: [
         {
-          "name": "cityId",
-          "type": "u32"
+          name: "cityId",
+          type: "u32",
         },
         {
-          "name": "item",
-          "type": {
-            "defined": "ProductionItem"
-          }
-        }
-      ]
+          name: "item",
+          type: {
+            defined: "ProductionItem",
+          },
+        },
+      ],
     },
     {
-      "name": "removeFromProductionQueue",
-      "accounts": [
+      name: "removeFromProductionQueue",
+      accounts: [
         {
-          "name": "playerAccount",
-          "isMut": true,
-          "isSigner": false
+          name: "playerAccount",
+          isMut: true,
+          isSigner: false,
         },
         {
-          "name": "player",
-          "isMut": true,
-          "isSigner": true
-        }
+          name: "player",
+          isMut: true,
+          isSigner: true,
+        },
       ],
-      "args": [
+      args: [
         {
-          "name": "cityId",
-          "type": "u32"
+          name: "cityId",
+          type: "u32",
         },
         {
-          "name": "index",
-          "type": "u8"
-        }
-      ]
+          name: "index",
+          type: "u8",
+        },
+      ],
     },
     {
-      "name": "purchaseWithGold",
-      "accounts": [
+      name: "purchaseWithGold",
+      accounts: [
         {
-          "name": "playerAccount",
-          "isMut": true,
-          "isSigner": false
+          name: "playerAccount",
+          isMut: true,
+          isSigner: false,
         },
         {
-          "name": "player",
-          "isMut": true,
-          "isSigner": true
-        }
+          name: "player",
+          isMut: true,
+          isSigner: true,
+        },
       ],
-      "args": [
+      args: [
         {
-          "name": "cityId",
-          "type": "u32"
+          name: "cityId",
+          type: "u32",
         },
         {
-          "name": "item",
-          "type": {
-            "defined": "ProductionItem"
-          }
-        }
-      ]
+          name: "item",
+          type: {
+            defined: "ProductionItem",
+          },
+        },
+      ],
     },
     {
-      "name": "startResearch",
-      "accounts": [
+      name: "startResearch",
+      accounts: [
         {
-          "name": "playerAccount",
-          "isMut": true,
-          "isSigner": false
+          name: "playerAccount",
+          isMut: true,
+          isSigner: false,
         },
         {
-          "name": "player",
-          "isMut": true,
-          "isSigner": true
-        }
+          name: "player",
+          isMut: true,
+          isSigner: true,
+        },
       ],
-      "args": [
+      args: [
         {
-          "name": "technologyType",
-          "type": {
-            "defined": "TechnologyType"
-          }
-        }
-      ]
+          name: "technologyType",
+          type: {
+            defined: "TechnologyType",
+          },
+        },
+      ],
     },
     {
-      "name": "upgradeTile",
-      "accounts": [
+      name: "upgradeTile",
+      accounts: [
         {
-          "name": "game",
-          "isMut": true,
-          "isSigner": false
+          name: "game",
+          isMut: true,
+          isSigner: false,
         },
         {
-          "name": "playerAccount",
-          "isMut": true,
-          "isSigner": false
+          name: "playerAccount",
+          isMut: true,
+          isSigner: false,
         },
         {
-          "name": "player",
-          "isMut": true,
-          "isSigner": true
-        }
+          name: "player",
+          isMut: true,
+          isSigner: true,
+        },
       ],
-      "args": [
+      args: [
         {
-          "name": "x",
-          "type": "u8"
+          name: "x",
+          type: "u8",
         },
         {
-          "name": "y",
-          "type": "u8"
+          name: "y",
+          type: "u8",
         },
         {
-          "name": "unitId",
-          "type": "u32"
-        }
-      ]
+          name: "unitId",
+          type: "u32",
+        },
+      ],
     },
     {
-      "name": "attackUnit",
-      "accounts": [
+      name: "attackUnit",
+      accounts: [
         {
-          "name": "game",
-          "isMut": true,
-          "isSigner": false
+          name: "game",
+          isMut: true,
+          isSigner: false,
         },
         {
-          "name": "playerAccount",
-          "isMut": true,
-          "isSigner": false
+          name: "playerAccount",
+          isMut: true,
+          isSigner: false,
         },
         {
-          "name": "npcAccount",
-          "isMut": true,
-          "isSigner": false
+          name: "npcAccount",
+          isMut: true,
+          isSigner: false,
         },
         {
-          "name": "player",
-          "isMut": true,
-          "isSigner": true
-        }
+          name: "player",
+          isMut: true,
+          isSigner: true,
+        },
       ],
-      "args": [
+      args: [
         {
-          "name": "attackerId",
-          "type": "u32"
+          name: "attackerId",
+          type: "u32",
         },
         {
-          "name": "defenderId",
-          "type": "u32"
-        }
-      ]
+          name: "defenderId",
+          type: "u32",
+        },
+      ],
     },
     {
-      "name": "attackCity",
-      "accounts": [
+      name: "attackCity",
+      accounts: [
         {
-          "name": "game",
-          "isMut": true,
-          "isSigner": false
+          name: "game",
+          isMut: true,
+          isSigner: false,
         },
         {
-          "name": "playerAccount",
-          "isMut": true,
-          "isSigner": false
+          name: "playerAccount",
+          isMut: true,
+          isSigner: false,
         },
         {
-          "name": "npcAccount",
-          "isMut": true,
-          "isSigner": false
+          name: "npcAccount",
+          isMut: true,
+          isSigner: false,
         },
         {
-          "name": "player",
-          "isMut": true,
-          "isSigner": true
-        }
+          name: "player",
+          isMut: true,
+          isSigner: true,
+        },
       ],
-      "args": [
+      args: [
         {
-          "name": "attackerId",
-          "type": "u32"
+          name: "attackerId",
+          type: "u32",
         },
         {
-          "name": "cityId",
-          "type": "u32"
-        }
-      ]
+          name: "cityId",
+          type: "u32",
+        },
+      ],
     },
     {
-      "name": "mintGems",
-      "accounts": [
+      name: "mintGems",
+      accounts: [
         {
-          "name": "mint",
-          "isMut": true,
-          "isSigner": false
+          name: "mint",
+          isMut: true,
+          isSigner: false,
         },
         {
-          "name": "destination",
-          "isMut": true,
-          "isSigner": false
+          name: "destination",
+          isMut: true,
+          isSigner: false,
         },
         {
-          "name": "owner",
-          "isMut": false,
-          "isSigner": false,
-          "docs": [
-            "it's important to check the signer, while recipient of gems can be any address"
-          ]
+          name: "owner",
+          isMut: false,
+          isSigner: false,
+          docs: ["it's important to check the signer, while recipient of gems can be any address"],
         },
         {
-          "name": "playerAccount",
-          "isMut": true,
-          "isSigner": false
+          name: "playerAccount",
+          isMut: true,
+          isSigner: false,
         },
         {
-          "name": "player",
-          "isMut": true,
-          "isSigner": true
+          name: "player",
+          isMut: true,
+          isSigner: true,
         },
         {
-          "name": "rent",
-          "isMut": false,
-          "isSigner": false
+          name: "rent",
+          isMut: false,
+          isSigner: false,
         },
         {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
+          name: "systemProgram",
+          isMut: false,
+          isSigner: false,
         },
         {
-          "name": "tokenProgram",
-          "isMut": false,
-          "isSigner": false
+          name: "tokenProgram",
+          isMut: false,
+          isSigner: false,
         },
         {
-          "name": "associatedTokenProgram",
-          "isMut": false,
-          "isSigner": false
-        }
+          name: "associatedTokenProgram",
+          isMut: false,
+          isSigner: false,
+        },
       ],
-      "args": []
+      args: [],
     },
     {
-      "name": "endTurn",
-      "accounts": [
+      name: "endTurn",
+      accounts: [
         {
-          "name": "game",
-          "isMut": true,
-          "isSigner": false
+          name: "game",
+          isMut: true,
+          isSigner: false,
         },
         {
-          "name": "playerAccount",
-          "isMut": true,
-          "isSigner": false
+          name: "playerAccount",
+          isMut: true,
+          isSigner: false,
         },
         {
-          "name": "npcAccount",
-          "isMut": true,
-          "isSigner": false
+          name: "npcAccount",
+          isMut: true,
+          isSigner: false,
         },
         {
-          "name": "player",
-          "isMut": true,
-          "isSigner": true
-        }
+          name: "player",
+          isMut: true,
+          isSigner: true,
+        },
       ],
-      "args": []
+      args: [],
     },
     {
-      "name": "closeGame",
-      "accounts": [
+      name: "closeGame",
+      accounts: [
         {
-          "name": "game",
-          "isMut": true,
-          "isSigner": false
+          name: "game",
+          isMut: true,
+          isSigner: false,
         },
         {
-          "name": "playerAccount",
-          "isMut": true,
-          "isSigner": false
+          name: "playerAccount",
+          isMut: true,
+          isSigner: false,
         },
         {
-          "name": "npcAccount",
-          "isMut": true,
-          "isSigner": false
+          name: "npcAccount",
+          isMut: true,
+          isSigner: false,
         },
         {
-          "name": "player",
-          "isMut": true,
-          "isSigner": true
-        }
+          name: "player",
+          isMut: true,
+          isSigner: true,
+        },
       ],
-      "args": []
+      args: [],
     },
     {
-      "name": "repairWall",
-      "accounts": [
+      name: "repairWall",
+      accounts: [
         {
-          "name": "playerAccount",
-          "isMut": true,
-          "isSigner": false
+          name: "playerAccount",
+          isMut: true,
+          isSigner: false,
         },
         {
-          "name": "player",
-          "isMut": true,
-          "isSigner": true
-        }
+          name: "player",
+          isMut: true,
+          isSigner: true,
+        },
       ],
-      "args": [
+      args: [
         {
-          "name": "cityId",
-          "type": "u32"
-        }
-      ]
-    }
+          name: "cityId",
+          type: "u32",
+        },
+      ],
+    },
   ],
-  "accounts": [
+  accounts: [
     {
-      "name": "Game",
-      "type": {
-        "kind": "struct",
-        "fields": [
+      name: "Game",
+      type: {
+        kind: "struct",
+        fields: [
           {
-            "name": "player",
-            "type": "publicKey"
+            name: "player",
+            type: "publicKey",
           },
           {
-            "name": "npc",
-            "type": "publicKey"
+            name: "npc",
+            type: "publicKey",
           },
           {
-            "name": "turn",
-            "type": "u32"
+            name: "turn",
+            type: "u32",
           },
           {
-            "name": "defeat",
-            "type": "bool"
+            name: "defeat",
+            type: "bool",
           },
           {
-            "name": "victory",
-            "type": "bool"
+            name: "victory",
+            type: "bool",
           },
           {
-            "name": "map",
-            "type": {
-              "array": [
+            name: "map",
+            type: {
+              array: [
                 {
-                  "defined": "Terrain"
+                  defined: "Terrain",
                 },
-                400
-              ]
-            }
+                400,
+              ],
+            },
           },
           {
-            "name": "difficultyLevel",
-            "type": "u8"
-          }
-        ]
-      }
+            name: "difficultyLevel",
+            type: "u8",
+          },
+        ],
+      },
     },
     {
-      "name": "Player",
-      "type": {
-        "kind": "struct",
-        "fields": [
+      name: "Player",
+      type: {
+        kind: "struct",
+        fields: [
           {
-            "name": "game",
-            "type": "publicKey"
+            name: "game",
+            type: "publicKey",
           },
           {
-            "name": "player",
-            "type": "publicKey"
+            name: "player",
+            type: "publicKey",
           },
           {
-            "name": "points",
-            "type": "u32"
+            name: "points",
+            type: "u32",
           },
           {
-            "name": "cities",
-            "type": {
-              "vec": {
-                "defined": "City"
-              }
-            }
+            name: "cities",
+            type: {
+              vec: {
+                defined: "City",
+              },
+            },
           },
           {
-            "name": "tiles",
-            "type": {
-              "vec": {
-                "defined": "Tile"
-              }
-            }
+            name: "tiles",
+            type: {
+              vec: {
+                defined: "Tile",
+              },
+            },
           },
           {
-            "name": "units",
-            "type": {
-              "vec": {
-                "defined": "Unit"
-              }
-            }
+            name: "units",
+            type: {
+              vec: {
+                defined: "Unit",
+              },
+            },
           },
           {
-            "name": "resources",
-            "type": {
-              "defined": "Resources"
-            }
+            name: "resources",
+            type: {
+              defined: "Resources",
+            },
           },
           {
-            "name": "researchedTechnologies",
-            "type": {
-              "vec": {
-                "defined": "TechnologyType"
-              }
-            }
+            name: "researchedTechnologies",
+            type: {
+              vec: {
+                defined: "TechnologyType",
+              },
+            },
           },
           {
-            "name": "currentResearch",
-            "type": {
-              "option": {
-                "defined": "TechnologyType"
-              }
-            }
+            name: "currentResearch",
+            type: {
+              option: {
+                defined: "TechnologyType",
+              },
+            },
           },
           {
-            "name": "researchAccumulatedPoints",
-            "type": "u32"
+            name: "researchAccumulatedPoints",
+            type: "u32",
           },
           {
-            "name": "nextCityId",
-            "type": "u32"
+            name: "nextCityId",
+            type: "u32",
           },
           {
-            "name": "nextUnitId",
-            "type": "u32"
-          }
-        ]
-      }
+            name: "nextUnitId",
+            type: "u32",
+          },
+        ],
+      },
     },
     {
-      "name": "Npc",
-      "type": {
-        "kind": "struct",
-        "fields": [
+      name: "Npc",
+      type: {
+        kind: "struct",
+        fields: [
           {
-            "name": "game",
-            "type": "publicKey"
+            name: "game",
+            type: "publicKey",
           },
           {
-            "name": "player",
-            "type": "publicKey"
+            name: "player",
+            type: "publicKey",
           },
           {
-            "name": "cities",
-            "type": {
-              "vec": {
-                "defined": "City"
-              }
-            }
+            name: "cities",
+            type: {
+              vec: {
+                defined: "City",
+              },
+            },
           },
           {
-            "name": "units",
-            "type": {
-              "vec": {
-                "defined": "Unit"
-              }
-            }
+            name: "units",
+            type: {
+              vec: {
+                defined: "Unit",
+              },
+            },
           },
           {
-            "name": "nextCityId",
-            "type": "u32"
+            name: "nextCityId",
+            type: "u32",
           },
           {
-            "name": "nextUnitId",
-            "type": "u32"
-          }
-        ]
-      }
-    }
+            name: "nextUnitId",
+            type: "u32",
+          },
+        ],
+      },
+    },
   ],
-  "types": [
+  types: [
     {
-      "name": "City",
-      "type": {
-        "kind": "struct",
-        "fields": [
+      name: "City",
+      type: {
+        kind: "struct",
+        fields: [
           {
-            "name": "cityId",
-            "type": "u32"
+            name: "cityId",
+            type: "u32",
           },
           {
-            "name": "name",
-            "type": "string"
+            name: "name",
+            type: "string",
           },
           {
-            "name": "player",
-            "type": "publicKey"
+            name: "player",
+            type: "publicKey",
           },
           {
-            "name": "game",
-            "type": "publicKey"
+            name: "game",
+            type: "publicKey",
           },
           {
-            "name": "x",
-            "type": "u8"
+            name: "x",
+            type: "u8",
           },
           {
-            "name": "y",
-            "type": "u8"
+            name: "y",
+            type: "u8",
           },
           {
-            "name": "health",
-            "type": "u32"
+            name: "health",
+            type: "u32",
           },
           {
-            "name": "wallHealth",
-            "type": "u32"
+            name: "wallHealth",
+            type: "u32",
           },
           {
-            "name": "attack",
-            "type": "u32"
+            name: "attack",
+            type: "u32",
           },
           {
-            "name": "population",
-            "type": "u32"
+            name: "population",
+            type: "u32",
           },
           {
-            "name": "goldYield",
-            "type": "u32"
+            name: "goldYield",
+            type: "u32",
           },
           {
-            "name": "foodYield",
-            "type": "u32"
+            name: "foodYield",
+            type: "u32",
           },
           {
-            "name": "productionYield",
-            "type": "u32"
+            name: "productionYield",
+            type: "u32",
           },
           {
-            "name": "scienceYield",
-            "type": "u32"
+            name: "scienceYield",
+            type: "u32",
           },
           {
-            "name": "buildings",
-            "type": {
-              "vec": {
-                "defined": "BuildingType"
-              }
-            }
+            name: "buildings",
+            type: {
+              vec: {
+                defined: "BuildingType",
+              },
+            },
           },
           {
-            "name": "productionQueue",
-            "type": {
-              "vec": {
-                "defined": "ProductionItem"
-              }
-            }
+            name: "productionQueue",
+            type: {
+              vec: {
+                defined: "ProductionItem",
+              },
+            },
           },
           {
-            "name": "accumulatedProduction",
-            "type": "u32"
+            name: "accumulatedProduction",
+            type: "u32",
           },
           {
-            "name": "accumulatedFood",
-            "type": "i32"
+            name: "accumulatedFood",
+            type: "i32",
           },
           {
-            "name": "housing",
-            "type": "u32"
+            name: "housing",
+            type: "u32",
           },
           {
-            "name": "controlledTiles",
-            "type": {
-              "vec": {
-                "defined": "TileCoordinate"
-              }
-            }
+            name: "controlledTiles",
+            type: {
+              vec: {
+                defined: "TileCoordinate",
+              },
+            },
           },
           {
-            "name": "level",
-            "type": "u32"
+            name: "level",
+            type: "u32",
           },
           {
-            "name": "growthPoints",
-            "type": "u32"
-          }
-        ]
-      }
+            name: "growthPoints",
+            type: "u32",
+          },
+        ],
+      },
     },
     {
-      "name": "TileCoordinate",
-      "type": {
-        "kind": "struct",
-        "fields": [
+      name: "TileCoordinate",
+      type: {
+        kind: "struct",
+        fields: [
           {
-            "name": "x",
-            "type": "u8"
+            name: "x",
+            type: "u8",
           },
           {
-            "name": "y",
-            "type": "u8"
-          }
-        ]
-      }
+            name: "y",
+            type: "u8",
+          },
+        ],
+      },
     },
     {
-      "name": "Terrain",
-      "type": {
-        "kind": "struct",
-        "fields": [
+      name: "Terrain",
+      type: {
+        kind: "struct",
+        fields: [
           {
-            "name": "terrain",
-            "type": "u8"
+            name: "terrain",
+            type: "u8",
           },
           {
-            "name": "discovered",
-            "type": "bool"
-          }
-        ]
-      }
+            name: "discovered",
+            type: "bool",
+          },
+        ],
+      },
     },
     {
-      "name": "Resources",
-      "type": {
-        "kind": "struct",
-        "fields": [
+      name: "Resources",
+      type: {
+        kind: "struct",
+        fields: [
           {
-            "name": "gold",
-            "type": "i32"
+            name: "gold",
+            type: "i32",
           },
           {
-            "name": "wood",
-            "type": "u32"
+            name: "wood",
+            type: "u32",
           },
           {
-            "name": "stone",
-            "type": "u32"
+            name: "stone",
+            type: "u32",
           },
           {
-            "name": "iron",
-            "type": "u32"
+            name: "iron",
+            type: "u32",
           },
           {
-            "name": "gems",
-            "type": "u32"
+            name: "gems",
+            type: "u32",
           },
           {
-            "name": "horses",
-            "type": "u32"
-          }
-        ]
-      }
+            name: "horses",
+            type: "u32",
+          },
+        ],
+      },
     },
     {
-      "name": "Tile",
-      "type": {
-        "kind": "struct",
-        "fields": [
+      name: "Tile",
+      type: {
+        kind: "struct",
+        fields: [
           {
-            "name": "tileType",
-            "type": {
-              "defined": "TileType"
-            }
+            name: "tileType",
+            type: {
+              defined: "TileType",
+            },
           },
           {
-            "name": "x",
-            "type": "u8"
+            name: "x",
+            type: "u8",
           },
           {
-            "name": "y",
-            "type": "u8"
-          }
-        ]
-      }
+            name: "y",
+            type: "u8",
+          },
+        ],
+      },
     },
     {
-      "name": "Unit",
-      "type": {
-        "kind": "struct",
-        "fields": [
+      name: "Unit",
+      type: {
+        kind: "struct",
+        fields: [
           {
-            "name": "unitId",
-            "type": "u32"
+            name: "unitId",
+            type: "u32",
           },
           {
-            "name": "player",
-            "type": "publicKey"
+            name: "player",
+            type: "publicKey",
           },
           {
-            "name": "game",
-            "type": "publicKey"
+            name: "game",
+            type: "publicKey",
           },
           {
-            "name": "unitType",
-            "type": {
-              "defined": "UnitType"
-            }
+            name: "unitType",
+            type: {
+              defined: "UnitType",
+            },
           },
           {
-            "name": "x",
-            "type": "u8"
+            name: "x",
+            type: "u8",
           },
           {
-            "name": "y",
-            "type": "u8"
+            name: "y",
+            type: "u8",
           },
           {
-            "name": "attack",
-            "type": "u8"
+            name: "attack",
+            type: "u8",
           },
           {
-            "name": "health",
-            "type": "u8"
+            name: "health",
+            type: "u8",
           },
           {
-            "name": "level",
-            "type": "u8"
+            name: "level",
+            type: "u8",
           },
           {
-            "name": "experience",
-            "type": "u8"
+            name: "experience",
+            type: "u8",
           },
           {
-            "name": "movementRange",
-            "type": "u8"
+            name: "movementRange",
+            type: "u8",
           },
           {
-            "name": "remainingActions",
-            "type": "u8"
+            name: "remainingActions",
+            type: "u8",
           },
           {
-            "name": "baseProductionCost",
-            "type": "u32"
+            name: "baseProductionCost",
+            type: "u32",
           },
           {
-            "name": "baseGoldCost",
-            "type": "u32"
+            name: "baseGoldCost",
+            type: "u32",
           },
           {
-            "name": "baseResourceCost",
-            "type": "u32"
+            name: "baseResourceCost",
+            type: "u32",
           },
           {
-            "name": "maintenanceCost",
-            "type": "i32"
+            name: "maintenanceCost",
+            type: "i32",
           },
           {
-            "name": "isRanged",
-            "type": "bool"
+            name: "isRanged",
+            type: "bool",
           },
           {
-            "name": "isAlive",
-            "type": "bool"
-          }
-        ]
-      }
+            name: "isAlive",
+            type: "bool",
+          },
+        ],
+      },
     },
     {
-      "name": "BuildingError",
-      "type": {
-        "kind": "enum",
-        "variants": [
+      name: "BuildingError",
+      type: {
+        kind: "enum",
+        variants: [
           {
-            "name": "TileOccupied"
-          }
-        ]
-      }
+            name: "TileOccupied",
+          },
+        ],
+      },
     },
     {
-      "name": "TileError",
-      "type": {
-        "kind": "enum",
-        "variants": [
+      name: "TileError",
+      type: {
+        kind: "enum",
+        variants: [
           {
-            "name": "NotUpgradeable"
+            name: "NotUpgradeable",
           },
           {
-            "name": "TileOccupied"
+            name: "TileOccupied",
           },
           {
-            "name": "TileNotControlled"
-          }
-        ]
-      }
+            name: "TileNotControlled",
+          },
+        ],
+      },
     },
     {
-      "name": "CityError",
-      "type": {
-        "kind": "enum",
-        "variants": [
+      name: "CityError",
+      type: {
+        kind: "enum",
+        variants: [
           {
-            "name": "QueueFull"
+            name: "QueueFull",
           },
           {
-            "name": "BuildingAlreadyExists"
+            name: "BuildingAlreadyExists",
           },
           {
-            "name": "CityNotFound"
+            name: "CityNotFound",
           },
           {
-            "name": "AlreadyQueued"
+            name: "AlreadyQueued",
           },
           {
-            "name": "InsufficientResources"
+            name: "InsufficientResources",
           },
           {
-            "name": "InvalidItem"
+            name: "InvalidItem",
           },
           {
-            "name": "QueueItemNotFound"
+            name: "QueueItemNotFound",
           },
           {
-            "name": "InsufficientGold"
+            name: "InsufficientGold",
           },
           {
-            "name": "TechnologyNotResearched"
+            name: "TechnologyNotResearched",
           },
           {
-            "name": "InsufficientWood"
+            name: "InsufficientWood",
           },
           {
-            "name": "InsufficientStone"
+            name: "InsufficientStone",
           },
           {
-            "name": "NotDamagedWall"
+            name: "NotDamagedWall",
           },
           {
-            "name": "NoWall"
+            name: "NoWall",
           },
           {
-            "name": "InsufficientGoldForMaintenance"
+            name: "InsufficientGoldForMaintenance",
           },
           {
-            "name": "InsufficientPopulationForSettler"
-          }
-        ]
-      }
+            name: "InsufficientPopulationForSettler",
+          },
+        ],
+      },
     },
     {
-      "name": "ResearchError",
-      "type": {
-        "kind": "enum",
-        "variants": [
+      name: "ResearchError",
+      type: {
+        kind: "enum",
+        variants: [
           {
-            "name": "InvalidResearch"
+            name: "InvalidResearch",
           },
           {
-            "name": "AlreadyResearching"
+            name: "AlreadyResearching",
           },
           {
-            "name": "ResearchAlreadyCompleted"
+            name: "ResearchAlreadyCompleted",
           },
           {
-            "name": "CannotResearch"
+            name: "CannotResearch",
           },
           {
-            "name": "ResearchNotComplete"
+            name: "ResearchNotComplete",
           },
           {
-            "name": "NoActiveResearch"
-          }
-        ]
-      }
+            name: "NoActiveResearch",
+          },
+        ],
+      },
     },
     {
-      "name": "GameError",
-      "type": {
-        "kind": "enum",
-        "variants": [
+      name: "GameError",
+      type: {
+        kind: "enum",
+        variants: [
           {
-            "name": "NotEnoughGems"
-          }
-        ]
-      }
+            name: "NotEnoughGems",
+          },
+        ],
+      },
     },
     {
-      "name": "ProductionItem",
-      "type": {
-        "kind": "enum",
-        "variants": [
+      name: "ProductionItem",
+      type: {
+        kind: "enum",
+        variants: [
           {
-            "name": "Unit",
-            "fields": [
+            name: "Unit",
+            fields: [
               {
-                "defined": "UnitType"
-              }
-            ]
+                defined: "UnitType",
+              },
+            ],
           },
           {
-            "name": "Building",
-            "fields": [
+            name: "Building",
+            fields: [
               {
-                "defined": "BuildingType"
-              }
-            ]
-          }
-        ]
-      }
+                defined: "BuildingType",
+              },
+            ],
+          },
+        ],
+      },
     },
     {
-      "name": "BuildingType",
-      "type": {
-        "kind": "enum",
-        "variants": [
+      name: "BuildingType",
+      type: {
+        kind: "enum",
+        variants: [
           {
-            "name": "Barracks"
+            name: "Barracks",
           },
           {
-            "name": "Wall"
+            name: "Wall",
           },
           {
-            "name": "WallMedieval"
+            name: "WallMedieval",
           },
           {
-            "name": "WallRenaissance"
+            name: "WallRenaissance",
           },
           {
-            "name": "WallIndustrial"
+            name: "WallIndustrial",
           },
           {
-            "name": "Library"
+            name: "Library",
           },
           {
-            "name": "School"
+            name: "School",
           },
           {
-            "name": "University"
+            name: "University",
           },
           {
-            "name": "Observatory"
+            name: "Observatory",
           },
           {
-            "name": "Forge"
+            name: "Forge",
           },
           {
-            "name": "Factory"
+            name: "Factory",
           },
           {
-            "name": "EnergyPlant"
+            name: "EnergyPlant",
           },
           {
-            "name": "Market"
+            name: "Market",
           },
           {
-            "name": "Bank"
+            name: "Bank",
           },
           {
-            "name": "StockExchange"
+            name: "StockExchange",
           },
           {
-            "name": "Granary"
+            name: "Granary",
           },
           {
-            "name": "Mill"
+            name: "Mill",
           },
           {
-            "name": "Bakery"
+            name: "Bakery",
           },
           {
-            "name": "Supermarket"
+            name: "Supermarket",
           },
           {
-            "name": "ResidentialComplex"
-          }
-        ]
-      }
+            name: "ResidentialComplex",
+          },
+        ],
+      },
     },
     {
-      "name": "TileType",
-      "type": {
-        "kind": "enum",
-        "variants": [
+      name: "TileType",
+      type: {
+        kind: "enum",
+        variants: [
           {
-            "name": "LumberMill"
+            name: "LumberMill",
           },
           {
-            "name": "StoneQuarry"
+            name: "StoneQuarry",
           },
           {
-            "name": "Farm"
+            name: "Farm",
           },
           {
-            "name": "IronMine"
+            name: "IronMine",
           },
           {
-            "name": "Pasture"
-          }
-        ]
-      }
+            name: "Pasture",
+          },
+        ],
+      },
     },
     {
-      "name": "TechnologyType",
-      "type": {
-        "kind": "enum",
-        "variants": [
+      name: "TechnologyType",
+      type: {
+        kind: "enum",
+        variants: [
           {
-            "name": "AnimalHusbandry"
+            name: "AnimalHusbandry",
           },
           {
-            "name": "Archery"
+            name: "Archery",
           },
           {
-            "name": "HorsebackRiding"
+            name: "HorsebackRiding",
           },
           {
-            "name": "IronWorking"
+            name: "IronWorking",
           },
           {
-            "name": "MedievalWarfare"
+            name: "MedievalWarfare",
           },
           {
-            "name": "Gunpowder"
+            name: "Gunpowder",
           },
           {
-            "name": "Ballistics"
+            name: "Ballistics",
           },
           {
-            "name": "TanksAndArmor"
+            name: "TanksAndArmor",
           },
           {
-            "name": "Writing"
+            name: "Writing",
           },
           {
-            "name": "Education"
+            name: "Education",
           },
           {
-            "name": "Economics"
+            name: "Economics",
           },
           {
-            "name": "Academia"
+            name: "Academia",
           },
           {
-            "name": "Astronomy"
+            name: "Astronomy",
           },
           {
-            "name": "Capitalism"
+            name: "Capitalism",
           },
           {
-            "name": "Agriculture"
+            name: "Agriculture",
           },
           {
-            "name": "Construction"
+            name: "Construction",
           },
           {
-            "name": "Industrialization"
+            name: "Industrialization",
           },
           {
-            "name": "ElectricalPower"
+            name: "ElectricalPower",
           },
           {
-            "name": "ModernFarming"
+            name: "ModernFarming",
           },
           {
-            "name": "Urbanization"
-          }
-        ]
-      }
+            name: "Urbanization",
+          },
+        ],
+      },
     },
     {
-      "name": "UnitType",
-      "type": {
-        "kind": "enum",
-        "variants": [
+      name: "UnitType",
+      type: {
+        kind: "enum",
+        variants: [
           {
-            "name": "Settler"
+            name: "Settler",
           },
           {
-            "name": "Builder"
+            name: "Builder",
           },
           {
-            "name": "Warrior"
+            name: "Warrior",
           },
           {
-            "name": "Archer"
+            name: "Archer",
           },
           {
-            "name": "Swordsman"
+            name: "Swordsman",
           },
           {
-            "name": "Crossbowman"
+            name: "Crossbowman",
           },
           {
-            "name": "Musketman"
+            name: "Musketman",
           },
           {
-            "name": "Rifleman"
+            name: "Rifleman",
           },
           {
-            "name": "Tank"
+            name: "Tank",
           },
           {
-            "name": "Horseman"
-          }
-        ]
-      }
-    }
+            name: "Horseman",
+          },
+        ],
+      },
+    },
   ],
-  "errors": [
+  errors: [
     {
-      "code": 6000,
-      "name": "UnitNotFound",
-      "msg": "Unit with given ID not found"
+      code: 6000,
+      name: "UnitNotFound",
+      msg: "Unit with given ID not found",
     },
     {
-      "code": 6001,
-      "name": "CannotMove",
-      "msg": "Unit cannot move this turn"
+      code: 6001,
+      name: "CannotMove",
+      msg: "Unit cannot move this turn",
     },
     {
-      "code": 6002,
-      "name": "OutOfMovementRange",
-      "msg": "Out of movement range"
+      code: 6002,
+      name: "OutOfMovementRange",
+      msg: "Out of movement range",
     },
     {
-      "code": 6003,
-      "name": "OutOfMapBounds",
-      "msg": "Out of map bounds"
+      code: 6003,
+      name: "OutOfMapBounds",
+      msg: "Out of map bounds",
     },
     {
-      "code": 6004,
-      "name": "TileOccupied",
-      "msg": "Tile is occupied by another unit"
+      code: 6004,
+      name: "TileOccupied",
+      msg: "Tile is occupied by another unit",
     },
     {
-      "code": 6005,
-      "name": "InvalidUnitType",
-      "msg": "The provided unit cannot perform this action"
+      code: 6005,
+      name: "InvalidUnitType",
+      msg: "The provided unit cannot perform this action",
     },
     {
-      "code": 6006,
-      "name": "UnitWrongPosition",
-      "msg": "The provided unit is not at the required coordinates"
+      code: 6006,
+      name: "UnitWrongPosition",
+      msg: "The provided unit is not at the required coordinates",
     },
     {
-      "code": 6007,
-      "name": "InvalidAttack",
-      "msg": "The provided unit cannot attack"
+      code: 6007,
+      name: "InvalidAttack",
+      msg: "The provided unit cannot attack",
     },
     {
-      "code": 6008,
-      "name": "OutOfAttackRange",
-      "msg": "The provided unit is out of attack range"
+      code: 6008,
+      name: "OutOfAttackRange",
+      msg: "The provided unit is out of attack range",
     },
     {
-      "code": 6009,
-      "name": "NoMovementPoints",
-      "msg": "No movement points left this turn"
+      code: 6009,
+      name: "NoMovementPoints",
+      msg: "No movement points left this turn",
     },
     {
-      "code": 6010,
-      "name": "UnitNotDamaged",
-      "msg": "Unit is not damaged"
+      code: 6010,
+      name: "UnitNotDamaged",
+      msg: "Unit is not damaged",
     },
     {
-      "code": 6011,
-      "name": "NotEnoughResources",
-      "msg": "Not enough of food to heal the unit"
+      code: 6011,
+      name: "NotEnoughResources",
+      msg: "Not enough of food to heal the unit",
     },
     {
-      "code": 6012,
-      "name": "MaxLevelReached",
-      "msg": "Max level reached"
+      code: 6012,
+      name: "MaxLevelReached",
+      msg: "Max level reached",
     },
     {
-      "code": 6013,
-      "name": "NotEnoughExp",
-      "msg": "Not enought experience to level up unit"
-    }
+      code: 6013,
+      name: "NotEnoughExp",
+      msg: "Not enought experience to level up unit",
+    },
   ],
-  "metadata": {
-    "address": "3qoyRXbpBJDPfQYL5GUFJ2nf2YzpA8kZmXPYr4DZBmPU"
-  }
+  metadata: {
+    address: "3qoyRXbpBJDPfQYL5GUFJ2nf2YzpA8kZmXPYr4DZBmPU",
+  },
 };

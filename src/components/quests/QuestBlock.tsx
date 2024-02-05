@@ -1,5 +1,5 @@
-import React from 'react';
-import './Quests.scss';
+import React from "react";
+import "./Quests.scss";
 
 interface IQuests {
   status: string;
@@ -8,7 +8,7 @@ interface IQuests {
   reward: string;
 }
 
-const QuestBlock = ({ status, title, description, reward}: IQuests) => {
+const QuestBlock = ({ status, title, description, reward }: IQuests) => {
   return (
     <div className={`quest-block ${status}`}>
       <img src={`/icons/${status}.png`} alt={status} className="quest-status" />
@@ -19,6 +19,6 @@ const QuestBlock = ({ status, title, description, reward}: IQuests) => {
       </div>
     </div>
   );
-}
+};
 
 export default QuestBlock;

@@ -67,7 +67,7 @@ export const SoundProvider: React.FC<BaseLayoutProps> = ({ children }) => {
     setMusicVolume(vol);
     localStorage.setItem("backgroundMusicVolume", String(vol));
     Howler.volume(Number(vol));
-  }
+  };
 
   const pauseSound = async (name: SoundType) => {
     if (name === "background" && backgroundSound.current) {
@@ -92,7 +92,7 @@ export const SoundProvider: React.FC<BaseLayoutProps> = ({ children }) => {
       localStorage.setItem("isInGameMusicPlaying", String(newState));
       return newState;
     });
-  }
+  };
 
   return (
     <SoundContext.Provider
@@ -103,8 +103,9 @@ export const SoundProvider: React.FC<BaseLayoutProps> = ({ children }) => {
         toggleBackgroundMusic,
         toggleInGameEffects,
         changeBackgroundVolume,
-      }}>
-        {children}
+      }}
+    >
+      {children}
     </SoundContext.Provider>
   );
 };

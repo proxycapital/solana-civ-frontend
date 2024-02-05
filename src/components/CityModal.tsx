@@ -66,7 +66,7 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
     const buildingsInQueue = new Set(city.productionQueue.map(extractBuildingType));
 
     const buildingsToBuild = AllBuildings.filter(
-      (building) => !existingBuildings.has(building.type) && !buildingsInQueue.has(building.type)
+      (building) => !existingBuildings.has(building.type) && !buildingsInQueue.has(building.type),
     );
 
     const sortedBuildings = buildingsToBuild.sort((a, b) => {
@@ -104,8 +104,8 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
         logMessage: "Error adding to production queue",
         defaultError: ErrorCodes.ErrorProductionQueue,
         defaultErrorsParams: {
-          cityId
-        }
+          cityId,
+        },
       });
     }
     await fetchPlayerState();
@@ -145,8 +145,8 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
         logMessage: "Error repairing city",
         defaultError: ErrorCodes.RepairFailed,
         defaultErrorsParams: {
-          cityId
-        }
+          cityId,
+        },
       });
     }
     await fetchPlayerState();
@@ -169,8 +169,8 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
         logMessage: `Error buying ${item.label}`,
         defaultError: ErrorCodes.PurchaseFailed,
         defaultErrorsParams: {
-          label: item.label
-        }
+          label: item.label,
+        },
       });
     }
     await fetchPlayerState();
@@ -237,7 +237,7 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
                             Ready in&nbsp;
                             <b>
                               {Math.round(
-                                (itemData.productionCost - city.accumulatedProduction) / city.productionYield
+                                (itemData.productionCost - city.accumulatedProduction) / city.productionYield,
                               )}
                             </b>{" "}
                             turns
@@ -268,23 +268,17 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
               <div className="divider" />
               <div className="city-resource-info">
                 <img width="24" src="./icons/science.png" alt="scienct" />
-                <span className="alegreya-regular-14">
-                  +{city.scienceYield}
-                </span>
+                <span className="alegreya-regular-14">+{city.scienceYield}</span>
               </div>
               <div className="divider" />
               <div className="city-resource-info">
                 <img width="24" src="./icons/gold.png" alt="gold" />
-                <span className="alegreya-regular-14">
-                  +{city.goldYield}
-                </span>
+                <span className="alegreya-regular-14">+{city.goldYield}</span>
               </div>
               <div className="divider" />
               <div className="city-resource-info">
                 <img width="24" src="./icons/hammer.png" alt="hummer" />
-                <span className="alegreya-regular-14">
-                  +{city.productionYield}
-                </span>
+                <span className="alegreya-regular-14">+{city.productionYield}</span>
               </div>
             </div>
             <div className="line-container">
@@ -294,9 +288,7 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
               <div className="flex-align-center">
                 <img width="20" src="/icons/population.png" alt="population" />
                 <div className="city-population">
-                  <span className="alegreya-regular-14">
-                    Population:
-                  </span>
+                  <span className="alegreya-regular-14">Population:</span>
                   {city.population < city.housing && (
                     <div>
                       <span className="food-for-growth-text">
@@ -313,9 +305,7 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
             <div className="city-stats">
               <div className="flex-align-center">
                 <img width="20" src="/icons/health.png" alt="health" />
-                <span className="alegreya-regular-14">
-                  Health
-                </span>
+                <span className="alegreya-regular-14">Health</span>
               </div>
               {/* <span className="test"></span> */}
               <b>{city.health}/100</b>
@@ -325,9 +315,7 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
               <div className="city-stats">
                 <div className="flex-align-center">
                   <img width="20" src="/icons/wall.png" alt="health" />
-                  <span className="alegreya-regular-14">
-                    Wall
-                  </span>
+                  <span className="alegreya-regular-14">Wall</span>
                 </div>
                 <b>
                   {city.wallHealth}/ {wallMaxHealth}
@@ -337,9 +325,7 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
             <div className="city-stats">
               <div className="flex-align-center">
                 <img width="20" src="/icons/attack.png" alt="strength" />
-                <span className="alegreya-regular-14">
-                  Defence
-                </span>
+                <span className="alegreya-regular-14">Defence</span>
               </div>
               <b>{city.attack}</b>
             </div>

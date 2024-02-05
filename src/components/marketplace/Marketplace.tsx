@@ -14,7 +14,13 @@ const ItemCard = ({ assetName, imageUrl, price }: ItemType) => {
       <div className="item-title">{assetName}</div>
       <img src={imageUrl} alt={assetName} style={{ width: "100%", height: "150px", objectFit: "cover" }} />
       {price !== 0 && (
-        <Button variant="outlined" onClick={() => { toast.warning("Coming soon"); }} className="buy-button">
+        <Button
+          variant="outlined"
+          onClick={() => {
+            toast.warning("Coming soon");
+          }}
+          className="buy-button"
+        >
           {price} gems
         </Button>
       )}

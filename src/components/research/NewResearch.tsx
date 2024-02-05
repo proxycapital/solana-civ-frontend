@@ -8,10 +8,10 @@ import ResearchTippy from "./ResearchTippy";
 import "./ResearchTree.scss";
 
 const NewResearch = () => {
-  const { technologies} = useGameState()
+  const { technologies } = useGameState();
 
   const technologiesKeys = technologies.researchedTechnologies.map((tech) => Object.keys(tech)[0]);
-  const lastResearch = technologiesKeys ? capitalizeWords(technologiesKeys[technologiesKeys.length - 1]) : '';
+  const lastResearch = technologiesKeys ? capitalizeWords(technologiesKeys[technologiesKeys.length - 1]) : "";
 
   /* @todo: some technologies unlock more than 1 building, e.g. "Agriculture" */
   const newBuildingUnlocked = AllBuildings.find((building) => building.tech === lastResearch);
@@ -19,26 +19,30 @@ const NewResearch = () => {
 
   return (
     <div className="new-research-block">
-      <h3>You have researched <span className="bold-text">{lastResearch}</span>!
+      <h3>
+        You have researched <span className="bold-text">{lastResearch}</span>!
         <br />
         {newBuildingUnlocked?.label && (
-          <span>Now you can build&nbsp;
+          <span>
+            Now you can build&nbsp;
             <Tippy touch={false} placement="bottom" content={ResearchTippy(newBuildingUnlocked?.label)}>
               <span className="underline-text">{newBuildingUnlocked?.label}</span>
-            </Tippy>.
+            </Tippy>
+            .
           </span>
         )}
-
         {newUnitUnlocked?.label && (
-          <span>Now you can train new unit - &nbsp;
+          <span>
+            Now you can train new unit - &nbsp;
             <Tippy touch={false} placement="bottom" content={ResearchTippy(newUnitUnlocked?.label)}>
               <span className="underline-text">{newUnitUnlocked?.label}</span>
-            </Tippy>.
+            </Tippy>
+            .
           </span>
         )}
       </h3>
     </div>
-  )
+  );
 };
 
 export default NewResearch;

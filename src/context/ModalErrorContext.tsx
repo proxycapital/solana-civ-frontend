@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext } from "react";
 
 export interface IModalErrorContext {
   showModalError: boolean;
@@ -8,18 +8,18 @@ export interface IModalErrorContext {
 const defaultValues = {
   showModalError: false,
   setShowModalError: () => {},
-}
+};
 
-export const ModalErrorProviderContext = React.createContext<IModalErrorContext>(defaultValues)
+export const ModalErrorProviderContext = React.createContext<IModalErrorContext>(defaultValues);
 
-export const useModalError = () => useContext<IModalErrorContext>(ModalErrorProviderContext)
+export const useModalError = () => useContext<IModalErrorContext>(ModalErrorProviderContext);
 
 export function ModalErrorProvider({ children }: any) {
-  const [showModalError, setShowModalError] = useState<boolean>(false)
-  
+  const [showModalError, setShowModalError] = useState<boolean>(false);
+
   return (
     <ModalErrorProviderContext.Provider value={{ showModalError, setShowModalError }}>
       {children}
     </ModalErrorProviderContext.Provider>
-  )
+  );
 }

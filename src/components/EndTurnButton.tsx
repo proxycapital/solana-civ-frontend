@@ -105,11 +105,11 @@ const EndTurnButton: React.FC<EndTurnButtonProps> = ({ setShowOnboardingType, op
 
     const [gameKey] = anchor.web3.PublicKey.findProgramAddressSync(
       [Buffer.from("GAME"), provider!.publicKey.toBuffer()],
-      program!.programId
+      program!.programId,
     );
     const [playerKey] = anchor.web3.PublicKey.findProgramAddressSync(
       [Buffer.from("PLAYER"), gameKey.toBuffer(), provider!.publicKey.toBuffer()],
-      program!.programId
+      program!.programId,
     );
     const accounts = {
       playerAccount: playerKey,
@@ -138,7 +138,6 @@ const EndTurnButton: React.FC<EndTurnButtonProps> = ({ setShowOnboardingType, op
 
     const researchQueue = localStorage.getItem("researchQueue");
 
-
     if (!researchQueue) {
       const totalTechnologies =
         config.science["Science and Economy Tree"].length +
@@ -166,15 +165,15 @@ const EndTurnButton: React.FC<EndTurnButtonProps> = ({ setShowOnboardingType, op
     try {
       const [gameKey] = anchor.web3.PublicKey.findProgramAddressSync(
         [Buffer.from("GAME"), provider!.publicKey.toBuffer()],
-        program!.programId
+        program!.programId,
       );
       const [playerKey] = anchor.web3.PublicKey.findProgramAddressSync(
         [Buffer.from("PLAYER"), gameKey.toBuffer(), provider!.publicKey.toBuffer()],
-        program!.programId
+        program!.programId,
       );
       const [npcKey] = anchor.web3.PublicKey.findProgramAddressSync(
         [Buffer.from("NPC"), gameKey.toBuffer()],
-        program!.programId
+        program!.programId,
       );
       const accounts = {
         game: gameKey,
@@ -217,15 +216,15 @@ const EndTurnButton: React.FC<EndTurnButtonProps> = ({ setShowOnboardingType, op
     try {
       const [gameKey] = anchor.web3.PublicKey.findProgramAddressSync(
         [Buffer.from("GAME"), provider!.publicKey.toBuffer()],
-        program!.programId
+        program!.programId,
       );
       const [playerKey] = anchor.web3.PublicKey.findProgramAddressSync(
         [Buffer.from("PLAYER"), gameKey.toBuffer(), provider!.publicKey.toBuffer()],
-        program!.programId
+        program!.programId,
       );
       const [npcKey] = anchor.web3.PublicKey.findProgramAddressSync(
         [Buffer.from("NPC"), gameKey.toBuffer()],
-        program!.programId
+        program!.programId,
       );
       const accounts = {
         game: gameKey,

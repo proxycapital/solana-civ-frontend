@@ -37,14 +37,12 @@ p.coming-soon {
 }
 
 @media (max-width: 768px) {
-  
   .store-item {
     width: 100%;
     margin: 15px 0;
   }
-  
+
   .store-items-row {
     justify-content: center;
   }
-
 }

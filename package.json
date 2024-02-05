@@ -70,6 +70,7 @@
   },
   "devDependencies": {
     "@types/howler": "^2.2.9",
+    "prettier": "^3.2.5",
     "react-app-rewired": "^2.2.1"
   }
 }
