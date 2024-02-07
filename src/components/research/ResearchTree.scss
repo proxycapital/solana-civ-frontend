@@ -192,40 +192,82 @@ button.research-button {
 }
 
 .new-research-block {
-  padding: 0 16px;
+  padding: 0.5rem 3rem;
   text-align: center;
 
-  h3 {
-    font-size: 1.5rem;
-    font-weight: normal;
+  .unit-image-container {
+    background-image: url("../../../public/icons/new-research-unit-bg.png");
+    background-size: 100% 105%;
+    background-repeat: no-repeat;
+    background-position: center;
+    padding: 1rem;
+    display: flex;
+    width: fit-content;
+    margin: 0 auto;
+
+    .unit-image {
+      width: 6rem;
+    }
   }
-}
 
-.unit-stats-container {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-
-  img {
-    width: 60px;
-    height: 60px;
+  .header-text {
+    color: var(--simple-text, #CDBE91);
+    text-align: center;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: 0.4px;
   }
 
-  .unit-stats-tippy {
+  .header-sub-text {
+    margin-top: 0;
+    color: #FFF;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-bottom: 1rem;
+  }
+  .unit-stats-container {
     display: flex;
     flex-direction: column;
-    margin-left: 0.5rem;
 
-    p {
-      margin: 0;
-      padding: 0;
+    .unit-stats {
+      position: relative;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      margin-bottom: 0.25rem;
 
-      span {
-        font-weight: bold;
-        font-size: 1.25rem;
-        line-height: 0;
+      b {
+        color: white;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+      }
+
+      img {
+        margin-right: 0.25rem;
       }
     }
+  }
+
+  // gradient border-bottom
+  .unit-stats::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(to right, rgba(202, 179, 125, 0), rgba(202, 179, 125, 1), rgba(202, 179, 125, 0));
+  }
+
+  img.unit-icon {
+    width: 24px;
+    padding: 0 5px;
   }
 }
 
