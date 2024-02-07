@@ -144,7 +144,7 @@ export const AllUnits: UnitType[] = [
     productionCost: 80,
     goldCost: 500,
     requirement: "tanksAndArmor",
-    tech: "Tanks and Armor",
+    tech: "Tanks And Armor",
     stats: {
       attack: 50,
       movement: 4,
