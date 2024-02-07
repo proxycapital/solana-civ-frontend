@@ -12,7 +12,7 @@ const ItemCard = ({ name, imageUrl }: ItemType) => {
       <div className="item-title">{name}</div>
       <img src={imageUrl} alt={name} style={{ width: "100%", height: "150px", objectFit: "cover" }} />
       <p className="coming-soon">Coming soon</p>
-      <Button variant="outlined" disabled onClick={() => { console.log("Click"); }} className="buy-button">
+      <Button variant="outlined" disabled onClick={() => {}} className="buy-button">
         Mint NFT
       </Button>
     </div>

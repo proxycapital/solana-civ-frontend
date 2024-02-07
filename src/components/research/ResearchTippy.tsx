@@ -16,12 +16,21 @@ interface TippyBuildingStatsProps {
 
 const TippyUnitStats = ({ attack, movement, maintenance, name}: TippyUnitStasProps) => {
   return (
-    <div className="unit-stats-container">
+    <div className="tippy-unit-stats-container">
       <img width="50" src={`./${name.toLowerCase()}.png`} alt="Archer" />
       <div className="unit-stats-tippy">
-        <p>Attack: <span>{attack}</span></p>
-        <p>Movement: <span>{movement}</span></p>
-        <p>Maintenance: <span>{maintenance}</span></p>
+        <div>
+          <img width={20} src="../icons/attack.png" alt="Attack" />
+          <span>{attack}</span>
+        </div>
+        <div>
+          <img width={20} src="../icons/movement.png" alt="Movement" />
+          <span>{movement}</span>
+        </div>
+        <div>
+          <img width={20} src="../icons/gold.png" alt="Gold" />
+          <span>{maintenance}</span>
+        </div>
       </div>
     </div>
   )
