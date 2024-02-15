@@ -7,8 +7,8 @@ import "./ResearchTree.scss";
 
 const BuildingStats = ({ researchName, productionCost }: any) => {
   const stats = getUnitOrBuildingStats(researchName);
-  
-  if (!stats) return <span>Unlocks Archery</span>
+
+  if (!stats) return <span>Unlocks Archery</span>;
 
   return (
     <div>
@@ -16,14 +16,18 @@ const BuildingStats = ({ researchName, productionCost }: any) => {
         <div className="unit-stats-container">
           <div className="unit-stats">
             <div className="flex-align-center">
-            <img width={24} src={`../icons/${stats.resourceName === "production" ? "hammer" : stats.resourceName}.png`} alt={stats.resourceName} />
+              <img
+                width={24}
+                src={`../icons/${stats.resourceName === "production" ? "hammer" : stats.resourceName}.png`}
+                alt={stats.resourceName}
+              />
               {stats.resourceName}
             </div>
             <span>+{stats?.income}</span>
           </div>
           <div className="unit-stats">
             <div className="flex-align-center">
-            <img width={24} src="../icons/gear.png" alt={stats.resourceName} />
+              <img width={24} src="../icons/gear.png" alt={stats.resourceName} />
               Production Cost
             </div>
             <span>{productionCost}</span>
@@ -31,8 +35,8 @@ const BuildingStats = ({ researchName, productionCost }: any) => {
           {stats?.type === "building" && stats.extra && (
             <div className="unit-stats">
               <div className="flex-align-center">
-              {/* @todo: update icon to housing */}
-              <img width={24} src="../icons/population.png" alt={stats.resourceName} />
+                {/* @todo: update icon to housing */}
+                <img width={24} src="../icons/population.png" alt={stats.resourceName} />
                 {stats.extra}
               </div>
               <span>{stats.extraValue}</span>
@@ -59,8 +63,8 @@ const BuildingStats = ({ researchName, productionCost }: any) => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 const NewResearch = () => {
   const { technologies } = useGameState();
 
@@ -114,13 +118,14 @@ const NewResearch = () => {
           </div>
         </>
       )}
-      {newBuildingsUnlocked.length > 0 && newBuildingsUnlocked.map((newBuildingUnlocked) =>(
-        <div key={newBuildingUnlocked.label} style={newBuildingUnlocked && newUnitUnlocked && { marginTop: "1rem" }}>
-          <span className="header-text">You have researched {newBuildingUnlocked.label}!</span>
-          <p className="header-sub-text">Now you can construct new building for:</p>
-          <BuildingStats researchName={newBuildingUnlocked?.label} productionCost={newBuildingUnlocked?.productionCost} />
-        </div>
-      ))}
+      {newBuildingsUnlocked.length > 0 &&
+        newBuildingsUnlocked.map((newBuildingUnlocked) => (
+          <div key={newBuildingUnlocked.label} style={newBuildingUnlocked && newUnitUnlocked && { marginTop: "1rem" }}>
+            <span className="header-text">You have researched {newBuildingUnlocked.label}!</span>
+            <p className="header-sub-text">Now you can construct new building for:</p>
+            <BuildingStats researchName={newBuildingUnlocked?.label} productionCost={newBuildingUnlocked?.productionCost} />
+          </div>
+        ))}
       <br />
     </div>
   );

@@ -16,6 +16,7 @@ target
 
 # misc
 .DS_Store
+.husky
 .env
 .env.local
 .env.development.local
