@@ -1,11 +1,10 @@
-import React, { useState } from "react"
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faVolumeHigh, faVolumeXmark } from "@fortawesome/free-solid-svg-icons";
 import { Slider } from "@mui/material";
 
 import { useSound } from "../../context/SoundContext";
 import "./Profile.scss";
-
 
 const Profile = () => {
   const { musicVolume, toggleBackgroundMusic, toggleInGameEffects, changeBackgroundVolume } = useSound();
@@ -15,7 +14,7 @@ const Profile = () => {
   const [isInGameMusicPlaying, setInGameMusicPlaying] = useState(() => {
     return localStorage.getItem("isInGameMusicPlaying") !== "false";
   });
- 
+
   const handleToggleBackgroundMusic = () => {
     toggleBackgroundMusic();
     setBackgroundMusicPlaying((prevState) => !prevState);
@@ -24,11 +23,11 @@ const Profile = () => {
   const handleToggleInGameMusic = () => {
     toggleInGameEffects();
     setInGameMusicPlaying((prevState) => !prevState);
-  }
+  };
 
   const handleBackgroundVolume = (volume: number) => {
     changeBackgroundVolume(volume);
-  }
+  };
 
   const userStats = {
     games: 8981,
@@ -36,7 +35,7 @@ const Profile = () => {
     defeat: 1231,
     abandoned: 300,
     mostPlayedCiv: "Singapure",
-  }
+  };
 
   return (
     <div className="profile">
@@ -64,11 +63,11 @@ const Profile = () => {
           defaultValue={50}
         />
       </div>
-      
+
       <div className="line-container">
         <img src="/icons/diamond.png" alt="" width="24" className="center-image" />
       </div>
-      
+
       {/* <div>
         <h2>Games Stats:</h2>
         <p className="coming-soon">Coming soon</p>
@@ -80,7 +79,7 @@ const Profile = () => {
         </div>
       </div> */}
     </div>
-  )
-}
+  );
+};
 
-export default Profile
+export default Profile;

@@ -41,7 +41,7 @@ const App: React.FC = () => {
       new UnsafeBurnerWalletAdapter(),
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [network]
+    [network],
   );
 
   return (

@@ -2,30 +2,30 @@ import React, { memo } from "react";
 import { Modal } from "@mui/material";
 
 const UpgradedTiles = {
-  "lumberMill": 14,
-  "farm": 12,
-  "stoneQuarry": 11,
-  "ironMine": 13,
-  "pasture": 16,
-}
+  lumberMill: 14,
+  farm: 12,
+  stoneQuarry: 11,
+  ironMine: 13,
+  pasture: 16,
+};
 
 const UpgradedTilesResources = {
-  "lumberMill": "wood",
-  "farm": "food",
-  "stoneQuarry": "stone",
-  "ironMine": "iron",
-  "pasture": "horses"
-}
+  lumberMill: "wood",
+  farm: "food",
+  stoneQuarry: "stone",
+  ironMine: "iron",
+  pasture: "horses",
+};
 
 const UpgradedTilesNames = {
-  "lumberMill": "Lumber Mill",
-  "farm": "Farm",
-  "stoneQuarry": "Stone Quarry",
-  "ironMine": "Iron Mine",
-  "pasture": "Pasture",
-}
+  lumberMill: "Lumber Mill",
+  farm: "Farm",
+  stoneQuarry: "Stone Quarry",
+  ironMine: "Iron Mine",
+  pasture: "Pasture",
+};
 
-export type UpgradedTileType = "lumberMill" | "farm" | "stoneQuarry" | "ironMine" | "pasture"
+export type UpgradedTileType = "lumberMill" | "farm" | "stoneQuarry" | "ironMine" | "pasture";
 
 interface UpgradedTileModalProps {
   show: boolean;
@@ -34,7 +34,7 @@ interface UpgradedTileModalProps {
 }
 
 const UpgradedTileModal: React.FC<UpgradedTileModalProps> = ({ show, onClose, selectedTileType }) => {
-  if (!selectedTileType) return <></>
+  if (!selectedTileType) return <></>;
 
   return (
     <Modal
@@ -53,11 +53,12 @@ const UpgradedTileModal: React.FC<UpgradedTileModalProps> = ({ show, onClose, se
         </div>
         <div className="unit-stats">
           <b>+2</b>
-          <img width="32" src={`./icons/${UpgradedTilesResources[selectedTileType]}.png`} alt="resource type"/><b>/ turn</b>
+          <img width="32" src={`./icons/${UpgradedTilesResources[selectedTileType]}.png`} alt="resource type" />
+          <b>/ turn</b>
         </div>
       </div>
     </Modal>
-  )
-}
+  );
+};
 
-export default memo(UpgradedTileModal)
+export default memo(UpgradedTileModal);

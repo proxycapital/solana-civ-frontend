@@ -39,7 +39,12 @@ const GameOverModal: React.FC<GameOverModalProps> = ({ isOpen, onClose }) => {
             : "Do not forget to withdraw your gems! After a successful withdrawal, you can conclude this match by clicking the Skull button."}
         </Typography>
         {game.defeat && (
-          <Button onClick={() => handleEndGame(provider!, program!, "/")} variant="contained" color="error" sx={{ mt: 2 }}>
+          <Button
+            onClick={() => handleEndGame(provider!, program!, "/")}
+            variant="contained"
+            color="error"
+            sx={{ mt: 2 }}
+          >
             End Game
           </Button>
         )}

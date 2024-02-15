@@ -34,7 +34,8 @@ const CityTile = ({ imageIndex, health, cityName, wallHealth, population }: City
           <div className="population-container">
             <span className="population">{population}</span>
           </div>
-        )}&nbsp;
+        )}
+        &nbsp;
         {cityName}
       </div>
 

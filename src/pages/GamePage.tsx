@@ -7,7 +7,7 @@ import GameMap from "../components/GameMap";
 import Console from "../components/Console";
 import { useModalError } from "../context/ModalErrorContext";
 import { useWorkspace } from "../context/AnchorContext";
-import InitiateGameButton from '../components/InitiateGameButton'
+import InitiateGameButton from "../components/InitiateGameButton";
 
 interface Message {
   time: string;
@@ -49,7 +49,8 @@ const GamePage: React.FC = () => {
             buildings in the city.
           </p>
           <p>
-            <b>Wood</b>, <b>stone</b>, <b>iron</b> can be earned only by upgrading tiles on the map. You earn resources every turn.
+            <b>Wood</b>, <b>stone</b>, <b>iron</b> can be earned only by upgrading tiles on the map. You earn resources
+            every turn.
           </p>
         </span>
       ),
@@ -68,7 +69,8 @@ const GamePage: React.FC = () => {
       target: ".gems-resource",
       content: (
         <span>
-          You will be earning gems by playing the game: defeat barbarians, complete quests, etc.<br />
+          You will be earning gems by playing the game: defeat barbarians, complete quests, etc.
+          <br />
           Gems can be withdrawn to your personal wallet at any time.
         </span>
       ),
@@ -79,27 +81,33 @@ const GamePage: React.FC = () => {
     },
     {
       target: ".end-game-button",
-      content: "You can also end the game at any time by clicking here. Be careful, you will lose all your progress! Click here only if you want to start from scratch.",
+      content:
+        "You can also end the game at any time by clicking here. Be careful, you will lose all your progress! Click here only if you want to start from scratch.",
     },
     {
       target: ".wallet-button-tutorial",
-      content: "You need to connect the wallet only if you want to withdraw gems. For the rest in-game actions, the auto-generated burner wallet will be used for your convenience.",
+      content:
+        "You need to connect the wallet only if you want to withdraw gems. For the rest in-game actions, the auto-generated burner wallet will be used for your convenience.",
     },
     {
       target: ".tutorial-research-button",
-      content: "Here you can research new technologies. Each technology unlocks new buildings and units. You can research only one technology at a time. Researching takes time and it depends on amount of science that your cities produce.",
+      content:
+        "Here you can research new technologies. Each technology unlocks new buildings and units. You can research only one technology at a time. Researching takes time and it depends on amount of science that your cities produce.",
     },
     {
       target: ".unit-builder",
-      content: "Builder unit can upgrade tiles on the map. Four upgrades are available: Lumber Mill for wood, Quarry for stone, Mine for iron and Farm for food.",
+      content:
+        "Builder unit can upgrade tiles on the map. Four upgrades are available: Lumber Mill for wood, Quarry for stone, Mine for iron and Farm for food.",
     },
     {
       target: ".unit-warrior",
-      content: "Warrior unit can attack barbarians and other players. You can also use it to defend your cities. This is most basic unit in the game. Later you will be able to research more advanced units.",
+      content:
+        "Warrior unit can attack barbarians and other players. You can also use it to defend your cities. This is most basic unit in the game. Later you will be able to research more advanced units.",
     },
     {
       target: ".unit-settler",
-      content: "Settler unit can found new cities. Each city can build units and buildings. You will be defeated if you lose all your cities and units. Start by selecting your Settler and founding a new city. Click the 'Found a City' button in the unit's card.",
+      content:
+        "Settler unit can found new cities. Each city can build units and buildings. You will be defeated if you lose all your cities and units. Start by selecting your Settler and founding a new city. Click the 'Found a City' button in the unit's card.",
     },
   ]);
 
@@ -139,7 +147,7 @@ const GamePage: React.FC = () => {
       <GameMap debug={debug} logMessage={logMessage} />
       {/* Modal to initiate accounts */}
       <Modal
-        open={showModalError} 
+        open={showModalError}
         onClose={() => setShowModalError(false)}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
@@ -196,12 +204,12 @@ const GamePage: React.FC = () => {
           options: {
             backgroundColor: "#36302a",
             textColor: "#fff",
-            primaryColor: '#C8AA6E',
+            primaryColor: "#C8AA6E",
             border: "2px solid #C8AA6E",
           },
           main: {
             border: "2px solid #C8AA6E",
-          }
+          },
         }}
       />
     </div>

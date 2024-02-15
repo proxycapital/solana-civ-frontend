@@ -25,8 +25,8 @@ export const AllBuildings: BuildingType[] = [
     goldCost: 100,
     productionCost: 6,
     stats: {
-      yield: "+2 city defense | +1 housing | +10 storage"
-    }
+      yield: "+2 city defense | +1 housing | +10 storage",
+    },
   },
   {
     type: "wall",
@@ -34,8 +34,8 @@ export const AllBuildings: BuildingType[] = [
     goldCost: 100,
     productionCost: 10,
     stats: {
-      yield: "+5 city defense"
-    }
+      yield: "+5 city defense",
+    },
   },
   {
     type: "wallMedieval",
@@ -43,10 +43,10 @@ export const AllBuildings: BuildingType[] = [
     goldCost: 200,
     productionCost: 16,
     stats: {
-      yield: "+10 city defense"
+      yield: "+10 city defense",
     },
     requirement: "medievalWarfare",
-    tech: "Medieval Warfare"
+    tech: "Medieval Warfare",
   },
   {
     type: "wallRenaissance",
@@ -54,10 +54,10 @@ export const AllBuildings: BuildingType[] = [
     goldCost: 250,
     productionCost: 20,
     stats: {
-      yield: "+10 city defense"
+      yield: "+10 city defense",
     },
     requirement: "gunpowder",
-    tech: "Gunpowder"
+    tech: "Gunpowder",
   },
   {
     type: "wallIndustrial",
@@ -65,10 +65,10 @@ export const AllBuildings: BuildingType[] = [
     goldCost: 300,
     productionCost: 28,
     stats: {
-      yield: "+10 city defense"
+      yield: "+10 city defense",
     },
     requirement: "tanksAndArmor",
-    tech: "Tanks and Armor"
+    tech: "Tanks and Armor",
   },
   {
     type: "library",
@@ -76,10 +76,10 @@ export const AllBuildings: BuildingType[] = [
     goldCost: 100,
     productionCost: 10,
     stats: {
-      yield: "+2 science"
+      yield: "+2 science",
     },
     requirement: "writing",
-    tech: "Writing"
+    tech: "Writing",
   },
   {
     type: "school",
@@ -87,10 +87,10 @@ export const AllBuildings: BuildingType[] = [
     goldCost: 150,
     productionCost: 20,
     stats: {
-      yield: "+3 science"
+      yield: "+3 science",
     },
     requirement: "education",
-    tech: "Education"
+    tech: "Education",
   },
   {
     type: "university",
@@ -98,10 +98,10 @@ export const AllBuildings: BuildingType[] = [
     goldCost: 200,
     productionCost: 30,
     stats: {
-      yield: "+4 science | +1 housing"
+      yield: "+4 science | +1 housing",
     },
     requirement: "academia",
-    tech: "Academia"
+    tech: "Academia",
   },
   {
     type: "observatory",
@@ -109,10 +109,10 @@ export const AllBuildings: BuildingType[] = [
     goldCost: 300,
     productionCost: 40,
     stats: {
-      yield: "+5 science"
+      yield: "+5 science",
     },
     requirement: "astronomy",
-    tech: "Astronomy"
+    tech: "Astronomy",
   },
   {
     type: "forge",
@@ -120,10 +120,10 @@ export const AllBuildings: BuildingType[] = [
     goldCost: 100,
     productionCost: 10,
     stats: {
-      yield: "+2 production"
+      yield: "+2 production",
     },
     requirement: "ironWorking",
-    tech: "Iron Working"
+    tech: "Iron Working",
   },
   {
     type: "factory",
@@ -131,10 +131,10 @@ export const AllBuildings: BuildingType[] = [
     goldCost: 200,
     productionCost: 20,
     stats: {
-      yield: "+3 production"
+      yield: "+3 production",
     },
     requirement: "industrialization",
-    tech: "Industrialization"
+    tech: "Industrialization",
   },
   {
     type: "energyPlant",
@@ -142,10 +142,10 @@ export const AllBuildings: BuildingType[] = [
     goldCost: 300,
     productionCost: 30,
     stats: {
-      yield: "+4 production"
+      yield: "+4 production",
     },
     requirement: "electricalPower",
-    tech: "Electrical Power"
+    tech: "Electrical Power",
   },
   {
     type: "market",
@@ -153,10 +153,10 @@ export const AllBuildings: BuildingType[] = [
     goldCost: 100,
     productionCost: 10,
     stats: {
-      yield: "+2 gold"
+      yield: "+2 gold",
     },
     requirement: "economics",
-    tech: "Economics"
+    tech: "Economics",
   },
   {
     type: "bank",
@@ -164,10 +164,10 @@ export const AllBuildings: BuildingType[] = [
     goldCost: 200,
     productionCost: 20,
     stats: {
-      yield: "+3 gold"
+      yield: "+3 gold",
     },
     requirement: "economics",
-    tech: "Economics"
+    tech: "Economics",
   },
   {
     type: "stockExchange",
@@ -175,10 +175,10 @@ export const AllBuildings: BuildingType[] = [
     goldCost: 300,
     productionCost: 30,
     stats: {
-      yield: "+4 gold"
+      yield: "+4 gold",
     },
     requirement: "capitalism",
-    tech: "Capitalism"
+    tech: "Capitalism",
   },
   {
     type: "granary",
@@ -186,10 +186,10 @@ export const AllBuildings: BuildingType[] = [
     goldCost: 100,
     productionCost: 10,
     stats: {
-      yield: "+2 food | +2 housing"
+      yield: "+2 food | +2 housing",
     },
     requirement: "agriculture",
-    tech: "Agriculture"
+    tech: "Agriculture",
   },
   {
     type: "mill",
@@ -197,10 +197,10 @@ export const AllBuildings: BuildingType[] = [
     goldCost: 200,
     productionCost: 20,
     stats: {
-      yield: "+2 food"
+      yield: "+2 food",
     },
     requirement: "agriculture",
-    tech: "Agriculture"
+    tech: "Agriculture",
   },
   {
     type: "bakery",
@@ -208,10 +208,10 @@ export const AllBuildings: BuildingType[] = [
     goldCost: 300,
     productionCost: 30,
     stats: {
-      yield: "+3 food"
+      yield: "+3 food",
     },
     requirement: "construction",
-    tech: "Construction"
+    tech: "Construction",
   },
   {
     type: "supermarket",
@@ -219,10 +219,10 @@ export const AllBuildings: BuildingType[] = [
     goldCost: 400,
     productionCost: 40,
     stats: {
-      yield: "+4 food"
+      yield: "+4 food",
     },
     requirement: "modernFarming",
-    tech: "Modern Farming"
+    tech: "Modern Farming",
   },
   {
     type: "residentialComplex",
@@ -230,9 +230,9 @@ export const AllBuildings: BuildingType[] = [
     goldCost: 600,
     productionCost: 40,
     stats: {
-      yield: "+5 housing"
+      yield: "+5 housing",
     },
     requirement: "urbanization",
-    tech: "Urbanization"
+    tech: "Urbanization",
   },
 ];

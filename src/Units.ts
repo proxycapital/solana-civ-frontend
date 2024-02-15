@@ -30,7 +30,7 @@ export const AllUnits: UnitType[] = [
       builds: 1,
       movement: 2,
       resourceCost: "-1 population",
-    }
+    },
   },
   {
     type: "builder",
@@ -42,7 +42,7 @@ export const AllUnits: UnitType[] = [
     stats: {
       builds: 1,
       movement: 2,
-    }
+    },
   },
   {
     type: "warrior",
@@ -54,7 +54,7 @@ export const AllUnits: UnitType[] = [
     stats: {
       attack: 8,
       movement: 2,
-    }
+    },
   },
   {
     type: "archer",
@@ -67,7 +67,7 @@ export const AllUnits: UnitType[] = [
       attack: 10,
       movement: 2,
       maintenanceCost: 1,
-    }
+    },
   },
   {
     type: "horseman",
@@ -82,7 +82,7 @@ export const AllUnits: UnitType[] = [
       resourceCost: "Cost: 10",
       resourceType: "horses",
       maintenanceCost: 2,
-    }
+    },
   },
   {
     type: "swordsman",
@@ -97,7 +97,7 @@ export const AllUnits: UnitType[] = [
       resourceCost: "Cost: 10",
       resourceType: "iron",
       maintenanceCost: 1,
-    }
+    },
   },
   {
     type: "crossbowman",
@@ -110,7 +110,7 @@ export const AllUnits: UnitType[] = [
       attack: 24,
       movement: 2,
       maintenanceCost: 2,
-    }
+    },
   },
   {
     type: "musketman",
@@ -123,7 +123,7 @@ export const AllUnits: UnitType[] = [
       attack: 32,
       movement: 2,
       maintenanceCost: 2,
-    }
+    },
   },
   {
     type: "rifleman",
@@ -136,7 +136,7 @@ export const AllUnits: UnitType[] = [
       attack: 40,
       movement: 3,
       maintenanceCost: 4,
-    }
+    },
   },
   {
     type: "tank",
@@ -149,6 +149,6 @@ export const AllUnits: UnitType[] = [
       attack: 50,
       movement: 4,
       maintenanceCost: 7,
-    }
+    },
   },
 ];

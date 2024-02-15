@@ -38,15 +38,15 @@ const ResearchTree = () => {
   }, []);
 
   useEffect(() => {
-    getResearchQueue()
-  }, [])
+    getResearchQueue();
+  }, []);
 
   const getResearchQueue = () => {
-    const researchQueue = localStorage.getItem('researchQueue');
-    if (!researchQueue) return
+    const researchQueue = localStorage.getItem("researchQueue");
+    if (!researchQueue) return;
 
-    setResearchQueue(JSON.parse(researchQueue))
-  }
+    setResearchQueue(JSON.parse(researchQueue));
+  };
 
   const handleResearchQueue = (selectedResearchIndex: number, treeType: string, name: string) => {
     const allTreeTechs: any = researchData;
@@ -59,7 +59,7 @@ const ResearchTree = () => {
 
       // select same techology, that already in current research
       if (currentResearchKey === selectedTechTreeKeys[selectedResearchIndex]) {
-        if (localStorage.getItem('researchQueue')) {
+        if (localStorage.getItem("researchQueue")) {
           toast.warning("Research queue removed");
         }
         resetResearchQueue();
@@ -74,32 +74,35 @@ const ResearchTree = () => {
 
     const leftTechsInTree = selectedTechTreeKeys.filter((tech) => !researchedKeys.includes(String(tech)));
 
-    formatedResearches = [...formatedResearches, ...leftTechsInTree.slice(0, leftTechsInTree.indexOf(toCamelCase(name)) + 1)]
+    formatedResearches = [
+      ...formatedResearches,
+      ...leftTechsInTree.slice(0, leftTechsInTree.indexOf(toCamelCase(name)) + 1),
+    ];
 
     if (formatedResearches.length === 1) {
       handleResearch(formatedResearches[0]);
-      return
-    };
+      return;
+    }
 
-    localStorage.setItem('researchQueue', JSON.stringify(formatedResearches));
+    localStorage.setItem("researchQueue", JSON.stringify(formatedResearches));
     getResearchQueue();
 
     toast.success("Research queue created");
-  }
+  };
 
   // select only 1 research
   const handleResearch = async (name: string) => {
-    resetResearchQueue()
+    resetResearchQueue();
 
     const technology = { [name]: {} } as any;
 
     const [gameKey] = anchor.web3.PublicKey.findProgramAddressSync(
       [Buffer.from("GAME"), provider!.publicKey.toBuffer()],
-      program!.programId
+      program!.programId,
     );
     const [playerKey] = anchor.web3.PublicKey.findProgramAddressSync(
       [Buffer.from("PLAYER"), gameKey.toBuffer(), provider!.publicKey.toBuffer()],
-      program!.programId
+      program!.programId,
     );
     const accounts = {
       playerAccount: playerKey,
@@ -116,7 +119,7 @@ const ResearchTree = () => {
       handleError({
         error,
         logMessage: "Failed to start research",
-        defaultError: ErrorCodes.ErrorResearchTechnology
+        defaultError: ErrorCodes.ErrorResearchTechnology,
       });
     }
     await fetchPlayerState();
@@ -125,7 +128,7 @@ const ResearchTree = () => {
   const resetResearchQueue = () => {
     resetResearchStorage();
     setResearchQueue([]);
-  }
+  };
 
   return (
     <div className="research-tree">

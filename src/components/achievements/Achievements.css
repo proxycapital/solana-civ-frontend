@@ -6,7 +6,7 @@
   max-width: 150px;
   border-radius: 10px;
 }
-  
+
 .achievements-item .item-title {
   padding: 5px;
   text-align: center;
@@ -41,9 +41,8 @@ p.coming-soon {
     width: 100%;
     margin: 15px 0;
   }
-  
+
   .achievements-items-row {
     justify-content: center;
   }
 }
-  

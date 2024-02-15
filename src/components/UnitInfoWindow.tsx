@@ -9,7 +9,7 @@ import { canUpgradeUnit } from "../utils";
 import { useWorkspace } from "../context/AnchorContext";
 import { useGameState } from "../context/GameStateContext";
 import { useSound } from "../context/SoundContext";
-import { ErrorCodes, useError} from "../hooks/error.hook";
+import { ErrorCodes, useError } from "../hooks/error.hook";
 
 type WindowAlignment = "left" | "right" | null;
 
@@ -79,7 +79,7 @@ const UnitInfoWindow: React.FC<UnitInfoProps> = ({ unit }) => {
       handleError({
         error,
         logMessage: "Failed to build a city",
-        defaultError: ErrorCodes.CityBuildFailed
+        defaultError: ErrorCodes.CityBuildFailed,
       });
     }
     await fetchPlayerState();
@@ -102,7 +102,7 @@ const UnitInfoWindow: React.FC<UnitInfoProps> = ({ unit }) => {
       handleError({
         error,
         logMessage: "Error upgrading land tile",
-        defaultError: ErrorCodes.ErrorBuildingConstruction
+        defaultError: ErrorCodes.ErrorBuildingConstruction,
       });
     }
     await fetchPlayerState();
@@ -123,7 +123,7 @@ const UnitInfoWindow: React.FC<UnitInfoProps> = ({ unit }) => {
     } catch (error) {
       handleError({
         error,
-        logMessage: "Error upgrading unit"
+        logMessage: "Error upgrading unit",
       });
     }
 

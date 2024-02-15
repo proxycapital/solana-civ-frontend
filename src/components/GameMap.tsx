@@ -3,7 +3,7 @@ import * as anchor from "@coral-xyz/anchor";
 import { ToastContainer, toast } from "react-toastify";
 
 import Terrain, { TileType } from "./Terrain";
-import CityTile from './CityTile';
+import CityTile from "./CityTile";
 import UnitTile from "./UnitTile";
 import UnitInfoWindow from "./UnitInfoWindow";
 import CityModal from "./CityModal";
@@ -82,9 +82,9 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
   const [selectedCityId, setSelectedCity] = useState<number | null>(null);
   const [selectedTileType, setSelectedTileType] = useState<UpgradedTileType | null>(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-  const [selectedTile, setSelectedTile] = useState<{ x: number, y: number } | null>(null)
-  const [unitsTile, setUnitsTile] = useState<Array<Unit | City | any>>([])
-  const { handleError } = useError()
+  const [selectedTile, setSelectedTile] = useState<{ x: number; y: number } | null>(null);
+  const [unitsTile, setUnitsTile] = useState<Array<Unit | City | any>>([]);
+  const { handleError } = useError();
 
   useEffect(() => {
     const handleResize = () => {
@@ -274,11 +274,11 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
   const moveUnit = async (selectedUnit: Unit, x: number, y: number) => {
     const [gameKey] = anchor.web3.PublicKey.findProgramAddressSync(
       [Buffer.from("GAME"), provider!.publicKey.toBuffer()],
-      program!.programId
+      program!.programId,
     );
     const [playerKey] = anchor.web3.PublicKey.findProgramAddressSync(
       [Buffer.from("PLAYER"), gameKey.toBuffer(), provider!.publicKey.toBuffer()],
-      program!.programId
+      program!.programId,
     );
     const accounts = {
       game: gameKey,
@@ -315,15 +315,15 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
   const attackUnit = async (attackingUnit: Unit, defendingUnit: Unit) => {
     const [gameKey] = anchor.web3.PublicKey.findProgramAddressSync(
       [Buffer.from("GAME"), provider!.publicKey.toBuffer()],
-      program!.programId
+      program!.programId,
     );
     const [playerKey] = anchor.web3.PublicKey.findProgramAddressSync(
       [Buffer.from("PLAYER"), gameKey.toBuffer(), provider!.publicKey.toBuffer()],
-      program!.programId
+      program!.programId,
     );
     const [npcKey] = anchor.web3.PublicKey.findProgramAddressSync(
       [Buffer.from("NPC"), gameKey.toBuffer()],
-      program!.programId
+      program!.programId,
     );
     const accounts = {
       game: gameKey,
@@ -354,15 +354,15 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
   const attackCity = async (attackingUnit: Unit, defendingCity: { cityId: number }) => {
     const [gameKey] = anchor.web3.PublicKey.findProgramAddressSync(
       [Buffer.from("GAME"), provider!.publicKey.toBuffer()],
-      program!.programId
+      program!.programId,
     );
     const [playerKey] = anchor.web3.PublicKey.findProgramAddressSync(
       [Buffer.from("PLAYER"), gameKey.toBuffer(), provider!.publicKey.toBuffer()],
-      program!.programId
+      program!.programId,
     );
     const [npcKey] = anchor.web3.PublicKey.findProgramAddressSync(
       [Buffer.from("NPC"), gameKey.toBuffer()],
-      program!.programId
+      program!.programId,
     );
     const accounts = {
       game: gameKey,
@@ -433,7 +433,7 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
     return selectUnit(x, y, type);
   };
 
-  const handleTileClick = (col: number, row: number, unitsInTile:  Unit[]) => {
+  const handleTileClick = (col: number, row: number, unitsInTile: Unit[]) => {
     // get all units, cities and upgraded tiles in the tile
     const upgradedUnitsInTile = upgradedTiles.filter((t) => t.x === col && t.y === row);
 
@@ -443,34 +443,37 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
 
     const tileUnits: Array<Unit | City | any> = [...playerUnits, ...upgradedUnitsInTile, ...citiesInTile];
 
-    if(tileUnits.length === 0) {
+    if (tileUnits.length === 0) {
       setUnitsTile([]);
       setSelectedTile(null);
     }
 
-    if(playerUnits.length === 1 && tileUnits.length === 1) {
+    if (playerUnits.length === 1 && tileUnits.length === 1) {
       unitAction(col, row, playerUnits[0].type || "unknown");
       return;
     }
 
     // if there is more than one unit in the tile and the selected unit is not in the tile, show menu
-    if(tileUnits.length > 1 && (!selectedUnit || !playerUnits.find(unit => selectedUnit.unitId === unit.unitId && !unit.isSelected)) ) {
-      if(selectedTile?.x  === col && selectedTile?.y === row) {
-        setSelectedTile(null)
+    if (
+      tileUnits.length > 1 &&
+      (!selectedUnit || !playerUnits.find((unit) => selectedUnit.unitId === unit.unitId && !unit.isSelected))
+    ) {
+      if (selectedTile?.x === col && selectedTile?.y === row) {
+        setSelectedTile(null);
         return;
       }
 
-      setUnits(prevState => {
-        return prevState.map((unit) => ({...unit, isSelected: false}))
-      })
+      setUnits((prevState) => {
+        return prevState.map((unit) => ({ ...unit, isSelected: false }));
+      });
 
-      setSelectedTile({x: col, y: row})
+      setSelectedTile({ x: col, y: row });
 
       setUnitsTile(tileUnits);
       return;
     }
 
-    if(selectedUnit) {
+    if (selectedUnit) {
       unitAction(col, row, selectedUnit?.type || "unknown");
     }
 
@@ -487,9 +490,8 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
       return;
     }
 
-
     const upgradedTile: { tileType: { [key: string]: {} }; x: number; y: number } = upgradedTiles.find(
-      (ut) => ut.x === col && ut.y === row
+      (ut) => ut.x === col && ut.y === row,
     );
 
     if (upgradedTile) {
@@ -501,15 +503,15 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
 
   const handleMenuSelected = (unitTile: Unit | City | any) => {
     // check if is a unit
-    if(unitTile.unitId !== undefined) {
-      setUnits(prevState => {
+    if (unitTile.unitId !== undefined) {
+      setUnits((prevState) => {
         return prevState.map((unit) => {
-          if(unit.unitId === unitTile.unitId) {
-            return {...unit, isSelected: true}
+          if (unit.unitId === unitTile.unitId) {
+            return { ...unit, isSelected: true };
           }
-          return {...unit, isSelected: false}
-        })
-      })
+          return { ...unit, isSelected: false };
+        });
+      });
     }
 
     // check if is a city
@@ -520,12 +522,12 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
     }
 
     // check if is an upgraded tile
-    if(unitTile.tileType) {
+    if (unitTile.tileType) {
       const upgradedTileName = Object.keys(unitTile.tileType)[0] as UpgradedTileType;
       setSelectedTileType(upgradedTileName);
       setShowUpgradedTileModal(true);
     }
-  }
+  };
 
   const isTileControlled = (tile: TileCoordinate): boolean => {
     return controlledTiles.some((controlledTile) => controlledTile.x === tile.x && controlledTile.y === tile.y);
@@ -596,7 +598,9 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
               className={`game-tile ${isInRangeForAnyUnit ? "in-range" : ""}`}
               onClick={() => handleTileClick(col, row, currentUnits)}
             >
-              {col === selectedTile?.x && row === selectedTile?.y && <TileMenu units={unitsTile} onClick={handleMenuSelected} /> }
+              {col === selectedTile?.x && row === selectedTile?.y && (
+                <TileMenu units={unitsTile} onClick={handleMenuSelected} />
+              )}
               {/* <p style={{color: 'red', textAlign: 'center', zIndex: 100000}}>({col}, {row})</p> */}
               {currentTile.discovered && currentTile.cityName && (
                 <CityTile
@@ -627,7 +631,10 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
                     <img src={`/icons/${resourceAvailable}.png`} alt="" />
                   </div>
                 )}
-              {currentTile.discovered && currentUnits.map((currentUnit) => <UnitTile key={currentUnit.unitId} turn={game.turn} {...currentUnit} onClick={() => ""} />)}
+              {currentTile.discovered &&
+                currentUnits.map((currentUnit) => (
+                  <UnitTile key={currentUnit.unitId} turn={game.turn} {...currentUnit} onClick={() => ""} />
+                ))}
             </div>
           );
         })}

@@ -6,12 +6,12 @@ import ptBR from './locales/pt-br'
 
 const resources = {
   enUs: {
-    translation: enUS
+    translation: enUS,
   },
   ptBR: {
-    translation: ptBR
-  }
-}
+    translation: ptBR,
+  },
+};
 
 i18n
   .use(initReactI18next)

@@ -1,6 +1,6 @@
 const resetResearchStorage = () => {
-  localStorage.removeItem('researchQueue');
-  localStorage.removeItem('prevTech');
-}
+  localStorage.removeItem("researchQueue");
+  localStorage.removeItem("prevTech");
+};
 
-export default resetResearchStorage
+export default resetResearchStorage;

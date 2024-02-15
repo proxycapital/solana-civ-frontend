@@ -13,19 +13,24 @@ const CustomTooltip: React.FC<BuildingType & { selectedTab: number }> = ({
   isUnlocked,
 }) => {
   const iconMapping: { [key: string]: string } = {
-    'gold': 'gold.png',
-    'production': 'hammer.png',
-    'food': 'food.png',
-    'city defense': 'attack.png',
+    gold: "gold.png",
+    production: "hammer.png",
+    food: "food.png",
+    "city defense": "attack.png",
   };
 
   function parseYield(yieldString: string) {
-    const words = yieldString.split(' | ');
-    return words.map(word => {
-      const keywordFound = Object.keys(iconMapping).find(keyword => word.includes(keyword));
+    const words = yieldString.split(" | ");
+    return words.map((word) => {
+      const keywordFound = Object.keys(iconMapping).find((keyword) => word.includes(keyword));
       if (keywordFound) {
         const iconPath = `./icons/${iconMapping[keywordFound]}`;
-        return <span>{word.replace(keywordFound, '')}<img src={iconPath} alt={keywordFound} width={24} /></span>;
+        return (
+          <span>
+            {word.replace(keywordFound, "")}
+            <img src={iconPath} alt={keywordFound} width={24} />
+          </span>
+        );
       }
       return <span>{word}</span>;
     });
@@ -47,13 +52,13 @@ const CustomTooltip: React.FC<BuildingType & { selectedTab: number }> = ({
               </span>
             )}
             {stats?.movement && (
-              <span style={stats?.builds ? { marginLeft: '2.2rem'} : undefined}>
+              <span style={stats?.builds ? { marginLeft: "2.2rem" } : undefined}>
                 Movement:&nbsp; <b>{stats.movement}</b>
                 <img width="24" src="./icons/movement.png" alt="foot" />
               </span>
             )}
             {stats?.attack && (
-              <span style={{ marginLeft: '1.3rem'}}>
+              <span style={{ marginLeft: "1.3rem" }}>
                 Attack:&nbsp; <b>{stats.attack}</b>
                 <img width="24" src="./icons/attack.png" alt="axe" />
               </span>
@@ -74,8 +79,16 @@ const CustomTooltip: React.FC<BuildingType & { selectedTab: number }> = ({
             {stats?.resourceCost && (
               <span>
                 {stats.resourceCost.includes("population") && <span>Cost:&nbsp;</span>}
-                {stats.resourceCost.includes("Cost") ? <span>Cost:&nbsp; <b>{stats.resourceCost.split(":")[1]}</b></span> : <b>{stats.resourceCost}</b>}
-                {stats?.resourceType && <img width="24" src={`./icons/${stats?.resourceType}.png`} alt={stats?.resourceType} />}
+                {stats.resourceCost.includes("Cost") ? (
+                  <span>
+                    Cost:&nbsp; <b>{stats.resourceCost.split(":")[1]}</b>
+                  </span>
+                ) : (
+                  <b>{stats.resourceCost}</b>
+                )}
+                {stats?.resourceType && (
+                  <img width="24" src={`./icons/${stats?.resourceType}.png`} alt={stats?.resourceType} />
+                )}
               </span>
             )}
             {stats?.maintenanceCost && (
@@ -102,4 +115,4 @@ const CustomTooltip: React.FC<BuildingType & { selectedTab: number }> = ({
   );
 };
 
-export default CustomTooltip
+export default CustomTooltip;

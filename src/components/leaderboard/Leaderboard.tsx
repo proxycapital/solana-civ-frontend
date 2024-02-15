@@ -36,13 +36,13 @@ const Leaderboard = () => {
 
   useEffect(() => {
     async function init() {
-      setIsLoading(true)
+      setIsLoading(true);
       const data = await getLeaderboard();
-      setIsLoading(false)
+      setIsLoading(false);
       setLeaderboardData(data);
     }
-    init()
-  }, [])
+    init();
+  }, []);
 
   const userAddress = wallet?.adapter.publicKey?.toBase58();
   const userPositionInBoard = leaderboardData.find((row) => row.address === userAddress);
@@ -70,14 +70,18 @@ const Leaderboard = () => {
             )}
             {userPositionInBoard && userRank && userAddress ? (
               <TableRow>
-                <TableCell style={{ borderColor: '#927f61' }} align="center">{userRank}</TableCell>
-                <TableCell style={{ borderColor: '#927f61' }}>
+                <TableCell style={{ borderColor: "#927f61" }} align="center">
+                  {userRank}
+                </TableCell>
+                <TableCell style={{ borderColor: "#927f61" }}>
                   <div className="user-container">
                     <RandomAvatar name={userAddress + userRank + userPositionInBoard.balance} size={32} />
                     <span>{isMobile ? formatAddress(userAddress) : userAddress} (You)</span>
                   </div>
                 </TableCell>
-                <TableCell style={{ borderColor: '#927f61' }} align="center">{userPositionInBoard.balance}</TableCell>
+                <TableCell style={{ borderColor: "#927f61" }} align="center">
+                  {userPositionInBoard.balance}
+                </TableCell>
               </TableRow>
             ) : null}
             {leaderboardData.map((row, index) => (
@@ -93,7 +97,9 @@ const Leaderboard = () => {
                 <TableCell>
                   <div className="user-container">
                     <RandomAvatar name={row.address + index + row.balance} size={32} />
-                    <span>{isMobile ? formatAddress(row.address) : row.address} {userAddress === row.address && "(You)"}</span>
+                    <span>
+                      {isMobile ? formatAddress(row.address) : row.address} {userAddress === row.address && "(You)"}
+                    </span>
                   </div>
                 </TableCell>
                 <TableCell align="center">

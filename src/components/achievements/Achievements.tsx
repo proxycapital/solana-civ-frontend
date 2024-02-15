@@ -5,7 +5,7 @@ type ItemType = {
   name: string;
   imageUrl: string;
 };
-  
+
 const ItemCard = ({ name, imageUrl }: ItemType) => {
   return (
     <div className="achievements-item">
@@ -24,7 +24,7 @@ const Achievements = () => {
     { name: "Pioneer Settler", imageUrl: "/achievements/early-bird.png" },
     { name: "Military Victory", imageUrl: "/achievements/military-victory.png" },
   ];
-  
+
   return (
     <div style={{ padding: "20px" }}>
       <div className="achievements-items-row">

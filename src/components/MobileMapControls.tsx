@@ -1,4 +1,4 @@
-import React from "react"
+import React from "react";
 
 interface MobileMapControlsProps {
   isSelectedUnit: boolean;
@@ -13,37 +13,37 @@ const MobileMapControls = ({ isSelectedUnit }: MobileMapControlsProps) => {
     const offsetSize = 150;
 
     switch (direction) {
-      case 'left':
+      case "left":
         gameMap[0].scrollTo({
           left: gameMap[0].scrollLeft - offsetSize,
-          behavior: 'smooth',
+          behavior: "smooth",
         });
         break;
-      case 'right':
+      case "right":
         gameMap[0].scrollTo({
           left: gameMap[0].scrollLeft + offsetSize,
-          behavior: 'smooth',
+          behavior: "smooth",
         });
         break;
-      case 'top':
+      case "top":
         gameMap[0].scrollTo({
           top: gameMap[0].scrollTop - offsetSize,
-          behavior: 'smooth',
+          behavior: "smooth",
         });
         break;
-      case 'bottom':
+      case "bottom":
         gameMap[0].scrollTo({
           top: gameMap[0].scrollTop + offsetSize,
-          behavior: 'smooth',
+          behavior: "smooth",
         });
         break;
       default:
         break;
     }
-  }
+  };
 
   return (
-    <div className={`mobile-map-controls ${isSelectedUnit ? 'unit-selected' : 'unit-not-selected'}`}>
+    <div className={`mobile-map-controls ${isSelectedUnit ? "unit-selected" : "unit-not-selected"}`}>
       <div className="top-controls">
         <div onClick={() => handleMapControl("top")} className="control">
           <img width={28} src="./icons/triangle.png" alt="Triangle Top" />
@@ -61,7 +61,7 @@ const MobileMapControls = ({ isSelectedUnit }: MobileMapControlsProps) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default React.memo(MobileMapControls)
+export default React.memo(MobileMapControls);

@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react'
-import { Button, Grid, Modal, Box, Typography } from '@mui/material'
+import React, { useState, useEffect } from "react";
+import { Button, Grid, Modal, Box, Typography } from "@mui/material";
 import { Connection, PublicKey, LAMPORTS_PER_SOL } from "@solana/web3.js";
 import { useNavigate } from "react-router-dom";
-import Tippy from '@tippyjs/react';
+import Tippy from "@tippyjs/react";
 
-import { sleep } from '../utils';
-import { useWorkspace } from '../context/AnchorContext';
-import { requestBackendAirdrop, requestSolanaAirdrop, registerPlayerAddress } from '../utils/initiateGame'
-import { handleEndGame, initializeGame } from '../utils/solanaUtils';
-import { useModalError } from '../context/ModalErrorContext';
+import { sleep } from "../utils";
+import { useWorkspace } from "../context/AnchorContext";
+import { requestBackendAirdrop, requestSolanaAirdrop, registerPlayerAddress } from "../utils/initiateGame";
+import { handleEndGame, initializeGame } from "../utils/solanaUtils";
+import { useModalError } from "../context/ModalErrorContext";
 
 const { REACT_APP_HELIUS_RPC } = process.env;
 
@@ -18,7 +18,7 @@ interface InitiateGameButtonProps {
   setErrorMsg: (errorMsg: string) => void;
   setProgressAirdrop?: (progress: number) => void;
   setPreogressInitialize?: (progress: number) => void;
-  label?: string
+  label?: string;
 }
 
 const InitiateGameButton = ({
@@ -73,7 +73,7 @@ const InitiateGameButton = ({
             // Second airdrop attempt using a different RPC
             const heliusConnection = new Connection(
               REACT_APP_HELIUS_RPC || "https://api.devnet.solana.com",
-              "confirmed"
+              "confirmed",
             );
             await requestSolanaAirdrop(heliusConnection, wallet.publicKey);
             setProgressAirdrop && setProgressAirdrop(70);
@@ -121,8 +121,8 @@ const InitiateGameButton = ({
     }
 
     label === "Initiate" ? navigate(0) : navigate("/game");
-  }
-  
+  };
+
   return (
     <>
       <Grid item xs={12}>
@@ -142,26 +142,31 @@ const InitiateGameButton = ({
         </Button>
       </Grid>
       <Modal
-        open={selectLevelVisible} 
+        open={selectLevelVisible}
         onClose={() => setSelectLevelVisible(false)}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box className="modal-end-game modal-select-levels" style={{background: "rgb(49 44 38)"}}>
+        <Box className="modal-end-game modal-select-levels" style={{ background: "rgb(49 44 38)" }}>
           <div className="modal-header">
             <div onClick={() => setSelectLevelVisible(false)} role="button" className="close-icon">
               <img width="32" src="./icons/close.png" alt="Close" />
             </div>
           </div>
           <Typography id="modal-modal-description" fontSize="1.2rem">
-             Select difficulty: 
-          </Typography>   
+            Select difficulty:
+          </Typography>
           <Box className="modal-levels-buttons">
             <Tippy
               key="level 1"
               placement="right"
               disabled={!!isMobile}
-              content={<span><span className="bold-text">x0.5</span> gems multiplier. <br />Barbarians spawn every 20 turns</span>}
+              content={
+                <span>
+                  <span className="bold-text">x0.5</span> gems multiplier. <br />
+                  Barbarians spawn every 20 turns
+                </span>
+              }
             >
               <Button
                 variant="contained"
@@ -176,7 +181,12 @@ const InitiateGameButton = ({
               key="level 2"
               placement="right"
               disabled={!!isMobile}
-              content={<span><span className="bold-text">x1</span> gems multiplier. <br />Barbarians spawn every 15 turns</span>}
+              content={
+                <span>
+                  <span className="bold-text">x1</span> gems multiplier. <br />
+                  Barbarians spawn every 15 turns
+                </span>
+              }
             >
               <Button
                 variant="contained"
@@ -191,7 +201,12 @@ const InitiateGameButton = ({
               key="level 3"
               placement="right"
               disabled={!!isMobile}
-              content={<span><span className="bold-text">x2</span> gems multiplier. <br />Barbarians spawn every 10 turns</span>}
+              content={
+                <span>
+                  <span className="bold-text">x2</span> gems multiplier. <br />
+                  Barbarians spawn every 10 turns
+                </span>
+              }
             >
               <Button
                 variant="contained"
@@ -206,7 +221,7 @@ const InitiateGameButton = ({
         </Box>
       </Modal>
     </>
-  )
-}
+  );
+};
 
-export default InitiateGameButton
+export default InitiateGameButton;

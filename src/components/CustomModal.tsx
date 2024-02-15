@@ -38,7 +38,7 @@ const CustomModal: React.FC<CustomModalProps> = ({ isOpen, onClose, title, child
           color: "white",
           p: 3,
           backdropFilter: "blur(8px)",
-          minWidth: title === "New Research" ? "50%" : "100%",
+          minWidth: title === "New Research" ? "600px" : "100%",
           minHeight: title === "New Research" ? "50vh" : "100vh",
           borderRadius: title === "New Research" ? "8px" : 0,
           border: title === "New Research" ? "1px solid #927F61" : "none",
@@ -46,6 +46,7 @@ const CustomModal: React.FC<CustomModalProps> = ({ isOpen, onClose, title, child
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
+          outline: "none",
         }}
       >
         {(title !== "New Research" || isMobile) && (

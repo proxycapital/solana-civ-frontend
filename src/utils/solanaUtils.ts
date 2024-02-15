@@ -18,7 +18,7 @@ export const getMap = async (provider: AnchorProvider | undefined, program: Prog
   }
   const [gameKey] = anchor.web3.PublicKey.findProgramAddressSync(
     [Buffer.from("GAME"), provider.publicKey.toBuffer()],
-    program.programId
+    program.programId,
   );
 
   let gameAccount;
@@ -37,7 +37,7 @@ export const getGame = async (provider: AnchorProvider | undefined, program: Pro
   }
   const [gameKey] = anchor.web3.PublicKey.findProgramAddressSync(
     [Buffer.from("GAME"), provider.publicKey.toBuffer()],
-    program.programId
+    program.programId,
   );
 
   try {
@@ -56,12 +56,12 @@ export const getPlayer = async (provider: AnchorProvider | undefined, program: P
   }
   const [gameKey] = anchor.web3.PublicKey.findProgramAddressSync(
     [Buffer.from("GAME"), provider.publicKey.toBuffer()],
-    program.programId
+    program.programId,
   );
 
   const [playerKey] = anchor.web3.PublicKey.findProgramAddressSync(
     [Buffer.from("PLAYER"), gameKey.toBuffer(), provider.publicKey.toBuffer()],
-    program.programId
+    program.programId,
   );
 
   let playerAccount;
@@ -105,12 +105,12 @@ export const getNpcs = async (provider: AnchorProvider | undefined, program: Pro
   }
   const [gameKey] = anchor.web3.PublicKey.findProgramAddressSync(
     [Buffer.from("GAME"), provider.publicKey.toBuffer()],
-    program.programId
+    program.programId,
   );
 
   const [npcKey] = anchor.web3.PublicKey.findProgramAddressSync(
     [Buffer.from("NPC"), gameKey.toBuffer()],
-    program.programId
+    program.programId,
   );
 
   let npcAccount;
@@ -129,19 +129,19 @@ export const getNpcs = async (provider: AnchorProvider | undefined, program: Pro
 export const initializeGame = async (provider: AnchorProvider, program: Program<Solciv>, level: number) => {
   const [gameKey] = anchor.web3.PublicKey.findProgramAddressSync(
     [Buffer.from("GAME"), provider.publicKey.toBuffer()],
-    program.programId
+    program.programId,
   );
   console.log("Game account address", gameKey.toString());
 
   const [playerKey] = anchor.web3.PublicKey.findProgramAddressSync(
     [Buffer.from("PLAYER"), gameKey.toBuffer(), provider.publicKey.toBuffer()],
-    program.programId
+    program.programId,
   );
   console.log("Player account address", playerKey.toString());
 
   const [npcKey] = anchor.web3.PublicKey.findProgramAddressSync(
     [Buffer.from("NPC"), gameKey.toBuffer()],
-    program.programId
+    program.programId,
   );
   console.log("NPC account address", npcKey.toString());
 
@@ -219,10 +219,7 @@ export const initializeGame = async (provider: AnchorProvider, program: Program<
 
     do {
       npcPosition2 = getRandomCoordinates();
-    } while (
-      calculateDistance(position, npcPosition2) < 10 ||
-      calculateDistance(npcPosition1, npcPosition2) < 10
-    );
+    } while (calculateDistance(position, npcPosition2) < 10 || calculateDistance(npcPosition1, npcPosition2) < 10);
     const accounts = {
       game: gameKey,
       npcAccount: npcKey,
@@ -245,16 +242,16 @@ export const addToProductionQueue = async (
   provider: AnchorProvider,
   program: Program<Solciv>,
   cityId: number,
-  item: any
+  item: any,
 ) => {
   const [gameKey] = anchor.web3.PublicKey.findProgramAddressSync(
     [Buffer.from("GAME"), provider.publicKey.toBuffer()],
-    program.programId
+    program.programId,
   );
 
   const [playerKey] = anchor.web3.PublicKey.findProgramAddressSync(
     [Buffer.from("PLAYER"), gameKey.toBuffer(), provider.publicKey.toBuffer()],
-    program.programId
+    program.programId,
   );
 
   const accounts = {
@@ -271,16 +268,16 @@ export const removeFromProductionQueue = async (
   provider: AnchorProvider,
   program: Program<Solciv>,
   cityId: number,
-  itemIndex: number
+  itemIndex: number,
 ) => {
   const [gameKey] = anchor.web3.PublicKey.findProgramAddressSync(
     [Buffer.from("GAME"), provider.publicKey.toBuffer()],
-    program.programId
+    program.programId,
   );
 
   const [playerKey] = anchor.web3.PublicKey.findProgramAddressSync(
     [Buffer.from("PLAYER"), gameKey.toBuffer(), provider.publicKey.toBuffer()],
-    program.programId
+    program.programId,
   );
 
   const accounts = {
@@ -296,12 +293,12 @@ export const removeFromProductionQueue = async (
 export const repairWall = async (provider: AnchorProvider, program: Program<Solciv>, cityId: number) => {
   const [gameKey] = anchor.web3.PublicKey.findProgramAddressSync(
     [Buffer.from("GAME"), provider.publicKey.toBuffer()],
-    program.programId
+    program.programId,
   );
 
   const [playerKey] = anchor.web3.PublicKey.findProgramAddressSync(
     [Buffer.from("PLAYER"), gameKey.toBuffer(), provider.publicKey.toBuffer()],
-    program.programId
+    program.programId,
   );
 
   const accounts = {
@@ -318,16 +315,16 @@ export const purchaseWithGold = async (
   provider: AnchorProvider,
   program: Program<Solciv>,
   cityId: number,
-  item: any
+  item: any,
 ) => {
   const [gameKey] = anchor.web3.PublicKey.findProgramAddressSync(
     [Buffer.from("GAME"), provider.publicKey.toBuffer()],
-    program.programId
+    program.programId,
   );
 
   const [playerKey] = anchor.web3.PublicKey.findProgramAddressSync(
     [Buffer.from("PLAYER"), gameKey.toBuffer(), provider.publicKey.toBuffer()],
-    program.programId
+    program.programId,
   );
 
   const accounts = {
@@ -343,12 +340,12 @@ export const purchaseWithGold = async (
 export const foundCity = async (provider: AnchorProvider, program: Program<Solciv>, data: any) => {
   const [gameKey] = anchor.web3.PublicKey.findProgramAddressSync(
     [Buffer.from("GAME"), provider.publicKey.toBuffer()],
-    program.programId
+    program.programId,
   );
 
   const [playerKey] = anchor.web3.PublicKey.findProgramAddressSync(
     [Buffer.from("PLAYER"), gameKey.toBuffer(), provider.publicKey.toBuffer()],
-    program.programId
+    program.programId,
   );
 
   const accounts = {
@@ -358,18 +355,21 @@ export const foundCity = async (provider: AnchorProvider, program: Program<Solci
     systemProgram: anchor.web3.SystemProgram.programId,
   };
 
-  return program.methods.foundCity(data.x, data.y, data.unitId, data.name).accounts(accounts).rpc({skipPreflight: true});
+  return program.methods
+    .foundCity(data.x, data.y, data.unitId, data.name)
+    .accounts(accounts)
+    .rpc({ skipPreflight: true });
 };
 
 export const upgradeLandPlot = async (provider: AnchorProvider, program: Program<Solciv>, unit: any) => {
   const [gameKey] = anchor.web3.PublicKey.findProgramAddressSync(
     [Buffer.from("GAME"), provider.publicKey.toBuffer()],
-    program.programId
+    program.programId,
   );
 
   const [playerKey] = anchor.web3.PublicKey.findProgramAddressSync(
     [Buffer.from("PLAYER"), gameKey.toBuffer(), provider.publicKey.toBuffer()],
-    program.programId
+    program.programId,
   );
 
   const accounts = {
@@ -401,12 +401,12 @@ export const upgradeLandPlot = async (provider: AnchorProvider, program: Program
 export const upgradeUnit = async (provider: AnchorProvider, program: Program<Solciv>, unitId: number) => {
   const [gameKey] = anchor.web3.PublicKey.findProgramAddressSync(
     [Buffer.from("GAME"), provider.publicKey.toBuffer()],
-    program.programId
+    program.programId,
   );
 
   const [playerKey] = anchor.web3.PublicKey.findProgramAddressSync(
     [Buffer.from("PLAYER"), gameKey.toBuffer(), provider.publicKey.toBuffer()],
-    program.programId
+    program.programId,
   );
 
   const accounts = {
@@ -419,11 +419,11 @@ export const upgradeUnit = async (provider: AnchorProvider, program: Program<Sol
 export const withdrawGems = async (provider: AnchorProvider, program: Program<Solciv>, owner: PublicKey) => {
   const [gameKey] = anchor.web3.PublicKey.findProgramAddressSync(
     [Buffer.from("GAME"), provider.publicKey.toBuffer()],
-    program.programId
+    program.programId,
   );
   const [playerKey] = anchor.web3.PublicKey.findProgramAddressSync(
     [Buffer.from("PLAYER"), gameKey.toBuffer(), provider.publicKey.toBuffer()],
-    program.programId
+    program.programId,
   );
   const MINT_SEED = "mint";
   const [mint] = anchor.web3.PublicKey.findProgramAddressSync([Buffer.from(MINT_SEED)], program.programId);
@@ -451,15 +451,15 @@ export const handleEndGame = async (provider: AnchorProvider, program: Program<S
   try {
     const [gameKey] = anchor.web3.PublicKey.findProgramAddressSync(
       [Buffer.from("GAME"), provider!.publicKey.toBuffer()],
-      program!.programId
+      program!.programId,
     );
     const [playerKey] = anchor.web3.PublicKey.findProgramAddressSync(
       [Buffer.from("PLAYER"), gameKey.toBuffer(), provider!.publicKey.toBuffer()],
-      program!.programId
+      program!.programId,
     );
     const [npcKey] = anchor.web3.PublicKey.findProgramAddressSync(
       [Buffer.from("NPC"), gameKey.toBuffer()],
-      program!.programId
+      program!.programId,
     );
     const accounts = {
       game: gameKey,

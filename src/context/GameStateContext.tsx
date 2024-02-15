@@ -5,7 +5,7 @@ import { useModalError } from "./ModalErrorContext";
 
 type Game = {
   turn: number;
-  map: {terrain: number; discovered: boolean}[];
+  map: { terrain: number; discovered: boolean }[];
   defeat: boolean;
   victory: boolean;
 };
@@ -41,7 +41,7 @@ export type City = {
   accumulatedFood: number;
   housing: number;
   controlledTiles: TileCoordinate[];
-}
+};
 
 interface TileCoordinate {
   x: number;
@@ -100,8 +100,8 @@ export const GameStateProvider: React.FC<BaseLayoutProps> = ({ children }) => {
 
   const updateControlledTiles = (cities: City[]) => {
     const newControlledTiles: TileCoordinate[] = [];
-    cities.forEach(city => {
-      city.controlledTiles.forEach(tile => {
+    cities.forEach((city) => {
+      city.controlledTiles.forEach((tile) => {
         newControlledTiles.push({ x: tile.x, y: tile.y });
       });
     });
