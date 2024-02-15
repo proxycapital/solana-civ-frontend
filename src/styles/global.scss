@@ -366,7 +366,7 @@ img.upgraded-tile {
 .unit-info-window {
   position: absolute;
   bottom: 10px;
-  padding: 30px 10px;
+  padding: 20px 10px;
   width: 240px;
   z-index: 100;
   text-align: center;  
@@ -392,6 +392,7 @@ img.upgraded-tile {
     font-weight: 700;
     line-height: normal;
     letter-spacing: 0.4px;
+    padding-bottom: 10px;
   }
 
   .gradient-wrapper {
@@ -424,7 +425,7 @@ img.upgraded-tile {
 
     b {
       color: white;
-      font-size: 14px;
+      font-size: 18px;
       font-style: normal;
       font-weight: 400;
       line-height: normal;
@@ -443,7 +444,7 @@ img.upgraded-tile {
   }
 
   img.unit-icon {
-    width: 24px;
+    width: 18px;
     padding: 0 5px;
   }
 

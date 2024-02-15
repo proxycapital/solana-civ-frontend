@@ -16,7 +16,7 @@ const BuildingStats = ({ researchName, productionCost }: any) => {
         <div className="unit-stats-container">
           <div className="unit-stats">
             <div className="flex-align-center">
-            <img width={24} src={`../icons/${stats.resourceName}.png`} alt={stats.resourceName} />
+            <img width={24} src={`../icons/${stats.resourceName === "production" ? "hammer" : stats.resourceName}.png`} alt={stats.resourceName} />
               {stats.resourceName}
             </div>
             <span>+{stats?.income}</span>
@@ -78,7 +78,7 @@ const NewResearch = () => {
             <img className="unit-image" src={`./${newUnitUnlocked.label.toLowerCase()}.png`} alt="Unit" />
           </div>
           <span className="header-text">You have researched {newUnitUnlocked.label}!</span>
-          <p className="header-sub-text">Now you can train new unit</p>
+          <p className="header-sub-text">Now you can train new unit:</p>
           <div className="unit-stats-container">
             <div className="unit-stats">
               <div className="flex-align-center">
@@ -117,7 +117,7 @@ const NewResearch = () => {
       {newBuildingsUnlocked.length > 0 && newBuildingsUnlocked.map((newBuildingUnlocked) =>(
         <div key={newBuildingUnlocked.label} style={newBuildingUnlocked && newUnitUnlocked && { marginTop: "1rem" }}>
           <span className="header-text">You have researched {newBuildingUnlocked.label}!</span>
-          <p className="header-sub-text">Now you can build new building for:</p>
+          <p className="header-sub-text">Now you can construct new building for:</p>
           <BuildingStats researchName={newBuildingUnlocked?.label} productionCost={newBuildingUnlocked?.productionCost} />
         </div>
       ))}

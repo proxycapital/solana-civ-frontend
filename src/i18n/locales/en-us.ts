@@ -1,6 +1,7 @@
 const enUs = {
   messages: {
     TileNotControlled: "Tile not controlled",
+    NotUpgradable: "Cannot build here",
     TileOccupied: "Tile is occupied by another construction",
     NoMovementPoints: "No movement points left this turn",
     WithinControlledTerritory: "Settler can build new cities only in neutral tiles",
