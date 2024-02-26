@@ -198,18 +198,12 @@ const GamePage: React.FC = () => {
         steps={steps}
         run={true}
         continuous={true}
-        disableBeacon={true}
         callback={handleJoyrideCallback}
-        className="joyride-modal"
         styles={{
           options: {
             backgroundColor: "#36302a",
             textColor: "#fff",
             primaryColor: "#C8AA6E",
-            border: "2px solid #C8AA6E",
-          },
-          main: {
-            border: "2px solid #C8AA6E",
           },
         }}
       />

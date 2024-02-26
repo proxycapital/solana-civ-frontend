@@ -407,7 +407,7 @@ const TopMenu: React.FC<TopMenuProps> = ({ debug, setDebug }) => {
         </ThemeProvider>
       </div>
       <Joyride
-        run={showOnboardingType}
+        run={!!showOnboardingType}
         steps={showOnboardingType === "production" ? productionSteps : researchSteps}
         styles={{
           options: {
