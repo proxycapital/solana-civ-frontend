@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import * as anchor from "@coral-xyz/anchor";
 import Box from "@mui/material/Box";
@@ -32,7 +33,7 @@ interface EndTurnButtonProps {
 
 const EndTurnButton: React.FC<EndTurnButtonProps> = ({ setShowOnboardingType, openNewResearchModal }) => {
   const { program, provider } = useWorkspace();
-  const { game, technologies, cities, allUnits, fetchPlayerState, fetchGameState, fetchNpcs } = useGameState();
+  const { game, technologies, cities, fetchPlayerState, fetchGameState, fetchNpcs } = useGameState();
   const [isProcessing, setIsProcessing] = useState(false);
   const [isClosingGame, setIsClosingGame] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);

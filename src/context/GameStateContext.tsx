@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { useWorkspace } from "../context/AnchorContext";
 import { getPlayer, getGame, getNpcs } from "../utils/solanaUtils";

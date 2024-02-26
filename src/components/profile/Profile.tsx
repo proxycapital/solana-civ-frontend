@@ -29,13 +29,13 @@ const Profile = () => {
     changeBackgroundVolume(volume);
   };
 
-  const userStats = {
-    games: 8981,
-    wins: 3123,
-    defeat: 1231,
-    abandoned: 300,
-    mostPlayedCiv: "Singapure",
-  };
+  // const userStats = {
+  //   games: 8981,
+  //   wins: 3123,
+  //   defeat: 1231,
+  //   abandoned: 300,
+  //   mostPlayedCiv: "Singapure",
+  // };
 
   return (
     <div className="profile">
@@ -64,11 +64,12 @@ const Profile = () => {
         />
       </div>
 
+      {/*
       <div className="line-container">
         <img src="/icons/diamond.png" alt="" width="24" className="center-image" />
       </div>
 
-      {/* <div>
+      <div>
         <h2>Games Stats:</h2>
         <p className="coming-soon">Coming soon</p>
         <div className="profile-stats">

@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import Tippy from "@tippyjs/react";
 
 import { canUpgradeUnit } from "../utils";
@@ -20,40 +19,9 @@ const UnitTile: React.FC<UnitTileProps> = ({
   unitId,
   onClick,
   experience,
-  turn,
   attack,
 }) => {
   const img = npc ? `npc-${type}` : type;
-  const [nextTurn, setNextTurn] = useState(false);
-  const [prevLevel, setPrevLevel] = useState(0);
-
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
-  // useEffect(() => {
-  //   setNextTurn(true);
-  //   setTimeout(() => {
-  //     setNextTurn(false);
-  //   }, 2000);
-  // }, [turn]);
-
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setPrevLevel(Number(level));
-  //   }, 2000);
-  // }, [level])
-
-  // const isHealing = health !== 100;
 
   if (npc) {
     return (

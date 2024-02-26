@@ -38,7 +38,10 @@ const UnitInfoWindow: React.FC<UnitInfoProps> = ({ unit }) => {
   const { handleError } = useError();
 
   useEffect(() => {
+    if (!unit.unitId) return
+  
     const element = document.getElementById(`unit-${unit?.unitId}`);
+
     if (element) {
       const rect = element.getBoundingClientRect();
       const distanceFromRight = window.innerWidth - rect.right;
@@ -50,7 +53,7 @@ const UnitInfoWindow: React.FC<UnitInfoProps> = ({ unit }) => {
         setAlignment("right");
       }
     }
-  }, []);
+  }, [unit.unitId]);
 
   const getUnusedCityName = () => {
     const usedNames = cities.map((city) => city.name);
