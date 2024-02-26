@@ -1,5 +1,6 @@
 import { Button } from "@mui/material";
-import "./Achievements.css";
+
+import "./Achievements.scss";
 
 type ItemType = {
   name: string;

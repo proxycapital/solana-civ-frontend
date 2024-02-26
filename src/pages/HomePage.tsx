@@ -64,7 +64,6 @@ const HomePage: React.FC = () => {
         </Grid>
         {showButtons ? (
           <>
-            {/* @todo: get loading state to fix initial showing of 2 buttons */}
             {/* user has old session */}
             {!showModalError ? (
               <>

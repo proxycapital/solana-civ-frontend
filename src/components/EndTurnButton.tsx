@@ -117,7 +117,7 @@ const EndTurnButton: React.FC<EndTurnButtonProps> = ({ setShowOnboardingType, op
     };
     try {
       const tx = program!.methods.startResearch(technology).accounts(accounts).rpc();
-      // @todo: maybe move it in the center of the screen and show during loading process
+      
       await toast.promise(tx, {
         pending: "Starting new research...",
         success: "Research started!",

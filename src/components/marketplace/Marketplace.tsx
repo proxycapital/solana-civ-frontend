@@ -1,6 +1,7 @@
 import { toast } from "react-toastify";
 import Button from "@mui/material/Button";
-import "./Marketplace.css";
+
+import "./Marketplace.scss";
 
 type ItemType = {
   assetName: string;
