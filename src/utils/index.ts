@@ -70,7 +70,7 @@ type BuildingType = {
   type: "building";
   resourceName: "science" | "gold" | "food" | "production" | "housing" | "defence";
   income: number;
-  extra?: "housing";
+  extra?: "housing" | "gold";
   extraValue?: number;
 };
 
@@ -132,6 +132,11 @@ function getUnitOrBuildingStats(unitOrBuildingName: string): BuildingType | Unit
     "Medieval Wall": { type: "wall", health: 100, attack: 10 },
     "Renaissance Wall": { type: "wall", health: 150, attack: 20 },
     "Industrial Wall": { type: "wall", health: 200, attack: 30 },
+
+    // naval buildings
+    "Sea Port": { type: "building", resourceName: "gold", income: 2, extra: "housing", extraValue: 1 },
+    Shipyard: { type: "building", resourceName: "production", income: 2, extra: "gold", extraValue: 1 },
+    Lighthouse: { type: "building", resourceName: "food", income: 1, extra: "gold", extraValue: 1 },
   };
 
   return BuildingsAndUnits[unitOrBuildingName];
