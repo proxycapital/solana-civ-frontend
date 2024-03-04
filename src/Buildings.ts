@@ -235,4 +235,38 @@ export const AllBuildings: BuildingType[] = [
     requirement: "urbanization",
     tech: "Urbanization",
   },
+  // naval buildings
+  {
+    type: "seaPort",
+    label: "Sea Port",
+    goldCost: 200,
+    productionCost: 20,
+    stats: {
+      yield: "+2 gold | +1 housing",
+    },
+    requirement: "oceanicTrade",
+    tech: "Oceanic Trade",
+  },
+  {
+    type: "shipyard",
+    label: "Shipyard",
+    goldCost: 200,
+    productionCost: 16,
+    stats: {
+      yield: "+2 production | +1 gold",
+    },
+    requirement: "advancedShipbuilding",
+    tech: "Advanced Shipbuilding",
+  },
+  {
+    type: "lighthouse",
+    label: "Lighthouse",
+    goldCost: 100,
+    productionCost: 10,
+    stats: {
+      yield: "+1 food | +1 gold",
+    },
+    requirement: "maritimeNavigation",
+    tech: "Maritime Navigation",
+  },
 ];
