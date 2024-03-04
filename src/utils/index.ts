@@ -124,6 +124,10 @@ function getUnitOrBuildingStats(unitOrBuildingName: string): BuildingType | Unit
     Musketman: { type: "unit", attack: 32, movement: 2, maintenance: 2 },
     Rifleman: { type: "unit", attack: 40, movement: 2, maintenance: 4 },
     Tank: { type: "unit", attack: 50, movement: 2, maintenance: 7 },
+    // naval units
+    Galley: { type: "unit", attack: 10, movement: 3, maintenance: 0 },
+    Frigate: { type: "unit", attack: 14, movement: 4, maintenance: 1 },
+    Battleship: { type: "unit", attack: 24, movement: 5, maintenance: 3 },
 
     "Medieval Wall": { type: "wall", health: 100, attack: 10 },
     "Renaissance Wall": { type: "wall", health: 150, attack: 20 },

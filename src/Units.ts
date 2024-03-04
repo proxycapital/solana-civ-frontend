@@ -151,4 +151,43 @@ export const AllUnits: UnitType[] = [
       maintenanceCost: 7,
     },
   },
+  {
+    type: "galley",
+    label: "Galley",
+    productionCost: 25,
+    goldCost: 150,
+    requirement: "maritimeNavigation",
+    tech: "Maritime Navigation",
+    stats: {
+      attack: 10,
+      movement: 3,
+      maintenanceCost: 0,
+    },
+  },
+  {
+    type: "frigate",
+    label: "Frigate",
+    productionCost: 40,
+    goldCost: 280,
+    requirement: "advancedShipbuilding",
+    tech: "Advanced Shipbuilding",
+    stats: {
+      attack: 14,
+      movement: 4,
+      maintenanceCost: 1,
+    },
+  },
+  {
+    type: "battleship",
+    label: "Battleship",
+    productionCost: 80,
+    goldCost: 420,
+    requirement: "oceanicTrade",
+    tech: "Oceanic Trade",
+    stats: {
+      attack: 24,
+      movement: 5,
+      maintenanceCost: 3,
+    },
+  },
 ];
