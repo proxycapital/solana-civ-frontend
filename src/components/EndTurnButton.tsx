@@ -17,8 +17,7 @@ import Tippy from "@tippyjs/react";
 import { useWorkspace } from "../context/AnchorContext";
 import { useGameState } from "../context/GameStateContext";
 import resetResearchStorage from "../utils/storage";
-
-import config from "../config.json";
+import { Researches } from "../Researches";
 
 const darkTheme = createTheme({
   palette: {
@@ -141,9 +140,9 @@ const EndTurnButton: React.FC<EndTurnButtonProps> = ({ setShowOnboardingType, op
 
     if (!researchQueue) {
       const totalTechnologies =
-        config.science["Science and Economy Tree"].length +
-        config.science["Production and Agriculture Tree"].length +
-        config.science["Military Tree"].length;
+        Researches["Science and Economy Tree"].length +
+        Researches["Production and Agriculture Tree"].length +
+        Researches["Military Tree"].length;
 
       if (!technologies.currentResearch && technologies.researchedTechnologies.length < totalTechnologies) {
         toast.warning("You need to select a technology to research");

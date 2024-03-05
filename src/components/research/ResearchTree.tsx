@@ -6,13 +6,11 @@ import { useGameState } from "../../context/GameStateContext";
 import { useWorkspace } from "../../context/AnchorContext";
 import ResearchBlock from "./ResearchBlock";
 import { toCamelCase } from "../../utils";
-import config from "../../config.json";
+import { Researches } from "../../Researches";
 import "./ResearchTree.scss";
 
 import resetResearchStorage from "../../utils/storage";
 import { ErrorCodes, useError } from "../../hooks/error.hook";
-
-const researchData = config.science;
 
 const ResearchTree = () => {
   const [researchQueue, setResearchQueue] = useState([]);
@@ -20,9 +18,9 @@ const ResearchTree = () => {
   const { program, provider } = useWorkspace();
   const { technologies, fetchPlayerState } = useGameState();
   const { handleError } = useError();
-  const column1 = researchData["Science and Economy Tree"];
-  const column2 = researchData["Production and Agriculture Tree"];
-  const column3 = researchData["Military Tree"];
+  const column1 = Researches["Science and Economy Tree"];
+  const column2 = Researches["Production and Agriculture Tree"];
+  const column3 = Researches["Military Tree"];
 
   const researchedKeys = technologies.researchedTechnologies.map((tech) => Object.keys(tech)[0]);
 
@@ -49,7 +47,7 @@ const ResearchTree = () => {
   };
 
   const handleResearchQueue = (selectedResearchIndex: number, treeType: string, name: string) => {
-    const allTreeTechs: any = researchData;
+    const allTreeTechs: any = Researches;
     const selectedTechTree: Array<any> = allTreeTechs[treeType];
     const selectedTechTreeKeys = selectedTechTree.map((tech) => toCamelCase(String(Object.values(tech)[0])));
 
