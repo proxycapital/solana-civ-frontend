@@ -86,17 +86,17 @@ const CustomTooltip: React.FC<BuildingType & { selectedTab: number }> = ({
                 ) : (
                   <b>{stats.resourceCost}</b>
                 )}
-                {stats?.resourceType && (
+                {stats?.resourceType ? (
                   <img width="24" src={`./icons/${stats?.resourceType}.png`} alt={stats?.resourceType} />
-                )}
+                ) : null}
               </span>
             )}
-            {stats?.maintenanceCost && (
+            {stats?.maintenanceCost ? (
               <span>
                 Maintenance:&nbsp;<b>{stats.maintenanceCost} </b>
                 <img width="24" src={`./icons/gold.png`} alt="gold" />
               </span>
-            )}
+            ) : null}
             {selectedTab === 0 ? (
               <span>
                 Production cost:&nbsp;<b>{productionCost}</b>
