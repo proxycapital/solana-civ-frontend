@@ -253,16 +253,22 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
     isDragging.current = false;
   };
 
-  const isInRange = (unit: any, x: number, y: number): boolean => {
+  // was x: number, y: number
+  const isInRange = (unit: any, x: number, y: number, imageIndex: number): boolean => {
     // do not consider "in range" the tile with the selected unit
-    if (unit.x === x && unit.y === y) {
-      return false;
-    }
-    return unit.isSelected && isWithinDistance(unit.x, unit.y, x, y, unit.movementRange);
+    if (unit.x === x && unit.y === y) return false;
+    
+    return unit.isSelected && isWithinDistance(unit.x, unit.y, x, y, unit.movementRange, unit.type, imageIndex === 17);
   };
 
-  const isWithinDistance = (x1: number, y1: number, x2: number, y2: number, distance: number) => {
+  const seaUnitTypes = ["galley", "frigate", "battleship"]
+
+  const isWithinDistance = (x1: number, y1: number, x2: number, y2: number, distance: number, unitType: string, isSeaTile: boolean) => {
     // const withinDistance = Math.abs(x1 - x2) <= distance && Math.abs(y1 - y2) <= distance;
+    if ((seaUnitTypes.includes(unitType) && !isSeaTile) || (!seaUnitTypes.includes(unitType) && isSeaTile)) {
+      return false;
+    }
+
     const withinDistance = Math.abs(x1 - x2) + Math.abs(y1 - y2) <= distance;
     const targetTile = tiles.find((t) => t.x === x2 && t.y === y2);
     const blockedTileTypes = ["NPC Village"];
@@ -401,14 +407,15 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
     const selectedUnit = units.find((unit) => unit.isSelected);
     const targetUnit = units.find((unit) => unit.x === x && unit.y === y);
     const targetNpcCity = npcCities.find((city) => city.x === x && city.y === y);
-
+    const targetTile = tiles.find((tile) => tile.x === x && tile.y === y);
+    const isSeaTile = targetTile?.imageIndex === 17
     // If the target tile is empty, and the new coords
     // within the selected unit's movement range, move the unit.
     if (
       selectedUnit &&
       !targetUnit &&
       !targetNpcCity &&
-      isWithinDistance(selectedUnit.x, selectedUnit.y, x, y, selectedUnit.movementRange)
+      isWithinDistance(selectedUnit.x, selectedUnit.y, x, y, selectedUnit.movementRange, selectedUnit.type, isSeaTile)
     ) {
       return moveUnit(selectedUnit, x, y);
     }
@@ -549,14 +556,7 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
         />
       )}
       {selectedUnit && (
-        <UnitInfoWindow
-          unit={selectedUnit}
-          // type={selectedUnit.type}
-          // remainingMoves={selectedUnit.movementRange}
-          // movementRange={selectedUnit.movementRange}
-          // builds={selectedUnit.type === 'worker' ? 1 : undefined}
-          // strength={selectedUnit.type === 'warrior' ? 10 : undefined}
-        />
+        <UnitInfoWindow unit={selectedUnit} />
       )}
       <div
         className={`game-map no-select`}
@@ -576,8 +576,11 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
             x: col,
             y: row,
           };
+          // check if unit is ground or naval 
+          // hide all naval or gound tiles to move 
+
           const currentUnits = units.filter((u) => u.x === col && u.y === row);
-          const isInRangeForAnyUnit = units.some((u) => isInRange(u, col, row));
+          const isInRangeForAnyUnit = units.some((u) => isInRange(u, col, row, currentTile.imageIndex));
           // @todo: refactor this to be more generic
           let resourceAvailable;
           if (currentTile.type === "Forest") {
