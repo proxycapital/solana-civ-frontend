@@ -44,6 +44,15 @@ function getRandomCoordinates() {
   return { x, y };
 }
 
+// Helper function that will not allow to spawn player/npc's on sea tiles
+function isInSea(posistion: { x: number, y: number }, map: Array<number>): boolean {
+  // size of the map
+  const MAP_BOUND = 20;
+  const mapIdx = posistion.x * MAP_BOUND + posistion.y;
+
+  return map[mapIdx] === config.seaTerrain ? true : false; 
+}
+
 // Function to calculate distance between two points on the grid
 function calculateDistance(point1: { x: number; y: number }, point2: { x: number; y: number }) {
   return Math.sqrt(Math.pow(point2.x - point1.x, 2) + Math.pow(point2.y - point1.y, 2));
@@ -151,6 +160,7 @@ export {
   capitalizeWords,
   canUpgradeUnit,
   getRandomCoordinates,
+  isInSea,
   calculateDistance,
   formatLargeNumber,
   formatAddress,

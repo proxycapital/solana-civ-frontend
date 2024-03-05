@@ -5,7 +5,7 @@ import { AnchorProvider, Program } from "@coral-xyz/anchor";
 
 import { Solciv } from "../context/idl";
 import { weightedRandomTile } from "../components/Terrain";
-import { getRandomCoordinates, calculateDistance } from "./index";
+import { getRandomCoordinates, calculateDistance, isInSea } from "./index";
 import resetResearchStorage from "./storage";
 
 const { REACT_APP_RPC: RPC } = process.env;
@@ -146,6 +146,11 @@ export const initializeGame = async (provider: AnchorProvider, program: Program<
   console.log("NPC account address", npcKey.toString());
 
   let gameAccount;
+  
+  const randomMap = Array.from({ length: 400 }, () => weightedRandomTile());
+  // first and second rows will be filled with sea
+  const randomMapWithSea = randomMap.map((item, index) => index < 40 ? 17 : item);
+
   try {
     // @ts-ignore
     gameAccount = await program.account.game.fetch(gameKey);
@@ -157,14 +162,12 @@ export const initializeGame = async (provider: AnchorProvider, program: Program<
   } else {
     resetResearchStorage();
 
-    const randomMap = Array.from({ length: 400 }, () => weightedRandomTile());
-
     const accounts = {
       game: gameKey,
       player: provider.publicKey,
       systemProgram: anchor.web3.SystemProgram.programId,
     };
-    const tx = await program.methods.initializeGame(randomMap, level).accounts(accounts).rpc();
+    const tx = await program.methods.initializeGame(randomMapWithSea, level).accounts(accounts).rpc();
     console.log("Transaction signature", tx);
     // wait for transaction to be confirmed
     await connection.confirmTransaction(tx);
@@ -173,8 +176,13 @@ export const initializeGame = async (provider: AnchorProvider, program: Program<
     console.log("Created game account", account);
   }
 
-  // Generate random player location
-  const position = getRandomCoordinates();
+  let position;
+
+  do {
+    // Generate random player location not in sea
+    position = getRandomCoordinates();
+  } while (!isInSea(position, randomMapWithSea));
+
   let playerAccount;
   try {
     // @ts-ignore
@@ -211,15 +219,16 @@ export const initializeGame = async (provider: AnchorProvider, program: Program<
   if (npcAccount) {
     console.log("Existing npc account", npcAccount);
   } else {
-    // Generate random NPC locations with distance check
+    // Generate random NPC locations with distance check and not in sea
     let npcPosition1, npcPosition2;
     do {
       npcPosition1 = getRandomCoordinates();
-    } while (calculateDistance(position, npcPosition1) < 10);
+    } while (calculateDistance(position, npcPosition1) < 10 && !isInSea(npcPosition1, randomMapWithSea));
 
     do {
       npcPosition2 = getRandomCoordinates();
-    } while (calculateDistance(position, npcPosition2) < 10 || calculateDistance(npcPosition1, npcPosition2) < 10);
+    } while ((calculateDistance(position, npcPosition2) < 10 || calculateDistance(npcPosition1, npcPosition2) < 10) && !isInSea(npcPosition2, randomMapWithSea));
+    
     const accounts = {
       game: gameKey,
       npcAccount: npcKey,

@@ -103,10 +103,13 @@ const InitiateGameButton = ({
     try {
       const provider = workspace.provider!;
       const program = workspace.program!;
+      
       setPreogressInitialize && setPreogressInitialize(50);
       await initializeGame(provider, program, level);
+
       setPreogressInitialize && setPreogressInitialize(75);
       await registerPlayerAddress(wallet.publicKey.toBase58());
+      
       setPreogressInitialize && setPreogressInitialize(100);
       // block for 200 ms to show 100%
       await sleep(200);
