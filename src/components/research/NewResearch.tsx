@@ -65,6 +65,7 @@ const BuildingStats = ({ researchName, productionCost }: any) => {
     </div>
   );
 };
+
 const NewResearch = () => {
   const { technologies } = useGameState();
 
@@ -73,9 +74,13 @@ const NewResearch = () => {
 
   const newUnitUnlocked = AllUnits.find((unit) => unit.tech === lastResearch);
   const newBuildingsUnlocked = AllBuildings.filter((building) => building.tech === lastResearch);
-
+  
   return (
     <div className="new-research-block">
+      {/* @todo: this is one for Animal Husbandry */}
+      {!newUnitUnlocked?.label && !newBuildingsUnlocked.length && (
+        <span className="header-text">You have researched {lastResearch}!</span>
+      )}
       {newUnitUnlocked?.label && (
         <>
           <div className="unit-image-container">
