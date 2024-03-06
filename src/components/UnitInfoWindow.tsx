@@ -38,7 +38,7 @@ const UnitInfoWindow: React.FC<UnitInfoProps> = ({ unit }) => {
   const { handleError } = useError();
 
   useEffect(() => {
-    if (!unit.unitId) return
+    if (!unit.unitId && unit.unitId !== 0) return
   
     const element = document.getElementById(`unit-${unit?.unitId}`);
 
@@ -133,6 +133,9 @@ const UnitInfoWindow: React.FC<UnitInfoProps> = ({ unit }) => {
     await fetchPlayerState();
   };
 
+  console.log('Ali', alignment)
+  console.log('Type: ', type)
+
   if (!alignment) return <></>;
 
   return (
@@ -177,7 +180,7 @@ const UnitInfoWindow: React.FC<UnitInfoProps> = ({ unit }) => {
           </b>
         </div>
       )}
-
+  
       {type === "settler" && (
         <div className="gradient-wrapper">
           <Button
