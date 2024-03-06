@@ -144,7 +144,7 @@ const EndTurnButton: React.FC<EndTurnButtonProps> = ({ setShowOnboardingType, op
         Researches["Production and Agriculture Tree"].length +
         Researches["Military Tree"].length;
 
-      if (!technologies.currentResearch && technologies.researchedTechnologies.length < totalTechnologies) {
+      if (!technologies.currentResearch && technologies.researchedTechnologies.length < totalTechnologies && cities.length > 0) {
         toast.warning("You need to select a technology to research");
         setShowOnboardingType("research");
         return;
