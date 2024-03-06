@@ -18,6 +18,8 @@ export type UnitType = {
   isUnlocked?: boolean;
 };
 
+export const SeaUnitTypes = ["galley", "frigate", "battleship"]
+
 export const AllUnits: UnitType[] = [
   {
     type: "settler",
