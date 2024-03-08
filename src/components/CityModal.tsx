@@ -371,6 +371,8 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
               <div className="modal-body">
                 {AllUnits.map((unit) => {
                   const isUnlocked = unit.requirement ? researchedTechnologies.has(unit.requirement) : true;
+                  const canRecruite = (unit.isNaval && city?.onCoast) || !unit.isNaval;
+
                   const stats = getUnitOrBuildingStats(String(unit.label));
 
                   if (!stats) return <></>;
@@ -380,7 +382,7 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
                     <Tippy
                       key={unit.type}
                       placement="right"
-                      content={<CustomTooltip {...unit} isUnlocked={isUnlocked} selectedTab={selectedTab} />}
+                      content={<CustomTooltip {...unit} isUnlocked={isUnlocked} canRecruite={canRecruite} selectedTab={selectedTab} type="unit" />}
                     >
                       <Box
                         onClick={() => {
@@ -394,7 +396,7 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
                           }
                           handlePurchaseWithGold(unit, "unit");
                         }}
-                        className={`body-item ${!isUnlocked ? "locked" : ""} primary-border-with-box-shadow`}
+                        className={`body-item ${!isUnlocked || !canRecruite ? "locked" : ""} primary-border-with-box-shadow`}
                         key={unit.type}
                       >
                         <img src={`/${unit.type}.png`} alt={unit.label} width="50" />
@@ -505,7 +507,7 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
                     <Tippy
                       key={building.type}
                       placement="left"
-                      content={<CustomTooltip {...building} isUnlocked={isUnlocked} selectedTab={selectedTab} />}
+                      content={<CustomTooltip {...building} isUnlocked={isUnlocked} selectedTab={selectedTab} type="building" />}
                     >
                       <Box
                         onClick={() => {
