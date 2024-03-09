@@ -16,6 +16,7 @@ const enUs = {
     InsufficientPopulationForSettler: "Insufficient population to purchase a settler. Minimum is 2 citizens.",
     QueueFull: "Production queue is at full capacity.",
     TechnologyNotResearched: "You need to unlock this technology via Research.",
+    CityMustBeOnCoast: "City must be located on the coast",
     InsufficientResources: "Not enough resources. See unit tooltip for more info.",
     InsufficientGoldForMaintenance: "You don't have enough of gold for unit maintenance.",
   },

@@ -1,7 +1,7 @@
 const ptBR = {
   messages: {
     TileNotControlled: "Território não controlado",
-    NotUpgradable: "Não é possível construir aqui",
+    NotUpgradeable: "Não é possível construir aqui",
     TileOccupied: "Território está ocupado por outra construção",
     NoMovementPoints: "Sem pontos de movimento restantes neste turno",
     WithinControlledTerritory: "Colonizador só pode construir novas cidades em território neutros",
