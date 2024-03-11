@@ -4,16 +4,12 @@ import * as anchor from "@coral-xyz/anchor";
 import { AnchorProvider, Program } from "@coral-xyz/anchor";
 
 import { Solciv } from "../context/idl";
-import { weightedRandomTile } from "../components/Terrain";
-import { getRandomCoordinates, calculateDistance, isInSea } from "./index";
+import { getRandomCoordinates, calculateDistance, isInSea, getPositions } from "./index";
 import resetResearchStorage from "./storage";
-import SeaMaps from "../mapVersions.json"
 
 const { REACT_APP_RPC: RPC } = process.env;
 
 const connection = new Connection(RPC || clusterApiUrl("devnet"), "confirmed");
-
-const AllMaps = ["", SeaMaps.sea_v1, SeaMaps.sea_v2, SeaMaps.sea_v3]
 
 export const getMap = async (provider: AnchorProvider | undefined, program: Program<Solciv> | undefined) => {
   if (!provider || !program) {
@@ -149,16 +145,8 @@ export const initializeGame = async (provider: AnchorProvider, program: Program<
   console.log("NPC account address", npcKey.toString());
 
   let gameAccount;
-  
-  let finalRandomMap;
-  const randomSelectedMap = AllMaps[Math.floor(Math.random() * AllMaps.length) + 1]
 
-  if (randomSelectedMap.length > 0 && Array.isArray(randomSelectedMap)) {
-    // change all ground tile to random but dont change any sea tile
-    finalRandomMap = randomSelectedMap.map((tile) => tile === 17 ? 17 : weightedRandomTile())
-  } else {
-    finalRandomMap = Array.from({ length: 400 }, () => weightedRandomTile());
-  }// first and second rows will be filled with sea
+  const { userPosition, npcPosition1, npcPosition2, map } = getPositions()
 
   try {
     // @ts-ignore
@@ -176,7 +164,7 @@ export const initializeGame = async (provider: AnchorProvider, program: Program<
       player: provider.publicKey,
       systemProgram: anchor.web3.SystemProgram.programId,
     };
-    const tx = await program.methods.initializeGame(finalRandomMap, level).accounts(accounts).rpc();
+    const tx = await program.methods.initializeGame(map, level).accounts(accounts).rpc();
     console.log("Transaction signature", tx);
     // wait for transaction to be confirmed
     await connection.confirmTransaction(tx);
@@ -185,13 +173,6 @@ export const initializeGame = async (provider: AnchorProvider, program: Program<
     console.log("Created game account", account);
   }
 
-  // let position;
-  let position = { x: 10, y: 5 }
-
-  // do {
-  //   // Generate random player location not in sea
-  //   position = getRandomCoordinates();
-  // } while (!isInSea(position, randomMapWithSea));
 
   let playerAccount;
   try {
@@ -209,7 +190,7 @@ export const initializeGame = async (provider: AnchorProvider, program: Program<
       player: provider.publicKey,
       systemProgram: anchor.web3.SystemProgram.programId,
     };
-    const tx = await program.methods.initializePlayer(position).accounts(accounts).rpc();
+    const tx = await program.methods.initializePlayer(userPosition).accounts(accounts).rpc();
     console.log("Transaction signature", tx);
 
     // wait for transaction to be confirmed
@@ -229,19 +210,6 @@ export const initializeGame = async (provider: AnchorProvider, program: Program<
   if (npcAccount) {
     console.log("Existing npc account", npcAccount);
   } else {
-    // Generate random NPC locations with distance check and not in sea
-    // for testing
-    let npcPosition1 = { x: 16, y: 3 }
-    // let npcPosition2;
-    // do {
-    //   npcPosition1 = getRandomCoordinates();
-    // } while (calculateDistance(position, npcPosition1) < 10 && !isInSea(npcPosition1, randomMapWithSea));
-
-    // do {
-    //   npcPosition2 = getRandomCoordinates();
-    // } while ((calculateDistance(position, npcPosition2) < 10 || calculateDistance(npcPosition1, npcPosition2) < 10) && !isInSea(npcPosition2, randomMapWithSea));
-    
-    let npcPosition2 = { x: 18, y: 12 }
 
     const accounts = {
       game: gameKey,

@@ -1,4 +1,26 @@
 import config from "../config.json";
+import SeaMaps from "../mapVersions.json"
+
+import { weightedRandomTile } from "../components/Terrain";
+
+const AllMaps: Array<{
+  game_map: undefined | Array<number>,
+  npc_position_1?: { x: number, y: number },
+  npc_position_2?: { x: number, y: number }}
+> = [{
+  // ground map has randomly setted barbarians
+  game_map: undefined,
+}, {
+  game_map: SeaMaps.sea_v1,
+  npc_position_1: { x: 16, y: 3},
+  npc_position_2: { x: 18, y: 12 },
+}, {
+  game_map: SeaMaps.sea_v2,
+  npc_position_1: { x: 10, y: 10 },
+}, {
+  game_map: SeaMaps.sea_v3,
+  npc_position_1: { x: 3, y: 17}
+}]
 
 function toCamelCase(str: string) {
   if (!str) return "";
@@ -45,10 +67,11 @@ function getRandomCoordinates() {
 }
 
 // Helper function that will not allow to spawn player/npc's on sea tiles
-function isInSea(posistion: { x: number, y: number }, map: Array<number>): boolean {
+function isInSea(position: { x: number, y: number }, map?: Array<number>): boolean {
+  if (!map) return false
   // size of the map
   const MAP_BOUND = 20;
-  const mapIdx = posistion.x * MAP_BOUND + posistion.y;
+  const mapIdx = position.y * MAP_BOUND + position.x;
 
   return map[mapIdx] === config.seaTerrain ? true : false; 
 }
@@ -74,6 +97,63 @@ function formatAddress(address: string, symbols: number = 4): string {
   if (!address) return "";
   return `${address.substring(0, symbols)}...${address.slice(-symbols)}`;
 }
+
+function getRandomCoordinatesNotInSea(map: Array<number>): { x: number, y: number } {
+  let position
+  do {
+    position = getRandomCoordinates()
+  } while (isInSea(position, map))
+  return position
+}
+
+function getPositions(): {
+  map: Array<number>,
+  userPosition: { x: number, y: number },
+  npcPosition1: { x: number, y: number },
+  npcPosition2: { x: number, y: number}
+} {
+  let finalRandomMap;
+  const randomSelectedMap = AllMaps[Math.floor(Math.random() * AllMaps.length)]
+  
+  if (randomSelectedMap && Array.isArray(randomSelectedMap?.game_map)) {
+    // change all ground tile to random but dont change any sea tile
+    finalRandomMap = randomSelectedMap?.game_map.map((tile) => tile === 17 ? 17 : weightedRandomTile())
+  } else {
+    finalRandomMap = Array.from({ length: 400 }, () => weightedRandomTile());
+  }
+
+  let userPosition, npcPosition1, npcPosition2;
+
+  // Render npc1 position
+  if (randomSelectedMap && randomSelectedMap.npc_position_1) {
+    npcPosition1 = randomSelectedMap.npc_position_1
+  } else {
+    // npcPosition1 will be always not in sea
+    npcPosition1 = getRandomCoordinates();
+  }
+
+  // Render npc2 position
+  if (randomSelectedMap && randomSelectedMap.npc_position_2) {
+    npcPosition2 = randomSelectedMap.npc_position_2
+  } else {
+    do {
+      npcPosition2 = getRandomCoordinatesNotInSea(finalRandomMap);
+    } while (calculateDistance(npcPosition1, npcPosition2) < 10);
+  }
+
+  do {
+    // Generate random player location not in sea
+    userPosition = getRandomCoordinatesNotInSea(finalRandomMap);
+  } while (calculateDistance(userPosition, npcPosition1) < 10 || calculateDistance(userPosition, npcPosition2) < 10);
+
+  return {
+    map: finalRandomMap,
+    userPosition,
+    npcPosition1,
+    npcPosition2,
+  }
+}
+
 
 type BuildingType = {
   type: "building";
@@ -166,4 +246,5 @@ export {
   formatAddress,
   getUnitOrBuildingStats,
   sleep,
+  getPositions,
 };
