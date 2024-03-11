@@ -211,14 +211,12 @@ header.top-navigation .balance-box img {
   display: grid;
   grid-template-columns: repeat(20, 100px);
   grid-template-rows: repeat(20, 100px);
-  /* justify-content: center; */
 }
 
 .game-tile {
   position: relative;
   width: 100px;
   height: 100px;
-  /* border: 1px solid black; */
   box-sizing: border-box;
   /* transition: 0.3s ease; */
 }
