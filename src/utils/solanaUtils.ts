@@ -4,7 +4,7 @@ import * as anchor from "@coral-xyz/anchor";
 import { AnchorProvider, Program } from "@coral-xyz/anchor";
 
 import { Solciv } from "../context/idl";
-import { getRandomCoordinates, calculateDistance, isInSea, getPositions } from "./index";
+import { getInitialPositions } from "./index";
 import resetResearchStorage from "./storage";
 
 const { REACT_APP_RPC: RPC } = process.env;
@@ -146,7 +146,7 @@ export const initializeGame = async (provider: AnchorProvider, program: Program<
 
   let gameAccount;
 
-  const { userPosition, npcPosition1, npcPosition2, map } = getPositions()
+  const { userPosition, npcPosition1, npcPosition2, map } = getInitialPositions()
 
   try {
     // @ts-ignore

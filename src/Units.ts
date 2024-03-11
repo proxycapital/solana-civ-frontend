@@ -16,6 +16,7 @@ export type UnitType = {
     maintenanceCost?: number;
   };
   isUnlocked?: boolean;
+  isNaval: boolean;
 };
 
 export const SeaUnitTypes = ["galley", "frigate", "battleship"]
@@ -33,6 +34,7 @@ export const AllUnits: UnitType[] = [
       movement: 2,
       resourceCost: "-1 population",
     },
+    isNaval: false,
   },
   {
     type: "builder",
@@ -45,6 +47,7 @@ export const AllUnits: UnitType[] = [
       builds: 1,
       movement: 2,
     },
+    isNaval: false,
   },
   {
     type: "warrior",
@@ -57,6 +60,7 @@ export const AllUnits: UnitType[] = [
       attack: 8,
       movement: 2,
     },
+    isNaval: false,
   },
   {
     type: "archer",
@@ -70,6 +74,7 @@ export const AllUnits: UnitType[] = [
       movement: 2,
       maintenanceCost: 1,
     },
+    isNaval: false,
   },
   {
     type: "horseman",
@@ -85,6 +90,7 @@ export const AllUnits: UnitType[] = [
       resourceType: "horses",
       maintenanceCost: 2,
     },
+    isNaval: false,
   },
   {
     type: "swordsman",
@@ -100,6 +106,7 @@ export const AllUnits: UnitType[] = [
       resourceType: "iron",
       maintenanceCost: 1,
     },
+    isNaval: false,
   },
   {
     type: "crossbowman",
@@ -113,6 +120,7 @@ export const AllUnits: UnitType[] = [
       movement: 2,
       maintenanceCost: 2,
     },
+    isNaval: false,
   },
   {
     type: "musketman",
@@ -126,6 +134,7 @@ export const AllUnits: UnitType[] = [
       movement: 2,
       maintenanceCost: 2,
     },
+    isNaval: false,
   },
   {
     type: "rifleman",
@@ -139,6 +148,7 @@ export const AllUnits: UnitType[] = [
       movement: 3,
       maintenanceCost: 4,
     },
+    isNaval: false,
   },
   {
     type: "tank",
@@ -152,6 +162,7 @@ export const AllUnits: UnitType[] = [
       movement: 4,
       maintenanceCost: 7,
     },
+    isNaval: false,
   },
   {
     type: "galley",
@@ -165,6 +176,7 @@ export const AllUnits: UnitType[] = [
       movement: 3,
       maintenanceCost: 0,
     },
+    isNaval: true,
   },
   {
     type: "frigate",
@@ -178,6 +190,7 @@ export const AllUnits: UnitType[] = [
       movement: 4,
       maintenanceCost: 1,
     },
+    isNaval: true,
   },
   {
     type: "battleship",
@@ -191,5 +204,6 @@ export const AllUnits: UnitType[] = [
       movement: 5,
       maintenanceCost: 3,
     },
+    isNaval: true,
   },
 ];

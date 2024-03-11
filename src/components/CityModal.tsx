@@ -382,7 +382,14 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
                     <Tippy
                       key={unit.type}
                       placement="right"
-                      content={<CustomTooltip {...unit} isUnlocked={isUnlocked} canRecruite={canRecruite} selectedTab={selectedTab} type="unit" />}
+                      content={(
+                        <CustomTooltip
+                          {...unit}
+                          isUnlocked={isUnlocked}
+                          canRecruiteOrConstruct={canRecruite}
+                          selectedTab={selectedTab}
+                        />
+                      )}
                     >
                       <Box
                         onClick={() => {
@@ -497,6 +504,8 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
               <div className="modal-body">
                 {buildingsToBuild.map((building) => {
                   const isUnlocked = building.requirement ? researchedTechnologies.has(building.requirement) : true;
+                  const seaBuildings = ["lighthouse", "seaPort", "shipyard"];
+                  const canConstruct = (seaBuildings.includes(building.type) && city?.onCoast) || !seaBuildings.includes(building.type);
 
                   const stats = getUnitOrBuildingStats(String(building.label));
                   if (!stats) console.log(building.label);
@@ -507,7 +516,14 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
                     <Tippy
                       key={building.type}
                       placement="left"
-                      content={<CustomTooltip {...building} isUnlocked={isUnlocked} selectedTab={selectedTab} type="building" />}
+                      content={(
+                        <CustomTooltip
+                          {...building}
+                          isUnlocked={isUnlocked}
+                          canRecruiteOrConstruct={canConstruct}
+                          selectedTab={selectedTab}
+                        />
+                      )}
                     >
                       <Box
                         onClick={() => {
@@ -521,7 +537,7 @@ const CityModal: React.FC<CityModalProps> = ({ cityId, show, onClose }) => {
                           }
                           handlePurchaseWithGold(building, "building");
                         }}
-                        className={`body-item ${!isUnlocked ? "locked" : ""} primary-border-with-box-shadow`}
+                        className={`body-item ${!isUnlocked || !canConstruct ? "locked" : ""} primary-border-with-box-shadow`}
                       >
                         <Typography variant="body1">{building.label}</Typography>
                         <div className="number-of-turns">

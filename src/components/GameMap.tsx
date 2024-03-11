@@ -16,6 +16,8 @@ import { getMap } from "../utils/solanaUtils";
 import GameOverModal from "./GameOverModal";
 import TileMenu from "./TileMenu";
 import { useError } from "../hooks/error.hook";
+import { SeaUnitTypes } from "../Units";
+import config from "../config.json"
 
 interface GameMapProps {
   debug: boolean;
@@ -261,11 +263,9 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
     return unit.isSelected && isWithinDistance(unit.x, unit.y, x, y, unit.movementRange, unit.type, imageIndex === 17);
   };
 
-  const seaUnitTypes = ["galley", "frigate", "battleship"]
-
   const isWithinDistance = (x1: number, y1: number, x2: number, y2: number, distance: number, unitType: string, isSeaTile: boolean) => {
     // const withinDistance = Math.abs(x1 - x2) <= distance && Math.abs(y1 - y2) <= distance;
-    if ((seaUnitTypes.includes(unitType) && !isSeaTile) || (!seaUnitTypes.includes(unitType) && isSeaTile)) {
+    if ((SeaUnitTypes.includes(unitType) && !isSeaTile) || (!SeaUnitTypes.includes(unitType) && isSeaTile)) {
       return false;
     }
 
@@ -408,7 +408,7 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
     const targetUnit = units.find((unit) => unit.x === x && unit.y === y);
     const targetNpcCity = npcCities.find((city) => city.x === x && city.y === y);
     const targetTile = tiles.find((tile) => tile.x === x && tile.y === y);
-    const isSeaTile = targetTile?.imageIndex === 17
+    const isSeaTile = targetTile?.imageIndex === config.seaTerrain;
     // If the target tile is empty, and the new coords
     // within the selected unit's movement range, move the unit.
     if (
@@ -576,8 +576,6 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
             x: col,
             y: row,
           };
-          // check if unit is ground or naval 
-          // hide all naval or gound tiles to move 
 
           const currentUnits = units.filter((u) => u.x === col && u.y === row);
           const isInRangeForAnyUnit = units.some((u) => isInRange(u, col, row, currentTile.imageIndex));
@@ -618,13 +616,8 @@ const GameMap: React.FC<GameMapProps> = ({ debug, logMessage }) => {
               <Terrain
                 isControlled={isControlled}
                 discovered={currentTile.discovered}
-                //x={col}
-                //y={row}
                 imageIndex={currentTile.imageIndex}
                 overlayImageIndex={currentTile.overlayImageIndex}
-                //cityName={currentTile.cityName}
-                //wallHealth={currentTile.wallHealth}
-                //health={currentTile.health}
                 turn={game.turn}
               />
               {currentTile.discovered &&

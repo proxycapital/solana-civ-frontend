@@ -42,6 +42,7 @@ export type City = {
   accumulatedFood: number;
   housing: number;
   controlledTiles: TileCoordinate[];
+  onCoast: boolean;
 };
 
 interface TileCoordinate {

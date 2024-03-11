@@ -2,7 +2,7 @@ import React from "react";
 
 import { BuildingType } from "../Buildings";
 
-const CustomTooltip: React.FC<BuildingType & { selectedTab: number, canRecruite?: boolean, type: "unit" | "building" }> = ({
+const CustomTooltip: React.FC<BuildingType & { selectedTab: number, canRecruiteOrConstruct?: boolean }> = ({
   description,
   stats,
   requirement,
@@ -11,8 +11,7 @@ const CustomTooltip: React.FC<BuildingType & { selectedTab: number, canRecruite?
   selectedTab,
   goldCost,
   isUnlocked,
-  canRecruite,
-  type,
+  canRecruiteOrConstruct,
 }) => {
   // const iconMapping: { [key: string]: string } = {
   //   gold: "gold.png",
@@ -38,7 +37,7 @@ const CustomTooltip: React.FC<BuildingType & { selectedTab: number, canRecruite?
   //   });
   // }
 
-  if (!canRecruite && type === "unit") {
+  if (!canRecruiteOrConstruct) {
     return (
       <div className="custom-tooltip">
         <p className="research-required-text">

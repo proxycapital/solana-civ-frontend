@@ -235,7 +235,7 @@ export const AllBuildings: BuildingType[] = [
     requirement: "urbanization",
     tech: "Urbanization",
   },
-  // naval buildings
+  // sea buildings
   {
     type: "seaPort",
     label: "Sea Port",
@@ -257,6 +257,7 @@ export const AllBuildings: BuildingType[] = [
     },
     requirement: "advancedShipbuilding",
     tech: "Advanced Shipbuilding",
+    
   },
   {
     type: "lighthouse",

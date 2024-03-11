@@ -106,7 +106,7 @@ function getRandomCoordinatesNotInSea(map: Array<number>): { x: number, y: numbe
   return position
 }
 
-function getPositions(): {
+function getInitialPositions(): {
   map: Array<number>,
   userPosition: { x: number, y: number },
   npcPosition1: { x: number, y: number },
@@ -144,7 +144,10 @@ function getPositions(): {
   do {
     // Generate random player location not in sea
     userPosition = getRandomCoordinatesNotInSea(finalRandomMap);
-  } while (calculateDistance(userPosition, npcPosition1) < 10 || calculateDistance(userPosition, npcPosition2) < 10);
+  } while (
+    // as we spawn builder and warrior - they should be on the sea
+    calculateDistance({ x: userPosition.x + 1, y: userPosition.y + 1}, npcPosition1) < 10 ||
+    calculateDistance({ x: userPosition.x + 1, y: userPosition.y + 1 }, npcPosition2) < 10);
 
   return {
     map: finalRandomMap,
@@ -246,5 +249,5 @@ export {
   formatAddress,
   getUnitOrBuildingStats,
   sleep,
-  getPositions,
+  getInitialPositions,
 };

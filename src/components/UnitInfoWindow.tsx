@@ -133,9 +133,6 @@ const UnitInfoWindow: React.FC<UnitInfoProps> = ({ unit }) => {
     await fetchPlayerState();
   };
 
-  console.log('Ali', alignment)
-  console.log('Type: ', type)
-
   if (!alignment) return <></>;
 
   return (

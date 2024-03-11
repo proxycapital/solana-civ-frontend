@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from "react";
 import Tippy from "@tippyjs/react";
 
+import config from "../config.json"
+
 interface TerrainProps {
   isControlled: boolean;
   discovered: boolean;
-  // x: number;
-  // y: number;
   imageIndex: number;
   overlayImageIndex?: number;
-  // cityName?: string | undefined;
-  // health?: number;
-  // wallHealth?: number;
   turn: number;
 }
 
@@ -41,6 +38,7 @@ export const TileType = {
   14: "Lumber Mill",
   15: "NPC Village",
   16: "Pasture",
+  [config.seaTerrain]: "Sea",
   20: "Empty",
 };
 
