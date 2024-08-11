@@ -1,0 +1,200 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.container {
+  background-image: url("../../public/homepage-bg.png");
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow-x: hidden;
+  position: relative;
+}
+
+.header {
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+}
+
+.menu-items {
+  display: flex;
+  gap: 1rem;
+}
+
+.balance {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.balance img {
+  width: 1.5rem;
+  margin-right: 0.5rem;
+}
+
+.main-content {
+  flex: 1;
+  margin-top: 10rem;
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.grid-container {
+  justify-content: center;
+  max-width: 1440px;
+}
+
+.grid-item {
+  display: flex;
+  justify-content: center;
+}
+
+.block {
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 10px;
+  padding: 1rem;
+  position: relative;
+  overflow: visible;
+  height: 150px;
+  width: 100%;
+  margin-bottom: 1rem;
+  cursor: pointer;
+}
+
+.block p {
+  max-width: 50%;
+}
+
+.block img.viking,
+.block img.empress {
+  position: absolute;
+  right: 1rem;
+  bottom: 0;
+  height: 120%;
+  transform-origin: bottom right;
+  transition: transform 0.3s ease;
+  z-index: 2;
+}
+
+.block:hover img.viking,
+.block:hover img.empress {
+  transform: scale(1.05, 1.05);
+}
+
+.label {
+  position: absolute;
+  top: -1rem;
+  left: 1rem;
+  background-color: gold;
+  color: black;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  animation: float 2s infinite ease-in-out;
+  z-index: 3;
+}
+
+.block-lootbox {
+  position: relative;
+  text-align: center;
+}
+
+.block-lootbox .lootbox-label {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 50%);
+  background-color: darkred;
+  color: white;
+  padding: 0.5rem;
+  border-radius: 5px;
+  width: 100%;
+  max-width: 150px;
+  text-align: center;
+  overflow: hidden;
+}
+
+.block-lootbox .lootbox-label::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.2));
+  transform: skewX(-20deg);
+  animation: shine 2s infinite;
+}
+
+@keyframes shine {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+.block-lootbox img {
+  width: 100%;
+  max-width: 100px;
+  height: auto;
+  filter: grayscale(100%);
+  transition: filter 0.3s ease;
+}
+
+.block-lootbox:hover img {
+  filter: none;
+}
+
+.footer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  background-color: transparent;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@media (max-width: 900px) {
+  .grid-container {
+    flex-direction: row;
+  }
+
+  .block {
+    max-width: 400px;
+    margin-bottom: 2rem;
+  }
+}
